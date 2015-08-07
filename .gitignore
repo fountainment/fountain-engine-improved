@@ -1,0 +1,11 @@
+bin
+build
+*.cbp
+*.layout
+*.depend
+*.o
+*.a
+CMakeCache.txt
+CMakeFiles
+Makefile
+*.cmake

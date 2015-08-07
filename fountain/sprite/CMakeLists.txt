@@ -1,0 +1,2 @@
+set(FOUNTAIN_SPRITE_SRC
+)
