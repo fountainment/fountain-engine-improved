@@ -3,8 +3,8 @@
 using fei::ModuleBase;
 
 ModuleBase::ModuleBase()
+: _isLoad(false)
 {
-	_isLoad = false;
 }
 
 ModuleBase::~ModuleBase()
@@ -14,7 +14,7 @@ ModuleBase::~ModuleBase()
 bool ModuleBase::init()
 {
 	_isLoad = true;
-	return _isLoad;
+	return true;
 }
 
 void ModuleBase::executeBeforeFrame()

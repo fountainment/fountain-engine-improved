@@ -3,6 +3,11 @@
 using fei::Engine;
 using fei::Application;
 
+Engine::Engine()
+: window(nullptr)
+{
+}
+
 bool Engine::init()
 {
 	if (_isLoad) return true;
@@ -13,6 +18,7 @@ bool Engine::init()
 
 void Engine::destroy()
 {
+	if (!_isLoad) return;
 	unloadModule();
 	_isLoad = false;
 }
@@ -57,9 +63,10 @@ bool Engine::loadModule()
 	
 	auto interface = Interface::getInstance();
 	interface->init();
-	
 	moduleList.push_back(interface);
+
 	moduleList.push_back(Render::getInstance());
+	moduleList.push_back(Time::getInstance());
 
 	//Temporary window for glewInit() to run correctly
 	window = Interface::getInstance()->applyNewWindow();

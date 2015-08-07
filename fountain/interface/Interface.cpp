@@ -20,13 +20,18 @@ Interface::Interface()
 bool Interface::init()
 {
 	if (_isLoad) return true;
-	_isLoad = glfwInit();
-	glfwSwapInterval(1);
+	_isLoad = true;
+	if (GL_FALSE == glfwInit()) {
+		_isLoad = false;
+	} else {
+		glfwSwapInterval(1);
+	}
 	return _isLoad;
 }
 
 void Interface::destroy()
 {
+	if (!_isLoad) return;
 	destroyAllWindows();
 	glfwTerminate();
 	_isLoad = false;

@@ -13,6 +13,8 @@ namespace fei {
 class Engine : public ModuleBase
 {
 public:
+	Engine();
+
 	bool init() override;
 	void destroy() override;
 
