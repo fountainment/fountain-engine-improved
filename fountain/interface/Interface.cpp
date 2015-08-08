@@ -47,17 +47,19 @@ fei::Window* Interface::applyNewWindow()
 void Interface::destroyWindow(fei::Window* window)
 {
 	delete window;
-	for (auto it = windowList.begin(); it != windowList.end(); ++it) {
+	auto it = windowList.begin();
+	while (it != windowList.end()) {
 		if ((*it) == window) {
 			it = windowList.erase(it);
-			--it;
+		} else {
+			++it;
 		}
 	}
 }
 
 void Interface::destroyAllWindows()
 {
-	for (auto it = windowList.end() - 1; it != windowList.begin() - 1; --it) {
+	for (auto it = windowList.rbegin(); it != windowList.rend(); ++it) {
 		delete *it;
 	}
 	windowList.clear();
@@ -65,7 +67,7 @@ void Interface::destroyAllWindows()
 
 void Interface::executeAfterFrame()
 {
-	for (auto it = windowList.end() - 1; it != windowList.begin() - 1; --it) {
+	for (auto it = windowList.rbegin(); it != windowList.rend(); ++it) {
 		(*it)->swapBuffers();
 		(*it)->pollEvents();
 	}

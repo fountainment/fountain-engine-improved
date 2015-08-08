@@ -100,7 +100,7 @@ bool Engine::loadModule()
 void Engine::unloadModule()
 {
 	Interface::getInstance()->destroyWindow(window);
-	for (auto it = moduleList.end() - 1; it != moduleList.begin() - 1; --it) {
+	for (auto it = moduleList.rbegin(); it != moduleList.rend(); ++it) {
 		if (*it) {
 			if ((*it)->isLoad()) {
 				(*it)->destroy();
@@ -126,7 +126,7 @@ void Engine::executeBeforeFrame()
 
 void Engine::executeAfterFrame()
 {
-	for (auto it = moduleList.end() - 1; it != moduleList.begin() - 1; --it) {
+	for (auto it = moduleList.rbegin(); it != moduleList.rend(); ++it) {
 		(*it)->executeAfterFrame();
 	}
 }

@@ -1,5 +1,6 @@
 bin
 build
+external
 *.cbp
 *.layout
 *.depend
