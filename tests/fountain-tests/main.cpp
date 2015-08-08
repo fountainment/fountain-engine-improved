@@ -6,7 +6,7 @@ public:
 	void engineSetting(fei::Engine *eg) override
 	{
 		if (!eg) return;
-		eg->window->setSize(800, 600);
+		//eg->window->setSize(800, 600);
 		eg->window->setTitle("fountain-tests");
 		eg->window->setResizable(false);
 

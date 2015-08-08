@@ -30,3 +30,13 @@ bool Render::init()
 	return _isLoad;
 }
 
+void Render::executeBeforeFrame()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	glPushMatrix();
+}
+
+void Render::executeAfterFrame()
+{
+	glPopMatrix();
+}

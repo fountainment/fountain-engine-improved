@@ -13,7 +13,12 @@ Time* Time::getInstance()
 	return instance;
 }
 
-Time::Time() 
+Time::Time()
+: initTime(0.0),
+  curTime(0.0),
+  lastTime(0.0),
+  deltaTime(0.0),
+  totalFrame(0)
 {
 }
 
@@ -24,7 +29,7 @@ bool Time::init()
 	if (GL_FALSE == glfwInit()) {
 		_isLoad = false;
 	} else {
-		initTime = glfwGetTime();
+		initTime = getTime();
 	}
 	return _isLoad;
 }
@@ -36,9 +41,29 @@ void Time::destroy()
 	_isLoad = false;
 }
 
-double Time::getTime()
+void Time::executeBeforeFrame()
 {
-	double t = glfwGetTime() - initTime;
-	return t;
+	lastTime = curTime;
+	curTime = glfwGetTime() - initTime;
+	deltaTime = curTime - lastTime;
 }
 
+void Time::executeAfterFrame()
+{
+	totalFrame++;
+}
+
+double Time::getTime()
+{
+	return curTime;
+}
+
+double Time::getDeltaTime()
+{
+	return deltaTime;
+}
+
+long long Time::getFrame()
+{
+	return totalFrame;
+}

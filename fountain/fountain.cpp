@@ -35,12 +35,22 @@ bool Engine::createWindow()
 
 void Engine::mainLoop()
 {
+	static GLfloat x = 0.0f;
 	while (!shouldExit()) {
 		executeBeforeFrame();
 		//TODO: move basic key events to Interface::executeBeforeFrame()
 		if (window->getKey(GLFW_KEY_F11)) {
 			window->setFullscreen(!window->isFullscreen());
 		}
+		glRotatef(x, 0.0f, 0.0f, 1.0f);
+		glBegin(GL_TRIANGLE_FAN);
+			glVertex2f(-0.5f, -0.5f);
+			glVertex2f(0.5f, -0.5f);
+			glVertex2f(0.5f, 0.5f);
+			glVertex2f(-0.5f, 0.5f);
+		glEnd();
+		x += 360.0f * Time::getInstance()->getDeltaTime();
+		std::printf("%f %lld\n", Time::getInstance()->getTime(), Time::getInstance()->getFrame());
 		//TODO: add SceneManager
 		executeAfterFrame();
 	}

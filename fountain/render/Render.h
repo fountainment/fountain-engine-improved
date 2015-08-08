@@ -9,6 +9,10 @@ class Render : public fei::ModuleBase
 {
 public:
 	bool init() override;
+
+	void executeBeforeFrame() override;
+	void executeAfterFrame() override;
+
 	static Render* getInstance();
 private:
 	Render();
