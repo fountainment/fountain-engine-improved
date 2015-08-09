@@ -71,12 +71,13 @@ bool Engine::loadModule()
 {
 	bool loadSuccess = true;
 	
+	moduleList.push_back(Time::getInstance());
+
 	auto interface = Interface::getInstance();
 	interface->init();
 	moduleList.push_back(interface);
 
 	moduleList.push_back(Render::getInstance());
-	moduleList.push_back(Time::getInstance());
 
 	//Temporary window for glewInit() to run correctly
 	window = Interface::getInstance()->applyNewWindow();

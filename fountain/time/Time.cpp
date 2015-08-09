@@ -29,7 +29,7 @@ bool Time::init()
 	if (GL_FALSE == glfwInit()) {
 		_isLoad = false;
 	} else {
-		initTime = getTime();
+		initTime = glfwGetTime();
 	}
 	return _isLoad;
 }
