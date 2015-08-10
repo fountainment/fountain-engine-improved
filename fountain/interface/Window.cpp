@@ -1,4 +1,5 @@
 #include "Window.h"
+#include <GL/glew.h>
 
 using fei::Window;
 

@@ -26,6 +26,14 @@ bool Render::init()
 	if (GLEW_OK != err) {
 		std::fprintf(stderr, "GLEW Error: %s\n", glewGetErrorString(err));
 		_isLoad = false;
+	} else {
+		std::printf("GLEW Version: %s\n", glewGetString(GLEW_VERSION));
+		std::printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
+		if (GLEW_VERSION_2_0) {
+			std::printf("GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+		} else {
+			std::printf("Shader unsupported!\n");
+		}
 	}
 	return _isLoad;
 }
