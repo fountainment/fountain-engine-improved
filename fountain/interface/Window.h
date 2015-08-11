@@ -1,8 +1,8 @@
 #if !defined(_FEI_WINDOW_H_)
 #define _FEI_WINDOW_H_
 
-#include "../base/basedef.h"
-#include "../base/ModuleBase.h"
+#include "base/basedef.h"
+#include "base/ModuleBase.h"
 #include <GLFW/glfw3.h>
 
 namespace fei {

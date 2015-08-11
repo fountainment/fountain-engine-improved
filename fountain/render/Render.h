@@ -1,7 +1,7 @@
 #if !defined(_FEI_RENDER_H_)
 #define _FEI_RENDER_H_
 
-#include "../base/ModuleBase.h"
+#include "base/ModuleBase.h"
 
 namespace fei {
 

@@ -1,5 +1,3 @@
-include_directories(${PROJECT_SOURCE_DIR}/fountain)
-
 set(FOUNTAIN_LINK_LIBRARY fountain)
 
 if(LINUX)

@@ -1,5 +1,5 @@
 #include "Render.h"
-#include "../base/basedef.h"
+#include "base/basedef.h"
 #include <GL/glew.h>
 
 using fei::Render;

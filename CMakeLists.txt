@@ -37,5 +37,7 @@ if(WINDOWS)
 endif()
 
 add_definitions(-DGLFW_INCLUDE_NONE -DGLFW_STATIC -DGLEW_STATIC -Wall -std=c++11 -fexceptions)
+include_directories(fountain)
+
 add_subdirectory(fountain)
 add_subdirectory(tests)

@@ -1,7 +1,7 @@
 #if !defined(_FEI_TIME_H_)
 #define _FEI_TIME_H_
 
-#include "../base/ModuleBase.h"
+#include "base/ModuleBase.h"
 
 namespace fei {
 

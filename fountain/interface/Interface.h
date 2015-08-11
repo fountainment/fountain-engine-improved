@@ -1,7 +1,7 @@
 #if !defined(_FEI_INTERFACE_H_)
 #define _FEI_INTERFACE_H_
 
-#include "../base/ModuleBase.h"
+#include "base/ModuleBase.h"
 #include "Window.h"
 
 namespace fei {
