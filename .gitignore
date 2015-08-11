@@ -1,11 +1,14 @@
 bin
 build
-external
+deps
 *.cbp
 *.layout
 *.depend
 *.o
 *.a
+*.so
+*.lib
+*.dll
 CMakeCache.txt
 CMakeFiles
 Makefile
