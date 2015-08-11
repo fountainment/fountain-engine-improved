@@ -30,7 +30,12 @@ endif()
 
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
-add_definitions(-DGLFW_INCLUDE_NONE -DGLFW_STATIC -DGLEW_STATIC -Wall -std=c++11 -fexceptions)
 
+if(WINDOWS)
+  add_subdirectory(deps/proj/glfw)
+  include_directories(deps/include)
+endif()
+
+add_definitions(-DGLFW_INCLUDE_NONE -DGLFW_STATIC -DGLEW_STATIC -Wall -std=c++11 -fexceptions)
 add_subdirectory(fountain)
 add_subdirectory(tests)
