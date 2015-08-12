@@ -17,11 +17,22 @@ public:
 
 	void add(const Vec2& v);
 	void sub(const Vec2& v);
+	void mul(float f);
+	void div(float f);
 	float dot(const Vec2& v) const;
 	bool isLonger(const Vec2& v) const;
 
-	inline const Vec2 operator-() const;
-	inline bool operator!=(const Vec2& v) const;
+	const Vec2 operator-() const;
+	const Vec2 operator+(const Vec2& v) const;
+	const Vec2 operator-(const Vec2& v) const;
+	const Vec2 operator*(float f) const;
+	const Vec2 operator/(float f) const;
+
+	void operator+=(const Vec2& v);
+	void operator-=(const Vec2& v);
+	void operator*=(float f);
+	void operator/=(float f);
+	bool operator!=(const Vec2& v) const;
 
 	float getLengthSq() const;
 	float getLength() const;

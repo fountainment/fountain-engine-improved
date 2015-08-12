@@ -9,13 +9,17 @@ class Camera : fei::NodeBase
 {
 public:
 	enum class Type {
-		PERSPECTIVE = 1,
-		ORTHOGRAPHIC = 2
+		ORTHOGRAPHIC = 1,
+		PERSPECTIVE = 2
 	};
 
+	Camera();
 	void update();
+	void setCameraType(Type type);
+	Type getCameraType();
 private:
 	Type cameraType;
+	float cameraScale;
 };
 
 }

@@ -7,6 +7,8 @@
 #include "interface/Window.h"
 #include "render/Render.h"
 #include "time/Time.h"
+#include "math/Vec2.h"
+#include "math/Rect.h"
 
 namespace fei {
 

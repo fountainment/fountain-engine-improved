@@ -2,6 +2,7 @@
 #define _FEI_RENDER_H_
 
 #include "base/ModuleBase.h"
+#include "math/Rect.h"
 
 namespace fei {
 
@@ -12,6 +13,8 @@ public:
 
 	void executeBeforeFrame() override;
 	void executeAfterFrame() override;
+
+	void setViewport(const Rect& viewport);
 
 	static Render* getInstance();
 private:

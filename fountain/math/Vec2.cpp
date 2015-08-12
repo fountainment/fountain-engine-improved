@@ -36,6 +36,18 @@ void Vec2::sub(const Vec2& v)
 	y -= v.y;
 }
 
+void Vec2::mul(float f)
+{
+	x *= f;
+	y *= f;
+}
+
+void Vec2::div(float f)
+{
+	x /= f;
+	y /= f;
+}
+
 float Vec2::dot(const Vec2& v) const
 {
 	return x * v.x + y * v.y;
@@ -51,6 +63,54 @@ const Vec2 Vec2::operator-() const
 	return Vec2(-x, -y);
 }
 
+const Vec2 Vec2::operator+(const Vec2& v) const
+{
+	Vec2 result(*this);
+	result.add(v);
+	return result;
+}
+
+const Vec2 Vec2::operator-(const Vec2& v) const
+{
+	Vec2 result(*this);
+	result.sub(v);
+	return result;
+}
+
+const Vec2 Vec2::operator*(float f) const
+{
+	Vec2 result(*this);
+	result.mul(f);
+	return result;
+}
+
+const Vec2 Vec2::operator/(float f) const
+{
+	Vec2 result(*this);
+	result.div(f);
+	return result;
+}
+
+void Vec2::operator+=(const Vec2& v)
+{
+	add(v);
+}
+
+void Vec2::operator-=(const Vec2& v)
+{
+	sub(v);
+}
+
+void Vec2::operator*=(float f)
+{
+	mul(f);
+}
+
+void Vec2::operator/=(float f)
+{
+	div(f);
+}
+
 bool Vec2::operator!=(const Vec2& v) const
 {
 	return x != v.x || y != v.y;
@@ -63,6 +123,6 @@ float Vec2::getLengthSq() const
 
 float Vec2::getLength() const
 {
-	return std::sqrt(dot(*this));
+	return std::sqrt(getLengthSq());
 }
 
