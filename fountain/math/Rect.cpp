@@ -4,11 +4,11 @@ using fei::Rect;
 
 Rect::Rect(float x, float y, float w, float h)
 {
-	position = Vec2(x, y);
-	size = Vec2(w, h);
+	position = fei::Vec2(x, y);
+	size = fei::Vec2(w, h);
 }
 
-Rect::Rect(Vec2 pos, Vec2 sz)
+Rect::Rect(fei::Vec2 pos, fei::Vec2 sz)
 {
 	position = pos;
 	size = sz;
