@@ -1,5 +1,5 @@
 #include "Vec2.h"
-#include <cmath>
+#include "mathdef.h"
 
 using fei::Vec2;
 
@@ -44,8 +44,16 @@ void Vec2::mul(float f)
 
 void Vec2::div(float f)
 {
-	x /= f;
-	y /= f;
+	mul(1.0f / f);
+}
+
+void Vec2::normalize()
+{
+	float n = getLengthSq();
+	if (n == 1.0f) return;
+	n = std::sqrt(n);
+	if (n < fei::eps) return;
+	div(n);
 }
 
 float Vec2::dot(const Vec2& v) const
@@ -53,9 +61,26 @@ float Vec2::dot(const Vec2& v) const
 	return x * v.x + y * v.y;
 }
 
+float Vec2::cross(const Vec2& v) const
+{
+	return x * v.y - v.x * y;
+}
+
+const Vec2 Vec2::normalized() const
+{
+	Vec2 result(*this);
+	result.normalize();
+	return result;
+}
+
 bool Vec2::isLonger(const Vec2& v) const
 {
 	return getLengthSq() > v.getLengthSq();
+}
+
+bool Vec2::equals(const Vec2& v) const
+{
+	return (std::abs(x - v.x) >= fei::eps) || (std::abs(y - v.y) >= fei::eps);
 }
 
 const Vec2 Vec2::operator-() const 
@@ -111,9 +136,14 @@ void Vec2::operator/=(float f)
 	div(f);
 }
 
+bool Vec2::operator==(const Vec2& v) const
+{
+	return equals(v);
+}
+
 bool Vec2::operator!=(const Vec2& v) const
 {
-	return x != v.x || y != v.y;
+	return !equals(v);
 }
 
 float Vec2::getLengthSq() const

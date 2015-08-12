@@ -19,8 +19,14 @@ public:
 	void sub(const Vec2& v);
 	void mul(float f);
 	void div(float f);
+	void normalize();
+
 	float dot(const Vec2& v) const;
+	float cross(const Vec2& v) const;
+	const Vec2 normalized() const;
+
 	bool isLonger(const Vec2& v) const;
+	bool equals(const Vec2& v) const;
 
 	const Vec2 operator-() const;
 	const Vec2 operator+(const Vec2& v) const;
@@ -32,6 +38,7 @@ public:
 	void operator-=(const Vec2& v);
 	void operator*=(float f);
 	void operator/=(float f);
+	bool operator==(const Vec2& v) const;
 	bool operator!=(const Vec2& v) const;
 
 	float getLengthSq() const;
