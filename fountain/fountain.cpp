@@ -75,11 +75,7 @@ bool Engine::loadModule()
 	bool loadSuccess = true;
 	
 	moduleList.push_back(Time::getInstance());
-
-	auto interface = Interface::getInstance();
-	interface->init();
-	moduleList.push_back(interface);
-
+	moduleList.push_back(Interface::getInstance());
 	moduleList.push_back(Render::getInstance());
 
 	for (auto module : moduleList) {
