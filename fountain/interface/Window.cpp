@@ -38,11 +38,7 @@ void Window::setTitle(std::string tt)
 
 void Window::setResizable(bool resizable)
 {
-	auto hint = GL_FALSE;
-	if (resizable) {
-		hint = GL_TRUE;
-	}
-	glfwWindowHint(GLFW_RESIZABLE, hint);
+	_isResizable = resizable;
 }
 
 void Window::setFullscreen(bool fullscreen)
@@ -90,6 +86,9 @@ GLFWwindow* Window::getWindow()
 		glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 		if (_isHide) {
 			glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
+		}
+		if (!_isResizable) {
+			glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 		}
 		if (_isFullscreen) {
 			w = mode->width;

@@ -48,7 +48,6 @@ void Engine::mainLoop()
 		if (frameFunc) {
 			frameFunc();
 		}
-		std::printf("%f %lld\n", Time::getInstance()->getTime(), Time::getInstance()->getFrame());
 		//TODO: add SceneManager
 		executeAfterFrame();
 	}

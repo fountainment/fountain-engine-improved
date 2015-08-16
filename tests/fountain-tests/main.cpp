@@ -5,6 +5,7 @@ fei::Texture tex;
 void test()
 {
 	tex.draw();
+	//std::printf("%f %lld\n", Time::getInstance()->getTime(), Time::getInstance()->getFrame());
 }
 
 class TestApplication : public fei::Application

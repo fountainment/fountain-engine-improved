@@ -42,6 +42,7 @@ private:
 	int width, height;
 	std::string title;
 	bool _isFullscreen;
+	bool _isResizable;
 	bool _isHide;
 };
 
