@@ -1,5 +1,6 @@
 #include "Texture.h"
 #include "base/basedef.h"
+#include "base/fileUtil.h"
 #include <FreeImage.h>
 
 using fei::Texture;
@@ -45,6 +46,10 @@ Texture::~Texture()
 void Texture::loadFile(const char* filename)
 {
 	FIBITMAP *dib;
+	if (!fei::isFileExist(filename)) {
+		std::fprintf(stderr, "Texture: \"%s\" file not exist!\n", filename);
+		return;
+	}
 	auto fif = FreeImage_GetFileType(filename, 0);
 	if (FIF_UNKNOWN == fif) {
 		fif = FreeImage_GetFIFFromFilename(filename);

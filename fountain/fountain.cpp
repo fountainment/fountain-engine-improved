@@ -4,7 +4,9 @@ using fei::Engine;
 using fei::Application;
 
 Engine::Engine()
-: window(nullptr)
+: window(nullptr),
+  //for test
+  frameFunc(nullptr)
 {
 }
 
@@ -41,6 +43,10 @@ void Engine::mainLoop()
 		if (window->getKey(GLFW_KEY_F11)) {
 			window->setFullscreen(!window->isFullscreen());
 		}
+		//for test
+		if (frameFunc) {
+			frameFunc();
+		}
 		std::printf("%f %lld\n", Time::getInstance()->getTime(), Time::getInstance()->getFrame());
 		//TODO: add SceneManager
 		executeAfterFrame();
@@ -56,6 +62,12 @@ void Engine::run()
 void Engine::exit()
 {
 	_shouldExit = true;
+}
+
+//for test
+void Engine::setFrameFunc(void (*frameF)())
+{
+	frameFunc = frameF;
 }
 
 bool Engine::loadModule()

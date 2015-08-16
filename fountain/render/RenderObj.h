@@ -8,7 +8,7 @@ namespace fei {
 class RenderObj : public fei::NodeBase
 {
 public:
-	virtual void draw();
+	virtual void draw() = 0;
 protected:
 	bool _isAlpha;
 	int alphaFunc;

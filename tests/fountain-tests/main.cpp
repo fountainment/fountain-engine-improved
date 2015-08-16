@@ -1,5 +1,12 @@
 #include "fountain.h"
 
+fei::Texture tex;
+
+void test()
+{
+	tex.loadFile("test.png");
+}
+
 class TestApplication : public fei::Application
 {
 public:
@@ -9,6 +16,8 @@ public:
 		eg->window->setSize(800, 600);
 		eg->window->setTitle("fountain-tests");
 		eg->window->setResizable(false);
+
+		eg->setFrameFunc(test);
 
 		fei::Render::getInstance()->setViewport(fei::Rect(0, 0, 800, 600));
 
