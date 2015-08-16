@@ -17,6 +17,9 @@ public:
 	void setTitle(std::string tt);
 	void setResizable(bool resizable);
 	void setFullscreen(bool fullscreen);
+	void setHide(bool isHide);
+
+	void setContextRoot(Window* root);
 
 	GLFWwindow* getWindow(); 
 	void delWindow();
@@ -35,9 +38,11 @@ public:
 	int getKey(int key);
 private:
 	GLFWwindow *window;
+	GLFWwindow *contextRoot;
 	int width, height;
 	std::string title;
 	bool _isFullscreen;
+	bool _isHide;
 };
 
 }

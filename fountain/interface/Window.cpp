@@ -4,12 +4,14 @@
 using fei::Window;
 
 Window::Window()
+: window(nullptr),
+  contextRoot(nullptr),
+  width(500),
+  height(500),
+  title(fei::EngineName),
+  _isFullscreen(false),
+  _isHide(false)
 {
-	glfwDefaultWindowHints();
-	window = nullptr;
-	width = height = 500;
-	title = fei::EngineName;
-	_isFullscreen = false;
 }
 
 Window::~Window()
@@ -57,9 +59,27 @@ void Window::setFullscreen(bool fullscreen)
 	_isFullscreen = fullscreen;
 }
 
+void Window::setHide(bool isHide)
+{
+	_isHide = isHide;
+	if (_isHide) {
+		hide();
+	} else {
+		show();
+	}
+}
+
+void Window::setContextRoot(Window* root)
+{
+	if (root) {
+		contextRoot = root->getWindow();
+	}
+}
+
 GLFWwindow* Window::getWindow()
 {
 	if (!window) {
+		glfwDefaultWindowHints();
 		auto monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 		int w = width, h = height;
@@ -67,15 +87,18 @@ GLFWwindow* Window::getWindow()
 		glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
 		glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
 		glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
+		if (_isHide) {
+			glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
+		}
 		if (_isFullscreen) {
 			w = mode->width;
 			h = mode->height;
 		} else {
 			monitor = nullptr;
 		}
-		window = glfwCreateWindow(w, h, title.c_str(), monitor, NULL);
+		window = glfwCreateWindow(w, h, title.c_str(), monitor, contextRoot);
+		glfwDefaultWindowHints();
 	}
-	setCurrent();
 	return window;
 }
 

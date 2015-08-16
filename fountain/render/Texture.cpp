@@ -95,6 +95,7 @@ void Texture::loadData(const unsigned char* bits, int w, int h, Format dataForma
 
 void Texture::draw()
 {
+	//for test
 	glEnable(GL_TEXTURE_2D);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
