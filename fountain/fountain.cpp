@@ -27,6 +27,7 @@ void Engine::destroy()
 
 bool Engine::createWindow()
 {
+	window->setContextRoot(fei::Interface::getInstance()->getRootWindow());
 	if (window->getWindow()) {
 		window->setCurrent();
 		return true;
@@ -82,12 +83,6 @@ bool Engine::loadModule()
 
 	moduleList.push_back(Render::getInstance());
 
-	//Temporary window for glewInit() to run correctly
-	window = Interface::getInstance()->applyNewWindow();
-	window->getWindow();
-	window->setCurrent();
-	window->hide();
-
 	for (auto module : moduleList) {
 		if (!module || !module->init()) {
 			loadSuccess = false;
@@ -95,8 +90,7 @@ bool Engine::loadModule()
 		}
 	}
 
-	//Delete temporary window
-	window->delWindow();
+	window = Interface::getInstance()->applyNewWindow();
 
 	return loadSuccess;
 }

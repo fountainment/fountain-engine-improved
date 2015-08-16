@@ -16,11 +16,15 @@ public:
 	void destroyWindow(Window* window);
 	void destroyAllWindows();
 
+	void createRootWindow();
+	Window* getRootWindow();
+
 	void executeAfterFrame() override;
 
 	static Interface* getInstance();
 private:
 	Interface();
+	Window* rootWindow;
 	std::vector<fei::Window*> windowList;
 	static Interface* instance;
 };

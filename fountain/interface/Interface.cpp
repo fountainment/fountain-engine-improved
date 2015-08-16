@@ -15,6 +15,7 @@ Interface* Interface::getInstance()
 }
 
 Interface::Interface()
+: rootWindow(nullptr)
 {
 }
 
@@ -26,6 +27,7 @@ bool Interface::init()
 		_isLoad = false;
 	} else {
 		glfwSwapInterval(1);
+		createRootWindow();
 	}
 	return _isLoad;
 }
@@ -63,7 +65,24 @@ void Interface::destroyAllWindows()
 	for (auto it = windowList.rbegin(); it != windowList.rend(); ++it) {
 		delete *it;
 	}
+	delete rootWindow;
 	windowList.clear();
+	rootWindow = nullptr;
+}
+
+void Interface::createRootWindow()
+{
+	if (!rootWindow) {
+		rootWindow = new fei::Window();
+		rootWindow->setHide(true);
+		rootWindow->getWindow();
+		rootWindow->setCurrent();
+	}
+}
+
+fei::Window* Interface::getRootWindow()
+{
+	return rootWindow;
 }
 
 void Interface::executeAfterFrame()

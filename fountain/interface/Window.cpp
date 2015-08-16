@@ -53,6 +53,7 @@ void Window::setFullscreen(bool fullscreen)
 			delWindow();
 			_isFullscreen = fullscreen;
 			getWindow();
+			setCurrent();
 			return;
 		}
 	}
