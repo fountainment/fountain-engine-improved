@@ -11,8 +11,8 @@ class Shader
 public:
 	friend class ShaderProgram;
 
-	void loadFromFile(std::string filename);
-	void loadFromString(std::string source);
+	void loadFile(const char* filename);
+	void loadString(const char* source);
 
 	void compile();
 	bool compileCheck();

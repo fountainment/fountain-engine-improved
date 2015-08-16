@@ -6,8 +6,11 @@
 #include "interface/Interface.h"
 #include "interface/Window.h"
 #include "render/Render.h"
+#include "render/Texture.h"
+#include "render/Shader.h"
 #include "time/Time.h"
 #include "math/Vec2.h"
+#include "math/Shape.h"
 #include "math/Rect.h"
 
 namespace fei {
