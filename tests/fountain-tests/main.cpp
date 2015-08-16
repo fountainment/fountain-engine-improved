@@ -4,7 +4,7 @@ fei::Texture tex;
 
 void test()
 {
-	tex.loadFile("test.png");
+	tex.draw();
 }
 
 class TestApplication : public fei::Application
@@ -20,6 +20,8 @@ public:
 		eg->setFrameFunc(test);
 
 		fei::Render::getInstance()->setViewport(fei::Rect(0, 0, 800, 600));
+
+		tex.loadFile("test.png");
 
 		//fei::Math::getInstance()->setRandomSeed(9312);
 		//fei::Render::getInstance()->setClearColor(FEI_Blue);
