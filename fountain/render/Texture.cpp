@@ -93,12 +93,10 @@ void Texture::loadData(const unsigned char* bits, int w, int h, Format dataForma
 	height = h;
 }
 
-void Texture::draw()
+void Texture::drawIt()
 {
 	//for test
 	glEnable(GL_TEXTURE_2D);
-	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
 	glBindTexture(GL_TEXTURE_2D, id);
 	glBegin(GL_TRIANGLE_FAN);
@@ -107,6 +105,5 @@ void Texture::draw()
 		glTexCoord2f(1.0f, 1.0f);glVertex2f(1.0f, 1.0f);
 		glTexCoord2f(0.0f, 1.0f);glVertex2f(-1.0f, 1.0f);
 	glEnd();
-	glDisable(GL_BLEND);
 	glDisable(GL_TEXTURE_2D);
 }

@@ -49,6 +49,7 @@ public:
 	void attach(Shader* shader);
 	void link();
 	void use();
+	void pop();
 
 private:
 	GLuint id;

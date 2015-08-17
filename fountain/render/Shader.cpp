@@ -102,4 +102,10 @@ void ShaderProgram::link()
 void ShaderProgram::use()
 {
 	glUseProgram(id);
+	//TODO: push shader
+}
+
+void ShaderProgram::pop()
+{
+	//TODO: pop shader
 }

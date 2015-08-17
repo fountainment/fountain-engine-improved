@@ -22,8 +22,9 @@ char* fei::readFileBuffer(const char* filename)
 		std::fseek(fp, 0, SEEK_END);
 		fSize = std::ftell(fp);
 		std::rewind(fp);
-		buffer = new char[fSize]; 
+		buffer = new char[fSize + 1];
 		result = std::fread(buffer, 1, fSize, fp);
+		buffer[fSize] = '\0';
 		std::fclose(fp);
 		if ((long)result != fSize) {
 			std::fprintf(stderr, "FileUtil: \"%s\" reading error!\n", filename);
