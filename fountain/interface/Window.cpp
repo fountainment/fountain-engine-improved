@@ -52,8 +52,9 @@ void Window::setFullscreen(bool fullscreen)
 			setCurrent();
 			return;
 		}
+	} else {
+		_isFullscreen = fullscreen;
 	}
-	_isFullscreen = fullscreen;
 }
 
 void Window::setHide(bool isHide)

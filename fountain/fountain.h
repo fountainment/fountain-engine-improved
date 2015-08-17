@@ -3,6 +3,7 @@
 
 #include "base/basedef.h"
 #include "base/ModuleBase.h"
+#include "base/fileUtil.h"
 #include "interface/Interface.h"
 #include "interface/Window.h"
 #include "render/Render.h"

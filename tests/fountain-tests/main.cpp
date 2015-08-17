@@ -5,7 +5,12 @@ fei::Texture tex;
 void test()
 {
 	tex.draw();
-	//std::printf("%f %lld\n", Time::getInstance()->getTime(), Time::getInstance()->getFrame());
+	char *buffer = fei::readFileBuffer("1.txt");
+	if (buffer) {
+		std::printf("%s", buffer);
+		delete [] buffer;
+	}
+	std::printf("Time: %f    Frame: %lld\n", fei::Time::getInstance()->getTime(), fei::Time::getInstance()->getFrame());
 }
 
 class TestApplication : public fei::Application

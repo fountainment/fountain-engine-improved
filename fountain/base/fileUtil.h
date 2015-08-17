@@ -4,6 +4,7 @@
 namespace fei {
 
 bool isFileExist(const char* filename);
+char* readFileBuffer(const char* filename);
 
 }
 
