@@ -17,6 +17,7 @@ void Clock::init(Clock* mClock)
 {
 	masterClock = mClock;
 	totalTime = 0.0;
+	frameCount = 0;
 	if (!masterClock) {
 		_isMaster = true;
 	} else {
