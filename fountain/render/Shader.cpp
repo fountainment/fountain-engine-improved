@@ -1,4 +1,6 @@
 #include "Shader.h"
+#include "Render.h"
+#include "base/fileUtil.h"
 
 using fei::Shader;
 using fei::VertexShader;
@@ -30,13 +32,24 @@ void Shader::deleteShader()
 	}
 }
 
+void Shader::loadFile(const char* filename)
+{
+	auto buffer = fei::readFileBuffer(filename);
+	loadString(buffer);
+	delete [] buffer;
+}
+
+void Shader::loadString(const char* source)
+{
+	shaderSource = source;
+}
+
 void Shader::compile()
 {
 	if (!id) createShader();
 	const GLchar* shaderStr = shaderSource.c_str();
 	glShaderSource(id, 1, &shaderStr, 0);
 	glCompileShader(id);
-	compileCheck();
 }
 
 bool Shader::compileCheck()
@@ -77,7 +90,7 @@ FragmentShader::FragmentShader()
 
 ShaderProgram::ShaderProgram()
 {
-	id = glCreateProgram();
+	id = 0;
 }
 
 ShaderProgram::~ShaderProgram()
@@ -87,11 +100,45 @@ ShaderProgram::~ShaderProgram()
 	}
 }
 
+void ShaderProgram::loadFile(const char* vs, const char* fs)
+{
+	if (!id) id = glCreateProgram();
+	auto vsStr = fei::readFileBuffer(vs);
+	auto fsStr = fei::readFileBuffer(fs);
+	loadString(vsStr, fsStr);
+	delete [] vsStr;
+	delete [] fsStr;
+}
+
+void ShaderProgram::loadString(const char* vsStr, const char* fsStr)
+{
+	if (!id) id = glCreateProgram();
+	VertexShader vert;
+	FragmentShader frag;
+	vert.loadString(vsStr);
+	frag.loadString(fsStr);
+	vert.compile();
+	vert.compileCheck();
+	frag.compile();
+	frag.compileCheck();
+	attach(&vert, &frag);
+	link();
+}
+
 void ShaderProgram::attach(Shader* shader)
 {
-	if (!shader->id) shader->compile();
+	if (!shader->id) {
+		shader->compile();
+		if (!shader->compileCheck()) return;
+	}
 	glAttachShader(id, shader->id);
 	shader->deleteShader();
+}
+
+void ShaderProgram::attach(Shader* vs, Shader* fs)
+{
+	attach(vs);
+	attach(fs);
 }
 
 void ShaderProgram::link()
@@ -101,11 +148,10 @@ void ShaderProgram::link()
 
 void ShaderProgram::use()
 {
-	glUseProgram(id);
-	//TODO: push shader
+	Render::getInstance()->pushShader(this);
 }
 
 void ShaderProgram::pop()
 {
-	//TODO: pop shader
+	Render::getInstance()->popShader(this);
 }

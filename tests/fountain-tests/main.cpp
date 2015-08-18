@@ -5,6 +5,7 @@ fei::Texture tex;
 fei::Camera cam;
 TestApplication testApp;
 fei::Clock mainClock;
+fei::ShaderProgram shader;
 
 void test()
 {
@@ -18,12 +19,12 @@ void test()
 	cam.move(speed);
 	cam.update();
 	tex.draw();
-	char *buffer = fei::readFileBuffer("1.txt");
-	if (buffer) {
-		std::printf("%s", buffer);
-		delete [] buffer;
-	}
-	std::printf("Time: %f    Frame: %lld\n", fei::Time::getInstance()->getTime(), fei::Time::getInstance()->getFrame());
+	//char *buffer = fei::readFileBuffer("1.txt");
+	//if (buffer) {
+		//std::printf("%s", buffer);
+		//delete [] buffer;
+	//}
+	//std::printf("Time: %f    Frame: %lld\n", fei::Time::getInstance()->getTime(), fei::Time::getInstance()->getFrame());
 	mainClock.tick();
 }
 
@@ -40,6 +41,8 @@ void TestApplication::engineSetting(fei::Engine *eg)
 
 	cam.setCameraSize(fei::Vec2(8, 6));
 	tex.loadFile("test.png");
+	shader.loadFile("vs.vert", "fs.frag");
+	tex.setShader(&shader);
 
 	//fei::Math::getInstance()->setRandomSeed(9312);
 	//fei::Render::getInstance()->setClearColor(FEI_Blue);

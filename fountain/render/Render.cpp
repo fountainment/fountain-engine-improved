@@ -38,6 +38,13 @@ bool Render::init()
 	return _isLoad;
 }
 
+void Render::destroy()
+{
+	while (!shaderStack.empty()) {
+		shaderStack.pop();
+	}
+}
+
 void Render::executeBeforeFrame()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -53,4 +60,33 @@ void Render::setViewport(const fei::Rect& viewport)
 {
 	glViewport(viewport.position.x, viewport.position.y,
 			viewport.size.x, viewport.size.y);
+}
+
+void Render::pushShader(fei::ShaderProgram* shader)
+{
+	if (shaderStack.empty() || shaderStack.top() != shader) {
+		shaderStack.push(shader);
+		glUseProgram(shader->id);
+	}
+}
+
+void Render::popShader(fei::ShaderProgram* shader)
+{
+	if (!shaderStack.empty() && shaderStack.top() == shader) {
+		shaderStack.pop();
+		if (shaderStack.empty()) {
+			glUseProgram(0);
+		} else {
+			glUseProgram((shaderStack.top())->id);
+		}
+	}
+}
+
+fei::ShaderProgram* Render::getShaderProgram()
+{
+	if (!shaderStack.empty()) {
+		return shaderStack.top();
+	} else {
+		return nullptr;
+	}
 }

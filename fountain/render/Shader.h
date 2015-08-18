@@ -44,9 +44,14 @@ public:
 class ShaderProgram
 {
 public:
+	friend class Render;
+
 	ShaderProgram();
 	~ShaderProgram();
+	void loadFile(const char* vs, const char* fs);
+	void loadString(const char* vsStr, const char* fsStr);
 	void attach(Shader* shader);
+	void attach(Shader* vs, Shader* fs);
 	void link();
 	void use();
 	void pop();
