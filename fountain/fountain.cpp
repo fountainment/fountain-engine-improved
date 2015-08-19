@@ -76,6 +76,7 @@ bool Engine::loadModule()
 	
 	moduleList.push_back(Time::getInstance());
 	moduleList.push_back(Interface::getInstance());
+	moduleList.push_back(Control::getInstance());
 	moduleList.push_back(Render::getInstance());
 
 	for (auto module : moduleList) {

@@ -1,6 +1,7 @@
 include(base/CMakeLists.txt)
 include(math/CMakeLists.txt)
 include(interface/CMakeLists.txt)
+include(control/CMakeLists.txt)
 include(time/CMakeLists.txt)
 include(render/CMakeLists.txt)
 include(font/CMakeLists.txt)
@@ -15,6 +16,7 @@ set(FOUNTAIN_SRC fountain.cpp
 	${FOUNTAIN_BASE_SRC}
 	${FOUNTAIN_MATH_SRC}
 	${FOUNTAIN_INTERFACE_SRC}
+	${FOUNTAIN_CONTROL_SRC}
 	${FOUNTAIN_TIME_SRC}
 	${FOUNTAIN_RENDER_SRC}
 	${FOUNTAIN_FONT_SRC}

@@ -6,6 +6,7 @@
 #include "base/fileUtil.h"
 #include "interface/Interface.h"
 #include "interface/Window.h"
+#include "control/Control.h"
 #include "render/Render.h"
 #include "render/Camera.h"
 #include "render/Texture.h"

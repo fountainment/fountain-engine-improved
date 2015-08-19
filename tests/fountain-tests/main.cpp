@@ -9,14 +9,21 @@ fei::ShaderProgram shader;
 
 void test()
 {
-	auto eg = testApp.getEngine();
+	//auto eg = testApp.getEngine();
+	//if (eg->window->getKey(GLFW_KEY_W)) speed += fei::Vec2(0.0f, 2.0f);
+	//if (eg->window->getKey(GLFW_KEY_S)) speed += fei::Vec2(0.0f, -2.0f);
+	//if (eg->window->getKey(GLFW_KEY_A)) speed += fei::Vec2(-2.0f, 0.0f);
+	//if (eg->window->getKey(GLFW_KEY_D)) speed += fei::Vec2(2.0f, 0.0f);
 	fei::Vec2 speed(0);
-	if (eg->window->getKey(GLFW_KEY_W)) speed += fei::Vec2(0.0f, 2.0f);
-	if (eg->window->getKey(GLFW_KEY_S)) speed += fei::Vec2(0.0f, -2.0f);
-	if (eg->window->getKey(GLFW_KEY_A)) speed += fei::Vec2(-2.0f, 0.0f);
-	if (eg->window->getKey(GLFW_KEY_D)) speed += fei::Vec2(2.0f, 0.0f);
+	fei::Vec2 pos(0);
+	fei::Joystick *joystick = fei::Control::getInstance()->getJoystick();
+	if (joystick) {
+		speed -= joystick->getAxes() * 5.0f;
+		//pos = joystick->getTouch();
+	}
 	speed *=  mainClock.getDeltaTime();
 	cam.move(speed);
+	//cam.setPosition(pos);
 	cam.update();
 	tex.draw();
 	//char *buffer = fei::readFileBuffer("1.txt");
@@ -46,7 +53,6 @@ void TestApplication::engineSetting(fei::Engine *eg)
 
 	//fei::Math::getInstance()->setRandomSeed(9312);
 	//fei::Render::getInstance()->setClearColor(FEI_Blue);
-
 	//fei::Scene::getInstance()->gotoScene(new TestScene());
 }
 

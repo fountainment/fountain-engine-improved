@@ -1,4 +1,5 @@
 #include "Render.h"
+#include "interface/Interface.h"
 #include "base/basedef.h"
 #include <GL/glew.h>
 
@@ -22,6 +23,10 @@ bool Render::init()
 {
 	if (_isLoad) return true;
 	_isLoad = true;
+	if (!fei::Interface::getInstance()->init()) {
+		_isLoad = false;
+		return false;
+	}
 	GLenum err = glewInit();
 	if (GLEW_OK != err) {
 		std::fprintf(stderr, "GLEW Error: %s\n", glewGetErrorString(err));
