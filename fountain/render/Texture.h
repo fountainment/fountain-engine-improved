@@ -23,7 +23,7 @@ public:
 	friend class Render;
 
 	Texture();
-	~Texture();
+	virtual ~Texture();
 	void loadFile(const char* filename);
 	void loadData(const unsigned char* bits, int w, int h, Format dataFormat = Format::RGBA);
 	void drawIt() override;

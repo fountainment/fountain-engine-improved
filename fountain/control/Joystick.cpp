@@ -4,8 +4,12 @@
 
 using fei::Joystick;
 
+const float accuracy = 0.00001f;
+
 Joystick::Joystick()
-: id(-1)
+: id(-1),
+  axesCount(0),
+  buttonCount(0)
 {
 	clearData();
 }
@@ -24,12 +28,18 @@ void Joystick::update()
 {
 	if (usable()) {
 		int count;
-		const float *axes = glfwGetJoystickAxes(id, &count);
+		const float *axes = glfwGetJoystickAxes(id, &axesCount);
+		count = axesCount;
 		if (count > 16) count = 16;
 		for (int i = 0; i < count; i++) {
-			axesData[i] = axes[i];
+			if (std::abs(axes[i]) > accuracy) {
+				axesData[i] = axes[i];
+			} else {
+				axesData[i] = 0.0f;
+			}
 		}
-		const unsigned char *button = glfwGetJoystickButtons(id, &count);
+		const unsigned char *button = glfwGetJoystickButtons(id, &buttonCount);
+		count = buttonCount;
 		if (count > 16) count = 16;
 		for (int i = 0; i < count; i++) {
 			buttonData[i] = button[i];
@@ -50,6 +60,16 @@ bool Joystick::usable()
 	return id >= GLFW_JOYSTICK_1 && id <= GLFW_JOYSTICK_LAST && glfwJoystickPresent(id);
 }
 
+int Joystick::getAxesCount()
+{
+	return axesCount;
+}
+
+int Joystick::getButtonCount()
+{
+	return buttonCount;
+}
+
 float Joystick::getAxesX()
 {
 	return axesData[0];
@@ -62,10 +82,20 @@ float Joystick::getAxesY()
 
 fei::Vec2 Joystick::getAxes()
 {
-	return fei::Vec2(axesData[0], -axesData[1]);
+	return fei::Vec2(getAxesX(), getAxesY());
+}
+
+float Joystick::getTouchX()
+{
+	return -axesData[9];
+}
+
+float Joystick::getTouchY()
+{
+	return axesData[10];
 }
 
 fei::Vec2 Joystick::getTouch()
 {
-	return fei::Vec2(-axesData[9], axesData[10]);
+	return fei::Vec2(getTouchX(), getTouchY());
 }
