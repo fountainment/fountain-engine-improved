@@ -62,6 +62,7 @@ bool Render::init()
 		} else {
 			std::printf("Shader unsupported!\n");
 		}
+		glAlphaFunc(GL_GREATER, 0.0f);
 	}
 	return _isLoad;
 }
