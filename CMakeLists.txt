@@ -36,7 +36,11 @@ if(WINDOWS)
   include_directories(deps/include)
 endif()
 
-add_definitions(-DGLFW_INCLUDE_NONE -DGLFW_STATIC -DGLEW_STATIC -Wall -std=c++11 -fexceptions)
+if(LINUX)
+  add_definitions(-Wall -fexceptions -std=c++11)
+endif()
+
+add_definitions(-DGLFW_INCLUDE_NONE -DGLFW_STATIC -DGLEW_STATIC)
 include_directories(fountain)
 
 add_subdirectory(fountain)
