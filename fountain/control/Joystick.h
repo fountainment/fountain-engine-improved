@@ -9,9 +9,14 @@ class Joystick
 {
 public:
 	friend class Control;
+
+	enum class Type {
+		DEFAULT = 1,
+		PS4 = 2
+	};
+
 	Joystick();
 	//int getKey(int key);
-	bool usable();
 	int getAxesCount();
 	int getButtonCount();
 	float getAxesX();
@@ -23,12 +28,15 @@ public:
 	float getTouchX();
 	float getTouchY();
 	Vec2 getTouch();
+	float getTouchId();
 
 private:
 	void init();
+	bool usable();
 	void update();
 	void clearData();
 	int id;
+	Type type;
 	int axesCount;
 	float axesData[16];
 	int buttonCount;

@@ -4,10 +4,11 @@
 
 using fei::Joystick;
 
-const float accuracy = 0.00001f;
+const float accuracy = 0.01f;
 
 Joystick::Joystick()
 : id(-1),
+  type(Type::DEFAULT),
   axesCount(0),
   buttonCount(0)
 {
@@ -21,6 +22,9 @@ void Joystick::init()
 		const char* name = glfwGetJoystickName(id);
 		std::printf("Detect Joystick: \"%s\"\n", name);
 		update();
+		if (axesCount == 12) {
+			type = Type::PS4;
+		}
 	}
 }
 
@@ -85,6 +89,21 @@ fei::Vec2 Joystick::getAxes()
 	return fei::Vec2(getAxesX(), getAxesY());
 }
 
+float Joystick::getDirectionX()
+{
+	return axesData[6];
+}
+
+float Joystick::getDirectionY()
+{
+	return -axesData[7];
+}
+
+fei::Vec2 Joystick::getDirection()
+{
+	return fei::Vec2(getDirectionX(), getDirectionY());
+}
+
 float Joystick::getTouchX()
 {
 	return -axesData[9];
@@ -98,4 +117,9 @@ float Joystick::getTouchY()
 fei::Vec2 Joystick::getTouch()
 {
 	return fei::Vec2(getTouchX(), getTouchY());
+}
+
+float Joystick::getTouchId()
+{
+	return axesData[11];
 }
