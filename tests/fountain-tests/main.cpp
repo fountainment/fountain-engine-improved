@@ -49,7 +49,8 @@ void TestApplication::engineSetting(fei::Engine *eg)
 	cam.setCameraSize(fei::Vec2(8, 6));
 	tex.loadFile("test.png");
 	shader.loadFile("vs.vert", "fs.frag");
-	tex.setShader(&shader);
+	//tex.setShader(&shader);
+	tex.setScale(0.002f);
 
 	//fei::Math::getInstance()->setRandomSeed(9312);
 	//fei::Render::getInstance()->setClearColor(FEI_Blue);

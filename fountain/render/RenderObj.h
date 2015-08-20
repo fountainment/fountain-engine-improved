@@ -13,6 +13,7 @@ public:
 	void draw();
 	virtual void drawIt();
 	void setShader(fei::ShaderProgram* sp);
+	void setScale(float scl);
 protected:
 	bool _isAlpha;
 	//int alphaFunc;

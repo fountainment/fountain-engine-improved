@@ -30,8 +30,7 @@ public:
 
 private:
 	GLuint id;
-	int width;
-	int height;
+	Vec2 size;
 };
 
 }

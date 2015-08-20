@@ -16,10 +16,15 @@ void RenderObj::setShader(fei::ShaderProgram* sp)
 	shaderProg = sp;
 }
 
+void RenderObj::setScale(float scl)
+{
+	scale = scl;
+}
+
 void RenderObj::draw()
 {
 	if (shaderProg) {
-		shaderProg->use();
+		shaderProg->push();
 	}
 	if (_isAlpha) {
 		glEnable(GL_BLEND);

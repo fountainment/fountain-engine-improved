@@ -21,7 +21,6 @@ public:
 protected:
 	Shader();
 	virtual ~Shader();
-	void createShader();
 	void deleteShader();
 
 	GLuint id;
@@ -54,7 +53,9 @@ public:
 	void attach(Shader* vs, Shader* fs);
 	void link();
 	void use();
+	void push();
 	void pop();
+	void setUniform(const char* varName, float value);
 
 private:
 	GLuint id;

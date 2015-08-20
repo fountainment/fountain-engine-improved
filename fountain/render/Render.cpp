@@ -5,6 +5,27 @@
 
 using fei::Render;
 
+static const GLchar *basicVertexShader = {
+	"void main()"
+	"{"
+	"	gl_TexCoord[0] = gl_MultiTexCoord0;"
+	"	gl_FrontColor = gl_Color;"
+	"	gl_Position = ftransform();"
+	"}"
+};
+
+static const GLchar *basicFragmentShader = {
+	"uniform sampler2D feiTex;"
+	"uniform float feiUseTex;"
+	"void main() {"
+	"	vec4 color = gl_Color;"
+	"	if (feiUseTex == 1.0) {"
+	"		color *= texture2D(feiTex, gl_TexCoord[0].st);"
+	"	}"
+	"	gl_FragColor = color;"
+	"}"
+};
+
 Render* Render::instance = nullptr;
 
 Render* Render::getInstance()
@@ -36,6 +57,8 @@ bool Render::init()
 		std::printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
 		if (GLEW_VERSION_2_0) {
 			std::printf("GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+			basicShader.loadString(basicVertexShader, basicFragmentShader);
+			basicShader.push();
 		} else {
 			std::printf("Shader unsupported!\n");
 		}
@@ -54,6 +77,10 @@ void Render::executeBeforeFrame()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glPushMatrix();
+	auto shader = getShaderProgram();
+	if (shader) {
+		shader->use();
+	}
 }
 
 void Render::executeAfterFrame()
@@ -71,7 +98,7 @@ void Render::pushShader(fei::ShaderProgram* shader)
 {
 	if (shaderStack.empty() || shaderStack.top() != shader) {
 		shaderStack.push(shader);
-		glUseProgram(shader->id);
+		shader->use();
 	}
 }
 
@@ -82,7 +109,7 @@ void Render::popShader(fei::ShaderProgram* shader)
 		if (shaderStack.empty()) {
 			glUseProgram(0);
 		} else {
-			glUseProgram((shaderStack.top())->id);
+			shaderStack.top()->use();
 		}
 	}
 }
@@ -94,4 +121,33 @@ fei::ShaderProgram* Render::getShaderProgram()
 	} else {
 		return nullptr;
 	}
+}
+
+void Render::bindTexture(GLuint tex)
+{
+	glBindTexture(GL_TEXTURE_2D, tex);
+	auto shader = getShaderProgram();
+	if (shader) {
+		shader->setUniform("feiUseTex", 1.0f);
+		shader->setUniform("feiTex", tex);
+	}
+}
+
+void Render::drawTexQuad(const fei::Vec2& size, GLfloat* texCoord)
+{
+	GLfloat w2 = size.x / 2.0f;
+	GLfloat h2 = size.y / 2.0f;
+	GLfloat vertex[] = {-w2, h2, w2, h2, -w2, -h2, w2, -h2};
+	GLfloat defaultTexCoord[] = {0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f};
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glVertexPointer(2, GL_FLOAT, 0, vertex);
+	if (texCoord) {
+		glTexCoordPointer(2, GL_FLOAT, 0, texCoord);
+	} else {
+		glTexCoordPointer(2, GL_FLOAT, 0, defaultTexCoord);
+	}
+	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }

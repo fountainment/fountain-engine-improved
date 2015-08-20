@@ -17,13 +17,6 @@ Shader::~Shader()
 	deleteShader();
 }
 
-void Shader::createShader()
-{
-	if (!id) {
-		id = glCreateShader(shaderType);
-	}
-}
-
 void Shader::deleteShader()
 {
 	if (id) {
@@ -46,7 +39,9 @@ void Shader::loadString(const char* source)
 
 void Shader::compile()
 {
-	if (!id) createShader();
+	if (!id) {
+		id = glCreateShader(shaderType);
+	}
 	const GLchar* shaderStr = shaderSource.c_str();
 	glShaderSource(id, 1, &shaderStr, 0);
 	glCompileShader(id);
@@ -102,7 +97,9 @@ ShaderProgram::~ShaderProgram()
 
 void ShaderProgram::loadFile(const char* vs, const char* fs)
 {
-	if (!id) id = glCreateProgram();
+	if (!id) {
+		id = glCreateProgram();
+	}
 	auto vsStr = fei::readFileBuffer(vs);
 	auto fsStr = fei::readFileBuffer(fs);
 	loadString(vsStr, fsStr);
@@ -112,7 +109,9 @@ void ShaderProgram::loadFile(const char* vs, const char* fs)
 
 void ShaderProgram::loadString(const char* vsStr, const char* fsStr)
 {
-	if (!id) id = glCreateProgram();
+	if (!id) {
+		id = glCreateProgram();
+	}
 	VertexShader vert;
 	FragmentShader frag;
 	vert.loadString(vsStr);
@@ -129,7 +128,9 @@ void ShaderProgram::attach(Shader* shader)
 {
 	if (!shader->id) {
 		shader->compile();
-		if (!shader->compileCheck()) return;
+		if (!shader->compileCheck()) {
+			return;
+		}
 	}
 	glAttachShader(id, shader->id);
 	shader->deleteShader();
@@ -148,10 +149,26 @@ void ShaderProgram::link()
 
 void ShaderProgram::use()
 {
+	glUseProgram(id);
+}
+
+void ShaderProgram::push()
+{
 	Render::getInstance()->pushShader(this);
 }
 
 void ShaderProgram::pop()
 {
 	Render::getInstance()->popShader(this);
+}
+
+void ShaderProgram::setUniform(const char* varName, float value)
+{
+	if (fei::Render::getInstance()->getShaderProgram() != this) {
+		return;
+	}
+	GLint loc = glGetUniformLocation(id, varName);
+	if (loc != -1) {
+		glUniform1f(loc, value);
+	}
 }

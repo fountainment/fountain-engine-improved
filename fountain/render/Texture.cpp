@@ -33,14 +33,12 @@ static Texture::Format BPP2FIFormat(int bpp)
 
 Texture::Texture()
 : id(0),
-  width(0),
-  height(0)
+  size(fei::Vec2(0.0f))
 {
 }
 
 Texture::~Texture()
 {
-	//glDeleteTextures(1, &id);
 }
 
 void Texture::loadFile(const char* filename)
@@ -79,7 +77,9 @@ void Texture::loadData(const unsigned char* bits, int w, int h, Format dataForma
 	} else {
 		_isAlpha = false;
 	}
-	glGenTextures(1, &id);
+	if (!id || GL_FALSE == glIsTexture(id)) {
+		glGenTextures(1, &id);
+	}
 	glBindTexture(GL_TEXTURE_2D, id);
 	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -88,22 +88,11 @@ void Texture::loadData(const unsigned char* bits, int w, int h, Format dataForma
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, w, h,
 			0, format, GL_UNSIGNED_BYTE, bits);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	width = w;
-	height = h;
+	size = fei::Vec2(w, h);
 }
 
 void Texture::drawIt()
 {
-	//for test
-	glEnable(GL_TEXTURE_2D);
-	glTexEnvf(GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);
-	glBindTexture(GL_TEXTURE_2D, id);
-	glBegin(GL_TRIANGLE_FAN);
-		glTexCoord2f(0.0f, 0.0f);glVertex2f(-1.0f, -1.0f);
-		glTexCoord2f(1.0f, 0.0f);glVertex2f(1.0f, -1.0f);
-		glTexCoord2f(1.0f, 1.0f);glVertex2f(1.0f, 1.0f);
-		glTexCoord2f(0.0f, 1.0f);glVertex2f(-1.0f, 1.0f);
-	glEnd();
-	glDisable(GL_TEXTURE_2D);
+	fei::Render::getInstance()->bindTexture(id);
+	fei::Render::getInstance()->drawTexQuad(size);
 }

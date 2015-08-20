@@ -4,5 +4,6 @@ set(FOUNTAIN_RENDER_SRC
 	render/Camera.cpp
 	render/Color.cpp
 	render/Texture.cpp
+	render/Image.cpp
 	render/Shader.cpp
 )
