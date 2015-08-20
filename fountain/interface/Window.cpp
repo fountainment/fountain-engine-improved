@@ -132,7 +132,7 @@ void Window::show()
 	}
 }
 
-bool Window::shouldClose()
+int Window::shouldClose()
 {
 	return glfwWindowShouldClose(window);
 }

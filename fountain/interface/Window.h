@@ -29,7 +29,7 @@ public:
 	void hide();
 	void show();
 
-	bool shouldClose();
+	int shouldClose();
 	void swapBuffers();
 	void pollEvents();
 
