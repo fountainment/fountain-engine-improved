@@ -27,7 +27,7 @@ void RenderObj::setAngle(float agl)
 	angle = agl;
 }
 
-void RenderObj::setAnchor(const Vec2& acr)
+void RenderObj::setAnchor(const fei::Vec2& acr)
 {
 	anchor = acr;
 }

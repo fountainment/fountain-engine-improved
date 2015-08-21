@@ -91,8 +91,8 @@ void Render::executeAfterFrame()
 
 void Render::setViewport(const fei::Rect& viewport)
 {
-	glViewport(viewport.getPosition().x, viewport.getPosition().y,
-			viewport.getSize().x, viewport.getSize().y);
+	glViewport((GLint)viewport.getPosition().x, (GLint)viewport.getPosition().y,
+		(GLsizei)viewport.getSize().x, (GLsizei)viewport.getSize().y);
 }
 
 void Render::pushShader(fei::ShaderProgram* shader)
@@ -130,7 +130,7 @@ void Render::bindTexture(GLuint tex)
 	auto shader = getShaderProgram();
 	if (shader) {
 		shader->setUniform("feiUseTex", 1.0f);
-		shader->setUniform("feiTex", tex);
+		shader->setUniform("feiTex", (float)tex);
 	}
 }
 

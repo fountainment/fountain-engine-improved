@@ -88,7 +88,7 @@ void Texture::loadData(const unsigned char* bits, int w, int h, Format dataForma
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, w, h,
 			0, format, GL_UNSIGNED_BYTE, bits);
-	size = fei::Vec2(w, h);
+	size = fei::Vec2((float)w, (float)h);
 }
 
 void Texture::drawIt()
@@ -102,7 +102,7 @@ const fei::Image Texture::getImage(const fei::Rect& rect)
 	return fei::Image(id, size, rect);
 }
 
-const fei::Image Texture::getImage(const Vec2& p, const Vec2& s)
+const fei::Image Texture::getImage(const fei::Vec2& p, const fei::Vec2& s)
 {
 	return getImage(fei::Rect(p, s));
 }

@@ -183,9 +183,9 @@ float Vec2::getAngle() const
 		}
 	}
 	float ans = std::atan(y / x);
-	if (x >= 0) ans += fei::pi * 1.5f;
-	else ans += fei::pi * 0.5f;
-	ans *= 180.0f / fei::pi;
+	if (x >= 0) ans += (float)fei::pi * 1.5f;
+	else ans += (float)fei::pi * 0.5f;
+	ans *= 180.0f / (float)fei::pi;
 	return ans;
 }
 

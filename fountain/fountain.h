@@ -30,6 +30,15 @@
 #include "render/Texture.h"
 #include "render/Shader.h"
 
+#ifdef _MSC_VER
+	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")
+	#ifdef NDEBUG
+		#pragma comment(linker, "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
+	#else
+		#pragma comment(linker, "/SUBSYSTEM:CONSOLE")
+	#endif
+#endif
+
 namespace fei {
 
 class Engine : public ModuleBase

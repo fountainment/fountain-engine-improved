@@ -34,6 +34,7 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 if(WINDOWS)
   add_subdirectory(deps/proj/glfw)
   include_directories(deps/include)
+  add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif()
 
 if(LINUX)

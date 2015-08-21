@@ -20,9 +20,9 @@ void test()
 	Vec2 speed(0);
 	auto *joystick = fei::Control::getInstance()->getJoystick();
 	if (joystick) {
-		speed = joystick->getAxes() * 500.0f * mainClock.getDeltaTime();
+		speed = joystick->getAxes() * 500.0f * (float)mainClock.getDeltaTime();
 		image.setAngle(speed.getAngle());
-		speed = joystick->getDirection() * 50.0f * mainClock.getDeltaTime();
+		speed = joystick->getDirection() * 50.0f * (float)mainClock.getDeltaTime();
 		tex.rotate(-speed.x);
 	}
 	//cam.setPosition(pos);
