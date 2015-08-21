@@ -20,8 +20,6 @@ void Camera::update()
 	if (needDataUpdate) {
 		updateCameraData();
 	}
-	GLint originMode;
-	glGetIntegerv(GL_MATRIX_MODE, &originMode);
 	glMatrixMode(GL_PROJECTION);
 	if (cameraType == Type::ORTHOGRAPHIC) {
 		glLoadIdentity();
@@ -30,7 +28,7 @@ void Camera::update()
 		//TODO: write it when you want to test it
 	}
 	glTranslatef(-pos.x, -pos.y, 0);
-	glMatrixMode(originMode);
+	glMatrixMode(GL_MODELVIEW);
 }
 
 void Camera::setCameraType(Type type)

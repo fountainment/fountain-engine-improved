@@ -77,16 +77,12 @@ void Render::destroy()
 void Render::executeBeforeFrame()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glPushMatrix();
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 	auto shader = getShaderProgram();
 	if (shader) {
 		shader->use();
 	}
-}
-
-void Render::executeAfterFrame()
-{
-	glPopMatrix();
 }
 
 void Render::setViewport(const fei::Rect& viewport)
