@@ -107,8 +107,7 @@ void Engine::unloadModule()
 
 bool Engine::shouldExit()
 {
-	bool result = _shouldExit || window->shouldClose();
-	return result;
+	return _shouldExit || window->shouldClose();
 }
 
 void Engine::executeBeforeFrame()
@@ -133,9 +132,7 @@ Application::Application()
 
 Application::~Application()
 {
-	if (engine) {
-		unloadEngine();
-	}
+	unloadEngine();
 }
 
 bool Application::loadEngine()

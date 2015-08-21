@@ -2,20 +2,33 @@
 #define _FEI_FOUNTAIN_H_
 
 #include "base/basedef.h"
-#include "base/ModuleBase.h"
 #include "base/fileUtil.h"
-#include "interface/Interface.h"
-#include "interface/Window.h"
-#include "control/Control.h"
-#include "render/Render.h"
-#include "render/Camera.h"
-#include "render/Texture.h"
-#include "render/Shader.h"
+#include "base/ModuleBase.h"
+#include "base/NodeBase.h"
+#include "base/noncopyable.h"
+
+#include "math/mathdef.h"
+#include "math/Rect.h"
+#include "math/Shape.h"
+#include "math/Vec2.h"
+#include "math/Vec3.h"
+
 #include "time/Time.h"
 #include "time/Clock.h"
-#include "math/Vec2.h"
-#include "math/Shape.h"
-#include "math/Rect.h"
+
+#include "interface/Interface.h"
+#include "interface/Window.h"
+
+#include "control/Control.h"
+#include "control/Joystick.h"
+
+#include "render/Render.h"
+#include "render/RenderObj.h"
+#include "render/Camera.h"
+#include "render/Color.h"
+#include "render/Image.h"
+#include "render/Texture.h"
+#include "render/Shader.h"
 
 namespace fei {
 
@@ -36,6 +49,7 @@ public:
 	void setFrameFunc(void (*frameF)());
 
 	Window *window;
+
 private:
 	bool loadModule();
 	void unloadModule();
@@ -46,7 +60,6 @@ private:
 	void (*frameFunc)();
 	
 	bool shouldExit();
-
 	bool _shouldExit;
 
 	void executeBeforeFrame() override;
@@ -64,9 +77,10 @@ public:
 
 	virtual void engineSetting(Engine *eg) = 0;
 	void run();
-	static Engine* getEngine();
-private:
 
+	static Engine* getEngine();
+
+private:
 	static Engine *engine;
 };
 
