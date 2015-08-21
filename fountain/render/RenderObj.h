@@ -14,12 +14,17 @@ public:
 	virtual void drawIt();
 	void setShader(fei::ShaderProgram* sp);
 	void setScale(float scl);
+	void setAngle(float agl);
+	void setAnchor(const Vec2& acr);
+	void rotate(float dltAgl);
+
 protected:
 	bool _isAlpha;
 	//int alphaFunc;
 	float angle;
 	float scale;
-	fei::ShaderProgram* shaderProg;
+	Vec2 anchor;
+	ShaderProgram* shaderProg;
 };
 
 }

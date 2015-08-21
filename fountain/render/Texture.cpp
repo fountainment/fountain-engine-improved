@@ -96,3 +96,18 @@ void Texture::drawIt()
 	fei::Render::getInstance()->bindTexture(id);
 	fei::Render::getInstance()->drawTexQuad(size);
 }
+
+const fei::Image Texture::getImage(const fei::Rect& rect)
+{
+	return fei::Image(id, size, rect);
+}
+
+const fei::Image Texture::getImage(const Vec2& p, const Vec2& s)
+{
+	return getImage(fei::Rect(p, s));
+}
+
+const fei::Image Texture::getImage()
+{
+	return getImage(fei::Vec2(0.0f), size);
+}

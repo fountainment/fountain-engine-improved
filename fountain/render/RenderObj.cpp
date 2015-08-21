@@ -7,6 +7,7 @@ RenderObj::RenderObj()
 : _isAlpha(false),
   angle(0.0f),
   scale(1.0f),
+  anchor(fei::Vec2(0.0f)),
   shaderProg(nullptr)
 {
 }
@@ -21,6 +22,21 @@ void RenderObj::setScale(float scl)
 	scale = scl;
 }
 
+void RenderObj::setAngle(float agl)
+{
+	angle = agl;
+}
+
+void RenderObj::setAnchor(const Vec2& acr)
+{
+	anchor = acr;
+}
+
+void RenderObj::rotate(float dltAgl)
+{
+	angle += dltAgl;
+}
+
 void RenderObj::draw()
 {
 	if (shaderProg) {
@@ -30,11 +46,14 @@ void RenderObj::draw()
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
-	glRotatef(angle, 0.0f, 0.0f, 1.0f);
 	glTranslatef(pos.x, pos.y, 0);
+	glRotatef(angle, 0.0f, 0.0f, 1.0f);
 	glScalef(scale, scale, scale);
+	glTranslatef(-anchor.x, -anchor.y, 0.0f);
 	drawIt();
-	glDisable(GL_BLEND);
+	if (_isAlpha) {
+		glDisable(GL_BLEND);
+	}
 	if (shaderProg) {
 		shaderProg->pop();
 	}

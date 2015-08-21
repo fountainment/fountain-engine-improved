@@ -26,6 +26,7 @@ public:
 	float dot(const Vec2& v) const;
 	float cross(const Vec2& v) const;
 	const Vec2 normalized() const;
+	const Vec2 reciprocal() const;
 
 	bool isLonger(const Vec2& v) const;
 	bool equals(const Vec2& v) const;
@@ -45,6 +46,7 @@ public:
 
 	float getLengthSq() const;
 	float getLength() const;
+	float getAngle() const;
 };
 
 }

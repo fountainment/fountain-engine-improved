@@ -84,6 +84,11 @@ const Vec2 Vec2::normalized() const
 	return result;
 }
 
+const Vec2 Vec2::reciprocal() const
+{
+	return fei::Vec2(1.0f / x, 1.0f / y);
+}
+
 bool Vec2::isLonger(const Vec2& v) const
 {
 	return getLengthSq() > v.getLengthSq();
@@ -165,5 +170,22 @@ float Vec2::getLengthSq() const
 float Vec2::getLength() const
 {
 	return std::sqrt(getLengthSq());
+}
+
+float Vec2::getAngle() const
+{
+	//TODO: need optimization
+	if (std::abs(x) < fei::eps) {
+		if (std::abs(y) < fei::eps || y > 0) {
+			return 0.0f;
+		} else {
+			return 180.0f;
+		}
+	}
+	float ans = std::atan(y / x);
+	if (x >= 0) ans += fei::pi * 1.5f;
+	else ans += fei::pi * 0.5f;
+	ans *= 180.0f / fei::pi;
+	return ans;
 }
 

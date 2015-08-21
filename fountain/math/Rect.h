@@ -17,11 +17,18 @@ public:
 	const Vec2 getSize() const;
 	void setSize(const Vec2& sz);
 
+	float getLeft();
+	float getRight();
+	float getTop();
+	float getBottom();
+
 	void zoom(float scale);
 	void zoom(const Vec2& v);
 	void normalize();
 
 	bool collidePoint(const fei::Vec2& pt) const;
+
+	void getStripCoord(float* coord) const;
 
 private:
 	Vec2 size;
