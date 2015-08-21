@@ -16,7 +16,6 @@ public:
 	void destroy() override;
 
 	void executeBeforeFrame() override;
-	void executeAfterFrame() override;
 
 	void setViewport(const Rect& viewport);
 
