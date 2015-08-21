@@ -91,8 +91,8 @@ void Render::executeAfterFrame()
 
 void Render::setViewport(const fei::Rect& viewport)
 {
-	glViewport(viewport.position.x, viewport.position.y,
-			viewport.size.x, viewport.size.y);
+	glViewport(viewport.getPosition().x, viewport.getPosition().y,
+			viewport.getSize().x, viewport.getSize().y);
 }
 
 void Render::pushShader(fei::ShaderProgram* shader)

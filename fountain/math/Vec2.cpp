@@ -56,6 +56,17 @@ void Vec2::normalize()
 	div(n);
 }
 
+void Vec2::zoom(float scale)
+{
+	mul(scale);
+}
+
+void Vec2::zoom(const Vec2& v)
+{
+	x *= v.x;
+	y *= v.y;
+}
+
 float Vec2::dot(const Vec2& v) const
 {
 	return x * v.x + y * v.y;

@@ -2,7 +2,7 @@
 
 using fei::NodeBase;
 
-const fei::Vec2 NodeBase::getPosition()
+const fei::Vec2 NodeBase::getPosition() const
 {
 	return pos;
 }

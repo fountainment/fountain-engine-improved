@@ -20,6 +20,8 @@ public:
 	void mul(float f);
 	void div(float f);
 	void normalize();
+	void zoom(float scale);
+	void zoom(const Vec2& v);
 
 	float dot(const Vec2& v) const;
 	float cross(const Vec2& v) const;
