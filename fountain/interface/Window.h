@@ -36,11 +36,14 @@ public:
 	bool isFullscreen();
 
 	int getKey(int key);
+
 private:
 	GLFWwindow *window;
 	GLFWwindow *contextRoot;
+
 	int width, height;
 	std::string title;
+
 	bool _isFullscreen;
 	bool _isResizable;
 	bool _isHide;

@@ -16,15 +16,22 @@ public:
 	};
 
 	Joystick();
-	//int getKey(int key);
+
+	void setAccuracy(float acrc);
+
 	int getAxesCount();
 	int getButtonCount();
+
+	//int getKey(int key);
+
 	float getAxesX();
 	float getAxesY();
 	Vec2 getAxes();
+
 	float getDirectionX();
 	float getDirectionY();
 	Vec2 getDirection();
+
 	float getTouchX();
 	float getTouchY();
 	Vec2 getTouch();
@@ -35,13 +42,14 @@ private:
 	bool usable();
 	void update();
 	void clearData();
+
 	int id;
 	Type type;
 	int axesCount;
 	float axesData[16];
 	int buttonCount;
 	unsigned char buttonData[16];
-
+	float accuracy;
 };
 
 }

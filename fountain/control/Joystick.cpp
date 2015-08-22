@@ -4,13 +4,13 @@
 
 using fei::Joystick;
 
-const float accuracy = 0.01f;
 
 Joystick::Joystick()
 : id(-1),
   type(Type::DEFAULT),
   axesCount(0),
-  buttonCount(0)
+  buttonCount(0),
+  accuracy(0.01f)
 {
 	clearData();
 }
@@ -62,6 +62,11 @@ void Joystick::clearData()
 bool Joystick::usable()
 {
 	return id >= GLFW_JOYSTICK_1 && id <= GLFW_JOYSTICK_LAST && glfwJoystickPresent(id);
+}
+
+void Joystick::setAccuracy(float acrc)
+{
+	accuracy = acrc;
 }
 
 int Joystick::getAxesCount()

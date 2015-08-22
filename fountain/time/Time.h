@@ -19,6 +19,7 @@ public:
 	long long getFrame();
 
 	static Time* getInstance();
+
 private:
 	Time();
 

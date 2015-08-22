@@ -22,10 +22,12 @@ public:
 	void executeAfterFrame() override;
 
 	static Interface* getInstance();
+
 private:
 	Interface();
 	Window* rootWindow;
 	std::vector<fei::Window*> windowList;
+
 	static Interface* instance;
 };
 

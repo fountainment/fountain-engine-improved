@@ -30,12 +30,6 @@ bool Control::init()
 	return _isLoad;
 }
 
-void Control::destroy()
-{
-	if (!_isLoad) return;
-	_isLoad = false;
-}
-
 void Control::executeBeforeFrame()
 {
 	if (joystickCheck()) {

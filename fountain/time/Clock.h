@@ -18,12 +18,15 @@ public:
 
 	void pause();
 	void resume();
+
 private:
 	double calculateDeltaTime();
 
 	double totalTime;
 	double deltaTime;
+
 	long long frameCount;
+
 	bool _isMaster;
 	bool _isPlay;
 

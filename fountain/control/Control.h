@@ -10,7 +10,6 @@ class Control : public fei::ModuleBase
 {
 public:
 	bool init() override;
-	void destroy() override;
 
 	void executeBeforeFrame() override;
 
