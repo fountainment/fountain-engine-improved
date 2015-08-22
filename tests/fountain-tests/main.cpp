@@ -8,7 +8,7 @@ Camera cam;
 TestApplication testApp;
 Clock mainClock;
 ShaderProgram shader;
-Image image;
+Image image, image2;
 
 void test()
 {
@@ -29,6 +29,7 @@ void test()
 	cam.update();
 	tex.draw();
 	image.draw();
+	image2.draw();
 	//char *buffer = fei::readFileBuffer("1.txt");
 	//if (buffer) {
 		//std::printf("%s", buffer);
@@ -52,6 +53,7 @@ void TestApplication::engineSetting(fei::Engine *eg)
 	cam.setCameraSize(fei::Vec2(4000, 3000));
 	tex.loadFile("test.png");
 	image = tex.getImage(fei::Vec2(100.0f), fei::Vec2(200.0f));
+	image2 = image.getImage(fei::Vec2(0.0f), fei::Vec2(100.0f));
 	image.setPosition(fei::Vec2(0.0f, 256.0f));
 	shader.loadFile("vs.vert", "fs.frag");
 	tex.setScale(2.0f);

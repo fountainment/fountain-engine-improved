@@ -134,8 +134,8 @@ void Render::drawTexQuad(const fei::Vec2& size, GLfloat* texCoord)
 {
 	GLfloat w2 = size.x / 2.0f;
 	GLfloat h2 = size.y / 2.0f;
-	GLfloat vertex[] = {-w2, h2, w2, h2, -w2, -h2, w2, -h2};
-	GLfloat defaultTexCoord[] = {0.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f};
+	GLfloat vertex[] = {-w2, h2, -w2, -h2, w2, h2, w2, -h2};
+	GLfloat defaultTexCoord[] = {0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glVertexPointer(2, GL_FLOAT, 0, vertex);

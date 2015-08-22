@@ -91,10 +91,10 @@ void Rect::getStripCoord(float* coord) const
 	auto rTop = pos + size;
 	coord[0] = pos.x;
 	coord[1] = rTop.y;
-	coord[2] = rTop.x;
-	coord[3] = rTop.y;
-	coord[4] = pos.x;
-	coord[5] = pos.y;
+	coord[2] = pos.x;
+	coord[3] = pos.y;
+	coord[4] = rTop.x;
+	coord[5] = rTop.y;
 	coord[6] = rTop.x;
 	coord[7] = pos.y;
 }

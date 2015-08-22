@@ -15,11 +15,17 @@ public:
 	Image(GLuint texId, const Vec2& texSize, const Rect& imageRect);
 	void drawIt() override;
 
+	const Image getImage(const Rect& imageRect);
+	const Image getImage(const Vec2& p, const Vec2& s);
+	const Image getImage();
+
 private:
 	GLuint id;
 	Vec2 size;
 	GLfloat texCoord[8];
 
+	const fei::Vec2 getLB();
+	const fei::Vec2 getTextureSize();
 };
 
 }

@@ -27,6 +27,7 @@
 #include "render/Camera.h"
 #include "render/Color.h"
 #include "render/Image.h"
+#include "render/ImagePool.h"
 #include "render/Texture.h"
 #include "render/Shader.h"
 

@@ -5,5 +5,6 @@ set(FOUNTAIN_RENDER_SRC
 	render/Color.cpp
 	render/Texture.cpp
 	render/Image.cpp
+	render/ImagePool.cpp
 	render/Shader.cpp
 )

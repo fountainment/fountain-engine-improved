@@ -14,15 +14,44 @@ Image::Image()
 
 Image::Image(GLuint texId, const fei::Vec2& texSize, const fei::Rect& imageRect)
 {
-	auto rectCopy = imageRect;
+	auto rect = imageRect;
 	id = texId;
 	size = imageRect.getSize();
-	rectCopy.zoom(texSize.reciprocal());
-	rectCopy.getStripCoord(texCoord);
+	rect.zoom(texSize.reciprocal());
+	rect.getStripCoord(texCoord);
 }
 
 void Image::drawIt()
 {
 	fei::Render::getInstance()->bindTexture(id);
 	fei::Render::getInstance()->drawTexQuad(size, texCoord);
+}
+
+const fei::Vec2 Image::getLB()
+{
+	auto v = getTextureSize();
+	v.zoom(fei::Vec2(texCoord[2], texCoord[3]));
+	return v;
+}
+
+const fei::Vec2 Image::getTextureSize()
+{
+	return fei::Vec2(size.x / (texCoord[4] - texCoord[2]), size.y / (texCoord[5] - texCoord[3]));
+}
+
+const Image Image::getImage(const Rect& imageRect)
+{
+	auto rect = imageRect;
+	rect.move(getLB());
+	return Image(id, getTextureSize(), rect);
+}
+
+const Image Image::getImage(const fei::Vec2& p, const fei::Vec2& s)
+{
+	return getImage(fei::Rect(p, s));
+}
+
+const Image Image::getImage()
+{
+	return *this;
 }
