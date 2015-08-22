@@ -12,30 +12,17 @@ Image image, image2;
 
 void test()
 {
-	//auto eg = testApp.getEngine();
-	//if (eg->window->getKey(GLFW_KEY_W)) speed += fei::Vec2(0.0f, 2.0f);
-	//if (eg->window->getKey(GLFW_KEY_S)) speed += fei::Vec2(0.0f, -2.0f);
-	//if (eg->window->getKey(GLFW_KEY_A)) speed += fei::Vec2(-2.0f, 0.0f);
-	//if (eg->window->getKey(GLFW_KEY_D)) speed += fei::Vec2(2.0f, 0.0f);
-	Vec2 speed(0);
 	auto *joystick = fei::Control::getInstance()->getJoystick();
 	if (joystick) {
-		speed = joystick->getAxes() * 500.0f * (float)mainClock.getDeltaTime();
+		Vec2 speed = joystick->getAxes() * 500.0f * (float)mainClock.getDeltaTime();
 		image.setAngle(speed.getAngle());
 		speed = joystick->getDirection() * 50.0f * (float)mainClock.getDeltaTime();
 		tex.rotate(-speed.x);
 	}
-	//cam.setPosition(pos);
 	cam.update();
 	tex.draw();
 	image.draw();
 	image2.draw();
-	//char *buffer = fei::readFileBuffer("1.txt");
-	//if (buffer) {
-		//std::printf("%s", buffer);
-		//delete [] buffer;
-	//}
-	//std::printf("Time: %f    Frame: %lld\n", fei::Time::getInstance()->getTime(), fei::Time::getInstance()->getFrame());
 	mainClock.tick();
 }
 
@@ -50,15 +37,15 @@ void TestApplication::engineSetting(fei::Engine *eg)
 
 	Render::getInstance()->setViewport(fei::Rect(0, 0, 800, 600));
 
-	cam.setCameraSize(fei::Vec2(4000, 3000));
+	cam.setCameraSize(fei::Vec2(800, 600));
 	tex.loadFile("test.png");
 	image = tex.getImage(fei::Vec2(100.0f), fei::Vec2(200.0f));
 	image2 = image.getImage(fei::Vec2(0.0f), fei::Vec2(100.0f));
 	image.setPosition(fei::Vec2(0.0f, 256.0f));
 	shader.loadFile("vs.vert", "fs.frag");
-	tex.setScale(2.0f);
+	tex.setScale(0.4f);
 	tex.setAnchor(Vec2(0.0f, -256.0f));
-	//tex.setShader(&shader);
+	tex.setShader(&shader);
 
 	//Math::getInstance()->setRandomSeed(9312);
 	//Render::getInstance()->setClearColor(FEI_Blue);
