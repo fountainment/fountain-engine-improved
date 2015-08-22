@@ -4,4 +4,5 @@ set(FOUNTAIN_MATH_SRC
 	math/Vec3.cpp
 	math/Shape.cpp
 	math/Rect.cpp
+	math/hash.cpp
 )

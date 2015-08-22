@@ -97,17 +97,19 @@ void Texture::drawIt()
 	fei::Render::getInstance()->drawTexQuad(size);
 }
 
-const fei::Image Texture::getImage(const fei::Rect& rect)
+const fei::Image Texture::getImage(const fei::Rect& rect) const
 {
-	return fei::Image(id, size, rect);
+	fei::Image result = fei::Image(id, size, rect);
+	result.setIsAlpha(isAlpha());
+	return result;
 }
 
-const fei::Image Texture::getImage(const fei::Vec2& p, const fei::Vec2& s)
+const fei::Image Texture::getImage(const fei::Vec2& p, const fei::Vec2& s) const
 {
 	return getImage(fei::Rect(p, s));
 }
 
-const fei::Image Texture::getImage()
+const fei::Image Texture::getImage() const
 {
 	return getImage(fei::Vec2(0.0f), size);
 }

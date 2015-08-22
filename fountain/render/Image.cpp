@@ -43,7 +43,9 @@ const Image Image::getImage(const Rect& imageRect)
 {
 	auto rect = imageRect;
 	rect.move(getLB());
-	return Image(id, getTextureSize(), rect);
+	Image result = Image(id, getTextureSize(), rect);
+	result.setIsAlpha(isAlpha());
+	return result;
 }
 
 const Image Image::getImage(const fei::Vec2& p, const fei::Vec2& s)

@@ -29,9 +29,9 @@ public:
 	void loadFile(const char* filename);
 	void loadData(const unsigned char* bits, int w, int h, Format dataFormat = Format::RGBA);
 
-	const Image getImage(const Rect& rect);
-	const Image getImage(const Vec2& p, const Vec2& s);
-	const Image getImage();
+	const Image getImage(const Rect& rect) const;
+	const Image getImage(const Vec2& p, const Vec2& s) const;
+	const Image getImage() const;
 
 	void drawIt() override;
 

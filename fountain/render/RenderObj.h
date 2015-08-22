@@ -12,10 +12,16 @@ public:
 	RenderObj();
 	void draw();
 	virtual void drawIt();
+
 	void setShader(fei::ShaderProgram* sp);
+
+	bool isAlpha() const;
+	void setIsAlpha(bool alpha);
+
 	void setScale(float scl);
 	void setAngle(float agl);
 	void setAnchor(const Vec2& acr);
+
 	void rotate(float dltAgl);
 
 protected:

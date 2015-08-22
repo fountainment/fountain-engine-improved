@@ -17,6 +17,16 @@ void RenderObj::setShader(fei::ShaderProgram* sp)
 	shaderProg = sp;
 }
 
+bool RenderObj::isAlpha() const
+{
+	return _isAlpha;
+}
+
+void RenderObj::setIsAlpha(bool alpha)
+{
+	_isAlpha = alpha;
+}
+
 void RenderObj::setScale(float scl)
 {
 	scale = scl;
