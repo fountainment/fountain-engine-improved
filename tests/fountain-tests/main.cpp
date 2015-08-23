@@ -7,7 +7,6 @@ Texture tex;
 Camera cam;
 TestApplication testApp;
 Clock mainClock;
-ShaderProgram shader;
 Image *image, *image2;
 ImagePool testPool;
 
@@ -37,20 +36,13 @@ void TestApplication::engineSetting(fei::Engine *eg)
 
 	eg->setFrameFunc(test);
 
-	Render::getInstance()->setViewport(fei::Rect(0, 0, 800, 600));
-
 	cam.setCameraSize(fei::Vec2(800, 600));
 	tex.loadFile("test.png");
-	//image = tex.getImage(fei::Vec2(100.0f), fei::Vec2(200.0f));
-	//image2 = image.getImage(fei::Vec2(0.0f), fei::Vec2(100.0f));
-	shader.loadFile("vs.vert", "fs.frag");
-	tex.setScale(0.4f);
-	tex.setAnchor(Vec2(0.0f, -256.0f));
-	tex.setShader(&shader);
+
 	testPool.load(tex, "test.sip");
 	image = testPool.getImage(0);
-	image->setPosition(fei::Vec2(0.0f, 256.0f));
 	image2 = testPool.getImage(1);
+	image->setPosition(fei::Vec2(0.0f, 256.0f));
 
 	//Math::getInstance()->setRandomSeed(9312);
 	//Render::getInstance()->setClearColor(FEI_Blue);
