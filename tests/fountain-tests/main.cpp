@@ -13,6 +13,7 @@ ImagePool testPool;
 
 void test()
 {
+	cam.setCameraSize(Render::getInstance()->getViewport().getSize());
 	auto *joystick = fei::Control::getInstance()->getJoystick();
 	if (joystick) {
 		Vec2 speed = joystick->getAxes() * 500.0f * (float)mainClock.getDeltaTime();

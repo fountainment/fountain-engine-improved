@@ -91,6 +91,13 @@ void Render::setViewport(const fei::Rect& viewport)
 		(GLsizei)viewport.getSize().x, (GLsizei)viewport.getSize().y);
 }
 
+const fei::Rect Render::getViewport()
+{
+	int viewport[4];
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	return fei::Rect(viewport[0], viewport[1], viewport[2], viewport[3]);
+}
+
 void Render::pushShader(fei::ShaderProgram* shader)
 {
 	if (shaderStack.empty() || shaderStack.top() != shader) {

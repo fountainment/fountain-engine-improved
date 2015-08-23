@@ -18,6 +18,7 @@ public:
 	void executeBeforeFrame() override;
 
 	void setViewport(const Rect& viewport);
+	const Rect getViewport();
 
 	void pushShader(ShaderProgram* shader);
 	void popShader(ShaderProgram* shader);
