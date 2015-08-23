@@ -39,7 +39,7 @@ const fei::Vec2 Image::getTextureSize()
 	return fei::Vec2(size.x / (texCoord[4] - texCoord[2]), size.y / (texCoord[5] - texCoord[3]));
 }
 
-const Image Image::getImage(const Rect& imageRect)
+const Image Image::getImage(const fei::Rect& imageRect)
 {
 	auto rect = imageRect;
 	rect.move(getLB());
