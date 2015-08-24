@@ -17,9 +17,11 @@ void test()
 	if (engine->window->getKey(GLFW_KEY_P)) {
 		fa.switchPlayAndPause();
 	}
+	auto mpos = engine->window->getRHCursorPos();
+	std::printf("%.3f %.3f\n", mpos.x, mpos.y);
 	fa.update();
 
-	cam.setCameraSize(Render::getInstance()->getViewport().getSize());
+	cam.setCameraSize(engine->window->getWindowSize());
 
 	auto *joystick = Control::getInstance()->getJoystick();
 	if (joystick) {

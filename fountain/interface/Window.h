@@ -3,6 +3,7 @@
 
 #include "base/basedef.h"
 #include "base/ModuleBase.h"
+#include "math/Vec2.h"
 #include <GLFW/glfw3.h>
 
 namespace fei {
@@ -36,6 +37,9 @@ public:
 	bool isFullscreen();
 
 	int getKey(int key);
+	const Vec2 getCursorPos();
+	const Vec2 getRHCursorPos();
+	const Vec2 getWindowSize();
 
 private:
 	GLFWwindow *window;

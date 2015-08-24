@@ -161,3 +161,35 @@ int Window::getKey(int key)
 	return result;
 }
 
+const fei::Vec2 Window::getCursorPos()
+{
+	fei::Vec2 result;
+	if (window) {
+		double xpos, ypos;
+		glfwGetCursorPos(window, &xpos, &ypos);
+		result.set((float)xpos, (float)ypos);
+	}
+	return result;
+}
+
+const fei::Vec2 Window::getRHCursorPos()
+{
+	fei::Vec2 result;
+	if (window) {
+		result = getCursorPos();
+		result.y = getWindowSize().y - 1 - result.y;
+	}
+	return result;
+}
+
+const fei::Vec2 Window::getWindowSize()
+{
+	fei::Vec2 result;
+	if (window) {
+		int width, height;
+		glfwGetWindowSize(window, &width, &height);
+		result.set((float)width, (float)height);
+	}
+	return result;
+}
+
