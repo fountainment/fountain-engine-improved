@@ -20,8 +20,9 @@ public:
 	Image* getImage(int index);
 	Image* getImage(const char* imagename);
 
+	int getImageNum();
+
 private:
-	GLuint texId;
 	int imageNum;
 	std::map<int, int> nameHash2ImageIndex;
 	std::vector<Image> imageList;

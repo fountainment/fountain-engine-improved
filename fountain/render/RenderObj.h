@@ -10,6 +10,8 @@ class RenderObj : public fei::NodeBase
 {
 public:
 	RenderObj();
+
+	virtual void update();
 	void draw();
 	virtual void drawIt();
 

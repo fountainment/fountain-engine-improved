@@ -47,6 +47,10 @@ void RenderObj::rotate(float dltAgl)
 	angle += dltAgl;
 }
 
+void RenderObj::update()
+{
+}
+
 void RenderObj::draw()
 {
 	if (shaderProg) {

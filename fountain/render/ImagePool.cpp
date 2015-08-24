@@ -26,8 +26,7 @@ const std::vector<std::pair<int, fei::Rect>> loadSipFile(const char* filename)
 }
 
 ImagePool::ImagePool()
-: texId(0),
-  imageNum(0)
+: imageNum(0)
 {
 }
 
@@ -72,4 +71,9 @@ fei::Image* ImagePool::getImage(int index)
 		image = &imageList[index];
 	}
 	return image;
+}
+
+int ImagePool::getImageNum()
+{
+	return imageNum;
 }

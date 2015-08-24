@@ -31,6 +31,8 @@
 #include "render/Texture.h"
 #include "render/Shader.h"
 
+#include "anime/FrameAnime.h"
+
 #ifdef _MSC_VER
 	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")
 	#ifdef NDEBUG
