@@ -9,7 +9,8 @@ const std::vector<std::pair<int, fei::Rect>> loadSipFile(const char* filename)
 {
 	std::vector<std::pair<int, fei::Rect>> result;
 	char name[100];
-	int x, y, rx, ry, rw, rh, imageNum, tmp;
+	int x, y, imageNum, tmp;
+	float rx, ry, rw, rh;
 	std::FILE *sipF = std::fopen(filename, "r");
 	if (!sipF) {
 		std::fprintf(stderr, "loadSipFile: \"%s\" file not exist!\n", filename);
@@ -17,7 +18,7 @@ const std::vector<std::pair<int, fei::Rect>> loadSipFile(const char* filename)
 	}
 	tmp = std::fscanf(sipF, "%d%d%d", &x, &y, &imageNum);
 	for (int i = 0; i < imageNum; i++) {
-		tmp = std::fscanf(sipF, "%s%d%d%d%d", name, &rw, &rh, &rx, &ry);
+		tmp = std::fscanf(sipF, "%s%f%f%f%f", name, &rw, &rh, &rx, &ry);
 		if (EOF == tmp) break;
 		result.push_back(std::make_pair(fei::bkdrHash(name), fei::Rect(rx, y - ry - rh, rw, rh)));
 	}

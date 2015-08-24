@@ -8,13 +8,13 @@ FrameAnime::FrameAnime()
 {
 }
 
-void FrameAnime::load(const ImagePool& imagePool)
+void FrameAnime::load(const fei::ImagePool& imagePool)
 {
 	framePool = imagePool;
 	curFrameIndex = 0;
 }
 
-void FrameAnime::load(const Texture& texture, const char* sipName)
+void FrameAnime::load(const fei::Texture& texture, const char* sipName)
 {
 	framePool.load(texture, sipName);
 	curFrameIndex = 0;
@@ -44,7 +44,7 @@ void FrameAnime::update()
 void FrameAnime::drawIt()
 {
 	if (!isStop()) {
-		fei::Image *image = framePool.getImage(curFrameIndex);
+		fei::Image *image = framePool.getImage((int)curFrameIndex);
 		if (image) {
 			image->draw();
 		}
@@ -68,7 +68,7 @@ int FrameAnime::getFrameNum()
 
 int FrameAnime::getCurFrameIndex()
 {
-	return curFrameIndex;
+	return (int)curFrameIndex;
 }
 
 void FrameAnime::setCurFrameIndex(int cfi)

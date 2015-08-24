@@ -95,7 +95,7 @@ const fei::Rect Render::getViewport()
 {
 	int viewport[4];
 	glGetIntegerv(GL_VIEWPORT, viewport);
-	return fei::Rect(viewport[0], viewport[1], viewport[2], viewport[3]);
+	return fei::Rect((float)viewport[0], (float)viewport[1], (float)viewport[2], (float)viewport[3]);
 }
 
 void Render::pushShader(fei::ShaderProgram* shader)
