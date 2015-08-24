@@ -9,21 +9,33 @@ Clock::Clock()
   frameCount(0),
   _isMaster(true),
   _isPlay(true),
+  _isStop(false),
   masterClock(nullptr)
 {
 }
 
-void Clock::init(Clock* mClock)
+void Clock::init()
 {
-	masterClock = mClock;
 	totalTime = 0.0;
 	frameCount = 0;
+	_isPlay = true;
+	_isStop = false;
+}
+
+void Clock::init(Clock* mClock)
+{
+	init();
+	setMasterClock(mClock);
+}
+
+void Clock::setMasterClock(Clock* mClock)
+{
+	masterClock = mClock;
 	if (!masterClock) {
 		_isMaster = true;
 	} else {
 		_isMaster = false;
 	}
-	_isPlay = true;
 }
 
 void Clock::tick()
@@ -50,6 +62,12 @@ long long Clock::getFrameCount()
 	return frameCount;
 }
 
+void Clock::play()
+{
+	stop();
+	resume();
+}
+
 void Clock::pause()
 {
 	_isPlay = false;
@@ -58,6 +76,39 @@ void Clock::pause()
 void Clock::resume()
 {
 	_isPlay = true;
+	_isStop = false;
+}
+
+void Clock::stop()
+{
+	_isPlay = false;
+	_isStop = true;
+	totalTime = 0.0;
+	frameCount = 0;
+}
+
+bool Clock::isPlay()
+{
+	return _isPlay;
+}
+
+void Clock::setPlay(bool isplay)
+{
+	_isPlay = isplay;
+}
+
+bool Clock::isStop()
+{
+	return _isStop;
+}
+
+void Clock::switchPlayAndPause()
+{
+	if (isPlay()) {
+		pause();
+	} else {
+		resume();
+	}
 }
 
 double Clock::calculateDeltaTime()

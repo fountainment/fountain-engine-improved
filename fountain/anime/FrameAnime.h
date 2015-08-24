@@ -4,10 +4,11 @@
 #include "render/RenderObj.h"
 #include "render/Texture.h"
 #include "render/ImagePool.h"
+#include "time/PlayObj.h"
 
 namespace fei {
 
-class FrameAnime : public RenderObj
+class FrameAnime : public RenderObj, public PlayObj
 {
 public:
 	FrameAnime();
@@ -27,7 +28,7 @@ public:
 	void setCurFrameIndex(int cfi);
 
 private:
-	int curFrameIndex;
+	double curFrameIndex;
 	float fps;
 	ImagePool framePool;
 };

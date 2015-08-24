@@ -10,19 +10,29 @@ FrameAnime fa;
 
 void test()
 {
+	//update
+	mainClock.tick();
+
+	auto engine = testApp.getEngine();
+	if (engine->window->getKey(GLFW_KEY_P)) {
+		fa.switchPlayAndPause();
+	}
+	fa.update();
+
 	cam.setCameraSize(Render::getInstance()->getViewport().getSize());
-	auto *joystick = fei::Control::getInstance()->getJoystick();
+
+	auto *joystick = Control::getInstance()->getJoystick();
 	if (joystick) {
 		Vec2 speed = joystick->getAxes() * 500.0f * (float)mainClock.getDeltaTime();
 		fa.move(speed);
 	}
+
+	//draw
 	cam.update();
-	fa.update();
 	fa.draw();
-	mainClock.tick();
 }
 
-void TestApplication::engineSetting(fei::Engine *eg)
+void TestApplication::engineSetting(Engine *eg)
 {
 	if (!eg) return;
 	eg->window->setSize(800, 600);
@@ -31,9 +41,9 @@ void TestApplication::engineSetting(fei::Engine *eg)
 
 	eg->setFrameFunc(test);
 
-	cam.setCameraSize(fei::Vec2(800, 600));
-
 	fa.load("test.png", "test.sip");
+	fa.setFps(15);
+	fa.setLoop(true);
 
 	//Math::getInstance()->setRandomSeed(9312);
 	//Render::getInstance()->setClearColor(FEI_Blue);

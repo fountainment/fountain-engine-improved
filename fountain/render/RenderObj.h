@@ -20,6 +20,12 @@ public:
 	bool isAlpha() const;
 	void setIsAlpha(bool alpha);
 
+	bool isVisible() const;
+	void setVisible(bool _isVisible);
+
+	void hide();
+	void show();
+
 	void setScale(float scl);
 	void setAngle(float agl);
 	void setAnchor(const Vec2& acr);
@@ -28,6 +34,7 @@ public:
 
 protected:
 	bool _isAlpha;
+	bool _isVisible;
 	//int alphaFunc;
 	float angle;
 	float scale;

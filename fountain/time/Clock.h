@@ -8,7 +8,10 @@ class Clock
 public:
 	Clock();
 
-	void init(Clock* mClock = nullptr);
+	void init();
+	void init(Clock* mClock);
+
+	void setMasterClock(Clock* mClock);
 
 	void tick();
 
@@ -16,8 +19,17 @@ public:
 	double getDeltaTime();
 	long long getFrameCount();
 
+	void play();
 	void pause();
 	void resume();
+	void stop();
+
+	bool isPlay();
+	void setPlay(bool isplay);
+
+	bool isStop();
+
+	void switchPlayAndPause();
 
 private:
 	double calculateDeltaTime();
@@ -29,6 +41,7 @@ private:
 
 	bool _isMaster;
 	bool _isPlay;
+	bool _isStop;
 
 	Clock* masterClock;
 };

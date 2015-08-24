@@ -28,17 +28,22 @@ void FrameAnime::load(const char* textureName, const char* sipName)
 
 void FrameAnime::update()
 {
-	//TODO: design time calculation
-	//TODO: design play logic
-	curFrameIndex += 1;
-	if (curFrameIndex == getFrameNum()) {
-		curFrameIndex = 0;
+	tick();
+	if (isPlay()) {
+		curFrameIndex += getFps() * getDeltaTime();
+		if (curFrameIndex >= getFrameNum()) {
+			if (isLoop()) {
+				curFrameIndex = 0;
+			} else {
+				stop();
+			}
+		}
 	}
 }
 
 void FrameAnime::drawIt()
 {
-	if (true/*isPlay()*/) {
+	if (!isStop()) {
 		fei::Image *image = framePool.getImage(curFrameIndex);
 		if (image) {
 			image->draw();

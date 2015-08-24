@@ -5,6 +5,7 @@ using fei::RenderObj;
 
 RenderObj::RenderObj()
 : _isAlpha(false),
+  _isVisible(true),
   angle(0.0f),
   scale(1.0f),
   anchor(fei::Vec2(0.0f)),
@@ -25,6 +26,26 @@ bool RenderObj::isAlpha() const
 void RenderObj::setIsAlpha(bool alpha)
 {
 	_isAlpha = alpha;
+}
+
+bool RenderObj::isVisible() const
+{
+	return _isVisible;
+}
+
+void RenderObj::setVisible(bool visible)
+{
+	_isVisible = visible;
+}
+
+void RenderObj::hide()
+{
+	setVisible(false);
+}
+
+void RenderObj::show()
+{
+	setVisible(true);
 }
 
 void RenderObj::setScale(float scl)
@@ -53,9 +74,11 @@ void RenderObj::update()
 
 void RenderObj::draw()
 {
-	if (shaderProg) {
+	bool visible = isVisible();
+	if (shaderProg && visible) {
 		shaderProg->push();
 	}
+	glDisable(GL_BLEND);
 	if (_isAlpha) {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -64,11 +87,13 @@ void RenderObj::draw()
 	glRotatef(angle, 0.0f, 0.0f, 1.0f);
 	glScalef(scale, scale, scale);
 	glTranslatef(-anchor.x, -anchor.y, 0.0f);
-	drawIt();
+	if (visible) {
+		drawIt();
+	}
 	if (_isAlpha) {
 		glDisable(GL_BLEND);
 	}
-	if (shaderProg) {
+	if (shaderProg && visible) {
 		shaderProg->pop();
 	}
 }
