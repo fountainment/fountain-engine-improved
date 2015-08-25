@@ -8,7 +8,6 @@ void RenderList::update()
 	for (auto renderObj : normalList) {
 		renderObj->update();
 	}
-	
 	for (auto renderObj : alphaList) {
 		renderObj->update();
 	}

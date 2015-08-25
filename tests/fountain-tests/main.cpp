@@ -22,7 +22,9 @@ void test()
 	//auto mpos = engine->window->getRHCursorPos();
 	//std::printf("%.3f %.3f\n", mpos.x, mpos.y);
 
-	cam.setCameraSize(engine->window->getWindowSize());
+	auto winSize = engine->window->getWindowSize();
+	cam.setCameraSize(winSize);
+	UI.setScale(std::min(winSize.x / 1920.0f, winSize.y / 1181.0f));
 
 	auto *joystick = Control::getInstance()->getJoystick();
 	if (joystick) {

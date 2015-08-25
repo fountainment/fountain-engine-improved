@@ -31,6 +31,11 @@ public:
 	void setAnchor(const Vec2& acr);
 	void setZPos(float z);
 
+	float getScale() const;
+	float getAngle() const;
+	const Vec2 getAnchor() const;
+	float getZPos() const;
+
 	void rotate(float dltAgl);
 
 protected:

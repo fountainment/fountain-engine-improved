@@ -69,6 +69,26 @@ void RenderObj::setZPos(float z)
 	zPos = z;
 }
 
+float RenderObj::getScale() const
+{
+	return scale;
+}
+
+float RenderObj::getAngle() const
+{
+	return angle;
+}
+
+const fei::Vec2 RenderObj::getAnchor() const
+{
+	return anchor;
+}
+
+float RenderObj::getZPos() const
+{
+	return zPos;
+}
+
 void RenderObj::rotate(float dltAgl)
 {
 	angle += dltAgl;
