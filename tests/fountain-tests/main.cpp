@@ -42,6 +42,11 @@ void test()
 	rl.draw();
 }
 
+bool cmp(RenderObj* a, RenderObj* b)
+{
+	return a->getZPos() < b->getZPos();
+}
+
 void TestApplication::engineSetting(Engine *eg)
 {
 	if (!eg) return;
@@ -54,7 +59,9 @@ void TestApplication::engineSetting(Engine *eg)
 	fa.load("test.png", "test.sip");
 	fa.setFps(15);
 	fa.setLoop(true);
+	fa.setScale(2.0f);
 	tex.loadFile("map.png");
+	tex.setScale(2.0f);
 	UI.loadFile("UI.png");
 	UI.setScale(0.65);
 

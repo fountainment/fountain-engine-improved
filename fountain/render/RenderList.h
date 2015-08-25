@@ -15,6 +15,8 @@ public:
 	void add(RenderObj* rObj);
 	void del(RenderObj* rObj);
 
+	void sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*));
+
 private:
 	std::list<RenderObj*> objList;
 	std::list<RenderObj*> normalList;

@@ -40,3 +40,8 @@ void RenderTree::delChild(RenderObj* rObj)
 {
 	childList.del(rObj);
 }
+
+void RenderTree::sort()
+{
+	childList.sort();
+}

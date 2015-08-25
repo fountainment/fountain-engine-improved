@@ -17,6 +17,7 @@ public:
 	void setRoot(RenderObj* rObj);
 	void addChild(RenderObj* rObj);
 	void delChild(RenderObj* rObj);
+	void sort();
 
 private:
 	RenderObj* root;
