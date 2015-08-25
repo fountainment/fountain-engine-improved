@@ -3,7 +3,7 @@
 
 using namespace fei;
 
-Camera cam;
+Camera cam, UICam;
 TestApplication testApp;
 Clock mainClock;
 FrameAnime fa;
@@ -59,11 +59,8 @@ void TestApplication::engineSetting(Engine *eg)
 	fa.load("test.png", "test.sip");
 	fa.setFps(15);
 	fa.setLoop(true);
-	fa.setScale(2.0f);
 	tex.loadFile("map.png");
-	tex.setScale(2.0f);
 	UI.loadFile("UI.png");
-	UI.setScale(0.65);
 
 	rl.add(&tex);
 
@@ -82,6 +79,8 @@ void TestApplication::engineSetting(Engine *eg)
 	UI.setIsAlpha(true);
 	rl.add(&fa);
 	rl.add(&UI);
+	UICam = cam;
+	cam.setCameraScale(2.0f);
 
 	//Math::getInstance()->setRandomSeed(9312);
 	//Render::getInstance()->setClearColor(FEI_Blue);

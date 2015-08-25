@@ -41,12 +41,12 @@ void RenderList::del(fei::RenderObj* rObj)
 	objList.remove(rObj);
 }
 
-bool zCmp(fei::RenderObj* a, fei::RenderObj* b)
-{
-	return a->getZPos() < b->getZPos();
-}
-
-void RenderList::sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*) = zCmp)
+void RenderList::sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*))
 {
 	objList.sort(cmp);
+}
+
+bool RenderListzCmp(fei::RenderObj* a, fei::RenderObj* b)
+{
+	return a->getZPos() < b->getZPos();
 }
