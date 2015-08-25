@@ -72,10 +72,7 @@ void Texture::loadData(const unsigned char* bits, int w, int h, Format dataForma
 	GLenum internalFormat = GL_RGB;
 	GLenum format = Format2GLFormat(dataFormat);
 	if ((int)dataFormat % 2 == 0) {
-		_isAlpha = true;
 		internalFormat = GL_RGBA;
-	} else {
-		_isAlpha = false;
 	}
 	if (!id || GL_FALSE == glIsTexture(id)) {
 		glGenTextures(1, &id);

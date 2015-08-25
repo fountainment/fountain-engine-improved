@@ -25,6 +25,7 @@
 #include "render/Render.h"
 #include "render/RenderObj.h"
 #include "render/RenderList.h"
+#include "render/RenderTree.h"
 #include "render/Camera.h"
 #include "render/Color.h"
 #include "render/Image.h"

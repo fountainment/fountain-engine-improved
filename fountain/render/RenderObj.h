@@ -12,6 +12,9 @@ public:
 	RenderObj();
 
 	virtual void update();
+
+	void matrixTransform();
+
 	void draw();
 	virtual void drawIt();
 

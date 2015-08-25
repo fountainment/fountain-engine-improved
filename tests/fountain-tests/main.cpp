@@ -10,6 +10,10 @@ FrameAnime fa;
 RenderList rl;
 Texture tex, UI;
 
+const int testNum = 100;
+Texture texCopy[testNum];
+FrameAnime animeCopy[testNum];
+
 void test()
 {
 	//update
@@ -54,10 +58,21 @@ void TestApplication::engineSetting(Engine *eg)
 	UI.loadFile("UI.png");
 	UI.setScale(0.65);
 
-	tex.setIsAlpha(false);
-	fa.setIsAlpha(false);
-
 	rl.add(&tex);
+
+	for (int i = 0; i < testNum; i++) {
+		texCopy[i] = tex;
+		texCopy[i].setPosition(Vec2(i, i));
+		rl.add(&texCopy[i]);
+	}
+
+	for (int i = 0; i < testNum; i++) {
+		animeCopy[i] = fa;
+		animeCopy[i].setPosition(Vec2(i, i));
+		rl.add(&animeCopy[i]);
+	}
+
+	UI.setIsAlpha(true);
 	rl.add(&fa);
 	rl.add(&UI);
 

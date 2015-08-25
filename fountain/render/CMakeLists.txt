@@ -2,6 +2,7 @@ set(FOUNTAIN_RENDER_SRC
 	render/Render.cpp
 	render/RenderObj.cpp
 	render/RenderList.cpp
+	render/RenderTree.cpp
 	render/Camera.cpp
 	render/Color.cpp
 	render/Texture.cpp

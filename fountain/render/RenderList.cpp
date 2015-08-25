@@ -5,23 +5,25 @@ using fei::RenderList;
 
 void RenderList::update()
 {
-	for (auto renderObj : normalList) {
+	alphaList.clear();
+	normalList.clear();
+	for (auto renderObj : objList) {
 		renderObj->update();
-	}
-	for (auto renderObj : alphaList) {
-		renderObj->update();
+		if (renderObj->isAlpha()) {
+			alphaList.push_back(renderObj);
+		} else {
+			normalList.push_back(renderObj);
+		}
 	}
 }
 
 void RenderList::drawIt()
 {
-	glEnable(GL_DEPTH_TEST);
 	for (auto it = normalList.rbegin(); it != normalList.rend(); ++it) {
 		glPushMatrix();
 		(*it)->draw();
 		glPopMatrix();
 	}
-	glDisable(GL_DEPTH_TEST);
 	for (auto renderObj : alphaList) {
 		glPushMatrix();
 		renderObj->draw();
@@ -31,15 +33,10 @@ void RenderList::drawIt()
 
 void RenderList::add(fei::RenderObj* rObj)
 {
-	if (rObj->isAlpha()) {
-		alphaList.push_back(rObj);
-	} else {
-		normalList.push_back(rObj);
-	}
+	objList.push_back(rObj);
 }
 
 void RenderList::del(fei::RenderObj* rObj)
 {
-	normalList.remove(rObj);
-	alphaList.remove(rObj);
+	objList.remove(rObj);
 }

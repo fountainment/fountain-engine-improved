@@ -98,17 +98,8 @@ void RenderObj::update()
 {
 }
 
-void RenderObj::draw()
+void RenderObj::matrixTransform()
 {
-	bool visible = isVisible();
-	if (shaderProg && visible) {
-		shaderProg->push();
-	}
-	glDisable(GL_BLEND);
-	if (_isAlpha) {
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	}
 	glTranslatef(pos.x, pos.y, zPos);
 	if (angle != 0.0f) {
 		glRotatef(angle, 0.0f, 0.0f, 1.0f);
@@ -117,14 +108,38 @@ void RenderObj::draw()
 		glScalef(scale, scale, scale);
 	}
 	glTranslatef(-anchor.x, -anchor.y, 0.0f);
+}
+
+void RenderObj::draw()
+{
+	glDisable(GL_BLEND);
+	glEnable(GL_DEPTH_TEST);
+	if (_isAlpha) {
+		glDepthFunc(GL_LEQUAL);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	} else {
+		glDepthFunc(GL_LESS);
+	}
+
+	bool visible = isVisible();
+	if (shaderProg && visible) {
+		shaderProg->push();
+	}
+
+	matrixTransform();
+
 	if (visible) {
 		drawIt();
 	}
-	if (_isAlpha) {
-		glDisable(GL_BLEND);
-	}
+
 	if (shaderProg && visible) {
 		shaderProg->pop();
+	}
+
+	glDisable(GL_DEPTH_TEST);
+	if (_isAlpha) {
+		glDisable(GL_BLEND);
 	}
 }
 
