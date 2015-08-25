@@ -20,7 +20,9 @@ static const GLchar *basicFragmentShader = {
 	"void main() {"
 	"	vec4 color = gl_Color;"
 	"	if (feiUseTex == 1.0) {"
-	"		color *= texture2D(feiTex, gl_TexCoord[0].st);"
+	"		vec4 texColor = texture2D(feiTex, gl_TexCoord[0].st);"
+	"		if (texColor.a == 0.0 || color.a == 0.0) discard;"
+	"		color *= texColor;"
 	"	}"
 	"	gl_FragColor = color;"
 	"}"
@@ -62,7 +64,8 @@ bool Render::init()
 		} else {
 			std::printf("Shader unsupported!\n");
 		}
-		glAlphaFunc(GL_GREATER, 0.0f);
+		glEnable(GL_CULL_FACE);
+		glCullFace(GL_FRONT);
 	}
 	return _isLoad;
 }

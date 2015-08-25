@@ -7,6 +7,8 @@ Camera cam;
 TestApplication testApp;
 Clock mainClock;
 FrameAnime fa;
+RenderList rl;
+Texture tex, UI;
 
 void test()
 {
@@ -17,21 +19,21 @@ void test()
 	if (engine->window->getKey(GLFW_KEY_P)) {
 		fa.switchPlayAndPause();
 	}
-	auto mpos = engine->window->getRHCursorPos();
-	std::printf("%.3f %.3f\n", mpos.x, mpos.y);
-	fa.update();
+	//auto mpos = engine->window->getRHCursorPos();
+	//std::printf("%.3f %.3f\n", mpos.x, mpos.y);
 
 	cam.setCameraSize(engine->window->getWindowSize());
 
 	auto *joystick = Control::getInstance()->getJoystick();
 	if (joystick) {
-		Vec2 speed = joystick->getAxes() * 500.0f * (float)mainClock.getDeltaTime();
+		Vec2 speed = joystick->getAxes() * 80.0f * (float)mainClock.getDeltaTime();
 		fa.move(speed);
 	}
 
 	//draw
 	cam.update();
-	fa.draw();
+	rl.update();
+	rl.draw();
 }
 
 void TestApplication::engineSetting(Engine *eg)
@@ -46,6 +48,16 @@ void TestApplication::engineSetting(Engine *eg)
 	fa.load("test.png", "test.sip");
 	fa.setFps(15);
 	fa.setLoop(true);
+	tex.loadFile("map.png");
+	UI.loadFile("UI.png");
+	UI.setScale(0.65);
+
+	tex.setIsAlpha(false);
+	fa.setIsAlpha(false);
+
+	rl.add(&tex);
+	rl.add(&fa);
+	rl.add(&UI);
 
 	//Math::getInstance()->setRandomSeed(9312);
 	//Render::getInstance()->setClearColor(FEI_Blue);

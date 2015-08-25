@@ -29,6 +29,7 @@ public:
 	void setScale(float scl);
 	void setAngle(float agl);
 	void setAnchor(const Vec2& acr);
+	void setZPos(float z);
 
 	void rotate(float dltAgl);
 
@@ -38,6 +39,7 @@ protected:
 	//int alphaFunc;
 	float angle;
 	float scale;
+	float zPos;
 	Vec2 anchor;
 	ShaderProgram* shaderProg;
 };

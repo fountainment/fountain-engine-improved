@@ -17,13 +17,15 @@ void FrameAnime::load(const fei::ImagePool& imagePool)
 void FrameAnime::load(const fei::Texture& texture, const char* sipName)
 {
 	framePool.load(texture, sipName);
+	setIsAlpha(texture.isAlpha());
 	curFrameIndex = 0;
 }
 
 void FrameAnime::load(const char* textureName, const char* sipName)
 {
-	framePool.load(textureName, sipName);
-	curFrameIndex = 0;
+	fei::Texture tmpTex;
+	tmpTex.loadFile(textureName);
+	load(tmpTex, sipName);
 }
 
 void FrameAnime::update()

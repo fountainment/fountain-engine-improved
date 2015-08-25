@@ -8,6 +8,7 @@ RenderObj::RenderObj()
   _isVisible(true),
   angle(0.0f),
   scale(1.0f),
+  zPos(0.0f),
   anchor(fei::Vec2(0.0f)),
   shaderProg(nullptr)
 {
@@ -63,6 +64,11 @@ void RenderObj::setAnchor(const fei::Vec2& acr)
 	anchor = acr;
 }
 
+void RenderObj::setZPos(float z)
+{
+	zPos = z;
+}
+
 void RenderObj::rotate(float dltAgl)
 {
 	angle += dltAgl;
@@ -83,9 +89,13 @@ void RenderObj::draw()
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
-	glTranslatef(pos.x, pos.y, 0);
-	glRotatef(angle, 0.0f, 0.0f, 1.0f);
-	glScalef(scale, scale, scale);
+	glTranslatef(pos.x, pos.y, zPos);
+	if (angle != 0.0f) {
+		glRotatef(angle, 0.0f, 0.0f, 1.0f);
+	}
+	if (scale != 1.0f) {
+		glScalef(scale, scale, scale);
+	}
 	glTranslatef(-anchor.x, -anchor.y, 0.0f);
 	if (visible) {
 		drawIt();
