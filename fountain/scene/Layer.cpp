@@ -7,6 +7,17 @@ Layer::Layer()
 {
 }
 
+void Layer::drawIt()
+{
+	cameraUpdate();
+	listDraw();
+}
+
+void Layer::setLayerCamera(Camera* camera)
+{
+	layerCamera = camera;
+}
+
 void Layer::cameraUpdate()
 {
 	if (layerCamera) {

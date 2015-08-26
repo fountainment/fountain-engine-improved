@@ -11,9 +11,15 @@ class Layer : public RenderList
 public:
 	Layer();
 
-	Camera *layerCamera;
+	virtual void drawIt();
+
+	void setLayerCamera(Camera* camera);
 	virtual void cameraUpdate();
+
 	//TODO: design control signal catch logic
+
+private:
+	Camera *layerCamera;
 };
 
 }

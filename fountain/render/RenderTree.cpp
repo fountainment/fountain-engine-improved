@@ -8,34 +8,31 @@ RenderTree::RenderTree()
 {
 }
 
-void RenderTree::feiInit()
+void RenderTree::treeInit()
 {
-	init();
 	if (root) {
 		root->feiInit();
 	}
 	childList.feiInit();
 }
 
-void RenderTree::feiDestroy()
+void RenderTree::treeDestroy()
 {
 	childList.feiDestroy();
 	if (root) {
 		root->feiDestroy();
 	}
-	destroy();
 }
 
-void RenderTree::feiUpdate()
+void RenderTree::treeUpdate()
 {
-	update();
 	if (root) {
 		root->feiUpdate();
 	}
 	childList.feiUpdate();
 }
 
-void RenderTree::drawIt()
+void RenderTree::treeDraw()
 {
 	glPushMatrix();
 	if (root) {
@@ -43,6 +40,29 @@ void RenderTree::drawIt()
 	}
 	childList.draw();
 	glPopMatrix();
+}
+
+void RenderTree::feiInit()
+{
+	init();
+	treeInit();
+}
+
+void RenderTree::feiDestroy()
+{
+	treeDestroy();
+	destroy();
+}
+
+void RenderTree::feiUpdate()
+{
+	update();
+	treeUpdate();
+}
+
+void RenderTree::drawIt()
+{
+	treeDraw();
 }
 
 void RenderTree::setRoot(RenderObj* rObj)

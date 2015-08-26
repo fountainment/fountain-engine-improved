@@ -3,25 +3,22 @@
 
 using fei::RenderList;
 
-void RenderList::feiInit()
+void RenderList::listInit()
 {
-	init();
 	for (auto renderObj : objList) {
 		renderObj->feiInit();
 	}
 }
 
-void RenderList::feiDestroy()
+void RenderList::listDestroy()
 {
 	for (auto it = objList.rbegin(); it != objList.rend(); ++it) {
 		(*it)->feiDestroy();
 	}
-	destroy();
 }
 
-void RenderList::feiUpdate()
+void RenderList::listUpdate()
 {
-	update();
 	alphaList.clear();
 	normalList.clear();
 	for (auto renderObj : objList) {
@@ -34,7 +31,7 @@ void RenderList::feiUpdate()
 	}
 }
 
-void RenderList::drawIt()
+void RenderList::listDraw()
 {
 	for (auto it = normalList.rbegin(); it != normalList.rend(); ++it) {
 		glPushMatrix();
@@ -46,6 +43,29 @@ void RenderList::drawIt()
 		renderObj->draw();
 		glPopMatrix();
 	}
+}
+
+void RenderList::feiInit()
+{
+	init();
+	listInit();
+}
+
+void RenderList::feiDestroy()
+{
+	listDestroy();
+	destroy();
+}
+
+void RenderList::feiUpdate()
+{
+	update();
+	listUpdate();
+}
+
+void RenderList::drawIt()
+{
+	listDraw();
 }
 
 void RenderList::add(fei::RenderObj* rObj)
