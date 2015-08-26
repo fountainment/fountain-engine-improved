@@ -5,6 +5,7 @@ include(control/CMakeLists.txt)
 include(time/CMakeLists.txt)
 include(render/CMakeLists.txt)
 include(font/CMakeLists.txt)
+include(scene/CMakeLists.txt)
 include(audio/CMakeLists.txt)
 include(anime/CMakeLists.txt)
 include(physics/CMakeLists.txt)
@@ -20,6 +21,7 @@ set(FOUNTAIN_SRC fountain.cpp
 	${FOUNTAIN_TIME_SRC}
 	${FOUNTAIN_RENDER_SRC}
 	${FOUNTAIN_FONT_SRC}
+	${FOUNTAIN_SCENE_SRC}
 	${FOUNTAIN_AUDIO_SRC}
 	${FOUNTAIN_ANIME_SRC}
 	${FOUNTAIN_SPRITE_SRC}

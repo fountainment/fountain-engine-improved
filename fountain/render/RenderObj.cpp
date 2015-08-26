@@ -94,8 +94,31 @@ void RenderObj::rotate(float dltAgl)
 	angle += dltAgl;
 }
 
+void RenderObj::init()
+{
+}
+
+void RenderObj::destroy()
+{
+}
+
 void RenderObj::update()
 {
+}
+
+void RenderObj::feiInit()
+{
+	init();
+}
+
+void RenderObj::feiDestroy()
+{
+	destroy();
+}
+
+void RenderObj::feiUpdate()
+{
+	update();
 }
 
 void RenderObj::matrixTransform()

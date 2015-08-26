@@ -35,6 +35,10 @@
 
 #include "anime/FrameAnime.h"
 
+#include "scene/Layer.h"
+#include "scene/Scene.h"
+#include "scene/SceneManager.h"
+
 #ifdef _MSC_VER
 	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")
 	#ifdef NDEBUG

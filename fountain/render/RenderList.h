@@ -11,7 +11,10 @@ bool zCmp(fei::RenderObj* a, fei::RenderObj* b);
 class RenderList : public fei::RenderObj
 {
 public:
-	virtual void update() override;
+	virtual void feiInit() override;
+	virtual void feiDestroy() override;
+	virtual void feiUpdate() override;
+
 	virtual void drawIt() override;
 
 	void add(RenderObj* rObj);

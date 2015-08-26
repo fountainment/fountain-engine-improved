@@ -11,7 +11,13 @@ class RenderObj : public fei::NodeBase
 public:
 	RenderObj();
 
+	virtual void init();
+	virtual void destroy();
 	virtual void update();
+
+	virtual void feiInit();
+	virtual void feiDestroy();
+	virtual void feiUpdate();
 
 	void matrixTransform();
 

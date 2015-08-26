@@ -11,8 +11,11 @@ class RenderTree : public RenderObj
 public:
 	RenderTree();
 
-	virtual void update();
-	virtual void drawIt();
+	virtual void feiInit() override;
+	virtual void feiDestroy() override;
+	virtual void feiUpdate() override;
+
+	virtual void drawIt() override;
 
 	void setRoot(RenderObj* rObj);
 	void addChild(RenderObj* rObj);

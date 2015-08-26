@@ -38,7 +38,7 @@ void test()
 
 	//draw
 	cam.update();
-	rl.update();
+	rl.feiUpdate();
 	rl.draw();
 }
 

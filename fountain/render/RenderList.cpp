@@ -3,12 +3,29 @@
 
 using fei::RenderList;
 
-void RenderList::update()
+void RenderList::feiInit()
 {
+	init();
+	for (auto renderObj : objList) {
+		renderObj->feiInit();
+	}
+}
+
+void RenderList::feiDestroy()
+{
+	for (auto it = objList.rbegin(); it != objList.rend(); ++it) {
+		(*it)->feiDestroy();
+	}
+	destroy();
+}
+
+void RenderList::feiUpdate()
+{
+	update();
 	alphaList.clear();
 	normalList.clear();
 	for (auto renderObj : objList) {
-		renderObj->update();
+		renderObj->feiUpdate();
 		if (renderObj->isAlpha()) {
 			alphaList.push_back(renderObj);
 		} else {

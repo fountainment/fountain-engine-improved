@@ -8,12 +8,31 @@ RenderTree::RenderTree()
 {
 }
 
-void RenderTree::update()
+void RenderTree::feiInit()
 {
+	init();
 	if (root) {
-		root->update();
+		root->feiInit();
 	}
-	childList.update();
+	childList.feiInit();
+}
+
+void RenderTree::feiDestroy()
+{
+	childList.feiDestroy();
+	if (root) {
+		root->feiDestroy();
+	}
+	destroy();
+}
+
+void RenderTree::feiUpdate()
+{
+	update();
+	if (root) {
+		root->feiUpdate();
+	}
+	childList.feiUpdate();
 }
 
 void RenderTree::drawIt()
