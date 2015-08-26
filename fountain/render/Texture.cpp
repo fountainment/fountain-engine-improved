@@ -41,7 +41,7 @@ Texture::~Texture()
 {
 }
 
-void Texture::loadFile(const char* filename)
+void Texture::load(const char* filename)
 {
 	FIBITMAP *dib;
 	if (!fei::isFileExist(filename)) {
@@ -63,11 +63,11 @@ void Texture::loadFile(const char* filename)
 	auto h = FreeImage_GetHeight(dib);
 	auto bpp = FreeImage_GetBPP(dib);
 	Format format = BPP2FIFormat(bpp);
-	loadData(bits, w, h, format);
+	load(bits, w, h, format);
 	FreeImage_Unload(dib);
 }
 
-void Texture::loadData(const unsigned char* bits, int w, int h, Format dataFormat)
+void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 {
 	GLenum internalFormat = GL_RGB;
 	GLenum format = Format2GLFormat(dataFormat);

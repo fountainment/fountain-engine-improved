@@ -26,8 +26,8 @@ public:
 
 	Texture();
 	virtual ~Texture();
-	void loadFile(const char* filename);
-	void loadData(const unsigned char* bits, int w, int h, Format dataFormat = Format::RGBA);
+	void load(const char* filename);
+	void load(const unsigned char* bits, int w, int h, Format dataFormat = Format::RGBA);
 
 	const Image getImage(const Rect& rect) const;
 	const Image getImage(const Vec2& p, const Vec2& s) const;

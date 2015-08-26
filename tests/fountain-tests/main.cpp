@@ -3,48 +3,58 @@
 
 using namespace fei;
 
-Camera cam, UICam;
-TestApplication testApp;
-Clock mainClock;
-FrameAnime fa;
-RenderList rl;
-Texture tex, UI;
+class TestScene : public Scene
+{
+public:
+	void init()
+	{
+		setClock(&mainClock);
 
-const int testNum = 100;
-Texture texCopy[testNum];
-FrameAnime animeCopy[testNum];
+		mainCam.setCameraSize(Vec2(800, 600));
+		mainCam.setCameraScale(2.0f);
+
+		map.load("map.png");
+
+		mainCharAnime.load("test.png", "test.sip");
+		mainCharAnime.setLoop(true);
+		mainCharAnime.setFps(15);
+
+		UI.load("UI.png");
+		UI.setIsAlpha(true);
+
+		UICam.setCameraSize(Vec2(1920, 1181));
+		UILayer.setCamera(&UICam);	
+		UILayer.setIsAlpha(true);
+		UILayer.add(&UI);
+
+		setCamera(&mainCam);
+
+		add(&map);
+		add(&mainCharAnime);
+		add(&UILayer);
+	}
+
+	void destroy()
+	{
+	}
+
+	void update()
+	{
+	}
+
+private:
+	Clock mainClock;
+	Camera mainCam, UICam;
+	FrameAnime mainCharAnime;
+	Texture UI, map;
+	Layer UILayer;
+};
+
+SceneManager sm;
 
 void test()
 {
-	//update
-	mainClock.tick();
-
-	auto engine = testApp.getEngine();
-	if (engine->window->getKey(GLFW_KEY_P)) {
-		fa.switchPlayAndPause();
-	}
-	//auto mpos = engine->window->getRHCursorPos();
-	//std::printf("%.3f %.3f\n", mpos.x, mpos.y);
-
-	auto winSize = engine->window->getWindowSize();
-	cam.setCameraSize(winSize);
-	UI.setScale(std::min(winSize.x / 1920.0f, winSize.y / 1181.0f));
-
-	auto *joystick = Control::getInstance()->getJoystick();
-	if (joystick) {
-		Vec2 speed = joystick->getAxes() * 80.0f * (float)mainClock.getDeltaTime();
-		fa.move(speed);
-	}
-
-	//draw
-	cam.update();
-	rl.feiUpdate();
-	rl.draw();
-}
-
-bool cmp(RenderObj* a, RenderObj* b)
-{
-	return a->getZPos() < b->getZPos();
+	sm.renderCurScene();
 }
 
 void TestApplication::engineSetting(Engine *eg)
@@ -56,31 +66,7 @@ void TestApplication::engineSetting(Engine *eg)
 
 	eg->setFrameFunc(test);
 
-	fa.load("test.png", "test.sip");
-	fa.setFps(15);
-	fa.setLoop(true);
-	tex.loadFile("map.png");
-	UI.loadFile("UI.png");
-
-	rl.add(&tex);
-
-	for (int i = 0; i < testNum; i++) {
-		texCopy[i] = tex;
-		texCopy[i].setPosition(Vec2(i, i));
-		rl.add(&texCopy[i]);
-	}
-
-	for (int i = 0; i < testNum; i++) {
-		animeCopy[i] = fa;
-		animeCopy[i].setPosition(Vec2(i, i));
-		rl.add(&animeCopy[i]);
-	}
-
-	UI.setIsAlpha(true);
-	rl.add(&fa);
-	rl.add(&UI);
-	UICam = cam;
-	cam.setCameraScale(2.0f);
+	sm.gotoScene(new TestScene());
 
 	//Math::getInstance()->setRandomSeed(9312);
 	//Render::getInstance()->setClearColor(FEI_Blue);
@@ -89,6 +75,7 @@ void TestApplication::engineSetting(Engine *eg)
 
 int main()
 {
+	TestApplication testApp;
 	testApp.run();
 	return 0;
 }

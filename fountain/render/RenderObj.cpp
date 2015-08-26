@@ -14,6 +14,10 @@ RenderObj::RenderObj()
 {
 }
 
+RenderObj::~RenderObj()
+{
+}
+
 void RenderObj::setShader(fei::ShaderProgram* sp)
 {
 	shaderProg = sp;

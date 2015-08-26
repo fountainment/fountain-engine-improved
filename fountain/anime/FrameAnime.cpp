@@ -24,7 +24,7 @@ void FrameAnime::load(const fei::Texture& texture, const char* sipName)
 void FrameAnime::load(const char* textureName, const char* sipName)
 {
 	fei::Texture tmpTex;
-	tmpTex.loadFile(textureName);
+	tmpTex.load(textureName);
 	load(tmpTex, sipName);
 }
 

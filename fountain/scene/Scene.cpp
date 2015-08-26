@@ -2,14 +2,30 @@
 
 using fei::Scene;
 
-void Scene::drawIt()
+Scene::~Scene()
 {
-	cameraUpdate();
-	listDraw();
 }
 
-void Scene::cameraUpdate()
+void Scene::feiUpdate()
 {
-	sceneCamera.update();
+	clockTick();
+	update();
+	listUpdate();
 }
 
+void Scene::setClock(fei::Clock* clock)
+{
+	sceneClock = clock;
+}
+
+fei::Clock* Scene::getClock()
+{
+	return sceneClock;
+}
+
+void Scene::clockTick()
+{
+	if (sceneClock) {
+		sceneClock->tick();
+	}
+}

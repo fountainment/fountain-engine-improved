@@ -10,12 +10,17 @@ namespace fei {
 class Scene : public Layer
 {
 public:
-	Clock sceneClock;
-	Camera sceneCamera;
+	virtual ~Scene();
 
-	virtual void drawIt();
+	virtual void feiUpdate() override;
 
-	void cameraUpdate();
+	void setClock(Clock* clock);
+	Clock* getClock();
+
+	void clockTick();
+
+private:
+	Clock *sceneClock;
 };
 
 }

@@ -44,7 +44,7 @@ ImagePool::ImagePool(const fei::Texture& texure, const char* sipName)
 void ImagePool::load(const char* texName, const char* sipName)
 {
 	fei::Texture tmpTex;
-	tmpTex.loadFile(texName);
+	tmpTex.load(texName);
 	load(tmpTex, sipName);
 }
 

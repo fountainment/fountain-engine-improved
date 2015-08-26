@@ -10,6 +10,7 @@ class RenderObj : public fei::NodeBase
 {
 public:
 	RenderObj();
+	virtual ~RenderObj();
 
 	virtual void init();
 	virtual void destroy();
