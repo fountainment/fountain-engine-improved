@@ -1,12 +1,14 @@
 #if !defined(_TESTAPPLICATION_H_)
 #define _TESTAPPLICATION_H_
 
-class TestApplication : public fei::Application
+#include "fountain.h"
+
+using namespace fei;
+
+class TestApplication : public Application
 {
 public:
-	void engineSetting(fei::Engine *eg) override;
+	void engineSetting(Engine *eg) override;
 };
-
-void test();
 
 #endif

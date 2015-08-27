@@ -3,6 +3,7 @@
 
 #include "base/basedef.h"
 #include "base/ModuleBase.h"
+#include "scene/SceneManager.h"
 #include "math/Vec2.h"
 #include <GLFW/glfw3.h>
 
@@ -40,6 +41,8 @@ public:
 	const Vec2 getCursorPos();
 	const Vec2 getRHCursorPos();
 	const Vec2 getWindowSize();
+
+	SceneManager *sceneManager;
 
 private:
 	GLFWwindow *window;

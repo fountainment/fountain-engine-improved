@@ -4,9 +4,7 @@ using fei::Engine;
 using fei::Application;
 
 Engine::Engine()
-: window(nullptr),
-  //for test
-  frameFunc(nullptr)
+: window(nullptr)
 {
 }
 
@@ -40,15 +38,7 @@ void Engine::mainLoop()
 {
 	while (!shouldExit()) {
 		executeBeforeFrame();
-		//TODO: move basic key events to Interface::executeBeforeFrame()
-		if (window->getKey(GLFW_KEY_F11)) {
-			window->setFullscreen(!window->isFullscreen());
-		}
-		//for test
-		if (frameFunc) {
-			frameFunc();
-		}
-		//TODO: add SceneManager
+		window->sceneManager->renderCurScene();
 		executeAfterFrame();
 	}
 }
@@ -62,12 +52,6 @@ void Engine::run()
 void Engine::exit()
 {
 	_shouldExit = true;
-}
-
-//for test
-void Engine::setFrameFunc(void (*frameF)())
-{
-	frameFunc = frameF;
 }
 
 bool Engine::loadModule()

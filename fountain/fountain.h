@@ -64,8 +64,6 @@ public:
 	void run();
 	void exit();
 
-	void setFrameFunc(void (*frameF)());
-
 	Window *window;
 
 private:
@@ -74,9 +72,6 @@ private:
 
 	std::vector<ModuleBase*> moduleList;
 
-	//for test
-	void (*frameFunc)();
-	
 	bool shouldExit();
 	bool _shouldExit;
 

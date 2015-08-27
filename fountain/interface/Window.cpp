@@ -4,7 +4,8 @@
 using fei::Window;
 
 Window::Window()
-: window(nullptr),
+: sceneManager(nullptr),
+  window(nullptr),
   contextRoot(nullptr),
   width(500),
   height(500),
@@ -12,11 +13,13 @@ Window::Window()
   _isFullscreen(false),
   _isHide(false)
 {
+	sceneManager = new fei::SceneManager();
 }
 
 Window::~Window()
 {
 	delWindow();
+	delete sceneManager;
 }
 
 void Window::setSize(int w, int h)
