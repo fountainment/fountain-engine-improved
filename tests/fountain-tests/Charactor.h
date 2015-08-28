@@ -12,11 +12,17 @@ public:
 	virtual void init() override;
 	virtual void update() override;
 
+	void setSpeed(const fei::Vec2& sp);
+	void setSpeed(const fei::Vec2& drct, float sp);
+
 	fei::Clock charClock;
 
 private:
+	fei::Vec2 speed;
+
 	fei::FrameAnime *curAnime;
-	fei::FrameAnime anime;
+	fei::FrameAnime walkAnime[4];
+	fei::FrameAnime runAnime[4];
 	//TODO: anime state control
 };
 

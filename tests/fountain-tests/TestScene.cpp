@@ -11,10 +11,6 @@ void TestScene::init()
 
 	map.load("map.png");
 
-	mainCharAnime.load("test.png", "test.sip");
-	mainCharAnime.setLoop(true);
-	mainCharAnime.setFps(15);
-
 	UI.load("UI43.png");
 	UI.setIsAlpha(true);
 
@@ -26,7 +22,7 @@ void TestScene::init()
 	setCamera(&mainCam);
 
 	add(&map);
-	add(&mainCharAnime);
+	add(&mainChar);
 	add(&UILayer);
 }
 
@@ -36,12 +32,13 @@ void TestScene::update()
 	if (joystick) {
 		auto speed = joystick->getAxes();
 		float sp = speed.getLengthSq();
-		speed.normalize();
-		if (sp > 0.25f) {
-			mainCharAnime.move(speed * 80.0f * mainClock.getDeltaTime());	
+		if (sp > 0.49f) {
+			mainChar.setSpeed(speed, 80.0f);
 		} else if (sp > 0.0001f) {
-			mainCharAnime.move(speed * 50.0f * mainClock.getDeltaTime());
+			mainChar.setSpeed(speed, 30.0f);
+		} else {
+			mainChar.setSpeed(Vec2(0.0f));
 		}
 	}
-	mainCam.setPosition(mainCharAnime.getPosition());
+	mainCam.setPosition(mainChar.getPosition());
 }

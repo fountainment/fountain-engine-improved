@@ -2,6 +2,7 @@
 #define _TESTSCENE_H_
 
 #include "fountain.h"
+#include "Charactor.h"
 
 using namespace fei;
 
@@ -13,7 +14,7 @@ public:
 private:
 	Clock mainClock;
 	Camera mainCam, UICam;
-	FrameAnime mainCharAnime;
+	Charactor mainChar;
 	Texture UI, map;
 	Layer UILayer;
 };

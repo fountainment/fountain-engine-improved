@@ -22,14 +22,19 @@ public:
 	void normalize();
 	void zoom(float scale);
 	void zoom(const Vec2& v);
+	void rotate(float degree);
 
 	float dot(const Vec2& v) const;
 	float cross(const Vec2& v) const;
 	const Vec2 normalized() const;
 	const Vec2 reciprocal() const;
+	const Vec2 rotated(float degree) const;
+
 
 	bool isLonger(const Vec2& v) const;
 	bool equals(const Vec2& v) const;
+
+	int getQuadrantIndex() const;
 
 	const Vec2 operator-() const;
 	const Vec2 operator+(const Vec2& v) const;
