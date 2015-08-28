@@ -1,4 +1,5 @@
 #include "Window.h"
+#include "interface/Interface.h"
 #include <GL/glew.h>
 
 using fei::Window;
@@ -118,6 +119,7 @@ void Window::setCurrent()
 {
 	if (window) {
 		glfwMakeContextCurrent(window);
+		Interface::getInstance()->setCurrentWindow(this);
 	}
 }
 

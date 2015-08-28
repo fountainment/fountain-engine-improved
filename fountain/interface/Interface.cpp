@@ -15,7 +15,8 @@ Interface* Interface::getInstance()
 }
 
 Interface::Interface()
-: rootWindow(nullptr)
+: rootWindow(nullptr),
+  currentWindow(nullptr)
 {
 }
 
@@ -83,6 +84,16 @@ void Interface::createRootWindow()
 fei::Window* Interface::getRootWindow()
 {
 	return rootWindow;
+}
+
+void Interface::setCurrentWindow(fei::Window* window)
+{
+	currentWindow = window;
+}
+
+fei::Window* Interface::getCurrentWindow()
+{
+	return currentWindow;
 }
 
 void Interface::executeAfterFrame()

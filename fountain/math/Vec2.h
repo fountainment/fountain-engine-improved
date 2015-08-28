@@ -52,6 +52,12 @@ public:
 	float getLengthSq() const;
 	float getLength() const;
 	float getAngle() const;
+
+	static const Vec2 ZERO;
+	static const Vec2 UP;
+	static const Vec2 DOWN;
+	static const Vec2 LEFT;
+	static const Vec2 RIGHT;
 };
 
 }

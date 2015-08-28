@@ -29,6 +29,7 @@ void TestScene::init()
 void TestScene::update()
 {
 	auto joystick = Control::getInstance()->getJoystick();
+	auto window = Interface::getInstance()->getCurrentWindow();
 	if (joystick) {
 		auto speed = joystick->getAxes();
 		float sp = speed.getLengthSq();
@@ -39,6 +40,21 @@ void TestScene::update()
 		} else {
 			mainChar.setSpeed(Vec2(0.0f));
 		}
+	} else if (window) {
+		Vec2 speed(0.0f);
+		if (window->getKey(GLFW_KEY_W)) {
+			speed.set(0.0f, 1.0f);
+		}
+		if (window->getKey(GLFW_KEY_A)) {
+			speed.set(-1.0f, 0.0f);
+		}
+		if (window->getKey(GLFW_KEY_S)) {
+			speed.set(0.0f, -1.0f);
+		}
+		if (window->getKey(GLFW_KEY_D)) {
+			speed.set(1.0f, 0.0f);
+		}
+		mainChar.setSpeed(speed, 100.0f);
 	}
 	mainCam.setPosition(mainChar.getPosition());
 }

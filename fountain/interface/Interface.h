@@ -19,6 +19,9 @@ public:
 	void createRootWindow();
 	Window* getRootWindow();
 
+	void setCurrentWindow(Window* window);
+	Window* getCurrentWindow();
+
 	void executeAfterFrame() override;
 
 	static Interface* getInstance();
@@ -26,6 +29,7 @@ public:
 private:
 	Interface();
 	Window* rootWindow;
+	Window* currentWindow;
 	std::vector<fei::Window*> windowList;
 
 	static Interface* instance;
