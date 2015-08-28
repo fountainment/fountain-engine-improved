@@ -67,6 +67,16 @@ void Vec2::zoom(const Vec2& v)
 	y *= v.y;
 }
 
+void Vec2::rotate(float degree)
+{
+	double rad = fei::D2R(degree);
+	double s = std::sin(rad);
+	double c = std::cos(rad);
+	double xx = x * c - y * s;
+	double yy = x * s + y * c;
+	set(xx, yy);
+}
+
 float Vec2::dot(const Vec2& v) const
 {
 	return x * v.x + y * v.y;
@@ -89,6 +99,13 @@ const Vec2 Vec2::reciprocal() const
 	return fei::Vec2(1.0f / x, 1.0f / y);
 }
 
+const Vec2 Vec2::rotated(float degree) const
+{
+	auto vec = *this;
+	vec.rotate(degree);
+	return vec;
+}
+
 bool Vec2::isLonger(const Vec2& v) const
 {
 	return getLengthSq() > v.getLengthSq();
@@ -97,6 +114,14 @@ bool Vec2::isLonger(const Vec2& v) const
 bool Vec2::equals(const Vec2& v) const
 {
 	return (std::abs(x - v.x) >= fei::eps) || (std::abs(y - v.y) >= fei::eps);
+}
+
+int Vec2::getQuadrantIndex() const
+{
+	if (x >= 0 && y >= 0) return 0;
+	if (x <= 0 && y >= 0) return 1;
+	if (x <= 0 && y <= 0) return 2;
+	return 3;
 }
 
 const Vec2 Vec2::operator-() const 

@@ -33,9 +33,9 @@ void TestScene::update()
 		auto speed = joystick->getAxes();
 		float sp = speed.getLengthSq();
 		if (sp > 0.49f) {
-			mainChar.setSpeed(speed, 80.0f);
+			mainChar.setSpeed(speed, 200.0f);
 		} else if (sp > 0.0001f) {
-			mainChar.setSpeed(speed, 30.0f);
+			mainChar.setSpeed(speed, 100.0f);
 		} else {
 			mainChar.setSpeed(Vec2(0.0f));
 		}
