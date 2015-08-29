@@ -10,7 +10,7 @@ Joystick::Joystick()
   type(Type::DEFAULT),
   axesCount(0),
   buttonCount(0),
-  accuracy(0.01f)
+  accuracy(0.1f)
 {
 	clearData();
 }

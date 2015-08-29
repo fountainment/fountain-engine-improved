@@ -47,10 +47,6 @@ void Time::executeBeforeFrame()
 	lastTime = curTime;
 	curTime = glfwGetTime() - initTime;
 	deltaTime = curTime - lastTime;
-	//for test
-	if (deltaTime > 0.033 || deltaTime < 0.0) {
-		deltaTime = 0.0166666666;
-	}
 }
 
 void Time::executeAfterFrame()
