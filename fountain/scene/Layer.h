@@ -13,8 +13,6 @@ public:
 
 	virtual void drawIt();
 
-	void setLayerCamera(Camera* camera);
-
 	void setCamera(Camera* camera);
 	Camera* getCamera();
 	//TODO: design control signal catch logic

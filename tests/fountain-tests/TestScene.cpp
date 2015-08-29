@@ -8,6 +8,7 @@ void TestScene::init()
 
 	mainCam.setCameraSize(Vec2(800, 600));
 	mainCam.setCameraScale(2.0f);
+	setCamera(&mainCam);
 
 	map.load("map.png");
 
@@ -18,8 +19,6 @@ void TestScene::init()
 	UILayer.setCamera(&UICam);
 	UILayer.setIsAlpha(true);
 	UILayer.add(&UI);
-
-	setCamera(&mainCam);
 
 	add(&map);
 	add(&mainChar);

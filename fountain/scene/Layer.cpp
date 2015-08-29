@@ -16,11 +16,6 @@ void Layer::drawIt()
 	cameraPop();
 }
 
-void Layer::setLayerCamera(fei::Camera* camera)
-{
-	layerCamera = camera;
-}
-
 void Layer::cameraPush()
 {
 	didCameraPush = false;

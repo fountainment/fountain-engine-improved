@@ -26,11 +26,14 @@ void SceneManager::gotoScene(fei::Scene* scene)
 {
 	destroyCurScene();
 	curScene = scene;
+	curScene->setClock(&defaultClock);
 	curScene->feiInit();
 }
 
 void SceneManager::renderCurScene()
 {
+	defaultClock.tick();
+	defaultCamera.update();
 	if (curScene) {
 		curScene->feiUpdate();
 		curScene->draw();

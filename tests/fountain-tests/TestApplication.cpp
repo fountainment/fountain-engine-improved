@@ -9,6 +9,7 @@ void TestApplication::engineSetting(Engine *eg)
 	eg->window->setTitle("fountain-tests");
 	eg->window->setResizable(false);
 
+	eg->window->sceneManager->defaultCamera.setCameraSize(Vec2(800, 600));
 	eg->window->sceneManager->gotoScene(new TestScene());
 }
 

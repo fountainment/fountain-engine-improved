@@ -22,10 +22,11 @@ public:
 	//TODO: add Clock logic in SceneManager
 	static SceneManager* getCurrentSceneManager();
 
+	Camera defaultCamera;
+	Clock defaultClock;
+
 private:
 	Scene *curScene;
-	Camera sceneCamera;
-	Clock sceneClock;
 };
 
 }
