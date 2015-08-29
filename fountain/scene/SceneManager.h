@@ -19,6 +19,8 @@ public:
 
 	void renderCurScene();
 
+	//TODO: add Clock logic in SceneManager
+
 private:
 	Scene *curScene;
 	Camera sceneCamera;

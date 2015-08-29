@@ -35,6 +35,8 @@ public:
 
 	void drawIt() override;
 
+	//TODO: design Texture recycle logic (Reference count?)
+
 private:
 	GLuint id;
 	Vec2 size;

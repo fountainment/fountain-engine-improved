@@ -14,10 +14,16 @@ public:
 		CIRCLE = 2,
 		POLYGON = 3
 	};
+
 	Shape();
-	bool collide(Shape* other);
+
+	virtual bool collide(Shape* other);
+
 	virtual float* getDataPtr() = 0;
 	virtual int getDataSize() = 0;
+
+	//TODO: design Shape data storage and render logic
+
 private:
 	bool _isSolid;
 	Type shapeType;
