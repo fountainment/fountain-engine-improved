@@ -6,6 +6,7 @@ using fei::Clock;
 Clock::Clock()
 : totalTime(0.0),
   deltaTime(0.0),
+  timeScale(1.0),
   frameCount(0),
   _isMaster(true),
   _isPlay(true),
@@ -60,6 +61,16 @@ double Clock::getDeltaTime()
 long long Clock::getFrameCount()
 {
 	return frameCount;
+}
+
+void Clock::setTimeScale(double tScale)
+{
+	timeScale = tScale;
+}
+
+double Clock::getTimeScale()
+{
+	return timeScale;
 }
 
 void Clock::play()
@@ -119,6 +130,9 @@ double Clock::calculateDeltaTime()
 			result = Time::getInstance()->getDeltaTime();
 		} else {
 			result = masterClock->getDeltaTime();	
+		}
+		if (timeScale != 1.0) {
+			result *= timeScale;
 		}
 	}
 	return result;

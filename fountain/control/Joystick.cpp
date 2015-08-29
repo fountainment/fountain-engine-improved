@@ -4,7 +4,6 @@
 
 using fei::Joystick;
 
-
 Joystick::Joystick()
 : id(-1),
   type(Type::DEFAULT),

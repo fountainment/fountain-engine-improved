@@ -19,6 +19,9 @@ public:
 	double getDeltaTime();
 	long long getFrameCount();
 
+	void setTimeScale(double tScale);
+	double getTimeScale();
+
 	void play();
 	void pause();
 	void resume();
@@ -36,6 +39,7 @@ private:
 
 	double totalTime;
 	double deltaTime;
+	double timeScale;
 
 	long long frameCount;
 
