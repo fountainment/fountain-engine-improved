@@ -47,6 +47,9 @@ void Time::executeBeforeFrame()
 	lastTime = curTime;
 	curTime = glfwGetTime() - initTime;
 	deltaTime = curTime - lastTime;
+	if (deltaTime > 0.33 || deltaTime < 0.0) {
+		deltaTime = 0.0;
+	}
 }
 
 void Time::executeAfterFrame()
