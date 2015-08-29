@@ -74,7 +74,7 @@ void Vec2::rotate(float degree)
 	double c = std::cos(rad);
 	double xx = x * c - y * s;
 	double yy = x * s + y * c;
-	set(xx, yy);
+	set((float)xx, (float)yy);
 }
 
 float Vec2::dot(const Vec2& v) const

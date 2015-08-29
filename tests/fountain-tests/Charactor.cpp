@@ -38,7 +38,7 @@ void Charactor::drawIt()
 void Charactor::update()
 {
 	charClock.tick();
-	move(speed * charClock.getDeltaTime());
+	move(speed * (float)charClock.getDeltaTime());
 	if (curAnime) {
 		curAnime->update();
 	}

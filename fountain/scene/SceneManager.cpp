@@ -1,4 +1,5 @@
 #include "scene/SceneManager.h"
+#include "interface/Interface.h"
 
 using fei::SceneManager;
 
@@ -34,4 +35,14 @@ void SceneManager::renderCurScene()
 		curScene->feiUpdate();
 		curScene->draw();
 	}
+}
+
+SceneManager* SceneManager::getCurrentSceneManager()
+{
+	SceneManager *ans = nullptr;
+	auto window = Interface::getInstance()->getCurrentWindow();
+	if (window) {
+		ans = window->sceneManager;
+	}
+	return ans;
 }
