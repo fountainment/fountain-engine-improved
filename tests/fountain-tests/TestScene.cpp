@@ -41,16 +41,16 @@ void TestScene::update()
 		}
 	} else if (window) {
 		Vec2 speed(Vec2::ZERO);
-		if (window->getKey(GLFW_KEY_W)) {
+		if (window->getKey(GLFW_KEY_UP)) {
 			speed.add(Vec2::UP);
 		}
-		if (window->getKey(GLFW_KEY_A)) {
+		if (window->getKey(GLFW_KEY_LEFT)) {
 			speed.add(Vec2::LEFT);
 		}
-		if (window->getKey(GLFW_KEY_S)) {
+		if (window->getKey(GLFW_KEY_DOWN)) {
 			speed.add(Vec2::DOWN);
 		}
-		if (window->getKey(GLFW_KEY_D)) {
+		if (window->getKey(GLFW_KEY_RIGHT)) {
 			speed.add(Vec2::RIGHT);
 		}
 		mainChar.setSpeed(speed, 100.0f);
