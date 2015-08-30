@@ -2,6 +2,7 @@
 #define _FEI_SHADER_H_
 
 #include "base/basedef.h"
+#include "math/Vec2.h"
 #include <GL/glew.h>
 
 namespace fei {
@@ -47,15 +48,23 @@ public:
 
 	ShaderProgram();
 	~ShaderProgram();
+
+	void deleteProgram();
+
 	void loadFile(const char* vs, const char* fs);
 	void loadString(const char* vsStr, const char* fsStr);
+
 	void attach(Shader* shader);
 	void attach(Shader* vs, Shader* fs);
+
 	void link();
 	void use();
+
 	void push();
 	void pop();
+
 	void setUniform(const char* varName, float value);
+	void setUniform(const char* varName, const Vec2& value);
 
 private:
 	GLuint id;

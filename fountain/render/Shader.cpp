@@ -90,8 +90,14 @@ ShaderProgram::ShaderProgram()
 
 ShaderProgram::~ShaderProgram()
 {
+	deleteProgram();
+}
+
+void ShaderProgram::deleteProgram()
+{
 	if (id) {
 		glDeleteProgram(id);
+		id = 0;
 	}
 }
 
@@ -170,5 +176,16 @@ void ShaderProgram::setUniform(const char* varName, float value)
 	GLint loc = glGetUniformLocation(id, varName);
 	if (loc != -1) {
 		glUniform1f(loc, value);
+	}
+}
+
+void ShaderProgram::setUniform(const char* varName, const fei::Vec2& value)
+{
+	if (fei::Render::getInstance()->getShaderProgram() != this) {
+		return;
+	}
+	GLint loc = glGetUniformLocation(id, varName);
+	if (loc != -1) {
+		glUniform2fv(loc, 2, &(value.x));
 	}
 }
