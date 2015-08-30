@@ -5,7 +5,7 @@ using fei::Image;
 
 Image::Image()
 : id(0),
-  size(fei::Vec2(0.0f))
+  size(fei::Vec2::ZERO)
 {
 	for (int i = 0; i < 8; i++) {
 		texCoord[i] = 0.0f;
@@ -14,7 +14,7 @@ Image::Image()
 
 Image::Image(const Image& img)
 : id(0),
-  size(fei::Vec2(0.0f))
+  size(fei::Vec2::ZERO)
 {
 	(*this) = img;
 }

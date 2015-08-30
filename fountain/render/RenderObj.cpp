@@ -9,7 +9,7 @@ RenderObj::RenderObj()
   angle(0.0f),
   scale(1.0f),
   zPos(0.0f),
-  anchor(fei::Vec2(0.0f)),
+  anchor(fei::Vec2::ZERO),
   shaderProg(nullptr)
 {
 }
