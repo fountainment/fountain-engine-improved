@@ -50,7 +50,7 @@ private:
 	std::map<GLuint, Vec2> textureSizeMap;
 	std::map<GLuint, int> textureRCMap;
 
-	static Render* instance;
+	static Render *instance;
 };
 
 }

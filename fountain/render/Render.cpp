@@ -73,10 +73,12 @@ bool Render::init()
 
 void Render::destroy()
 {
+	if (!_isLoad) return;
 	while (!shaderStack.empty()) {
 		shaderStack.pop();
 	}
 	deleteUnusedTexture();
+	_isLoad = false;
 }
 
 void Render::executeBeforeFrame()
