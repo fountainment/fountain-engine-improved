@@ -27,6 +27,7 @@ public:
 	ShaderProgram* getShaderProgram();
 
 	void registTexture(const char* filename, GLuint id);
+	void deleteTexture(GLuint id);
 	int queryTexture(const char* filename);
 	void registTexSize(GLuint id, const Vec2& s);
 	const Vec2 queryTexSize(GLuint id);

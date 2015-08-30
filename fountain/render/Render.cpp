@@ -143,6 +143,18 @@ void Render::registTexture(const char* filename, GLuint id)
 	fileTextureMap[hash] = id;
 }
 
+void Render::deleteTexture(GLuint id)
+{
+	glDeleteTextures(1, &id);
+	textureSizeMap.erase(textureSizeMap.find(id));
+	for (auto it = fileTextureMap.begin(); it != fileTextureMap.end(); ++it) {
+		if (it->second == id) {
+			fileTextureMap.erase(it);
+			break;
+		}
+	}
+}
+
 int Render::queryTexture(const char* filename)
 {
 	int hash = fei::bkdrHash(filename);
@@ -180,7 +192,7 @@ void Render::deleteUnusedTexture()
 {
 	for (auto it = textureRCMap.begin(); it != textureRCMap.end();) {
 		if (it->second == 0) {
-			glDeleteTextures(1, &it->first);
+			deleteTexture(it->first);
 			it = textureRCMap.erase(it);
 		} else {
 			++it;
