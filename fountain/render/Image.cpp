@@ -12,8 +12,32 @@ Image::Image()
 	}
 }
 
+Image::Image(const Image& img)
+: id(0),
+  size(fei::Vec2(0.0f))
+{
+	(*this) = img;
+}
+
+void Image::operator=(const Image& img)
+{
+	fei::Render::getInstance()->releaseTexture(id);
+	id = img.id;
+	fei::Render::getInstance()->addRefTexture(id);
+	size = img.size;
+	for (int i = 0; i < 8; i++) {
+		texCoord[i] = img.texCoord[i];
+	}
+}
+
+Image::~Image()
+{
+	fei::Render::getInstance()->releaseTexture(id);
+}
+
 Image::Image(GLuint texId, const fei::Vec2& texSize, const fei::Rect& imageRect)
 {
+	fei::Render::getInstance()->addRefTexture(texId);
 	auto rect = imageRect;
 	id = texId;
 	size = imageRect.getSize();

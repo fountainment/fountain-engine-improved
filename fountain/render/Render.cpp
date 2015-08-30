@@ -1,6 +1,7 @@
 #include "Render.h"
 #include "interface/Interface.h"
 #include "base/basedef.h"
+#include "math/hash.h"
 #include <GL/glew.h>
 
 using fei::Render;
@@ -75,6 +76,7 @@ void Render::destroy()
 	while (!shaderStack.empty()) {
 		shaderStack.pop();
 	}
+	deleteUnusedTexture();
 }
 
 void Render::executeBeforeFrame()
@@ -86,6 +88,11 @@ void Render::executeBeforeFrame()
 	if (shader) {
 		shader->use();
 	}
+}
+
+void Render::executeAfterFrame()
+{
+	deleteUnusedTexture();
 }
 
 void Render::setViewport(const fei::Rect& viewport)
@@ -127,6 +134,57 @@ fei::ShaderProgram* Render::getShaderProgram()
 		return shaderStack.top();
 	} else {
 		return nullptr;
+	}
+}
+
+void Render::registTexture(const char* filename, GLuint id)
+{
+	int hash = fei::bkdrHash(filename);
+	fileTextureMap[hash] = id;
+}
+
+int Render::queryTexture(const char* filename)
+{
+	int hash = fei::bkdrHash(filename);
+	GLuint ans = 0;
+	auto it = fileTextureMap.find(hash);
+	if (it != fileTextureMap.end()) {
+		ans = it->second;
+	}
+	return ans;
+}
+
+void Render::registTexSize(GLuint id, const Vec2& s)
+{
+	textureSizeMap[id] = s;
+}
+
+const fei::Vec2 Render::queryTexSize(GLuint id)
+{
+	return textureSizeMap[id];
+}
+
+void Render::addRefTexture(GLuint id)
+{
+	if (!id) return;
+	textureRCMap[id]++;
+}
+
+void Render::releaseTexture(GLuint id)
+{
+	if (!id) return;
+	textureRCMap[id]--;
+}
+
+void Render::deleteUnusedTexture()
+{
+	for (auto it = textureRCMap.begin(); it != textureRCMap.end();) {
+		if (it->second == 0) {
+			glDeleteTextures(1, &it->first);
+			it = textureRCMap.erase(it);
+		} else {
+			++it;
+		}
 	}
 }
 

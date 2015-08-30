@@ -11,6 +11,7 @@ class SceneManager
 {
 public:
 	SceneManager();
+	~SceneManager();
 
 	void destroyCurScene();
 	Scene* getCurScene();

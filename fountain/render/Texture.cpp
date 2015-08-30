@@ -1,6 +1,7 @@
 #include "Texture.h"
 #include "base/basedef.h"
 #include "base/fileUtil.h"
+#include "render/Render.h"
 #include <FreeImage.h>
 
 using fei::Texture;
@@ -33,16 +34,39 @@ static Texture::Format BPP2FIFormat(int bpp)
 
 Texture::Texture()
 : id(0),
-  size(fei::Vec2(0.0f))
+  size(fei::Vec2::ZERO)
 {
+}
+
+Texture::Texture(const Texture& tex)
+: id(0)
+{
+	(*this) = tex;
+}
+
+void Texture::operator=(const Texture& tex)
+{
+	fei::Render::getInstance()->releaseTexture(id);
+	id = tex.id;
+	fei::Render::getInstance()->addRefTexture(id);
+	size = tex.size;
 }
 
 Texture::~Texture()
 {
+	fei::Render::getInstance()->releaseTexture(id);
 }
 
 void Texture::load(const char* filename)
 {
+	int queryId = fei::Render::getInstance()->queryTexture(filename);
+	if (queryId) {
+		fei::Render::getInstance()->releaseTexture(id);
+		id = queryId;
+		size = fei::Render::getInstance()->queryTexSize(id);
+		fei::Render::getInstance()->addRefTexture(id);
+		return;
+	}
 	FIBITMAP *dib;
 	if (!fei::isFileExist(filename)) {
 		std::fprintf(stderr, "Texture: \"%s\" file not exist!\n", filename);
@@ -64,6 +88,7 @@ void Texture::load(const char* filename)
 	auto bpp = FreeImage_GetBPP(dib);
 	Format format = BPP2FIFormat(bpp);
 	load(bits, w, h, format);
+	fei::Render::getInstance()->registTexture(filename, id);
 	FreeImage_Unload(dib);
 }
 
@@ -76,6 +101,7 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 	}
 	if (!id || GL_FALSE == glIsTexture(id)) {
 		glGenTextures(1, &id);
+		fei::Render::getInstance()->addRefTexture(id);
 	}
 	glBindTexture(GL_TEXTURE_2D, id);
 	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
@@ -86,6 +112,7 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, w, h,
 			0, format, GL_UNSIGNED_BYTE, bits);
 	size = fei::Vec2((float)w, (float)h);
+	fei::Render::getInstance()->registTexSize(id, size);
 }
 
 void Texture::drawIt()
@@ -96,7 +123,7 @@ void Texture::drawIt()
 
 const fei::Image Texture::getImage(const fei::Rect& rect) const
 {
-	fei::Image result = fei::Image(id, size, rect);
+	fei::Image result(id, size, rect);
 	result.setIsAlpha(isAlpha());
 	return result;
 }
@@ -108,5 +135,5 @@ const fei::Image Texture::getImage(const fei::Vec2& p, const fei::Vec2& s) const
 
 const fei::Image Texture::getImage() const
 {
-	return getImage(fei::Vec2(0.0f), size);
+	return getImage(fei::Vec2::ZERO, size);
 }

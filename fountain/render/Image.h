@@ -12,6 +12,10 @@ class Image : public RenderObj
 {
 public:
 	Image();
+	Image(const Image& img);
+	void operator=(const Image& img);
+
+	~Image();
 	Image(GLuint texId, const Vec2& texSize, const Rect& imageRect);
 	void drawIt() override;
 

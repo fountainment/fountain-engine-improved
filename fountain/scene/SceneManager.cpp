@@ -8,6 +8,11 @@ SceneManager::SceneManager()
 {
 }
 
+SceneManager::~SceneManager()
+{
+	destroyCurScene();
+}
+
 void SceneManager::destroyCurScene()
 {
 	if (curScene) {

@@ -25,7 +25,11 @@ public:
 	friend class Render;
 
 	Texture();
+	Texture(const Texture& tex);
+	void operator=(const Texture& tex);
+
 	virtual ~Texture();
+
 	void load(const char* filename);
 	void load(const unsigned char* bits, int w, int h, Format dataFormat = Format::RGBA);
 
