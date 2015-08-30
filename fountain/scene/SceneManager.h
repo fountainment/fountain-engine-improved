@@ -16,7 +16,7 @@ public:
 	void destroyCurScene();
 	Scene* getCurScene();
 
-	void gotoScene(Scene* scene);
+	void gotoScene(Scene* goScene, bool destroyCurrent = true);
 
 	void renderCurScene();
 
@@ -28,6 +28,9 @@ public:
 
 private:
 	Scene *curScene;
+	Scene *nextScene;
+
+	bool doDestroyCurScene;
 };
 
 }

@@ -4,7 +4,9 @@
 using fei::SceneManager;
 
 SceneManager::SceneManager()
-: curScene(nullptr)
+: curScene(nullptr),
+  nextScene(nullptr),
+  doDestroyCurScene(false)
 {
 }
 
@@ -27,12 +29,18 @@ fei::Scene* SceneManager::getCurScene()
 	return curScene;
 }
 
-void SceneManager::gotoScene(fei::Scene* scene)
+void SceneManager::gotoScene(fei::Scene* goScene, bool destroyCurrent)
 {
-	destroyCurScene();
-	curScene = scene;
-	curScene->setClock(&defaultClock);
-	curScene->feiInit();
+	if (goScene) {
+		goScene->setClock(&defaultClock);
+		goScene->feiInit();
+	}
+	if (curScene) {
+		doDestroyCurScene = destroyCurrent;
+		nextScene = goScene;
+	} else {
+		curScene = goScene;
+	}
 }
 
 void SceneManager::renderCurScene()
@@ -42,6 +50,14 @@ void SceneManager::renderCurScene()
 	if (curScene) {
 		curScene->feiUpdate();
 		curScene->draw();
+	}
+	if (doDestroyCurScene) {
+		destroyCurScene();
+		doDestroyCurScene = false;
+	}
+	if (nextScene) {
+		curScene = nextScene;
+		nextScene = nullptr;
 	}
 }
 
