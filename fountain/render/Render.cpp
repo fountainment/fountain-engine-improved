@@ -166,9 +166,9 @@ int Render::queryTexture(const char* filename)
 	return ans;
 }
 
-void Render::registTexSize(GLuint id, const Vec2& s)
+void Render::registTexSize(GLuint id, const fei::Vec2& size)
 {
-	textureSizeMap[id] = s;
+	textureSizeMap[id] = size;
 }
 
 const fei::Vec2 Render::queryTexSize(GLuint id)
