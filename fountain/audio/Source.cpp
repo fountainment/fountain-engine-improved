@@ -136,6 +136,7 @@ Source::~Source()
 
 void Source::setPitch(float pitch)
 {
+	if (pitch <= 0.0f || pitch > 10.0f) return;
 	alSourcef(id, AL_PITCH, pitch);
 }
 

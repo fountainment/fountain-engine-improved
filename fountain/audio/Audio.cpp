@@ -82,6 +82,7 @@ void Audio::setListenerOrientation(const Vec2& vec)
 
 void Audio::setListenerGain(float gain)
 {
+	if (gain < 0.0f || gain > 10.0f) return;
 	alListenerf(AL_GAIN, gain);
 }
 
