@@ -46,35 +46,35 @@ void Audio::destroy()
 	_isLoad = false;
 }
 
-void Audio::setListenerPosition(const Vec3& v)
+void Audio::setListenerPosition(const fei::Vec3& v)
 {
 	alListenerfv(AL_POSITION, &v.x);
 }
 
-void Audio::setListenerVelocity(const Vec3& v)
+void Audio::setListenerVelocity(const fei::Vec3& v)
 {
 	alListenerfv(AL_VELOCITY, &v.x);
 }
 
-void Audio::setListenerOrientation(const Vec3& vec, const Vec3& up)
+void Audio::setListenerOrientation(const fei::Vec3& vec, const fei::Vec3& up)
 {
 	ALfloat orientation[] = {vec.x, vec.y, vec.z, up.x, up.y, up.z};
 	alListenerfv(AL_ORIENTATION, orientation);
 }
 
-void Audio::setListenerPosition(const Vec2& v)
+void Audio::setListenerPosition(const fei::Vec2& v)
 {
 	Vec3 v3(v, 0.0f);
 	alListenerfv(AL_POSITION, &v3.x);
 }
 
-void Audio::setListenerVelocity(const Vec2& v)
+void Audio::setListenerVelocity(const fei::Vec2& v)
 {
 	Vec3 v3(v, 0.0f);
 	alListenerfv(AL_VELOCITY, &v3.x);
 }
 
-void Audio::setListenerOrientation(const Vec2& vec)
+void Audio::setListenerOrientation(const fei::Vec2& vec)
 {
 	Vec3 v3Vec(vec, 0.0f), v3Up(0.0f, 0.0f, 1.0f);
 	setListenerOrientation(v3Vec, v3Up);

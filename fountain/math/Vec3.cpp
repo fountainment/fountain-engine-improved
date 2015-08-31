@@ -16,7 +16,7 @@ Vec3::Vec3(float xx, float yy, float zz)
 	z = zz;
 }
 
-Vec3::Vec3(const Vec2& v, float zz)
+Vec3::Vec3(const fei::Vec2& v, float zz)
 {
 	x = v.x;
 	y = v.y;
