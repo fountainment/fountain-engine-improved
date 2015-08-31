@@ -40,6 +40,7 @@
 #include "scene/SceneManager.h"
 
 #include "audio/Audio.h"
+#include "audio/Source.h"
 
 #ifdef _MSC_VER
 	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")

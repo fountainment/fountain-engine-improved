@@ -11,12 +11,16 @@ class TestScene : public Scene
 public:
 	void init() override;
 	void update() override;
+
 private:
 	Clock mainClock;
 	Camera mainCam, UICam;
 	Charactor mainChar;
 	Texture UI, map;
 	Layer UILayer;
+	Source audio;
+
+	float pitch;
 };
 
 #endif

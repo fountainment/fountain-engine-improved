@@ -4,6 +4,8 @@ using namespace fei;
 
 void TestScene::init()
 {
+	pitch = 1.0f;
+
 	setClock(&mainClock);
 
 	mainCam.setCameraSize(Vec2(800, 600));
@@ -19,6 +21,10 @@ void TestScene::init()
 	UILayer.setCamera(&UICam);
 	UILayer.setIsAlpha(true);
 	UILayer.add(&UI);
+
+	audio.loadWAV("test.wav");
+	audio.setLoop(true);
+	audio.play();
 
 	add(&map);
 	add(&mainChar);
@@ -52,6 +58,14 @@ void TestScene::update()
 		}
 		if (window->getKey(GLFW_KEY_RIGHT)) {
 			speed.add(Vec2::RIGHT);
+		}
+		if (window->getKey(GLFW_KEY_W)) {
+			pitch *= 1.01f;
+			audio.setPitch(pitch);
+		}
+		if (window->getKey(GLFW_KEY_S)) {
+			pitch *= 0.99f;
+			audio.setPitch(pitch);
 		}
 		mainChar.setSpeed(speed, 100.0f);
 	}
