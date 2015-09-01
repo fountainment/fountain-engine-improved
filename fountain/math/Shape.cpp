@@ -8,6 +8,10 @@ Shape::Shape()
 {
 }
 
+Shape::~Shape()
+{
+}
+
 bool Shape::collide(const Shape* other)
 {
 	return false;

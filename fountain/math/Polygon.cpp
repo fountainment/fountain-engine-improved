@@ -2,12 +2,12 @@
 
 using fei::Polygon;
 
-int Polygon::getSize() const
+int Polygon::getDataSize() const
 {
 	return data.size();
 }
 
-const float* Polygon::getData() const
+const float* Polygon::getDataPtr() const
 {
 	if (!data.empty()) {
 		return &data[0].x;

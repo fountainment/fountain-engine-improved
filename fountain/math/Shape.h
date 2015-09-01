@@ -16,11 +16,12 @@ public:
 	};
 
 	Shape();
+	virtual ~Shape();
 
 	virtual bool collide(const Shape* other);
 
-	virtual float* getDataPtr() = 0;
-	virtual int getDataSize() = 0;
+	virtual const float* getDataPtr() const = 0;
+	virtual int getDataSize() const = 0;
 
 	//TODO: design Shape data storage and render logic
 
