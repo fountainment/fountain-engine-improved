@@ -17,7 +17,7 @@ public:
 
 	Shape();
 
-	virtual bool collide(Shape* other);
+	virtual bool collide(const Shape* other);
 
 	virtual float* getDataPtr() = 0;
 	virtual int getDataSize() = 0;

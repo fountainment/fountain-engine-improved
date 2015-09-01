@@ -10,6 +10,7 @@
 #include "math/mathdef.h"
 #include "math/Rect.h"
 #include "math/Shape.h"
+#include "math/Polygon.h"
 #include "math/Vec2.h"
 #include "math/Vec3.h"
 
