@@ -15,7 +15,7 @@ const float* Polygon::getDataPtr() const
 	return nullptr;
 }
 
-void Polygon::pushPoint(const Vec2& p)
+void Polygon::pushPoint(const fei::Vec2& p)
 {
 	data.push_back(p);
 }
