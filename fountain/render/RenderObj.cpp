@@ -175,7 +175,7 @@ void RenderObj::drawIt()
 {
 }
 
-void RenderObj::setColor(const Color& c)
+void RenderObj::setColor(const fei::Color& c)
 {
 	color = c;
 }

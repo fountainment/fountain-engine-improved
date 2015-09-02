@@ -22,7 +22,7 @@ Color::Color(float rr, float gg, float bb, float aa)
 	a = aa;
 }
 
-Color::Color(const Vec3& rgb, float aa)
+Color::Color(const fei::Vec3& rgb, float aa)
 {
 	r = rgb.x;
 	g = rgb.y;
