@@ -43,7 +43,7 @@ void TestScene::update()
 		} else if (sp > 0.0001f) {
 			mainChar.setSpeed(speed, 100.0f);
 		} else {
-			mainChar.setSpeed(Vec2(0.0f));
+			mainChar.setSpeed(Vec2::ZERO);
 		}
 	} else if (window) {
 		Vec2 speed(Vec2::ZERO);

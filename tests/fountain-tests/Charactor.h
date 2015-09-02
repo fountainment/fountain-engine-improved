@@ -23,6 +23,11 @@ private:
 	fei::FrameAnime *curAnime;
 	fei::FrameAnime walkAnime[4];
 	fei::FrameAnime runAnime[4];
+
+	fei::Polygon poly;
+	fei::Polygon poly1;
+	fei::Polygon poly2;
+	fei::Polygon poly3;
 	//TODO: anime state control
 };
 

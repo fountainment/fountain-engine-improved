@@ -119,6 +119,7 @@ void Texture::drawIt()
 {
 	fei::Render::getInstance()->bindTexture(id);
 	fei::Render::getInstance()->drawTexQuad(size);
+	fei::Render::getInstance()->disableTexture();
 }
 
 const fei::Image Texture::getImage(const fei::Rect& rect) const

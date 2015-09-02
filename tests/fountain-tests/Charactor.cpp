@@ -25,11 +25,29 @@ void Charactor::init()
 		runAnime[i].setFps(15);
 	}
 	curAnime = &walkAnime[0];
+	poly.setSolid(false);
+	poly.pushPoint(Vec2(-100.0f));
+	poly.pushPoint(Vec2(100.0f, -100.0f));
+	poly.pushPoint(Vec2(100.0f));
+	poly.pushPoint(Vec2(-100.0f, 100.0f));
+	poly1.pushPoint(Vec2(-100.0f));
+	poly1.pushPoint(Vec2(0.0f, -100.0f));
+	poly1.pushPoint(Vec2(-50.0f, 0.0f));
+	poly2.pushPoint(Vec2(-90.0f, 30.0f));
+	poly2.pushPoint(Vec2(-60.0f, 30.0f));
+	poly2.pushPoint(Vec2(-75.0f, 35.0f));
+	poly3.pushPoint(Vec2(-40.0f, 30.0f));
+	poly3.pushPoint(Vec2(-10.0f, 30.0f));
+	poly3.pushPoint(Vec2(-25.0f, 35.0f));
 	charClock.init();
 }
 
 void Charactor::drawIt()
 {
+	Render::getInstance()->drawShape(&poly);
+	Render::getInstance()->drawShape(&poly1);
+	Render::getInstance()->drawShape(&poly2);
+	Render::getInstance()->drawShape(&poly3);
 	if (curAnime) {
 		curAnime->draw();
 	}

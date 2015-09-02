@@ -49,6 +49,7 @@ void Image::drawIt()
 {
 	fei::Render::getInstance()->bindTexture(id);
 	fei::Render::getInstance()->drawTexQuad(size, texCoord);
+	fei::Render::getInstance()->disableTexture();
 }
 
 const fei::Vec2 Image::getLB()

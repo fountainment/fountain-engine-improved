@@ -5,6 +5,7 @@
 #include "base/ModuleBase.h"
 #include "math/Vec2.h"
 #include "math/Rect.h"
+#include "math/Shape.h"
 #include "Shader.h"
 #include <GL/glew.h>
 
@@ -36,7 +37,9 @@ public:
 	void deleteUnusedTexture();
 
 	void bindTexture(GLuint tex);
+	void disableTexture();
 	void drawTexQuad(const Vec2& size, GLfloat* texCoord = nullptr);
+	void drawShape(const Shape* shape);
 
 	static Render* getInstance();
 

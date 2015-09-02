@@ -6,7 +6,7 @@
 
 namespace fei {
 
-class Rect : public fei::NodeBase
+class Rect : public NodeBase
 {
 public:
 	Rect(float x, float y, float w, float h);
@@ -26,7 +26,7 @@ public:
 	void zoom(const Vec2& v);
 	void normalize();
 
-	bool collidePoint(const fei::Vec2& pt) const;
+	bool collidePoint(const Vec2& pt) const;
 
 	void getStripCoord(float* coord) const;
 

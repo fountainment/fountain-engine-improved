@@ -10,9 +10,8 @@ class Shape
 {
 public:
 	enum class Type {
-		RECT = 1,
-		CIRCLE = 2,
-		POLYGON = 3
+		POLYGON = 1,
+		CIRCLE = 2
 	};
 
 	Shape();
@@ -22,6 +21,9 @@ public:
 
 	virtual const float* getDataPtr() const = 0;
 	virtual int getDataSize() const = 0;
+
+	void setSolid(bool solid);
+	bool isSolid() const;
 
 	//TODO: design Shape data storage and render logic
 

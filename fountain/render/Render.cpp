@@ -212,6 +212,14 @@ void Render::bindTexture(GLuint tex)
 	}
 }
 
+void Render::disableTexture()
+{
+	auto shader = getShaderProgram();
+	if (shader) {
+		shader->setUniform("feiUseTex", 0.0f);
+	}
+}
+
 void Render::drawTexQuad(const fei::Vec2& size, GLfloat* texCoord)
 {
 	GLfloat w2 = size.x / 2.0f;
@@ -229,4 +237,16 @@ void Render::drawTexQuad(const fei::Vec2& size, GLfloat* texCoord)
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+void Render::drawShape(const fei::Shape* shape)
+{
+	GLenum type = GL_TRIANGLE_FAN;
+	if (!shape->isSolid()) {
+		type = GL_LINE_LOOP;
+	}
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(2, GL_FLOAT, 0, shape->getDataPtr());
+	glDrawArrays(type, 0, shape->getDataSize());
+	glDisableClientState(GL_VERTEX_ARRAY);
 }
