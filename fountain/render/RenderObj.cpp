@@ -139,6 +139,7 @@ void RenderObj::matrixTransform()
 
 void RenderObj::draw()
 {
+	color.use();
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	if (_isAlpha) {
@@ -172,4 +173,14 @@ void RenderObj::draw()
 
 void RenderObj::drawIt()
 {
+}
+
+void RenderObj::setColor(const Color& c)
+{
+	color = c;
+}
+
+const fei::Color RenderObj::getColor() const
+{
+	return color;
 }

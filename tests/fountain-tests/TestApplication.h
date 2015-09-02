@@ -3,12 +3,10 @@
 
 #include "fountain.h"
 
-using namespace fei;
-
-class TestApplication : public Application
+class TestApplication : public fei::Application
 {
 public:
-	void engineSetting(Engine *eg) override;
+	void engineSetting(fei::Engine *eg) override;
 };
 
 #endif

@@ -2,6 +2,7 @@
 #define _FEI_RENDEROBJ_H_
 
 #include "base/NodeBase.h"
+#include "render/Color.h"
 #include "render/Shader.h"
 
 namespace fei {
@@ -48,6 +49,9 @@ public:
 
 	void rotate(float dltAgl);
 
+	void setColor(const Color& c);
+	const Color getColor() const;
+
 protected:
 	bool _isAlpha;
 	bool _isVisible;
@@ -56,6 +60,7 @@ protected:
 	float scale;
 	float zPos;
 	Vec2 anchor;
+	Color color;
 	ShaderProgram* shaderProg;
 };
 

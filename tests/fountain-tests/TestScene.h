@@ -4,21 +4,19 @@
 #include "fountain.h"
 #include "Charactor.h"
 
-using namespace fei;
-
-class TestScene : public Scene
+class TestScene : public fei::Scene
 {
 public:
 	void init() override;
 	void update() override;
 
 private:
-	Clock mainClock;
-	Camera mainCam, UICam;
+	fei::Clock mainClock;
+	fei::Camera mainCam, UICam;
+	fei::Texture UI, map;
+	fei::Layer UILayer;
+	fei::Source audio;
 	Charactor mainChar;
-	Texture UI, map;
-	Layer UILayer;
-	Source audio;
 
 	float pitch;
 };

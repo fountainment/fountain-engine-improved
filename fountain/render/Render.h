@@ -4,6 +4,7 @@
 #include "base/basedef.h"
 #include "base/ModuleBase.h"
 #include "math/Vec2.h"
+#include "math/Vec4.h"
 #include "math/Rect.h"
 #include "math/Shape.h"
 #include "Shader.h"
@@ -40,6 +41,8 @@ public:
 	void disableTexture();
 	void drawTexQuad(const Vec2& size, GLfloat* texCoord = nullptr);
 	void drawShape(const Shape* shape);
+
+	void useColor(const Vec4* color);
 
 	static Render* getInstance();
 

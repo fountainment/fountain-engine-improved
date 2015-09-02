@@ -1,6 +1,8 @@
 #include "TestApplication.h"
 #include "TestScene.h"
 
+using namespace fei;
+
 void TestApplication::engineSetting(Engine *eg)
 {
 	if (!eg) return;

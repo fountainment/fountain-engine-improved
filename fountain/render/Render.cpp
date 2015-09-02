@@ -250,3 +250,8 @@ void Render::drawShape(const fei::Shape* shape)
 	glDrawArrays(type, 0, shape->getDataSize());
 	glDisableClientState(GL_VERTEX_ARRAY);
 }
+
+void Render::useColor(const Vec4* color)
+{
+	glColor4fv(&color->x);
+}

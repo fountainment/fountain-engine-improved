@@ -22,6 +22,8 @@ void TestScene::init()
 	UILayer.setIsAlpha(true);
 	UILayer.add(&UI);
 
+	UI.setColor(Color(Vec3(1.0f), 0.8f));
+
 	audio.loadWAV("test.wav");
 	audio.setLoop(true);
 	audio.play();
