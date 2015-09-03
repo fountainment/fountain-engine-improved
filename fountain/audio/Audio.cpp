@@ -30,6 +30,7 @@ bool Audio::init()
 		std::fprintf(stderr, "Oops! Sound device not found!\n");
 	}
 	alcMakeContextCurrent(context);
+	std::printf("OpenAL Version: %s\n", alGetString(AL_VERSION));
 	setListenerPosition(fei::Vec2::ZERO);
 	setListenerVelocity(fei::Vec2::ZERO);
 	setListenerGain(1.0f);
