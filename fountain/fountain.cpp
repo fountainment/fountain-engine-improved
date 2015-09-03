@@ -63,6 +63,7 @@ bool Engine::loadModule()
 	moduleList.push_back(Control::getInstance());
 	moduleList.push_back(Render::getInstance());
 	moduleList.push_back(Audio::getInstance());
+	moduleList.push_back(Physics::getInstance());
 
 	for (auto module : moduleList) {
 		if (!module || !module->init()) {

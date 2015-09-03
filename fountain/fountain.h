@@ -13,6 +13,7 @@
 #include "math/Polygon.h"
 #include "math/Vec2.h"
 #include "math/Vec3.h"
+#include "math/Vec4.h"
 
 #include "time/Time.h"
 #include "time/Clock.h"
@@ -42,6 +43,8 @@
 
 #include "audio/Audio.h"
 #include "audio/Source.h"
+
+#include "physics/Physics.h"
 
 #ifdef _MSC_VER
 	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")

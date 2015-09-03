@@ -42,7 +42,8 @@ if(LINUX)
 endif()
 
 add_definitions(-DGLFW_INCLUDE_NONE -DGLFW_STATIC -DGLEW_STATIC)
-include_directories(fountain)
+include_directories(fountain deps/proj/Box2D)
 
+add_subdirectory(deps/proj/Box2D)
 add_subdirectory(fountain)
 add_subdirectory(tests)
