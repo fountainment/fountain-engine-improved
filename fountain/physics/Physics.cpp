@@ -37,5 +37,5 @@ void Physics::destroy()
 
 void Physics::executeBeforeFrame()
 {
-	world->Step(0.0166, 8, 3);
+	world->Step(0.0166f, 8, 3);
 }
