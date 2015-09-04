@@ -11,9 +11,15 @@ ModuleBase::~ModuleBase()
 {
 }
 
+bool ModuleBase::feiInit()
+{
+	if (_isLoad) return true;
+	_isLoad = init();
+	return _isLoad;
+}
+
 bool ModuleBase::init()
 {
-	_isLoad = true;
 	return true;
 }
 
@@ -25,9 +31,15 @@ void ModuleBase::executeAfterFrame()
 {
 }
 
+void ModuleBase::feiDestroy()
+{
+	if (!_isLoad) return;
+	destroy();
+	_isLoad = false;
+}
+
 void ModuleBase::destroy()
 {
-	_isLoad = false;
 }
 
 bool ModuleBase::isLoad()

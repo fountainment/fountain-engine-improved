@@ -25,21 +25,17 @@ Time::Time()
 
 bool Time::init()
 {
-	if (_isLoad) return true;
-	_isLoad = true;
 	if (GL_FALSE == glfwInit()) {
-		_isLoad = false;
+		return false;
 	} else {
 		initTime = glfwGetTime();
 	}
-	return _isLoad;
+	return true;
 }
 
 void Time::destroy()
 {
-	if (!_isLoad) return;
 	glfwTerminate();
-	_isLoad = false;
 }
 
 void Time::executeBeforeFrame()

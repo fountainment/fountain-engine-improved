@@ -7,14 +7,19 @@ class ModuleBase
 {
 protected:
 	ModuleBase();
-	bool _isLoad;
+
 public:
 	virtual ~ModuleBase();
+	bool feiInit();
 	virtual bool init();
 	virtual void executeBeforeFrame();
 	virtual void executeAfterFrame();
+	void feiDestroy();
 	virtual void destroy();
 	bool isLoad();
+
+private:
+	bool _isLoad;
 };
 
 }

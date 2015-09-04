@@ -19,18 +19,14 @@ Physics::Physics()
 
 bool Physics::init()
 {
-	if (_isLoad) return true;
-	_isLoad = true;
 	b2Vec2 g(0, 10);
 	world = new b2World(g);
 	world->SetAllowSleeping(true);
-	return _isLoad;
+	return true;
 }
 
 void Physics::destroy()
 {
-	if (!_isLoad) return;
-	_isLoad = false;
 	delete world;
 	world = nullptr;
 }

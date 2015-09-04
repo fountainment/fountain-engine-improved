@@ -20,14 +20,12 @@ Control::Control()
 
 bool Control::init()
 {
-	if (_isLoad) return true;
-	_isLoad = true;
 	if (!fei::Interface::getInstance()->init()) {
-		_isLoad = false;
+		return false;
 	} else {
 		findJoystick();
 	}
-	return _isLoad;
+	return true;
 }
 
 void Control::executeBeforeFrame()

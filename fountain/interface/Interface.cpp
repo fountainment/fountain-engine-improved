@@ -22,24 +22,20 @@ Interface::Interface()
 
 bool Interface::init()
 {
-	if (_isLoad) return true;
-	_isLoad = true;
 	if (GL_FALSE == glfwInit()) {
-		_isLoad = false;
+		return false;
 	} else {
 		std::printf("GLFW Version: %s\n", glfwGetVersionString());
 		glfwSwapInterval(1);
 		createRootWindow();
 	}
-	return _isLoad;
+	return true;
 }
 
 void Interface::destroy()
 {
-	if (!_isLoad) return;
 	destroyAllWindows();
 	glfwTerminate();
-	_isLoad = false;
 }
 
 fei::Window* Interface::applyNewWindow()

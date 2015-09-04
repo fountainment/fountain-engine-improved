@@ -10,17 +10,14 @@ Engine::Engine()
 
 bool Engine::init()
 {
-	if (_isLoad) return true;
-	_isLoad = loadModule();
+	bool flag = loadModule();
 	_shouldExit = false;
-	return _isLoad;
+	return flag;
 }
 
 void Engine::destroy()
 {
-	if (!_isLoad) return;
 	unloadModule();
-	_isLoad = false;
 }
 
 bool Engine::createWindow()
@@ -66,9 +63,9 @@ bool Engine::loadModule()
 	moduleList.push_back(Physics::getInstance());
 
 	for (auto module : moduleList) {
-		if (!module || !module->init()) {
+		if (!module || !module->feiInit()) {
 			loadSuccess = false;
-			break;
+			return loadSuccess;
 		}
 	}
 
@@ -79,11 +76,13 @@ bool Engine::loadModule()
 
 void Engine::unloadModule()
 {
-	Interface::getInstance()->destroyWindow(window);
+	if (window) {
+		Interface::getInstance()->destroyWindow(window);
+	}
 	for (auto it = moduleList.rbegin(); it != moduleList.rend(); ++it) {
 		if (*it) {
 			if ((*it)->isLoad()) {
-				(*it)->destroy();
+				(*it)->feiDestroy();
 			}
 			delete (*it);
 		}
@@ -127,7 +126,7 @@ bool Application::loadEngine()
 	if (!engine) {
 		engine = new Engine();
 		if (engine) {
-			loadSuccess = engine->init();
+			loadSuccess = engine->feiInit();
 		}
 	} else {
 		loadSuccess = engine->isLoad();
@@ -138,7 +137,7 @@ bool Application::loadEngine()
 void Application::unloadEngine()
 {
 	if (engine) {
-		engine->destroy();
+		engine->feiDestroy();
 		delete engine;
 		engine = nullptr;
 	}

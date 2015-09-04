@@ -45,16 +45,13 @@ Render::Render()
 
 bool Render::init()
 {
-	if (_isLoad) return true;
-	_isLoad = true;
 	if (!fei::Interface::getInstance()->init()) {
-		_isLoad = false;
 		return false;
 	}
 	GLenum err = glewInit();
 	if (GLEW_OK != err) {
 		std::fprintf(stderr, "GLEW Error: %s\n", glewGetErrorString(err));
-		_isLoad = false;
+		return false;
 	} else {
 		std::printf("GLEW Version: %s\n", glewGetString(GLEW_VERSION));
 		std::printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
@@ -68,17 +65,15 @@ bool Render::init()
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_FRONT);
 	}
-	return _isLoad;
+	return true;
 }
 
 void Render::destroy()
 {
-	if (!_isLoad) return;
 	while (!shaderStack.empty()) {
 		shaderStack.pop();
 	}
 	deleteUnusedTexture();
-	_isLoad = false;
 }
 
 void Render::executeBeforeFrame()

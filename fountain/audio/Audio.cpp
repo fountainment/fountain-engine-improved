@@ -19,8 +19,6 @@ Audio::Audio()
 
 bool Audio::init()
 {
-	if (_isLoad) return true;
-	_isLoad = true;
 	audioDevice = alcOpenDevice(nullptr);
 	if (!audioDevice) {
 		std::fprintf(stderr, "Oops! Sound device not found!\n");
@@ -35,16 +33,14 @@ bool Audio::init()
 	setListenerVelocity(fei::Vec2::ZERO);
 	setListenerGain(1.0f);
 	setListenerOrientation(fei::Vec2::UP);
-	return _isLoad;
+	return true;
 }
 
 void Audio::destroy()
 {
-	if (!_isLoad) return;
 	alcMakeContextCurrent(nullptr);
 	alcDestroyContext(context);
 	alcCloseDevice(audioDevice);
-	_isLoad = false;
 }
 
 void Audio::setListenerPosition(const fei::Vec3& v)
