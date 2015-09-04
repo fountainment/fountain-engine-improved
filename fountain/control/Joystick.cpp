@@ -46,7 +46,7 @@ void Joystick::update()
 		if (count > 16) count = 16;
 		for (int i = 0; i < count; i++) {
 			buttonData[i] = button[i];
-		}
+		};
 	}
 }
 

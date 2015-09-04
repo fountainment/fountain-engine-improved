@@ -20,7 +20,7 @@ Control::Control()
 
 bool Control::init()
 {
-	if (!fei::Interface::getInstance()->init()) {
+	if (!fei::Interface::getInstance()->feiInit()) {
 		return false;
 	} else {
 		findJoystick();

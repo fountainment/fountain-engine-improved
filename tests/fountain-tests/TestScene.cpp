@@ -47,6 +47,14 @@ void TestScene::update()
 		} else {
 			mainChar.setSpeed(Vec2::ZERO);
 		}
+		if (joystick->getDirectionY() > 0.0f) {
+			pitch *= 1.01f;
+			audio.setPitch(pitch);
+		}
+		if (joystick->getDirectionY() < 0.0f) {
+			pitch *= 0.99f;
+			audio.setPitch(pitch);
+		}
 	} else if (window) {
 		Vec2 speed(Vec2::ZERO);
 		if (window->getKey(GLFW_KEY_UP)) {

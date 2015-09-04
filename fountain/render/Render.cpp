@@ -45,7 +45,7 @@ Render::Render()
 
 bool Render::init()
 {
-	if (!fei::Interface::getInstance()->init()) {
+	if (!fei::Interface::getInstance()->feiInit()) {
 		return false;
 	}
 	GLenum err = glewInit();
