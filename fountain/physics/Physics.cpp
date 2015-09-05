@@ -35,3 +35,14 @@ void Physics::executeBeforeFrame()
 {
 	world->Step(0.0166f, 8, 3);
 }
+
+void Physics::setGravity(const fei::Vec2& g)
+{
+	world->SetGravity(b2Vec2(g.x, g.y));
+}
+
+const fei::Vec2 Physics::getGravity()
+{
+	auto g = world->GetGravity();
+	return fei::Vec2(g.x, g.y);
+}
