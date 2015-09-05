@@ -108,9 +108,9 @@ const fei::Rect Render::getViewport()
 void Render::pushShader(fei::ShaderProgram* shader)
 {
 	if (shaderStack.empty() || shaderStack.top() != shader) {
-		shaderStack.push(shader);
 		shader->use();
 	}
+	shaderStack.push(shader);
 }
 
 void Render::popShader(fei::ShaderProgram* shader)
@@ -119,7 +119,7 @@ void Render::popShader(fei::ShaderProgram* shader)
 		shaderStack.pop();
 		if (shaderStack.empty()) {
 			glUseProgram(0);
-		} else {
+		} else if (shaderStack.top() != shader) {
 			shaderStack.top()->use();
 		}
 	}
