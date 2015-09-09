@@ -23,6 +23,7 @@ public:
 	const Vec2 physicsToRender(const Vec2& v);
 
 	Body* createBody(const Vec2& pos, Body::Type type = Body::Type::Dynamic);
+	void destroyBody(Body* body);
 
 	static Physics* getInstance();
 

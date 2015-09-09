@@ -20,7 +20,7 @@ Physics::Physics()
 
 bool Physics::init()
 {
-	b2Vec2 g(0, -10);
+	b2Vec2 g(0.0f, -10.0f);
 	world = new b2World(g);
 	world->SetAllowSleeping(true);
 	return true;
@@ -77,4 +77,10 @@ fei::Body* Physics::createBody(const fei::Vec2& pos, fei::Body::Type type)
 	auto b2bd = world->CreateBody(&bodyDef);
 	auto body = new Body(b2bd, type);
 	return body;
+}
+
+void Physics::destroyBody(fei::Body* body)
+{
+	world->DestroyBody(body->body);
+	delete body;
 }

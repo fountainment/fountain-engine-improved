@@ -37,7 +37,7 @@ void TestScene::init()
 
 void TestScene::destroy()
 {
-	delete body;
+	Physics::getInstance()->destroyBody(body);
 }
 
 void TestScene::update()

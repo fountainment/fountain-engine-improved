@@ -13,11 +13,13 @@ Body::Body(b2Body* b2bd, Type tp)
 : body(b2bd),
   type(tp)
 {
+	body->SetUserData((void*)this);
 }
 
 void Body::setBody(b2Body* b2bd)
 {
 	body = b2bd;
+	body->SetUserData((void*)this);
 }
 
 const fei::Vec2 Body::getPosition() const
