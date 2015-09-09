@@ -8,6 +8,7 @@ class TestScene : public fei::Scene
 {
 public:
 	void init() override;
+	void destroy() override;
 	void update() override;
 
 private:
@@ -19,6 +20,7 @@ private:
 	Charactor mainChar;
 
 	float pitch;
+	fei::Body* body;
 };
 
 #endif

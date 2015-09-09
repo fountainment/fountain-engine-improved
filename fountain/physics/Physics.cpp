@@ -20,7 +20,7 @@ Physics::Physics()
 
 bool Physics::init()
 {
-	b2Vec2 g(0, 10);
+	b2Vec2 g(0, -10);
 	world = new b2World(g);
 	world->SetAllowSleeping(true);
 	return true;

@@ -17,13 +17,14 @@ public:
 		Kinematic = 3
 	};
 
+	const fei::Vec2 getPosition() const;
+	float getAngle() const;
+
 private:
 	Body();
 	Body(b2Body* b2bd, Type tp);
 	
 	void setBody(b2Body* b2bd);
-	const fei::Vec2 getPosition() const;
-	float getAngle() const;
 
 	b2Body* body;
 	Type type;
