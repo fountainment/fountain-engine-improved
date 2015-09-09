@@ -45,6 +45,7 @@
 #include "audio/Source.h"
 
 #include "physics/Physics.h"
+#include "physics/Body.h"
 
 #ifdef _MSC_VER
 	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")

@@ -13,7 +13,8 @@ Physics* Physics::getInstance()
 }
 
 Physics::Physics()
-: world(nullptr)
+: world(nullptr),
+  ratio(1.0f)
 {
 }
 
@@ -45,4 +46,35 @@ const fei::Vec2 Physics::getGravity()
 {
 	auto g = world->GetGravity();
 	return fei::Vec2(g.x, g.y);
+}
+
+const fei::Vec2 Physics::renderToPhysics(const fei::Vec2& v)
+{
+	return v / ratio;
+}
+
+const fei::Vec2 Physics::physicsToRender(const fei::Vec2& v)
+{
+	return v * ratio;
+}
+
+fei::Body* Physics::createBody(const fei::Vec2& pos, fei::Body::Type type)
+{
+	b2BodyDef bodyDef;
+	auto physicsPos = renderToPhysics(pos);
+	bodyDef.position.Set(physicsPos.x, physicsPos.y);
+	switch(type) {
+	case fei::Body::Type::Static:
+		bodyDef.type = b2_staticBody;
+		break;
+	case fei::Body::Type::Dynamic:
+		bodyDef.type = b2_dynamicBody;
+		break;
+	case fei::Body::Type::Kinematic:
+		bodyDef.type = b2_kinematicBody;
+		break;
+	}
+	auto b2bd = world->CreateBody(&bodyDef);
+	auto body = new Body(b2bd, type);
+	return body;
 }

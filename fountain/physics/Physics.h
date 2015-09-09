@@ -3,6 +3,7 @@
 
 #include "base/ModuleBase.h"
 #include "math/Vec2.h"
+#include "physics/Body.h"
 #include <Box2D/Box2D.h>
 
 namespace fei {
@@ -18,12 +19,18 @@ public:
 	void setGravity(const Vec2& g);
 	const Vec2 getGravity();
 
+	const Vec2 renderToPhysics(const Vec2& v);
+	const Vec2 physicsToRender(const Vec2& v);
+
+	Body* createBody(const Vec2& pos, Body::Type type = Body::Type::Dynamic);
+
 	static Physics* getInstance();
 
 private:
 	Physics();
 
 	b2World *world;
+	float ratio;
 
 	static Physics *instance;
 };
