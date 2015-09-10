@@ -12,7 +12,7 @@ Shape::~Shape()
 {
 }
 
-bool Shape::collide(const Shape* other)
+bool Shape::collide(const Shape* other) const
 {
 	return false;
 }
@@ -25,4 +25,9 @@ void Shape::setSolid(bool solid)
 bool Shape::isSolid() const
 {
 	return _isSolid;
+}
+
+Shape::Type Shape::getType() const
+{
+	return shapeType;
 }

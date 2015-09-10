@@ -2,6 +2,7 @@
 #include "interface/Interface.h"
 #include "base/basedef.h"
 #include "math/hash.h"
+#include "math/Circle.h"
 #include <GL/glew.h>
 
 using fei::Render;
@@ -221,14 +222,14 @@ void Render::drawTexQuad(const fei::Vec2& size, GLfloat* texCoord)
 	GLfloat h2 = size.y / 2.0f;
 	GLfloat vertex[] = {-w2, h2, -w2, -h2, w2, h2, w2, -h2};
 	GLfloat defaultTexCoord[] = {0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
+	GLfloat *useTexCoord = defaultTexCoord;
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glVertexPointer(2, GL_FLOAT, 0, vertex);
 	if (texCoord) {
-		glTexCoordPointer(2, GL_FLOAT, 0, texCoord);
-	} else {
-		glTexCoordPointer(2, GL_FLOAT, 0, defaultTexCoord);
+		useTexCoord = texCoord;
 	}
+	glTexCoordPointer(2, GL_FLOAT, 0, useTexCoord);
 	glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
 	glDisableClientState(GL_VERTEX_ARRAY);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -239,6 +240,12 @@ void Render::drawShape(const fei::Shape* shape)
 	GLenum type = GL_TRIANGLE_FAN;
 	if (!shape->isSolid()) {
 		type = GL_LINE_LOOP;
+	}
+	auto pos = shape->getPosition();
+	glTranslatef(pos.x, pos.y, 0.0f);
+	if (fei::Shape::Type::CIRCLE == shape->getType()) {
+		float r = ((fei::Circle*)shape)->getRadius();
+		glScalef(r, r, r);
 	}
 	glEnableClientState(GL_VERTEX_ARRAY);
 	glVertexPointer(2, GL_FLOAT, 0, shape->getDataPtr());

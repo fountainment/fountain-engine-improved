@@ -3,6 +3,7 @@
 
 #include <Box2D/Box2D.h>
 #include "math/Vec2.h"
+#include "math/Shape.h"
 
 namespace fei {
 
@@ -12,13 +13,16 @@ public:
 	friend class Physics;
 
 	enum class Type {
-		Static = 1,
-		Dynamic = 2,
-		Kinematic = 3
+		STATIC = 1,
+		DYNAMIC = 2,
+		KINEMATIC = 3
 	};
 
 	const fei::Vec2 getPosition() const;
 	float getAngle() const;
+
+	b2Fixture* createFixture(const Shape* shape);
+	b2Fixture* createFixture(const b2FixtureDef& fixDef);
 
 private:
 	Body();

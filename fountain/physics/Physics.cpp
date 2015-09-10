@@ -1,4 +1,5 @@
 #include "Physics.h"
+#include "math/Circle.h"
 
 using fei::Physics;
 
@@ -58,19 +59,34 @@ const fei::Vec2 Physics::physicsToRender(const fei::Vec2& v)
 	return v * ratio;
 }
 
+float Physics::renderToPhysics(float f)
+{
+	return f / ratio;
+}
+
+float Physics::physicsToRender(float f)
+{
+	return f * ratio;
+}
+
+void Physics::setRatio(float rt)
+{
+	ratio = rt;
+}
+
 fei::Body* Physics::createBody(const fei::Vec2& pos, fei::Body::Type type)
 {
 	b2BodyDef bodyDef;
 	auto physicsPos = renderToPhysics(pos);
 	bodyDef.position.Set(physicsPos.x, physicsPos.y);
 	switch(type) {
-	case fei::Body::Type::Static:
+	case fei::Body::Type::STATIC:
 		bodyDef.type = b2_staticBody;
 		break;
-	case fei::Body::Type::Dynamic:
+	case fei::Body::Type::DYNAMIC:
 		bodyDef.type = b2_dynamicBody;
 		break;
-	case fei::Body::Type::Kinematic:
+	case fei::Body::Type::KINEMATIC:
 		bodyDef.type = b2_kinematicBody;
 		break;
 	}
@@ -83,4 +99,26 @@ void Physics::destroyBody(fei::Body* body)
 {
 	world->DestroyBody(body->body);
 	delete body;
+}
+
+b2Shape* Physics::ShapeToB2Shape(const fei::Shape* shape)
+{
+	b2Shape *b2shape = nullptr;
+	switch (shape->getType()) {
+	case fei::Shape::Type::POLYGON:
+		{
+			auto pShape = new b2PolygonShape;
+			pShape->Set((const b2Vec2*)shape->getDataPtr(), shape->getDataSize());
+			b2shape = pShape;
+		}
+		break;
+	case fei::Shape::Type::CIRCLE:
+		{
+			auto cShape = new b2CircleShape;
+			cShape->m_radius = Physics::getInstance()->renderToPhysics(((fei::Circle*)shape)->getRadius());
+			b2shape = cShape;
+		}
+		break;
+	}
+	return b2shape;
 }

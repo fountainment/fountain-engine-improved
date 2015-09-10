@@ -5,6 +5,7 @@ set(FOUNTAIN_MATH_SRC
 	math/Vec4.cpp
 	math/Shape.cpp
 	math/Polygon.cpp
+	math/Circle.cpp
 	math/Rect.cpp
 	math/hash.cpp
 )

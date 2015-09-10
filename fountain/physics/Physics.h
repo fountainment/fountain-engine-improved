@@ -3,6 +3,7 @@
 
 #include "base/ModuleBase.h"
 #include "math/Vec2.h"
+#include "math/Shape.h"
 #include "physics/Body.h"
 #include <Box2D/Box2D.h>
 
@@ -21,9 +22,15 @@ public:
 
 	const Vec2 renderToPhysics(const Vec2& v);
 	const Vec2 physicsToRender(const Vec2& v);
+	float renderToPhysics(float f);
+	float physicsToRender(float f);
 
-	Body* createBody(const Vec2& pos, Body::Type type = Body::Type::Dynamic);
+	void setRatio(float rt);
+
+	Body* createBody(const Vec2& pos, Body::Type type = Body::Type::DYNAMIC);
 	void destroyBody(Body* body);
+
+	static b2Shape* ShapeToB2Shape(const Shape* shape);
 
 	static Physics* getInstance();
 
