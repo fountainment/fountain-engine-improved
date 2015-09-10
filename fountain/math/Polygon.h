@@ -14,6 +14,8 @@ public:
 	const float* getDataPtr() const override;
 	void pushPoint(const Vec2& p);
 
+	static const Polygon makeRegularPolygon(int edgeNum, float radius);
+
 private:
 	std::vector<Vec2> data;
 };
