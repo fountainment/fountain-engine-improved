@@ -9,4 +9,5 @@ if(WINDOWS)
 	set(PLATFORM_LINK_LIBRARY glfw3 glew32s opengl32 FreeImage OpenAL32 Box2D legacy_stdio_definitions)
 endif()
 
+add_subdirectory(empty-test)
 add_subdirectory(fountain-tests)
