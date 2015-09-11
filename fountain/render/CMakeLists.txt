@@ -9,4 +9,5 @@ set(FOUNTAIN_RENDER_SRC
 	render/Image.cpp
 	render/ImagePool.cpp
 	render/Shader.cpp
+	render/ShapeObj.cpp
 )

@@ -35,6 +35,7 @@
 #include "render/ImagePool.h"
 #include "render/Texture.h"
 #include "render/Shader.h"
+#include "render/ShapeObj.h"
 
 #include "anime/FrameAnime.h"
 

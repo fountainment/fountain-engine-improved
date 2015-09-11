@@ -19,7 +19,11 @@ public:
 	void setCameraType(Type type);
 	Type getCameraType();
 	void setCameraScale(float scale);
-	void setCameraSize(fei::Vec2 v);
+	void setCameraSize(const Vec2& v);
+
+	const Vec2 screenToWorld(const Vec2& scrPos);
+	const Vec2 worldToScreen(const Vec2& wrdPos);
+
 private:
 	float width, height;
 	float left, right, bottom, top, near, far;

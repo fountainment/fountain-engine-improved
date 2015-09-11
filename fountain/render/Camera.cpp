@@ -2,6 +2,7 @@
 #include "Render.h"
 #include "base/basedef.h"
 #include "math/mathdef.h"
+#include "interface/Interface.h"
 #include <GL/glew.h>
 
 using fei::Camera;
@@ -52,11 +53,29 @@ void Camera::setCameraScale(float scale)
 	}
 }
 
-void Camera::setCameraSize(fei::Vec2 v)
+void Camera::setCameraSize(const fei::Vec2& v)
 {
 	width = v.x;
 	height = v.y;
 	needDataUpdate = true;
+}
+
+const fei::Vec2 Camera::screenToWorld(const fei::Vec2& scrPos)
+{
+	fei::Vec2 ans;
+	auto camSize = fei::Vec2(right - left, top - bottom);
+	auto winSize = fei::Interface::getInstance()->getCurrentWindow()->getWindowSize();
+	ans = camSize.zoomed(scrPos.zoomed(winSize.reciprocal()) - fei::Vec2(0.5f)) + pos;
+	return ans;
+}
+
+const fei::Vec2 Camera::worldToScreen(const fei::Vec2& wrdPos)
+{
+	fei::Vec2 ans;
+	auto camSize = fei::Vec2(right - left, top - bottom);
+	auto winSize = fei::Interface::getInstance()->getCurrentWindow()->getWindowSize();
+	ans = ((wrdPos - pos).zoomed(camSize.reciprocal()) + fei::Vec2(0.5f)).zoomed(winSize);
+	return ans;
 }
 
 void Camera::updateCameraData()

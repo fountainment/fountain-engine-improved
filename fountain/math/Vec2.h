@@ -24,6 +24,8 @@ public:
 	void zoom(const Vec2& v);
 	void rotate(float degree);
 
+	const Vec2 zoomed(float scale) const;
+	const Vec2 zoomed(const Vec2& v) const;
 	float dot(const Vec2& v) const;
 	float cross(const Vec2& v) const;
 	const Vec2 normalized() const;

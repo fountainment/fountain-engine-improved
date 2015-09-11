@@ -31,16 +31,10 @@ fei::Scene* SceneManager::getCurScene()
 
 void SceneManager::gotoScene(fei::Scene* goScene, bool destroyCurrent)
 {
-	if (goScene) {
-		goScene->setClock(&defaultClock);
-		goScene->feiInit();
-	}
 	if (curScene) {
 		doDestroyCurScene = destroyCurrent;
-		nextScene = goScene;
-	} else {
-		curScene = goScene;
 	}
+	nextScene = goScene;
 }
 
 void SceneManager::renderCurScene()
@@ -57,6 +51,8 @@ void SceneManager::renderCurScene()
 	}
 	if (nextScene) {
 		curScene = nextScene;
+		curScene->setClock(&defaultClock);
+		curScene->feiInit();
 		nextScene = nullptr;
 	}
 }

@@ -77,6 +77,20 @@ void Vec2::rotate(float degree)
 	set((float)xx, (float)yy);
 }
 
+const Vec2 Vec2::zoomed(float scale) const
+{
+	Vec2 result(*this);
+	result.zoom(scale);
+	return result;
+}
+
+const Vec2 Vec2::zoomed(const Vec2& v) const
+{
+	Vec2 result(*this);
+	result.zoom(v);
+	return result;
+}
+
 float Vec2::dot(const Vec2& v) const
 {
 	return x * v.x + y * v.y;

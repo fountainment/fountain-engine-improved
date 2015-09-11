@@ -7,7 +7,8 @@
 #include "math/Vec4.h"
 #include "math/Rect.h"
 #include "math/Shape.h"
-#include "Shader.h"
+#include "render/Shader.h"
+#include "render/Color.h"
 #include <GL/glew.h>
 
 namespace fei {

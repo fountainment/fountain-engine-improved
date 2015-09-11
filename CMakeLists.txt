@@ -44,6 +44,18 @@ endif()
 add_definitions(-DGLFW_INCLUDE_NONE -DGLFW_STATIC -DGLEW_STATIC)
 include_directories(fountain deps/proj/Box2D)
 
+set(FOUNTAIN_LINK_LIBRARY fountain)
+
+if(LINUX)
+	set(PLATFORM_LINK_LIBRARY glfw GLEW GL freeimage openal Box2D)
+endif()
+
+if(WINDOWS)
+	link_directories(${PROJECT_SOURCE_DIR}/deps/lib ${PROJECT_BINARY_DIR}/bin)
+	set(PLATFORM_LINK_LIBRARY glfw3 glew32s opengl32 FreeImage OpenAL32 Box2D legacy_stdio_definitions)
+endif()
+
 add_subdirectory(deps/proj/Box2D)
 add_subdirectory(fountain)
+add_subdirectory(tools)
 add_subdirectory(tests)
