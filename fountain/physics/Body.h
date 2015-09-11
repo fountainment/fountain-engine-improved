@@ -21,6 +21,10 @@ public:
 	const fei::Vec2 getPosition() const;
 	float getAngle() const;
 
+	b2Body* getB2Body() const;
+
+	void setSpeed(const Vec2& sp);
+
 	b2Fixture* createFixture(const Shape* shape);
 	b2Fixture* createFixture(const b2FixtureDef& fixDef);
 

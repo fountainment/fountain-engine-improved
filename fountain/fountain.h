@@ -11,6 +11,7 @@
 #include "math/Rect.h"
 #include "math/Shape.h"
 #include "math/Polygon.h"
+#include "math/Circle.h"
 #include "math/Vec2.h"
 #include "math/Vec3.h"
 #include "math/Vec4.h"

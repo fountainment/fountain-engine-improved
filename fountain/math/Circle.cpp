@@ -39,11 +39,13 @@ fei::Vec2(0.980785f, -0.195090f)};
 Circle::Circle()
 : radius(1.0f)
 {
+	shapeType = fei::Shape::Type::CIRCLE;
 }
 
 Circle::Circle(float r)
 : radius(r)
 {
+	shapeType = fei::Shape::Type::CIRCLE;
 }
 
 int Circle::getDataSize() const
@@ -85,6 +87,7 @@ bool Circle::collide(const fei::Shape* shape) const
 		}
 		break;
 	case fei::Shape::Type::POLYGON:
+	case fei::Shape::Type::RECT:
 		break;
 	}
 	return result;

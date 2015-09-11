@@ -12,7 +12,8 @@ class Shape : public NodeBase
 public:
 	enum class Type {
 		POLYGON = 1,
-		CIRCLE = 2
+		CIRCLE = 2,
+		RECT = 3
 	};
 
 	Shape();
@@ -32,6 +33,8 @@ public:
 
 private:
 	bool _isSolid;
+
+protected:
 	Type shapeType;
 };
 

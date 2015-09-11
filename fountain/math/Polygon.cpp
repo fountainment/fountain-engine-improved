@@ -21,6 +21,11 @@ void Polygon::pushPoint(const fei::Vec2& p)
 	data.push_back(p);
 }
 
+const std::vector<fei::Vec2> Polygon::getDataVector() const
+{
+	return data;
+}
+
 const Polygon Polygon::makeRegularPolygon(int edgeNum, float radius)
 {
 	Polygon polygon;

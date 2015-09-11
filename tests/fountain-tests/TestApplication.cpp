@@ -11,6 +11,9 @@ void TestApplication::engineSetting(Engine *eg)
 	eg->window->setTitle("fountain-tests");
 	eg->window->setResizable(false);
 
+	Physics::getInstance()->setRatio(30.0f);
+	Physics::getInstance()->setGravity(Vec2::ZERO);
+
 	eg->window->sceneManager->defaultCamera.setCameraSize(Vec2(800, 600));
 	eg->window->sceneManager->gotoScene(new TestScene());
 }

@@ -1,5 +1,7 @@
 #include "Physics.h"
+#include "math/Polygon.h"
 #include "math/Circle.h"
+#include "math/Rect.h"
 
 using fei::Physics;
 
@@ -104,19 +106,40 @@ void Physics::destroyBody(fei::Body* body)
 b2Shape* Physics::ShapeToB2Shape(const fei::Shape* shape)
 {
 	b2Shape *b2shape = nullptr;
+	auto pos = shape->getPosition();
+	pos = Physics::getInstance()->renderToPhysics(pos);
 	switch (shape->getType()) {
 	case fei::Shape::Type::POLYGON:
 		{
 			auto pShape = new b2PolygonShape;
-			pShape->Set((const b2Vec2*)shape->getDataPtr(), shape->getDataSize());
+			auto array = ((fei::Polygon*)shape)->getDataVector();
+			for (auto& vertex : array) {
+				vertex = Physics::getInstance()->renderToPhysics(vertex);
+				vertex += pos;
+			}
+			if (!array.empty()) {
+				pShape->Set((const b2Vec2*)(&array[0]), shape->getDataSize());
+			}
 			b2shape = pShape;
 		}
 		break;
 	case fei::Shape::Type::CIRCLE:
 		{
 			auto cShape = new b2CircleShape;
+			cShape->m_p = b2Vec2(pos.x, pos.y);
 			cShape->m_radius = Physics::getInstance()->renderToPhysics(((fei::Circle*)shape)->getRadius());
 			b2shape = cShape;
+		}
+		break;
+	case fei::Shape::Type::RECT:
+		{
+			auto pShape = new b2PolygonShape;
+			auto size = ((fei::Rect*)shape)->getSize() * 0.5f;
+			auto center = ((fei::Rect*)shape)->getCenter();
+			size = Physics::getInstance()->renderToPhysics(size);
+			center = Physics::getInstance()->renderToPhysics(center);
+			pShape->SetAsBox(size.x, size.y, b2Vec2(center.x, center.y), 0.0f);
+			b2shape = pShape;
 		}
 		break;
 	}

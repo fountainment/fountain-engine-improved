@@ -34,6 +34,17 @@ float Body::getAngle() const
 	return body->GetAngle();
 }
 
+void Body::setSpeed(const fei::Vec2& sp)
+{
+	auto vec = Physics::getInstance()->renderToPhysics(sp);
+	body->SetLinearVelocity(b2Vec2(vec.x, vec.y));
+}
+
+b2Body* Body::getB2Body() const
+{
+	return body;
+}
+
 b2Fixture* Body::createFixture(const fei::Shape* shape)
 {
 	float density = 1.0f;

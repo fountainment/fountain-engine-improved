@@ -20,7 +20,6 @@ private:
 	Charactor mainChar;
 
 	float pitch;
-	fei::Body* body;
 };
 
 #endif

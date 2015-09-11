@@ -10,6 +10,7 @@ public:
 
 	virtual void drawIt() override;
 	virtual void init() override;
+	virtual void destroy() override;
 	virtual void update() override;
 
 	void setSpeed(const fei::Vec2& sp);
@@ -19,6 +20,8 @@ public:
 
 private:
 	fei::Vec2 speed;
+	fei::Body *body;
+	fei::Body *ground;
 
 	fei::FrameAnime *curAnime;
 	fei::FrameAnime walkAnime[4];

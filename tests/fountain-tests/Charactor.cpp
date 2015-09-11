@@ -26,6 +26,22 @@ void Charactor::init()
 	}
 	curAnime = &walkAnime[0];
 	charClock.init();
+
+	Circle circle(10.0f);
+	Rect rect(Vec2(100.0f, 20.0f));
+	rect.setCenter(Vec2::ZERO);
+
+	body = Physics::getInstance()->createBody(Vec2::ZERO);
+	body->createFixture(&circle);
+
+	ground = Physics::getInstance()->createBody(Vec2(0.0f, -200.0f), Body::Type::STATIC);
+	ground->createFixture(&rect);
+}
+
+void Charactor::destroy()
+{
+	Physics::getInstance()->destroyBody(body);
+	Physics::getInstance()->destroyBody(ground);
 }
 
 void Charactor::drawIt()
@@ -38,7 +54,7 @@ void Charactor::drawIt()
 void Charactor::update()
 {
 	charClock.tick();
-	move(speed * (float)charClock.getDeltaTime());
+	setPosition(body->getPosition());
 	if (curAnime) {
 		curAnime->update();
 	}
@@ -53,6 +69,7 @@ void Charactor::setSpeed(const fei::Vec2& drct, float sp)
 {
 	auto v = drct.normalized();
 	speed = v * sp;
+	body->setSpeed(speed);
 	int ri = v.getQuadrantIndex();
 	v.rotate(-45.0f);
 	int i = v.getQuadrantIndex();

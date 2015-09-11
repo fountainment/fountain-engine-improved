@@ -31,13 +31,10 @@ void TestScene::init()
 	add(&map);
 	add(&mainChar);
 	add(&UILayer);
-
-	body = Physics::getInstance()->createBody(fei::Vec2::ZERO);
 }
 
 void TestScene::destroy()
 {
-	Physics::getInstance()->destroyBody(body);
 }
 
 void TestScene::update()
@@ -87,6 +84,4 @@ void TestScene::update()
 		mainChar.setSpeed(speed, 100.0f);
 	}
 	mainCam.setPosition(mainChar.getPosition());
-	auto bdv = body->getPosition();
-	std::printf("%.3f %.3f\n", bdv.x, bdv.y);
 }

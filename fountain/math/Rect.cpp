@@ -2,8 +2,21 @@
 
 using fei::Rect;
 
+Rect::Rect()
+{
+	shapeType = fei::Shape::Type::RECT;
+	size = fei::Vec2(1.0f);
+}
+
+Rect::Rect(const Vec2& sz)
+{
+	shapeType = fei::Shape::Type::RECT;
+	size = sz;
+}
+
 Rect::Rect(float x, float y, float w, float h)
 {
+	shapeType = fei::Shape::Type::RECT;
 	pos = fei::Vec2(x, y);
 	size = fei::Vec2(w, h);
 	normalize();
@@ -11,6 +24,7 @@ Rect::Rect(float x, float y, float w, float h)
 
 Rect::Rect(const fei::Vec2& ps, const fei::Vec2& sz)
 {
+	shapeType = fei::Shape::Type::RECT;
 	pos = ps;
 	size = sz;
 	normalize();
@@ -99,3 +113,12 @@ void Rect::getStripCoord(float* coord) const
 	coord[7] = pos.y;
 }
 
+const float* Rect::getDataPtr() const
+{
+	return nullptr;
+}
+
+int Rect::getDataSize() const
+{
+	return 4;
+}

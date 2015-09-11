@@ -2,13 +2,15 @@
 #define _FEI_RECT_H_
 
 #include "Vec2.h"
-#include "base/NodeBase.h"
+#include "math/Shape.h"
 
 namespace fei {
 
-class Rect : public NodeBase
+class Rect : public Shape
 {
 public:
+	Rect();
+	Rect(const Vec2& sz);
 	Rect(float x, float y, float w, float h);
 	Rect(const Vec2& pos, const Vec2& sz);
 
@@ -29,6 +31,9 @@ public:
 	bool collidePoint(const Vec2& pt) const;
 
 	void getStripCoord(float* coord) const;
+
+	const float* getDataPtr() const override;
+	int getDataSize() const override;
 
 private:
 	Vec2 size;

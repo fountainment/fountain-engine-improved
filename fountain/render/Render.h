@@ -39,6 +39,11 @@ public:
 
 	void bindTexture(GLuint tex);
 	void disableTexture();
+
+	inline void drawArray2f(const GLfloat* vertex, GLint first, GLsizei count, GLenum mode);
+
+	void drawRect(const Vec2& size);
+	void drawQuad(const Vec2& size);
 	void drawTexQuad(const Vec2& size, GLfloat* texCoord = nullptr);
 	void drawShape(const Shape* shape);
 
@@ -58,6 +63,14 @@ private:
 
 	static Render *instance;
 };
+
+inline void Render::drawArray2f(const GLfloat* vertex, GLint first, GLsizei count, GLenum mode)
+{
+	glEnableClientState(GL_VERTEX_ARRAY);
+	glVertexPointer(2, GL_FLOAT, 0, vertex);
+	glDrawArrays(mode, first, count);
+	glDisableClientState(GL_VERTEX_ARRAY);
+}
 
 }
 
