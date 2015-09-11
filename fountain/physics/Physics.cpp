@@ -2,8 +2,85 @@
 #include "math/Polygon.h"
 #include "math/Circle.h"
 #include "math/Rect.h"
+#include "render/Render.h"
+#include "render/Color.h"
 
 using fei::Physics;
+
+class DebugDraw : public b2Draw
+{
+public:
+	~DebugDraw()
+	{
+	}
+
+	void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
+	{
+		fei::Color(color.r, color.g, color.b, color.a).use();
+		fei::Polygon polygon;
+		for (int i = 0; i < vertexCount; ++i) {
+			fei::Vec2 vec(vertices[i].x, vertices[i].y);
+			polygon.pushPoint(Physics::getInstance()->physicsToRender(vec));
+		}
+		polygon.setSolid(false);
+		fei::Render::getInstance()->drawShape(&polygon);
+	}
+
+	void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
+	{
+		fei::Color(color.r, color.g, color.b, color.a).use();
+		fei::Polygon polygon;
+		for (int i = 0; i < vertexCount; ++i) {
+			fei::Vec2 vec(vertices[i].x, vertices[i].y);
+			polygon.pushPoint(Physics::getInstance()->physicsToRender(vec));
+		}
+		fei::Render::getInstance()->drawShape(&polygon);
+		fei::Color(color.r + 0.2f, color.g + 0.2f, color.b + 0.2f).use();
+		polygon.setSolid(false);
+		fei::Render::getInstance()->drawShape(&polygon);
+	}
+
+	void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
+	{
+		fei::Color(color.r, color.g, color.b, color.a).use();
+		fei::Circle circle(Physics::getInstance()->physicsToRender(radius));
+		circle.setPosition(Physics::getInstance()->physicsToRender(fei::Vec2(center.x, center.y)));
+		circle.setSolid(false);
+		fei::Render::getInstance()->drawShape(&circle);
+	}
+
+	void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
+	{
+		fei::Color(color.r, color.g, color.b, color.a).use();
+		fei::Circle circle(Physics::getInstance()->physicsToRender(radius));
+		circle.setPosition(Physics::getInstance()->physicsToRender(fei::Vec2(center.x, center.y)));
+		fei::Render::getInstance()->drawShape(&circle);
+		fei::Color::White.use();
+		DrawSegment(center, center + radius * axis, b2Color(1.0f, 1.0f, 1.0f));
+		DrawCircle(center, radius, b2Color(color.r + 0.2f, color.g + 0.2f, color.b + 0.2f));
+	}
+
+	void DrawSegment(const b2Vec2& p1, const b2Vec2& p2, const b2Color& color)
+	{
+		fei::Vec2 a(p1.x, p1.y);
+		fei::Vec2 b(p2.x, p2.y);
+		a = Physics::getInstance()->physicsToRender(a);
+		b = Physics::getInstance()->physicsToRender(b);
+		fei::Color(color.r, color.g, color.b, color.a).use();
+		//Render::getInstance()->drawSegment(a, b);
+	}
+
+	void DrawTransform(const b2Transform& xf)
+	{
+		b2Vec2 p1 = xf.p, p2;
+		const float32 k_axisScale = 0.2f;
+		p2 = p1 + k_axisScale * xf.q.GetXAxis();
+		DrawSegment(p1, p2, b2Color(1.0f, 0.0f, 0.0f));
+
+		p2 = p1 + k_axisScale * xf.q.GetYAxis();
+		DrawSegment(p1, p2, b2Color(0.0f, 1.0f, 0.0f));
+	}
+};
 
 Physics* Physics::instance = nullptr;
 
@@ -17,6 +94,9 @@ Physics* Physics::getInstance()
 
 Physics::Physics()
 : world(nullptr),
+  debugDraw(nullptr),
+  ddCamera(nullptr),
+  doDebugDraw(false),
   ratio(1.0f)
 {
 }
@@ -25,7 +105,16 @@ bool Physics::init()
 {
 	b2Vec2 g(0.0f, -10.0f);
 	world = new b2World(g);
+	debugDraw = new DebugDraw;
+	uint32 flags = 0;
+	flags += b2Draw::e_shapeBit;
+	flags += b2Draw::e_jointBit;
+	//flags += b2Draw::e_aabbBit;
+	flags += b2Draw::e_pairBit;
+	//flags += b2Draw::e_centerOfMassBit;
+	debugDraw->SetFlags(flags);
 	world->SetAllowSleeping(true);
+	world->SetDebugDraw(debugDraw);
 	return true;
 }
 
@@ -38,6 +127,16 @@ void Physics::destroy()
 void Physics::executeBeforeFrame()
 {
 	world->Step(0.0166f, 8, 3);
+}
+
+void Physics::executeAfterFrame()
+{
+	if (doDebugDraw) {
+		if (ddCamera) {
+			ddCamera->update();
+		}
+		world->DrawDebugData();
+	}
 }
 
 void Physics::setGravity(const fei::Vec2& g)
@@ -101,6 +200,16 @@ void Physics::destroyBody(fei::Body* body)
 {
 	world->DestroyBody(body->body);
 	delete body;
+}
+
+void Physics::setDoDebugDraw(bool doDD)
+{
+	doDebugDraw = doDD;
+}
+
+void Physics::setDebugDrawCamera(fei::Camera* cam)
+{
+	ddCamera = cam;
 }
 
 b2Shape* Physics::ShapeToB2Shape(const fei::Shape* shape)

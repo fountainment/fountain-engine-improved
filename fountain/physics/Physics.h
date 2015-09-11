@@ -5,6 +5,7 @@
 #include "math/Vec2.h"
 #include "math/Shape.h"
 #include "physics/Body.h"
+#include "render/Camera.h"
 #include <Box2D/Box2D.h>
 
 namespace fei {
@@ -16,6 +17,7 @@ public:
 	void destroy() override;
 
 	void executeBeforeFrame() override;
+	void executeAfterFrame() override;
 
 	void setGravity(const Vec2& g);
 	const Vec2 getGravity();
@@ -30,6 +32,9 @@ public:
 	Body* createBody(const Vec2& pos, Body::Type type = Body::Type::DYNAMIC);
 	void destroyBody(Body* body);
 
+	void setDoDebugDraw(bool doDD);
+	void setDebugDrawCamera(Camera* cam);
+
 	static b2Shape* ShapeToB2Shape(const Shape* shape);
 
 	static Physics* getInstance();
@@ -38,6 +43,9 @@ private:
 	Physics();
 
 	b2World *world;
+	b2Draw *debugDraw;
+	Camera* ddCamera;
+	bool doDebugDraw;
 	float ratio;
 
 	static Physics *instance;

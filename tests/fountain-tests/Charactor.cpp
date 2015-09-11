@@ -27,10 +27,14 @@ void Charactor::init()
 	curAnime = &walkAnime[0];
 	charClock.init();
 
-	Circle circle(10.0f);
+	Rect rect(Vec2(40, 20));
+	rect.setCenter(Vec2(0, -20));
 
 	body = Physics::getInstance()->createBody(Vec2::ZERO);
-	body->createFixture(&circle);
+	auto b2bd = body->getB2Body();
+	b2bd->SetFixedRotation(true);
+	b2bd->SetGravityScale(0.0f);
+	body->createFixture(&rect);
 }
 
 void Charactor::destroy()
@@ -57,6 +61,7 @@ void Charactor::update()
 void Charactor::setSpeed(const Vec2& sp)
 {
 	speed = sp;
+	body->setSpeed(speed);
 }
 
 void Charactor::setSpeed(const fei::Vec2& drct, float sp)

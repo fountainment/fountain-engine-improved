@@ -11,6 +11,8 @@ void TestScene::init()
 	mainCam.setCameraSize(Vec2(800, 600));
 	mainCam.setCameraScale(2.0f);
 	setCamera(&mainCam);
+	Physics::getInstance()->setDebugDrawCamera(&mainCam);
+	Physics::getInstance()->setDoDebugDraw(true);
 
 	map.load("map.png");
 
@@ -28,12 +30,16 @@ void TestScene::init()
 	audio.setLoop(true);
 	audio.play();
 
-	Rect rect(Vec2(600.0f, 20.0f));
-	rect.setCenter(Vec2::ZERO);
-	auto poly = Polygon::makeRegularPolygon(6, 100.0f);
+	Rect rect[2] = {Rect(Vec2(550.0f, 20.0f)), Rect(Vec2(20.0f, 550.0f))};
+	rect[0].setCenter(Vec2::ZERO);
+	rect[1].setCenter(Vec2::ZERO);
 
-	ground = Physics::getInstance()->createBody(Vec2(0.0f, -300.0f), Body::Type::STATIC);
-	ground->createFixture(&poly);
+	Vec2 v[4] = {Vec2(0.0f, -280.0f), Vec2(0.0f, 260.0f), Vec2(-260.0f, 0.0f), Vec2(260.0f, 0.0f)};
+
+	for (int i = 0; i < 4; i++) {
+		ground[i] = Physics::getInstance()->createBody(v[i], Body::Type::STATIC);
+		ground[i]->createFixture(&rect[i / 2]);
+	}
 
 	add(&map);
 	add(&mainChar);
@@ -42,7 +48,10 @@ void TestScene::init()
 
 void TestScene::destroy()
 {
-	Physics::getInstance()->destroyBody(ground);
+	for (int i = 0; i < 4; i++) {
+		Physics::getInstance()->destroyBody(ground[i]);
+	}
+	Physics::getInstance()->setDebugDrawCamera(nullptr);
 }
 
 void TestScene::update()

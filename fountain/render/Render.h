@@ -42,6 +42,7 @@ public:
 
 	inline void drawArray2f(const GLfloat* vertex, GLint first, GLsizei count, GLenum mode);
 
+	void drawLine(const Vec2& pa, const Vec2& pb);
 	void drawRect(const Vec2& size);
 	void drawQuad(const Vec2& size);
 	void drawTexQuad(const Vec2& size, GLfloat* texCoord = nullptr);
