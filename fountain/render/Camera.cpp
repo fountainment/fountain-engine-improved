@@ -18,9 +18,7 @@ Camera::Camera()
 
 void Camera::update()
 {
-	if (needDataUpdate) {
-		updateCameraData();
-	}
+	updateCameraData();
 	glMatrixMode(GL_PROJECTION);
 	if (cameraType == Type::ORTHOGRAPHIC) {
 		glLoadIdentity();
@@ -62,33 +60,36 @@ void Camera::setCameraSize(const fei::Vec2& v)
 
 const fei::Vec2 Camera::screenToWorld(const fei::Vec2& scrPos)
 {
-	fei::Vec2 ans;
+	updateCameraData();
 	auto camSize = fei::Vec2(right - left, top - bottom);
 	auto winSize = fei::Interface::getInstance()->getCurrentWindow()->getWindowSize();
-	ans = camSize.zoomed(scrPos.zoomed(winSize.reciprocal()) - fei::Vec2(0.5f)) + pos;
+	auto ans = camSize.zoomed(scrPos.zoomed(winSize.reciprocal()) - fei::Vec2(0.5f)) + pos;
 	return ans;
 }
 
 const fei::Vec2 Camera::worldToScreen(const fei::Vec2& wrdPos)
 {
-	fei::Vec2 ans;
+	updateCameraData();
 	auto camSize = fei::Vec2(right - left, top - bottom);
 	auto winSize = fei::Interface::getInstance()->getCurrentWindow()->getWindowSize();
-	ans = ((wrdPos - pos).zoomed(camSize.reciprocal()) + fei::Vec2(0.5f)).zoomed(winSize);
+	auto ans = ((wrdPos - pos).zoomed(camSize.reciprocal()) + fei::Vec2(0.5f)).zoomed(winSize);
 	return ans;
 }
 
 void Camera::updateCameraData()
 {
-	if (cameraType == Type::ORTHOGRAPHIC) {
-		float ratio = 2.0f * cameraScale;
-		left = -width / ratio;
-		right = width / ratio;
-		bottom = -height / ratio;
-		top = height / ratio;
-		near = -99999;
-		far = 99999;
-	} else if (cameraType == Type::PERSPECTIVE) {
-		//TODO: write it when you want to test it
+	if (needDataUpdate) {
+		if (cameraType == Type::ORTHOGRAPHIC) {
+			float ratio = 2.0f * cameraScale;
+			left = -width / ratio;
+			right = width / ratio;
+			bottom = -height / ratio;
+			top = height / ratio;
+			near = -99999;
+			far = 99999;
+		} else if (cameraType == Type::PERSPECTIVE) {
+			//TODO: write it when you want to test it
+		}
+		needDataUpdate = false;
 	}
 }

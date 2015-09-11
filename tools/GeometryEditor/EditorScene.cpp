@@ -20,5 +20,4 @@ void EditorScene::update()
 	auto window = Interface::getInstance()->getCurrentWindow();
 	auto pos = window->getRHCursorPos();
 	pos = mainCam.screenToWorld(pos);
-	std::printf("%f %f\n", pos.x, pos.y);
 }
