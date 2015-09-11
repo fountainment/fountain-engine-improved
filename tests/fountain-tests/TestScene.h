@@ -19,6 +19,8 @@ private:
 	fei::Source audio;
 	Charactor mainChar;
 
+	fei::Body *ground;
+
 	float pitch;
 };
 

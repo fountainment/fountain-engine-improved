@@ -28,20 +28,14 @@ void Charactor::init()
 	charClock.init();
 
 	Circle circle(10.0f);
-	Rect rect(Vec2(100.0f, 20.0f));
-	rect.setCenter(Vec2::ZERO);
 
 	body = Physics::getInstance()->createBody(Vec2::ZERO);
 	body->createFixture(&circle);
-
-	ground = Physics::getInstance()->createBody(Vec2(0.0f, -200.0f), Body::Type::STATIC);
-	ground->createFixture(&rect);
 }
 
 void Charactor::destroy()
 {
 	Physics::getInstance()->destroyBody(body);
-	Physics::getInstance()->destroyBody(ground);
 }
 
 void Charactor::drawIt()

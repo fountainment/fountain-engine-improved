@@ -28,6 +28,13 @@ void TestScene::init()
 	audio.setLoop(true);
 	audio.play();
 
+	Rect rect(Vec2(600.0f, 20.0f));
+	rect.setCenter(Vec2::ZERO);
+	auto poly = Polygon::makeRegularPolygon(6, 100.0f);
+
+	ground = Physics::getInstance()->createBody(Vec2(0.0f, -300.0f), Body::Type::STATIC);
+	ground->createFixture(&poly);
+
 	add(&map);
 	add(&mainChar);
 	add(&UILayer);
@@ -35,6 +42,7 @@ void TestScene::init()
 
 void TestScene::destroy()
 {
+	Physics::getInstance()->destroyBody(ground);
 }
 
 void TestScene::update()

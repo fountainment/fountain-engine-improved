@@ -21,7 +21,6 @@ public:
 private:
 	fei::Vec2 speed;
 	fei::Body *body;
-	fei::Body *ground;
 
 	fei::FrameAnime *curAnime;
 	fei::FrameAnime walkAnime[4];

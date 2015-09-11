@@ -31,7 +31,7 @@ const Polygon Polygon::makeRegularPolygon(int edgeNum, float radius)
 	Polygon polygon;
 	for (int i = 0; i < edgeNum; i++) {
 		float angle = 2.0 * fei::pi / edgeNum * i;
-		polygon.pushPoint(fei::Vec2(std::cos(angle), std::sin(angle)));
+		polygon.pushPoint(fei::Vec2(std::cos(angle), std::sin(angle)) * radius);
 	}
 	return polygon;
 }
