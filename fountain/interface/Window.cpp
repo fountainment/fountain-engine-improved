@@ -119,8 +119,10 @@ void Window::delWindow()
 void Window::setCurrent()
 {
 	if (window) {
-		glfwMakeContextCurrent(window);
-		Interface::getInstance()->setCurrentWindow(this);
+		if (Interface::getInstance()->getCurrentWindow() != this) {
+			glfwMakeContextCurrent(window);
+			Interface::getInstance()->setCurrentWindow(this);
+		}
 	}
 }
 
@@ -209,7 +211,7 @@ const fei::Vec2 Window::getWindowSize()
 	return result;
 }
 
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
 	if (scene) {
@@ -217,7 +219,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	}
 }
 
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
 	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
 	if (scene) {
@@ -225,7 +227,15 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 	}
 }
 
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+static void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	if (scene) {
+		scene->cursorPosCallback(xpos, ypos);
+	}
+}
+
+static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
 	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
 	if (scene) {
@@ -233,7 +243,7 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 	}
 }
 
-void character_callback(GLFWwindow* window, unsigned int codepoint)
+static void character_callback(GLFWwindow* window, unsigned int codepoint)
 {
 	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
 	if (scene) {
@@ -245,6 +255,7 @@ void Window::setCallback()
 {
 	glfwSetKeyCallback(window, key_callback);
 	glfwSetMouseButtonCallback(window, mouse_button_callback);
+	glfwSetCursorPosCallback(window, cursor_pos_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 	glfwSetCharCallback(window, character_callback);
 }

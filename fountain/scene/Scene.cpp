@@ -38,6 +38,10 @@ void Scene::mouseButtonCallback(int button, int action, int mods)
 {
 }
 
+void Scene::cursorPosCallback(double xpos, double ypos)
+{
+}
+
 void Scene::scrollCallback(double xoffset, double yoffset)
 {
 }

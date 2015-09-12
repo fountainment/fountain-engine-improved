@@ -19,8 +19,6 @@ void EditorScene::init()
 
 void EditorScene::update()
 {
-	auto window = Interface::getInstance()->getCurrentWindow();
-	pos = mainCam.screenToWorld(window->getRHCursorPos());
 	if (holdVertex >= 0) {
 		poly.setVertex(holdVertex, pos);
 	}
@@ -29,7 +27,6 @@ void EditorScene::update()
 void EditorScene::mouseButtonCallback(int button, int action, int mods)
 {
 	auto window = Interface::getInstance()->getCurrentWindow();
-	pos = mainCam.screenToWorld(window->getRHCursorPos());
 	if (button == GLFW_MOUSE_BUTTON_LEFT) {
 		if (action == GLFW_PRESS) {
 			holdVertex = poly.collideVertex(pos, 20.0f);
@@ -41,11 +38,18 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 	if (button == GLFW_MOUSE_BUTTON_RIGHT) {
 		if (action == GLFW_PRESS) {
 			if (!window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT)) {
+				poly.insertVertex(pos, 0);
 			}
 		}
 		if (action == GLFW_RELEASE) {
 		}
 	}
+}
+
+void EditorScene::cursorPosCallback(double xpos, double ypos)
+{
+	auto window = Interface::getInstance()->getCurrentWindow();
+	pos = mainCam.screenToWorld(window->getRHCursorPos());
 }
 
 void EditorScene::scrollCallback(double xoffset, double yoffset)

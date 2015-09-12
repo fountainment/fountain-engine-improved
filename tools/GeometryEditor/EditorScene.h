@@ -10,6 +10,7 @@ public:
 	void update() override;
 
 	void mouseButtonCallback(int button, int action, int mods) override;
+	void cursorPosCallback(double xpos, double ypos) override;
 	void scrollCallback(double xoffset, double yoffset) override;
 
 private:

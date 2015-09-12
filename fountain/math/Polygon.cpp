@@ -33,6 +33,12 @@ const fei::Vec2 Polygon::getVertex(int index) const
 	return data[index];
 }
 
+void Polygon::insertVertex(const fei::Vec2& p, int index)
+{
+	//TODO: assertion
+	data.insert(data.begin() + index, p);
+}
+
 int Polygon::collideVertex(const fei::Vec2& p, float radius) const
 {
 	float rSq = radius * radius;

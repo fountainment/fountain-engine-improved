@@ -16,7 +16,7 @@ public:
 
 	void setVertex(int index, const Vec2& p);
 	const Vec2 getVertex(int index) const;
-	int insertVertex(const Vec2& p);
+	void insertVertex(const Vec2& p, int index);
 
 	int collideVertex(const Vec2& p, float radius) const;
 
