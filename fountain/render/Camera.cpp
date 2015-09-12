@@ -51,6 +51,16 @@ void Camera::setCameraScale(float scale)
 	}
 }
 
+float Camera::getCameraScale()
+{
+	return cameraScale;
+}
+
+void Camera::cameraScaleZoom(float zoom)
+{
+	setCameraScale(cameraScale * zoom);
+}
+
 void Camera::setCameraSize(const fei::Vec2& v)
 {
 	width = v.x;
@@ -85,8 +95,8 @@ void Camera::updateCameraData()
 			right = width / ratio;
 			bottom = -height / ratio;
 			top = height / ratio;
-			near = -99999;
-			far = 99999;
+			near = -99999.0f;
+			far = 99999.0f;
 		} else if (cameraType == Type::PERSPECTIVE) {
 			//TODO: write it when you want to test it
 		}

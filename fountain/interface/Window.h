@@ -33,7 +33,6 @@ public:
 
 	int shouldClose();
 	void swapBuffers();
-	void pollEvents();
 
 	bool isFullscreen();
 
@@ -45,6 +44,8 @@ public:
 	SceneManager *sceneManager;
 
 private:
+	void setCallback();
+
 	GLFWwindow *window;
 	GLFWwindow *contextRoot;
 

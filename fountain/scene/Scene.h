@@ -19,6 +19,11 @@ public:
 
 	void clockTick();
 
+	virtual void keyCallback(int key, int scancode, int action, int mods);
+	virtual void mouseButtonCallback(int button, int action, int mods);
+	virtual void scrollCallback(double xoffset, double yoffset);
+	virtual void charactorCallback(unsigned int codepoint);
+
 private:
 	Clock *sceneClock;
 };

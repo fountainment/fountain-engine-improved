@@ -102,6 +102,7 @@ GLFWwindow* Window::getWindow()
 			monitor = nullptr;
 		}
 		window = glfwCreateWindow(w, h, title.c_str(), monitor, contextRoot);
+		setCallback();
 		glfwDefaultWindowHints();
 	}
 	return window;
@@ -139,17 +140,18 @@ void Window::show()
 
 int Window::shouldClose()
 {
-	return glfwWindowShouldClose(window);
+	if (window) {
+		return glfwWindowShouldClose(window);
+	} else {
+		return 0;
+	}
 }
 
 void Window::swapBuffers()
 {
-	glfwSwapBuffers(window);
-}
-
-void Window::pollEvents()
-{
-	glfwPollEvents();
+	if (window) {
+		glfwSwapBuffers(window);
+	}
 }
 
 bool Window::isFullscreen()
@@ -196,5 +198,45 @@ const fei::Vec2 Window::getWindowSize()
 		result.set((float)width, (float)height);
 	}
 	return result;
+}
+
+void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	if (scene) {
+		scene->keyCallback(key, scancode, action, mods);
+	}
+}
+
+void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
+{
+	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	if (scene) {
+		scene->mouseButtonCallback(button, action, mods);
+	}
+}
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	if (scene) {
+		scene->scrollCallback(xoffset, yoffset);
+	}
+}
+
+void character_callback(GLFWwindow* window, unsigned int codepoint)
+{
+	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	if (scene) {
+		scene->charactorCallback(codepoint);
+	}
+}
+
+void Window::setCallback()
+{
+	glfwSetKeyCallback(window, key_callback);
+	glfwSetMouseButtonCallback(window, mouse_button_callback);
+	glfwSetScrollCallback(window, scroll_callback);
+	glfwSetCharCallback(window, character_callback);
 }
 

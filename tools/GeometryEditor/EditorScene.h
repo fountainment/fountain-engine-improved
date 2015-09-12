@@ -9,6 +9,9 @@ public:
 	void init() override;
 	void update() override;
 
+	void mouseButtonCallback(int button, int action, int mods) override;
+	void scrollCallback(double xoffset, double yoffset) override;
+
 private:
 	fei::Camera mainCam;
 	fei::Polygon poly;

@@ -29,3 +29,19 @@ void Scene::clockTick()
 		sceneClock->tick();
 	}
 }
+
+void Scene::keyCallback(int key, int scancode, int action, int mods)
+{
+}
+
+void Scene::mouseButtonCallback(int button, int action, int mods)
+{
+}
+
+void Scene::scrollCallback(double xoffset, double yoffset)
+{
+}
+
+void Scene::charactorCallback(unsigned int codepoint)
+{
+}

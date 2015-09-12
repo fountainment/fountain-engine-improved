@@ -19,6 +19,8 @@ public:
 	void setCameraType(Type type);
 	Type getCameraType();
 	void setCameraScale(float scale);
+	float getCameraScale();
+	void cameraScaleZoom(float zoom);
 	void setCameraSize(const Vec2& v);
 
 	const Vec2 screenToWorld(const Vec2& scrPos);
