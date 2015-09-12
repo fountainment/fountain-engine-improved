@@ -49,3 +49,7 @@ void Scene::scrollCallback(double xoffset, double yoffset)
 void Scene::charactorCallback(unsigned int codepoint)
 {
 }
+
+void Scene::framebufferSizeCallback(int width, int height)
+{
+}

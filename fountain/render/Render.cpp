@@ -270,3 +270,4 @@ void Render::useColor(const fei::Vec4* color)
 {
 	glColor4fv(&color->x);
 }
+

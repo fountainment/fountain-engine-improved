@@ -1,6 +1,5 @@
 #include "Window.h"
 #include "interface/Interface.h"
-#include <GL/glew.h>
 
 using fei::Window;
 
@@ -12,6 +11,7 @@ Window::Window()
   height(500),
   title(fei::EngineName),
   _isFullscreen(false),
+  _isResizable(false),
   _isHide(false)
 {
 	sceneManager = new fei::SceneManager();
@@ -90,10 +90,10 @@ GLFWwindow* Window::getWindow()
 		glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
 		glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 		if (_isHide) {
-			glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
+			glfwWindowHint(GLFW_VISIBLE, 0);
 		}
 		if (!_isResizable) {
-			glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+			glfwWindowHint(GLFW_RESIZABLE, 0);
 		}
 		if (_isFullscreen) {
 			w = mode->width;
@@ -119,10 +119,8 @@ void Window::delWindow()
 void Window::setCurrent()
 {
 	if (window) {
-		if (Interface::getInstance()->getCurrentWindow() != this) {
-			glfwMakeContextCurrent(window);
-			Interface::getInstance()->setCurrentWindow(this);
-		}
+		glfwMakeContextCurrent(window);
+		Interface::getInstance()->setCurrentWindow(this);
 	}
 }
 
@@ -211,6 +209,17 @@ const fei::Vec2 Window::getWindowSize()
 	return result;
 }
 
+const fei::Vec2 Window::getFrameSize()
+{
+	fei::Vec2 result;
+	if (window) {
+		int width, height;
+		glfwGetFramebufferSize(window, &width, &height);
+		result.set((float)width, (float)height);
+	}
+	return result;
+}
+
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
@@ -251,6 +260,23 @@ static void character_callback(GLFWwindow* window, unsigned int codepoint)
 	}
 }
 
+static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+{
+	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	if (scene) {
+		scene->framebufferSizeCallback(width, height);
+	}
+}
+
+/*
+static void drop_callback(GLFWwindow* window, int count, const char** paths)
+{
+	for (int i = 0; i < count; i++) {
+		std::printf("%s\n", paths[i]);
+	}
+}
+*/
+
 void Window::setCallback()
 {
 	glfwSetKeyCallback(window, key_callback);
@@ -258,5 +284,7 @@ void Window::setCallback()
 	glfwSetCursorPosCallback(window, cursor_pos_callback);
 	glfwSetScrollCallback(window, scroll_callback);
 	glfwSetCharCallback(window, character_callback);
+	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+	//glfwSetDropCallback(window, drop_callback);
 }
 

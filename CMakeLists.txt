@@ -38,7 +38,7 @@ if(WINDOWS)
 endif()
 
 if(LINUX)
-  add_definitions(-Wall -fexceptions -std=c++11)
+  add_definitions(-Wall -fexceptions -std=c++11 -g)
 endif()
 
 add_definitions(-DGLFW_INCLUDE_NONE -DGLFW_STATIC -DGLEW_STATIC)

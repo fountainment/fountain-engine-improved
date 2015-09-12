@@ -22,7 +22,7 @@ public:
 
 	const std::vector<Vec2> getDataVector() const;
 
-	static const Polygon makeRegularPolygon(int edgeNum, float radius);
+	static const Polygon makeRegularPolygon(int edgeNum, float radius, float offset = 0.0f);
 
 protected:
 	std::vector<Vec2> data;

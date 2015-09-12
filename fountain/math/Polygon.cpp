@@ -55,11 +55,11 @@ const std::vector<fei::Vec2> Polygon::getDataVector() const
 	return data;
 }
 
-const Polygon Polygon::makeRegularPolygon(int edgeNum, float radius)
+const Polygon Polygon::makeRegularPolygon(int edgeNum, float radius, float offset)
 {
 	Polygon polygon;
 	for (int i = 0; i < edgeNum; i++) {
-		float angle = 2.0 * fei::pi / edgeNum * i;
+		float angle = 2.0 * fei::pi / edgeNum * i + fei::D2R(offset);
 		polygon.pushPoint(fei::Vec2(std::cos(angle), std::sin(angle)) * radius);
 	}
 	return polygon;

@@ -2,7 +2,6 @@
 #include "Render.h"
 #include "base/basedef.h"
 #include "math/mathdef.h"
-#include "interface/Interface.h"
 #include <GL/glew.h>
 
 using fei::Camera;
@@ -72,8 +71,8 @@ const fei::Vec2 Camera::screenToWorld(const fei::Vec2& scrPos)
 {
 	updateCameraData();
 	auto camSize = fei::Vec2(right - left, top - bottom);
-	auto winSize = fei::Interface::getInstance()->getCurrentWindow()->getWindowSize();
-	auto ans = camSize.zoomed(scrPos.zoomed(winSize.reciprocal()) - fei::Vec2(0.5f)) + pos;
+	auto vpSize = fei::Render::getInstance()->getViewport().getSize();
+	auto ans = camSize.zoomed(scrPos.zoomed(vpSize.reciprocal()) - fei::Vec2(0.5f)) + pos;
 	return ans;
 }
 
@@ -81,8 +80,8 @@ const fei::Vec2 Camera::worldToScreen(const fei::Vec2& wrdPos)
 {
 	updateCameraData();
 	auto camSize = fei::Vec2(right - left, top - bottom);
-	auto winSize = fei::Interface::getInstance()->getCurrentWindow()->getWindowSize();
-	auto ans = ((wrdPos - pos).zoomed(camSize.reciprocal()) + fei::Vec2(0.5f)).zoomed(winSize);
+	auto vpSize = fei::Render::getInstance()->getViewport().getSize();
+	auto ans = ((wrdPos - pos).zoomed(camSize.reciprocal()) + fei::Vec2(0.5f)).zoomed(vpSize);
 	return ans;
 }
 

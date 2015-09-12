@@ -2,10 +2,25 @@
 
 using namespace fei;
 
+void EShapeObj::drawIt()
+{
+	Render::getInstance()->drawShape(shape);
+	Rect rct;
+	rct.setSize(fei::Vec2(10.0f));
+	const float *data = shape->getDataPtr();
+	for (int i = 0; i < shape->getDataSize(); i++) {
+		rct.setCenter(fei::Vec2(data[i << 1], data[i << 1 | 1]));
+		Render::getInstance()->drawShape(&rct);
+	}
+}
+
 void EditorScene::init()
 {
-	poly = Polygon::makeRegularPolygon(3, 200.0f);
+	poly = Polygon::makeRegularPolygon(4, 200.0f, 45.0f);
 	poly.setSolid(false);
+
+	tex.load("map.png");
+	add(&tex);
 
 	polyObj.setShape(&poly);
 	add(&polyObj);
@@ -19,8 +34,12 @@ void EditorScene::init()
 
 void EditorScene::update()
 {
+	auto window = Interface::getInstance()->getCurrentWindow();
 	if (holdVertex >= 0) {
 		poly.setVertex(holdVertex, pos);
+	}
+	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE)) {
+		mainCam.move(Vec2(1.0f));
 	}
 }
 
@@ -64,6 +83,7 @@ void EditorScene::scrollCallback(double xoffset, double yoffset)
 
 void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 {
+	auto window = Interface::getInstance()->getCurrentWindow();
 	if (key == GLFW_KEY_SPACE) {
 		if (action == GLFW_PRESS) {
 			poly.setSolid(true);
@@ -72,4 +92,17 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 			poly.setSolid(false);
 		}
 	}
+	if (key == GLFW_KEY_F11) {
+		if (action == GLFW_PRESS) {
+			window->setFullscreen(!window->isFullscreen());	
+			Render::getInstance()->setViewport(window->getFrameSize());
+			mainCam.setCameraSize(window->getFrameSize());
+		}
+	}
+}
+
+void EditorScene::framebufferSizeCallback(int width, int height)
+{
+	Render::getInstance()->setViewport(Vec2(width, height));
+	mainCam.setCameraSize(Vec2(width, height));
 }

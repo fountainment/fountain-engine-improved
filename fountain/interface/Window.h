@@ -41,6 +41,7 @@ public:
 	const Vec2 getCursorPos();
 	const Vec2 getRHCursorPos();
 	const Vec2 getWindowSize();
+	const Vec2 getFrameSize();
 
 	SceneManager *sceneManager;
 

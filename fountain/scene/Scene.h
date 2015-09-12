@@ -24,6 +24,7 @@ public:
 	virtual void scrollCallback(double xoffset, double yoffset);
 	virtual void cursorPosCallback(double xpos, double ypos);
 	virtual void charactorCallback(unsigned int codepoint);
+	virtual void framebufferSizeCallback(int width, int height);
 
 private:
 	Clock *sceneClock;
