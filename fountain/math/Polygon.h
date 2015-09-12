@@ -24,7 +24,7 @@ public:
 
 	static const Polygon makeRegularPolygon(int edgeNum, float radius);
 
-private:
+protected:
 	std::vector<Vec2> data;
 };
 

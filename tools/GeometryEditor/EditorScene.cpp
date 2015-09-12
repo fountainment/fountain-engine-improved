@@ -61,3 +61,15 @@ void EditorScene::scrollCallback(double xoffset, double yoffset)
 		mainCam.cameraScaleZoom(0.9f);
 	}
 }
+
+void EditorScene::keyCallback(int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_SPACE) {
+		if (action == GLFW_PRESS) {
+			poly.setSolid(true);
+		}
+		if (action == GLFW_RELEASE) {
+			poly.setSolid(false);
+		}
+	}
+}

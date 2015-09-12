@@ -14,7 +14,7 @@ public:
 	void setShape(Shape* sp);
 	void drawIt() override;
 
-private:
+protected:
 	Shape* shape;
 };
 
