@@ -258,19 +258,11 @@ void Render::drawShape(const fei::Shape* shape)
 	auto pos = shape->getPosition();
 	glPushMatrix();
 	glTranslatef(pos.x, pos.y, 0.0f);
-	switch(shape->getType()) {
-	case fei::Shape::Type::CIRCLE:
-		{
-			float r = ((fei::Circle*)shape)->getRadius();
-			glScalef(r, r, r);
-		}
-	case fei::Shape::Type::POLYGON:
-		drawArray2f(shape->getDataPtr(), 0, shape->getDataSize(), type);
-		break;
-	case fei::Shape::Type::RECT:
-		drawRect(((fei::Rect*)shape)->getSize());
-		break;
+	if (fei::Shape::Type::CIRCLE == shape->getType()) {
+		float r = ((fei::Circle*)shape)->getRadius();
+		glScalef(r, r, r);
 	}
+	drawArray2f(shape->getDataPtr(), 0, shape->getDataSize(), type);
 	glPopMatrix();
 }
 

@@ -115,7 +115,12 @@ void Rect::getStripCoord(float* coord) const
 
 const float* Rect::getDataPtr() const
 {
-	return nullptr;
+	static float data[8] = {0.0f};
+	data[2] = size.x;
+	data[4] = size.x;
+	data[5] = size.y;
+	data[7] = size.y;
+	return data;
 }
 
 int Rect::getDataSize() const
