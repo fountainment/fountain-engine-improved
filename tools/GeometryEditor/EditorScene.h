@@ -16,6 +16,9 @@ private:
 	fei::Camera mainCam;
 	fei::Polygon poly;
 	fei::ShapeObj polyObj;
+
+	int holdVertex;
+	fei::Vec2 pos;
 };
 
 #endif

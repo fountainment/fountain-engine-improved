@@ -168,6 +168,15 @@ int Window::getKey(int key)
 	return result;
 }
 
+int Window::getMouseButton(int button)
+{
+	int result = 0;
+	if (window) {
+		result = glfwGetMouseButton(window, button);
+	}
+	return result;
+}
+
 const fei::Vec2 Window::getCursorPos()
 {
 	fei::Vec2 result;

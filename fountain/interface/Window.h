@@ -37,6 +37,7 @@ public:
 	bool isFullscreen();
 
 	int getKey(int key);
+	int getMouseButton(int button);
 	const Vec2 getCursorPos();
 	const Vec2 getRHCursorPos();
 	const Vec2 getWindowSize();

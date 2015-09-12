@@ -14,6 +14,12 @@ public:
 	const float* getDataPtr() const override;
 	void pushPoint(const Vec2& p);
 
+	void setVertex(int index, const Vec2& p);
+	const Vec2 getVertex(int index) const;
+	int insertVertex(const Vec2& p);
+
+	int collideVertex(const Vec2& p, float radius) const;
+
 	const std::vector<Vec2> getDataVector() const;
 
 	static const Polygon makeRegularPolygon(int edgeNum, float radius);
