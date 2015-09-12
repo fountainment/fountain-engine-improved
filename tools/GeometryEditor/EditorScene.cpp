@@ -19,7 +19,7 @@ void EditorScene::init()
 	poly = Polygon::makeRegularPolygon(4, 200.0f, 45.0f);
 	poly.setSolid(false);
 
-	tex.load("map.png");
+	tex.load("image.png");
 	add(&tex);
 
 	polyObj.setShape(&poly);
@@ -38,8 +38,11 @@ void EditorScene::update()
 	if (holdVertex >= 0) {
 		poly.setVertex(holdVertex, pos);
 	}
-	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE)) {
-		mainCam.move(Vec2(1.0f));
+	mPos = window->getRHCursorPos();
+	deltaV = mPos - oldPos;
+	oldPos = mPos;
+	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
+		mainCam.move(deltaV / -mainCam.getCameraScale());
 	}
 }
 
@@ -58,6 +61,11 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 		if (action == GLFW_PRESS) {
 			if (!window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT)) {
 				poly.insertVertex(pos, 0);
+			} else {
+				if (holdVertex != -1) {
+					poly.deleteVertex(holdVertex);
+					holdVertex = -1;
+				}
 			}
 		}
 		if (action == GLFW_RELEASE) {

@@ -39,6 +39,12 @@ void Polygon::insertVertex(const fei::Vec2& p, int index)
 	data.insert(data.begin() + index, p);
 }
 
+void Polygon::deleteVertex(int index)
+{
+	//TODO: assertion
+	data.erase(data.begin() + index);
+}
+
 int Polygon::collideVertex(const fei::Vec2& p, float radius) const
 {
 	float rSq = radius * radius;

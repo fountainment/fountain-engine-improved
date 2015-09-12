@@ -95,9 +95,7 @@ fei::Window* Interface::getCurrentWindow()
 
 void Interface::executeAfterFrame()
 {
-	for (auto it = windowList.rbegin(); it != windowList.rend(); ++it) {
-		(*it)->swapBuffers();
-	}
+	currentWindow->swapBuffers();
 	glfwPollEvents();
 }
 

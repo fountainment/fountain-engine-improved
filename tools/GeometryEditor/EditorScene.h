@@ -29,6 +29,7 @@ private:
 
 	int holdVertex;
 	fei::Vec2 pos;
+	fei::Vec2 mPos, oldPos, deltaV;
 };
 
 #endif
