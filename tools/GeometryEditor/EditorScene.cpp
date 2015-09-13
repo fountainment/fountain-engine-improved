@@ -16,6 +16,10 @@ void EShapeObj::drawIt()
 
 void EditorScene::init()
 {
+	Physics::getInstance()->setDoDebugDraw(true);
+	Physics::getInstance()->setDebugDrawCamera(&mainCam);
+	Physics::getInstance()->setRatio(64.0f);
+
 	poly = Polygon::makeRegularPolygon(4, 200.0f, 45.0f);
 	poly.setSolid(false);
 
@@ -106,6 +110,20 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 			Render::getInstance()->setViewport(window->getFrameSize());
 			mainCam.setCameraSize(window->getFrameSize());
 		}
+	}
+	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
+		auto body = Physics::getInstance()->createBody(Vec2::ZERO);
+		body->getB2Body()->SetGravityScale(0.0f);
+		auto fix = body->createFixture(&poly);
+		fix->SetSensor(true);
+	}
+	if (key == GLFW_KEY_D && action == GLFW_PRESS) {
+		auto body = Physics::getInstance()->createBody(Vec2::ZERO);
+		body->createFixture(&poly);
+	}
+	if (key == GLFW_KEY_F && action == GLFW_PRESS) {
+		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::STATIC);
+		body->createFixture(&poly);
 	}
 }
 
