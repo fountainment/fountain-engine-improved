@@ -7,5 +7,6 @@ set(FOUNTAIN_MATH_SRC
 	math/Polygon.cpp
 	math/Circle.cpp
 	math/Rect.cpp
+	math/Segment.cpp
 	math/hash.cpp
 )
