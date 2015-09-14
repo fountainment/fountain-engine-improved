@@ -25,19 +25,30 @@ void EditorScene::init()
 	Physics::getInstance()->setDebugDrawCamera(&mainCam);
 	Physics::getInstance()->setRatio(64.0f);
 
-	poly = Polygon::makeRegularPolygon(4, 200.0f, 45.0f);
-	poly.setSolid(false);
+	for (int i = 0; i < 10; i++) {
+		poly[i] = Polygon::makeRegularPolygon(4, 200.0f, 45.0f);
+		poly[i].setSolid(false);
+	}
 
-	tex.load("image.png");
-	add(&tex);
+	for (int i = 0; i < 10; i++) {
+		char tmpStr[2];
+		tmpStr[0] = '0' + i;
+		tmpStr[1] = '\0';
+		std::string t(tmpStr);
+		t += ".png";
+		tex[i].load(t.c_str());
+	}
+	image = tex[0].getImage();
+	add(&image);
 
-	polyObj.setShape(&poly);
+	polyObj.setShape(&poly[0]);
 	add(&polyObj);
 
 	auto vec = Interface::getInstance()->getCurrentWindow()->getWindowSize();
 	mainCam.setCameraSize(vec);
 	setCamera(&mainCam);
 
+	curEdit = 0;
 	holdVertex = -1;
 }
 
@@ -46,7 +57,7 @@ void EditorScene::update()
 	auto window = Interface::getInstance()->getCurrentWindow();
 
 	if (holdVertex >= 0) {
-		poly.setVertex(holdVertex, pos);
+		poly[curEdit].setVertex(holdVertex, pos);
 	}
 
 	mPos = window->getRHCursorPos();
@@ -58,7 +69,7 @@ void EditorScene::update()
 	}
 
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT) && window->getKey(GLFW_KEY_LEFT_CONTROL)) {
-		poly.moveVertices(deltaV);
+		poly[curEdit].moveVertices(deltaV);
 	}
 }
 
@@ -68,7 +79,7 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 
 	if (button == GLFW_MOUSE_BUTTON_LEFT) {
 		if (action == GLFW_PRESS) {
-			holdVertex = poly.collideVertex(pos, 10.0f / mainCam.getCameraScale());
+			holdVertex = poly[curEdit].collideVertex(pos, 10.0f / mainCam.getCameraScale());
 		}
 		if (action == GLFW_RELEASE) {
 			holdVertex = -1;
@@ -77,10 +88,10 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
 		if (!window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT)) {
-			poly.insertVertex(pos, 0);
+			poly[curEdit].insertVertex(pos, 0);
 		} else {
 			if (holdVertex != -1) {
-				poly.deleteVertex(holdVertex);
+				poly[curEdit].deleteVertex(holdVertex);
 				holdVertex = -1;
 			}
 		}
@@ -109,10 +120,10 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 
 	if (key == GLFW_KEY_SPACE) {
 		if (action == GLFW_PRESS) {
-			poly.setSolid(true);
+			poly[curEdit].setSolid(true);
 		}
 		if (action == GLFW_RELEASE) {
-			poly.setSolid(false);
+			poly[curEdit].setSolid(false);
 		}
 	}
 
@@ -125,18 +136,25 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO);
 		body->getB2Body()->SetGravityScale(0.0f);
-		auto fix = body->createFixture(&poly);
+		auto fix = body->createFixture(&poly[curEdit]);
 		fix->SetSensor(true);
 	}
 
 	if (key == GLFW_KEY_D && action == GLFW_PRESS) {
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO);
-		body->createFixture(&poly);
+		body->createFixture(&poly[curEdit]);
 	}
 
 	if (key == GLFW_KEY_F && action == GLFW_PRESS) {
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::STATIC);
-		body->createFixture(&poly);
+		body->createFixture(&poly[curEdit]);
+	}
+
+	if (key >= GLFW_KEY_0 && key <= GLFW_KEY_9 && action == GLFW_PRESS) {
+		curEdit = key - GLFW_KEY_0;
+		image = tex[curEdit].getImage();
+		polyObj.setShape(&poly[curEdit]);
+		holdVertex = -1;
 	}
 }
 

@@ -23,9 +23,12 @@ public:
 
 private:
 	fei::Camera mainCam;
-	fei::Polygon poly;
-	fei::Texture tex;
+	fei::Polygon poly[10];
+	fei::Texture tex[10];
+	fei::Image image;
 	EShapeObj polyObj;
+
+	int curEdit;
 
 	int holdVertex;
 	fei::Vec2 pos;
