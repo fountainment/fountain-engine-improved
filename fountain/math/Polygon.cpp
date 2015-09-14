@@ -45,6 +45,13 @@ void Polygon::deleteVertex(int index)
 	data.erase(data.begin() + index);
 }
 
+void Polygon::moveVertices(const fei::Vec2& v)
+{
+	for (auto &vertex : data) {
+		vertex.add(v);
+	}
+}
+
 int Polygon::collideVertex(const fei::Vec2& p, float radius) const
 {
 	float rSq = radius * radius;

@@ -19,6 +19,8 @@ public:
 	void insertVertex(const Vec2& p, int index);
 	void deleteVertex(int index);
 
+	void moveVertices(const Vec2& v);
+
 	int collideVertex(const Vec2& p, float radius) const;
 
 	const std::vector<Vec2> getDataVector() const;
