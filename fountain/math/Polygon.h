@@ -32,7 +32,7 @@ public:
 
 	static const Polygon makeRegularPolygon(int edgeNum, float radius, float offset = 0.0f);
 
-protected:
+private:
 	std::vector<Vec2> data;
 };
 

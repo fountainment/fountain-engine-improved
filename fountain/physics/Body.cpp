@@ -59,6 +59,15 @@ b2Fixture* Body::createFixture(const fei::Shape* shape)
 	return fixture;
 }
 
+const std::vector<b2Fixture*> Body::createFixture(const std::vector<fei::Shape*>& shapeList)
+{
+	std::vector<b2Fixture*> result;
+	for (auto shape : shapeList) {
+		result.push_back(createFixture(shape));
+	}
+	return result;
+}
+
 b2Fixture* Body::createFixture(const b2FixtureDef& fixDef)
 {
 	return body->CreateFixture(&fixDef);

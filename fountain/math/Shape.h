@@ -29,8 +29,6 @@ public:
 
 	Type getType() const;
 
-	//TODO: design Shape data storage and render logic
-
 private:
 	bool _isSolid;
 

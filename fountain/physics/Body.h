@@ -2,6 +2,7 @@
 #define _FEI_BODY_H_
 
 #include <Box2D/Box2D.h>
+#include "base/basedef.h"
 #include "math/Vec2.h"
 #include "math/Shape.h"
 
@@ -26,6 +27,7 @@ public:
 	void setSpeed(const Vec2& sp);
 
 	b2Fixture* createFixture(const Shape* shape);
+	const std::vector<b2Fixture*> createFixture(const std::vector<Shape*>& shapeList);
 	b2Fixture* createFixture(const b2FixtureDef& fixDef);
 
 private:
