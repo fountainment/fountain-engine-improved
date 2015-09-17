@@ -41,7 +41,7 @@ public:
 	void bindTexture(GLuint tex);
 	void disableTexture();
 
-	inline void drawArray2f(const GLfloat* vertex, GLint first, GLsizei count, GLenum mode);
+	void drawArray2f(const GLfloat* vertex, GLint first, GLsizei count, GLenum mode);
 
 	void drawLine(const Vec2& pa, const Vec2& pb);
 	void drawRect(const Vec2& size);

@@ -156,6 +156,14 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 		polyObj.setShape(&poly[curEdit]);
 		holdVertex = -1;
 	}
+
+	if (key == GLFW_KEY_E && action == GLFW_PRESS) {
+		auto list = poly[curEdit].convexDecomposition();
+		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
+		for (auto poly : list) {
+			body->createFixture(&poly);
+		}
+	}
 }
 
 void EditorScene::framebufferSizeCallback(int width, int height)

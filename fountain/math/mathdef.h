@@ -6,6 +6,7 @@
 namespace fei {
 
 extern const double eps;
+extern const float epsf;
 extern const double pi;
 
 extern const double d2r;

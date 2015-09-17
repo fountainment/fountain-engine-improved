@@ -20,7 +20,7 @@ public:
 		fei::Polygon polygon;
 		for (int i = 0; i < vertexCount; ++i) {
 			fei::Vec2 vec(vertices[i].x, vertices[i].y);
-			polygon.pushPoint(Physics::getInstance()->physicsToRender(vec));
+			polygon.pushVertex(Physics::getInstance()->physicsToRender(vec));
 		}
 		polygon.setSolid(false);
 		fei::Render::getInstance()->drawShape(&polygon);
@@ -32,7 +32,7 @@ public:
 		fei::Polygon polygon;
 		for (int i = 0; i < vertexCount; ++i) {
 			fei::Vec2 vec(vertices[i].x, vertices[i].y);
-			polygon.pushPoint(Physics::getInstance()->physicsToRender(vec));
+			polygon.pushVertex(Physics::getInstance()->physicsToRender(vec));
 		}
 		fei::Render::getInstance()->drawShape(&polygon);
 		fei::Color(color.r + 0.2f, color.g + 0.2f, color.b + 0.2f).use();

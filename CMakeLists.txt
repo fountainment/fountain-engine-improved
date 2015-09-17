@@ -31,6 +31,8 @@ endif()
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 
+add_subdirectory(deps/proj/Box2D)
+
 if(WINDOWS)
   add_subdirectory(deps/proj/glfw)
   include_directories(deps/include)
@@ -39,6 +41,12 @@ endif()
 
 if(LINUX)
   add_definitions(-Wall -fexceptions -std=c++11)
+endif()
+
+set(DEBUG TRUE)
+
+if (DEBUG)
+  add_definitions(-g)
 endif()
 
 add_definitions(-DGLFW_INCLUDE_NONE -DGLFW_STATIC -DGLEW_STATIC)
@@ -55,7 +63,6 @@ if(WINDOWS)
 	set(PLATFORM_LINK_LIBRARY glfw3 glew32s opengl32 FreeImage OpenAL32 Box2D legacy_stdio_definitions)
 endif()
 
-add_subdirectory(deps/proj/Box2D)
 add_subdirectory(fountain)
 add_subdirectory(tools)
 add_subdirectory(tests)
