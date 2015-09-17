@@ -35,7 +35,7 @@ bool Segment::collideSegment(fei::Vec2& pt, const Segment& seg) const
 bool Segment::collideRay(Vec2& pt, const Vec2& src, const Vec2& drct) const
 {
 	auto intersection = fei::collideLine(a, b, src, src + drct);
-	if (rectCollidePoint(intersection) && drct.dot(intersection)) {
+	if (rectCollidePoint(intersection) && drct.dot(intersection - src) > 0.0f) {
 		pt = intersection;
 		return true;
 	} else {
