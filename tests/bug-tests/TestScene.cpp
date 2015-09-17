@@ -49,6 +49,21 @@ void TestScene::testMath()
 			std::printf("Segment: 1ok!\n");
 		}
 	}
+
+	Polygon y;
+	y.pushVertex(Vec2(98.999977, 76.000000));
+	y.pushVertex(Vec2(209.999985, 6.999993));
+	y.pushVertex(Vec2(141.421356, 141.421356));
+	y.pushVertex(Vec2(-141.421356, 141.421356));
+	y.pushVertex(Vec2(141.421326, -141.421371));
+	y.pushVertex(Vec2(-141.421326, -141.421371));
+
+	auto tl = y.getVisibleVerticesIndex(1);
+	std::printf("%lu\n", tl.size());
+	for (int vertex : tl) {
+		std::printf("%d\n", vertex);
+	}
+	std::printf("%d\n", y.getBestCutVertexIndex(1));
 }
 
 void TestScene::testPhysics()

@@ -80,7 +80,7 @@ const std::vector<Polygon> Polygon::cut(int index) const
 	} else {
 		int prev = indexNormalize(index - 1);
 		bool isConcave = isConcaveVertex(index);
-		auto leftVec = getVector(prev);
+		auto leftVec = -getVector(prev);
 		auto rightVec = getVector(index);
 		auto middleVec = (leftVec.normalized() + rightVec.normalized()).normalized();
 		if (isConcave) {
@@ -89,10 +89,10 @@ const std::vector<Polygon> Polygon::cut(int index) const
 		auto pl = collideRay(getVertex(index), middleVec);
 		if (!pl.empty()) {
 			Polygon polyCopy(*this);
-			int insertLoc = indexNormalize(onWhichSegment(pl[0]) + 1);
+			int insertLoc = polyCopy.indexNormalize(polyCopy.onWhichSegment(pl[0]) + 1);
 			polyCopy.insertVertex(pl[0], insertLoc);
 			if (insertLoc <= index) {
-				index = indexNormalize(index + 1);
+				index = polyCopy.indexNormalize(index + 1);
 			}
 			result = polyCopy.cut(index, insertLoc);
 		}

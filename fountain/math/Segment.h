@@ -52,19 +52,21 @@ inline bool fei::Segment::collidePoint(const Vec2& p) const
 
 inline bool fei::Segment::rectCollidePoint(const fei::Vec2& p) const
 {
-	return ((p.x - a.x) * (p.x - b.x) <= 0
-		&& (p.y - a.y) * (p.y - b.y) <= 0);
+	return ((p.x - a.x) * (p.x - b.x) <= 0.0f
+		&& (p.y - a.y) * (p.y - b.y) <= 0.0f);
 }
 
 inline int fei::Segment::onLeftOrRight(const fei::Vec2& pt) const
 {
 	double cp = getVector().cross(pt - a);
-	if (cp > 0) {
+	if (std::abs(cp) < fei::epsf) {
+		return 0;
+	}
+	if (cp > 0.0f) {
 		return -1;
-	} else if (cp < 0) {
+	} else {
 		return 1;
 	}
-	return 0;
 }
 		  
 #endif

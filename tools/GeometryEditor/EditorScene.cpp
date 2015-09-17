@@ -158,6 +158,7 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 	}
 
 	if (key == GLFW_KEY_E && action == GLFW_PRESS) {
+		poly[curEdit].print();
 		auto list = poly[curEdit].convexDecomposition();
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
 		for (auto poly : list) {
