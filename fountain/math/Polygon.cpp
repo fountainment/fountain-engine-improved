@@ -344,7 +344,7 @@ void Polygon::print() const
 {
 	printf("%lu\n", data.size());
 	for (auto vertex : data) {
-		printf("%.2f %.2f\n", vertex.x, vertex.y);
+		printf("%f %f\n", vertex.x, vertex.y);
 	}
 	printf("\n");
 }
@@ -366,7 +366,7 @@ const std::vector<Polygon> Polygon::convexDecomposition() const
 				for (auto poly : twoPoly) {
 					poly.normalize();
 					if (poly.isValid()) {
-						processQueue.push(poly.normalized());
+						processQueue.push(poly);
 					}
 				}
 			}
