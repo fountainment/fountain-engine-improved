@@ -51,6 +51,7 @@ public:
 	bool isConvex() const;
 	
 	const std::vector<Polygon> convexDecomposition() const;
+	const std::vector<Polygon> box2dDecomposition() const;
 
 	static const Polygon makeRegularPolygon(int edgeNum, float radius, float offset = 0.0f);
 

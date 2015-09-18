@@ -23,10 +23,12 @@ public:
 
 private:
 	fei::Camera mainCam;
+	fei::Rect basePoint;
 	fei::Polygon poly[10];
 	fei::Texture tex[10];
 	fei::Image image;
 	EShapeObj polyObj;
+	fei::ShapeObj basePointObj;
 
 	int curEdit;
 

@@ -385,6 +385,37 @@ const std::vector<Polygon> Polygon::convexDecomposition() const
 	return result;
 }
 
+const std::vector<Polygon> Polygon::box2dDecomposition() const
+{
+	std::vector<Polygon> result;
+	std::queue<Polygon> processQueue;
+	auto convexList = convexDecomposition();
+	for (auto poly : convexList) {
+		processQueue.push(poly);
+	}
+	while(!processQueue.empty()) {
+		auto currentPoly = processQueue.front();
+		processQueue.pop();
+		if (currentPoly.isValid()) {
+			if (currentPoly.getDataSize() <= 8) {
+				result.push_back(currentPoly);
+			} else {
+				auto twoPoly = currentPoly.cut(0);
+				for (auto poly : twoPoly) {
+					poly.normalize();
+					if (poly.isValid() && (poly.getArea() > fei::epsf)) {
+						processQueue.push(poly);
+					}
+				}
+			}
+		}
+		if (result.size() > 100 || processQueue.size() > 100) {
+			break;
+		}
+	}
+	return result;
+}
+
 const Polygon Polygon::makeRegularPolygon(int edgeNum, float radius, float offset)
 {
 	Polygon polygon;

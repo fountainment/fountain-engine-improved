@@ -41,6 +41,10 @@ void EditorScene::init()
 	image = tex[0].getImage();
 	add(&image);
 
+	basePoint.setSize(Vec2(10.0f));
+	basePointObj.setShape(&basePoint);
+	add(&basePointObj);
+
 	polyObj.setShape(&poly[0]);
 	add(&polyObj);
 
@@ -136,7 +140,7 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 	}
 
 	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
-		auto list = poly[curEdit].convexDecomposition();
+		auto list = poly[curEdit].box2dDecomposition();
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
 		body->getB2Body()->SetGravityScale(0.0f);
 		for (auto poly : list) {
@@ -146,7 +150,7 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 	}
 
 	if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-		auto list = poly[curEdit].convexDecomposition();
+		auto list = poly[curEdit].box2dDecomposition();
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
 		for (auto poly : list) {
 			body->createFixture(&poly);
@@ -154,7 +158,7 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 	}
 
 	if (key == GLFW_KEY_F && action == GLFW_PRESS) {
-		auto list = poly[curEdit].convexDecomposition();
+		auto list = poly[curEdit].box2dDecomposition();
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::STATIC);
 		for (auto poly : list) {
 			body->createFixture(&poly);
