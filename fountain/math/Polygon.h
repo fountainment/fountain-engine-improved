@@ -32,6 +32,7 @@ public:
 	const std::vector<Polygon> cut(int index) const;
 	const std::vector<Polygon> cut(int a, int b) const;
 
+	int closestWhichSegment(const Vec2& p) const;
 	int onWhichSegment(const Vec2& p) const;
 	int collideVertex(const Vec2& p, float radius) const;
 	const std::vector<Vec2> collideRay(const Vec2& src, const Vec2& drct) const;
@@ -49,8 +50,6 @@ public:
 	std::vector<int> getVisibleVerticesIndex(int index) const; 
 	bool isConvex() const;
 	
-	void print() const;
-
 	const std::vector<Polygon> convexDecomposition() const;
 
 	static const Polygon makeRegularPolygon(int edgeNum, float radius, float offset = 0.0f);

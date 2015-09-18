@@ -43,12 +43,6 @@ if(LINUX)
   add_definitions(-Wall -fexceptions -std=c++11)
 endif()
 
-set(DEBUG TRUE)
-
-if (DEBUG)
-  add_definitions(-g)
-endif()
-
 add_definitions(-DGLFW_INCLUDE_NONE -DGLFW_STATIC -DGLEW_STATIC)
 include_directories(fountain deps/proj/Box2D)
 

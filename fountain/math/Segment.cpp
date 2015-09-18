@@ -39,7 +39,6 @@ bool Segment::collideRay(Vec2& pt, const Vec2& src, const Vec2& drct) const
 		pt = intersection;
 		return true;
 	} else {
-	std::printf("x%f %f\n", intersection.x, intersection.y);
 		return false;
 	}
 }

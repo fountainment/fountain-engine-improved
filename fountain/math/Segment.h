@@ -47,13 +47,14 @@ inline float fei::Segment::getLengthSq() const
 
 inline bool fei::Segment::collidePoint(const Vec2& p) const
 {
-	return (std::abs((p - a).cross(b - a)) < fei::epsf) && rectCollidePoint(p);
+	return std::abs((a - p).normalized().dot((b - p).normalized()) + 1.0f) < fei::epsf;
 }
 
 inline bool fei::Segment::rectCollidePoint(const fei::Vec2& p) const
 {
-	return ((p.x - a.x) * (p.x - b.x) <= 0.0f
-		&& (p.y - a.y) * (p.y - b.y) <= 0.0f);
+	float x = (p.x - a.x) * (p.x - b.x);;
+	float y = (p.y - a.y) * (p.y - b.y);
+	return (x < 0.0f || std::abs(x) < fei::epsf) && (y < 0.0f || std::abs(y) < fei::epsf);
 }
 
 inline int fei::Segment::onLeftOrRight(const fei::Vec2& pt) const

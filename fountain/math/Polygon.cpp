@@ -89,7 +89,8 @@ const std::vector<Polygon> Polygon::cut(int index) const
 		auto pl = collideRay(getVertex(index), middleVec);
 		if (!pl.empty()) {
 			Polygon polyCopy(*this);
-			int insertLoc = polyCopy.indexNormalize(polyCopy.onWhichSegment(pl[0]) + 1);
+			int segIndex = polyCopy.closestWhichSegment(pl[0]);
+			int insertLoc = polyCopy.indexNormalize(segIndex + 1);
 			polyCopy.insertVertex(pl[0], insertLoc);
 			if (insertLoc <= index) {
 				index = polyCopy.indexNormalize(index + 1);
@@ -127,6 +128,21 @@ const std::vector<Polygon> Polygon::cut(int a, int b) const
 	return result;
 }
 
+int Polygon::closestWhichSegment(const fei::Vec2& p) const
+{
+	int ans = 0;
+	float minR = 1e32;
+	for (int i = 0; i < (int)data.size(); i++) {
+		auto seg = getSegment(i);
+		float curRatio = std::abs(((p - seg.a).getLength() + (p - seg.b).getLength()) / seg.getLength() - 1.0f);
+		if (curRatio <= minR) {
+			minR = curRatio;
+			ans = i;
+		}
+	}
+	return ans;
+}
+
 int Polygon::onWhichSegment(const fei::Vec2& p) const
 {
 	for (int i = 0; i < (int)data.size(); i++) {
@@ -141,7 +157,7 @@ int Polygon::collideVertex(const fei::Vec2& p, float radius) const
 {
 	float rSq = radius * radius;
 	for (int i = 0; i < (int)data.size(); i++) {
-		if ((data[i] - p).getLengthSq() <= rSq) {
+		if (((data[i] + pos) - p).getLengthSq() <= rSq) {
 			return i;
 		}
 	}
@@ -166,7 +182,7 @@ const std::vector<fei::Vec2> Polygon::collideRay(const fei::Vec2& src, const fei
 	}
 	std::sort(result.begin(), result.end(), cmpLength);
 	for (int i = 0; i < (int)result.size(); i++) {
-		if (result[i] == fei::Vec2::ZERO) continue;
+		if (result[i].getLengthSq() < 0.01f) continue;
 		if (i == 0 || result[i] != result[i - 1]) {
 			uniqueResult.push_back(result[i] + src);
 		}
@@ -190,7 +206,7 @@ void Polygon::normalize()
 	int sz = data.size();
 	for (int i = 0; i < sz; i++) {
 		int prev = indexNormalize(i - 1);
-		if ((getVertex(i) != getVertex(prev))
+		if ((getVector(prev).getLengthSq() >= 0.01f)
 		   && (getVector(i).normalized() != getVector(prev).normalized())) {
 			nData.push_back(getVertex(i));
 		}
@@ -338,15 +354,6 @@ std::vector<int> Polygon::getVisibleVerticesIndex(int index) const
 bool Polygon::isConvex() const
 {
 	return getOneConcaveVertex() < 0;
-}
-
-void Polygon::print() const
-{
-	printf("%lu\n", data.size());
-	for (auto vertex : data) {
-		printf("%f %f\n", vertex.x, vertex.y);
-	}
-	printf("\n");
 }
 
 const std::vector<Polygon> Polygon::convexDecomposition() const

@@ -88,7 +88,9 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
 		if (!window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT)) {
-			poly[curEdit].insertVertex(pos, 0);
+			int loc = poly[curEdit].closestWhichSegment(pos);
+			loc = poly[curEdit].indexNormalize(loc + 1);
+			poly[curEdit].insertVertex(pos, loc);
 		} else {
 			if (holdVertex != -1) {
 				poly[curEdit].deleteVertex(holdVertex);
@@ -134,20 +136,29 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 	}
 
 	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
-		auto body = Physics::getInstance()->createBody(Vec2::ZERO);
+		auto list = poly[curEdit].convexDecomposition();
+		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
 		body->getB2Body()->SetGravityScale(0.0f);
-		auto fix = body->createFixture(&poly[curEdit]);
-		fix->SetSensor(true);
+		for (auto poly : list) {
+			auto fix = body->createFixture(&poly);
+			fix->SetSensor(true);
+		}
 	}
 
 	if (key == GLFW_KEY_D && action == GLFW_PRESS) {
-		auto body = Physics::getInstance()->createBody(Vec2::ZERO);
-		body->createFixture(&poly[curEdit]);
+		auto list = poly[curEdit].convexDecomposition();
+		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
+		for (auto poly : list) {
+			body->createFixture(&poly);
+		}
 	}
 
 	if (key == GLFW_KEY_F && action == GLFW_PRESS) {
+		auto list = poly[curEdit].convexDecomposition();
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::STATIC);
-		body->createFixture(&poly[curEdit]);
+		for (auto poly : list) {
+			body->createFixture(&poly);
+		}
 	}
 
 	if (key >= GLFW_KEY_0 && key <= GLFW_KEY_9 && action == GLFW_PRESS) {
@@ -158,12 +169,6 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 	}
 
 	if (key == GLFW_KEY_E && action == GLFW_PRESS) {
-		poly[curEdit].print();
-		auto list = poly[curEdit].convexDecomposition();
-		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
-		for (auto poly : list) {
-			body->createFixture(&poly);
-		}
 	}
 }
 
