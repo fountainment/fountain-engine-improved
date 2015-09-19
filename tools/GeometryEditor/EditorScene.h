@@ -9,6 +9,16 @@ public:
 	void drawIt() override;
 };
 
+class Cross : public fei::RenderObj
+{
+public:
+	void drawIt() override;
+	void setSize(float sz);
+
+private:
+	fei::Segment a, b;
+};
+
 class EditorScene : public fei::Scene
 {
 public:
@@ -23,12 +33,12 @@ public:
 
 private:
 	fei::Camera mainCam;
-	fei::Rect basePoint;
 	fei::Polygon poly[10];
 	fei::Texture tex[10];
 	fei::Image image;
 	EShapeObj polyObj;
-	fei::ShapeObj basePointObj;
+
+	Cross centerCross;
 
 	int curEdit;
 

@@ -19,6 +19,20 @@ void EShapeObj::drawIt()
 	}
 }
 
+void Cross::drawIt()
+{
+	Render::getInstance()->drawShape(&a);
+	Render::getInstance()->drawShape(&b);
+}
+
+void Cross::setSize(float sz)
+{
+	a.a = Vec2(-sz / 2.0f, 0.0f);
+	a.b = Vec2(sz / 2.0f, 0.0f);
+	b.a = Vec2(0.0f, -sz / 2.0f);
+	b.b = Vec2(0.0f, sz / 2.0f);
+}
+
 void EditorScene::init()
 {
 	Physics::getInstance()->setDoDebugDraw(true);
@@ -41,9 +55,8 @@ void EditorScene::init()
 	image = tex[0].getImage();
 	add(&image);
 
-	basePoint.setSize(Vec2(10.0f));
-	basePointObj.setShape(&basePoint);
-	add(&basePointObj);
+	centerCross.setSize(10.0f);
+	add(&centerCross);
 
 	polyObj.setShape(&poly[0]);
 	add(&polyObj);

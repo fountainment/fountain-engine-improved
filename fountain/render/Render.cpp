@@ -262,6 +262,9 @@ void Render::drawShape(const fei::Shape* shape)
 		float r = ((fei::Circle*)shape)->getRadius();
 		glScalef(r, r, r);
 	}
+	if (fei::Shape::Type::SEGMENT == shape->getType()) {
+		type = GL_LINES;
+	}
 	drawArray2f(shape->getDataPtr(), 0, shape->getDataSize(), type);
 	glPopMatrix();
 }
