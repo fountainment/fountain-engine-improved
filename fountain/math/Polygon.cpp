@@ -130,7 +130,7 @@ const std::vector<Polygon> Polygon::cut(int a, int b) const
 
 int Polygon::closestWhichSegment(const fei::Vec2& p) const
 {
-	int ans = 0;
+	int ans = -1;
 	float minR = 1e32;
 	for (int i = 0; i < (int)data.size(); i++) {
 		auto seg = getSegment(i);

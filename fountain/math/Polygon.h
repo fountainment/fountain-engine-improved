@@ -63,6 +63,9 @@ private:
 
 inline int fei::Polygon::indexNormalize(int index) const
 {
+	if (data.empty()) {
+		return 0;
+	}
 	int sz = (int)data.size();
 	return ((index % sz) + sz) % sz;
 }
