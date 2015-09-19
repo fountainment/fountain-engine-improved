@@ -2,15 +2,19 @@
 #define _FEI_SEGMENT_H_
 
 #include "math/Vec2.h"
+#include "math/Shape.h"
 #include "math/mathdef.h"
 
 namespace fei {
 
-class Segment
+class Segment : public Shape
 {
 public:
 	Segment();
 	Segment(Vec2 aa, Vec2 bb);
+
+	const float* getDataPtr() const override;
+	int getDataSize() const override;
 
 	const Vec2 getVector() const;
 	float getLength() const;

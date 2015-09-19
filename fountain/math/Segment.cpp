@@ -6,12 +6,24 @@ Segment::Segment()
 : a(fei::Vec2::ZERO),
   b(fei::Vec2::ZERO)
 {
+	shapeType = fei::Shape::Type::SEGMENT;
 }
 
 Segment::Segment(fei::Vec2 aa, fei::Vec2 bb)
 : a(aa),
   b(bb)
 {
+	shapeType = fei::Shape::Type::SEGMENT;
+}
+
+const float* Segment::getDataPtr() const
+{
+	return &a.x;
+}
+
+int Segment::getDataSize() const
+{
+	return 2;
 }
 
 void Segment::swapAB()

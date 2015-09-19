@@ -13,7 +13,8 @@ public:
 	enum class Type {
 		POLYGON = 1,
 		CIRCLE = 2,
-		RECT = 3
+		RECT = 3,
+		SEGMENT = 4
 	};
 
 	Shape();

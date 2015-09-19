@@ -251,6 +251,18 @@ b2Shape* Physics::ShapeToB2Shape(const fei::Shape* shape)
 			b2shape = pShape;
 		}
 		break;
+	case fei::Shape::Type::SEGMENT:
+		{
+			auto lShape = new b2ChainShape;
+			auto data = shape->getDataPtr();
+			auto pos = shape->getPosition();
+			b2Vec2 vec[2];
+			vec[0] = b2Vec2(data[0] + pos.x, data[1] + pos.y);
+			vec[1] = b2Vec2(data[2] + pos.x, data[3] + pos.y);
+			lShape->CreateChain(vec, shape->getDataSize());
+			b2shape = lShape;
+		}
+		break;
 	}
 	return b2shape;
 }
