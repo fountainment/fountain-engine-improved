@@ -9,7 +9,7 @@ public:
 	void engineSetting(Engine* engine)
 	{
 		engine->window->setResizable(true);
-		engine->window->setSize(800.0f, 600.0f);
+		engine->window->setSize(800, 600);
 		engine->window->setTitle("GeometryEditor v0.07");
 		engine->window->sceneManager->gotoScene(new EditorScene);
 	}

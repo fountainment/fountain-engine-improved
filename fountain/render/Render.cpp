@@ -216,7 +216,7 @@ void Render::disableTexture()
 	}
 }
 
-void Render::drawLine(const Vec2& pa, const Vec2& pb)
+void Render::drawLine(const fei::Vec2& pa, const fei::Vec2& pb)
 {
 	GLfloat vertex[] = {pa.x, pa.y, pb.x, pb.y};
 	drawArray2f(vertex, 0, 2, GL_LINES);

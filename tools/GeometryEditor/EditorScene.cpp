@@ -191,6 +191,7 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 
 void EditorScene::framebufferSizeCallback(int width, int height)
 {
-	Render::getInstance()->setViewport(Vec2(width, height));
-	mainCam.setCameraSize(Vec2(width, height));
+	Vec2 framebufferSize((float)width, (float)height);
+	Render::getInstance()->setViewport(framebufferSize);
+	mainCam.setCameraSize(framebufferSize);
 }

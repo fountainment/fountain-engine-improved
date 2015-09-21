@@ -8,7 +8,7 @@ Rect::Rect()
 	size = fei::Vec2(1.0f);
 }
 
-Rect::Rect(const Vec2& sz)
+Rect::Rect(const fei::Vec2& sz)
 {
 	shapeType = fei::Shape::Type::RECT;
 	size = sz;
