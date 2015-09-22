@@ -1,4 +1,5 @@
-_Pragma("once")
+#if !defined(_FEI_FONT_H_)
+#define _FEI_FONT_H_
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -22,3 +23,5 @@ private:
 };
 
 }
+
+#endif
