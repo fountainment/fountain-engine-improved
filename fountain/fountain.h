@@ -49,6 +49,7 @@
 
 #include "physics/Physics.h"
 #include "physics/Body.h"
+#include "physics/FixtureGroup.h"
 
 #ifdef _MSC_VER
 	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")
