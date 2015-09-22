@@ -61,6 +61,7 @@ bool Engine::loadModule()
 	moduleList.push_back(Render::getInstance());
 	moduleList.push_back(Audio::getInstance());
 	moduleList.push_back(Physics::getInstance());
+	moduleList.push_back(Font::getInstance());
 
 	for (auto module : moduleList) {
 		if (!module || !module->feiInit()) {

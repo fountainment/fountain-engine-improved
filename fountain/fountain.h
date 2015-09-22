@@ -51,6 +51,8 @@
 #include "physics/Body.h"
 #include "physics/FixtureGroup.h"
 
+#include "font/Font.h"
+
 #ifdef _MSC_VER
 	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")
 	#ifdef NDEBUG

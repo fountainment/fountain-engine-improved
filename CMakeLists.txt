@@ -41,6 +41,7 @@ endif()
 
 if(LINUX)
   add_definitions(-Wall -fexceptions -std=c++11)
+  add_definitions(-I/usr/include/freetype2)
 endif()
 
 add_definitions(-DGLFW_INCLUDE_NONE -DGLFW_STATIC -DGLEW_STATIC)
@@ -49,7 +50,7 @@ include_directories(fountain deps/proj/Box2D)
 set(FOUNTAIN_LINK_LIBRARY fountain)
 
 if(LINUX)
-	set(PLATFORM_LINK_LIBRARY glfw GLEW GL freeimage openal Box2D)
+	set(PLATFORM_LINK_LIBRARY glfw GLEW GL freeimage openal Box2D freetype)
 endif()
 
 if(WINDOWS)
