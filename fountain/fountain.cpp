@@ -143,6 +143,10 @@ void Application::unloadEngine()
 	}
 }
 
+void Application::engineSetting(Engine *engine)
+{
+}
+
 void Application::run()
 {
 	bool loadSuccess = loadEngine();

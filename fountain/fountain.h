@@ -99,7 +99,7 @@ public:
 	bool loadEngine();
 	void unloadEngine();
 
-	virtual void engineSetting(Engine *eg) = 0;
+	virtual void engineSetting(Engine *engine);
 	void run();
 
 	static Engine* getEngine();
