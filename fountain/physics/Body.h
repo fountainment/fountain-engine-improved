@@ -5,6 +5,7 @@
 #include "base/basedef.h"
 #include "math/Vec2.h"
 #include "math/Shape.h"
+#include "math/Polygon.h"
 
 namespace fei {
 
@@ -28,6 +29,7 @@ public:
 
 	b2Fixture* createFixture(const Shape* shape);
 	const std::vector<b2Fixture*> createFixture(const std::vector<Shape*>& shapeList);
+	const std::vector<b2Fixture*> createFixture(const std::vector<Polygon>& polyList);
 	b2Fixture* createFixture(const b2FixtureDef& fixDef);
 
 private:

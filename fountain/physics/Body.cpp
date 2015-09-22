@@ -68,6 +68,15 @@ const std::vector<b2Fixture*> Body::createFixture(const std::vector<fei::Shape*>
 	return result;
 }
 
+const std::vector<b2Fixture*> Body::createFixture(const std::vector<fei::Polygon>& polyList)
+{
+	std::vector<b2Fixture*> result;
+	for (auto poly : polyList) {
+		result.push_back(createFixture(&poly));
+	}
+	return result;
+}
+
 b2Fixture* Body::createFixture(const b2FixtureDef& fixDef)
 {
 	return body->CreateFixture(&fixDef);

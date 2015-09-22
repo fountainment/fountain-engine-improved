@@ -156,26 +156,20 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 		auto list = poly[curEdit].box2dDecomposition();
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
 		body->getB2Body()->SetGravityScale(0.0f);
-		for (auto poly : list) {
-			auto fix = body->createFixture(&poly);
-			fix->SetSensor(true);
-		}
+		FixtureGroup fixtures = body->createFixture(list);
+		fixtures.setSensor(true);
 	}
 
 	if (key == GLFW_KEY_D && action == GLFW_PRESS) {
 		auto list = poly[curEdit].box2dDecomposition();
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
-		for (auto poly : list) {
-			body->createFixture(&poly);
-		}
+		body->createFixture(list);
 	}
 
 	if (key == GLFW_KEY_F && action == GLFW_PRESS) {
 		auto list = poly[curEdit].box2dDecomposition();
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::STATIC);
-		for (auto poly : list) {
-			body->createFixture(&poly);
-		}
+		body->createFixture(list);
 	}
 
 	if (key >= GLFW_KEY_0 && key <= GLFW_KEY_9 && action == GLFW_PRESS) {
