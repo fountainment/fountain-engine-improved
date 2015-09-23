@@ -115,7 +115,7 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 	fei::Render::getInstance()->registTexSize(id, size);
 }
 
-bool Texture::isLoaded()
+bool Texture::isLoaded() const
 {
 	return id && GL_TRUE == glIsTexture(id);
 }

@@ -18,6 +18,9 @@ bool Font::init()
 	if (error) {
 		return false;
 	}
+	int major, minor, patch;
+	FT_Library_Version(library, &major, &minor, &patch);
+	std::printf("FreeType Version: %d.%d.%d\n", major, minor, patch);
 	return true;
 }
 
