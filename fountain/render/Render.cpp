@@ -106,6 +106,13 @@ const fei::Rect Render::getViewport()
 	return fei::Rect((float)viewport[0], (float)viewport[1], (float)viewport[2], (float)viewport[3]);
 }
 
+int Render::getMaxTextureSize()
+{
+	GLint maxTexSize;
+	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
+	return maxTexSize;
+}
+
 void Render::pushShader(fei::ShaderProgram* shader)
 {
 	if (shaderStack.empty() || shaderStack.top() != shader) {

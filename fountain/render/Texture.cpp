@@ -86,9 +86,9 @@ void Texture::load(const char* filename)
 		return;
 	}
 	auto bits = FreeImage_GetBits(dib);
-	auto w = FreeImage_GetWidth(dib);
-	auto h = FreeImage_GetHeight(dib);
-	auto bpp = FreeImage_GetBPP(dib);
+	int w = FreeImage_GetWidth(dib);
+	int h = FreeImage_GetHeight(dib);
+	int bpp = FreeImage_GetBPP(dib);
 	Format format = BPP2FIFormat(bpp);
 	load(bits, w, h, format);
 	fei::Render::getInstance()->registTexture(filename, id);
@@ -139,9 +139,9 @@ void Texture::subUpdate(const char* filename, int xoffset, int yoffset)
 		return;
 	}
 	auto bits = FreeImage_GetBits(dib);
-	auto w = FreeImage_GetWidth(dib);
-	auto h = FreeImage_GetHeight(dib);
-	auto bpp = FreeImage_GetBPP(dib);
+	int w = FreeImage_GetWidth(dib);
+	int h = FreeImage_GetHeight(dib);
+	int bpp = FreeImage_GetBPP(dib);
 	Format format = BPP2FIFormat(bpp);
 	subUpdate(bits, w, h, format, xoffset, yoffset);
 	FreeImage_Unload(dib);

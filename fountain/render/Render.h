@@ -25,6 +25,8 @@ public:
 	void setViewport(const Rect& viewport);
 	const Rect getViewport();
 
+	int getMaxTextureSize();
+
 	void pushShader(ShaderProgram* shader);
 	void popShader(ShaderProgram* shader);
 	ShaderProgram* getShaderProgram();

@@ -73,6 +73,8 @@ void TestScene::testPhysics()
 
 void TestScene::testRender()
 {
+	int s = Render::getInstance()->getMaxTextureSize();
+	std::printf("%d\n", s);
 }
 
 void TestScene::testFont()
@@ -83,5 +85,6 @@ void TestScene::testFont()
 
 void TestScene::testAudio()
 {
-
+	src.loadWAV("test.wav");
+	src.play();
 }

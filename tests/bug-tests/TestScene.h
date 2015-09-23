@@ -16,6 +16,8 @@ private:
 	void testRender();
 	void testAudio();
 	void testFont();
+
+	fei::Source src;
 };
 
 #endif
