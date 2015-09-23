@@ -32,6 +32,7 @@ public:
 
 	void load(const char* filename);
 	void load(const unsigned char* bits, int w, int h, Format dataFormat = Format::RGBA);
+	void unload();
 
 	bool isLoaded() const;
 

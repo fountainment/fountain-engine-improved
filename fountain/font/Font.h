@@ -1,10 +1,10 @@
 #if !defined(_FEI_FONT_H_)
 #define _FEI_FONT_H_
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
 #include "base/basedef.h"
 #include "base/ModuleBase.h"
+#include <ft2build.h>
+#include FT_FREETYPE_H
 
 namespace fei {
 
@@ -16,9 +16,9 @@ public:
 	bool init() override;
 	void destroy() override;
 
-private:
 	FT_Library library;
 
+private:
 	static Font* instance;
 };
 

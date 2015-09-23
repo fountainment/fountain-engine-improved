@@ -3,6 +3,7 @@
 
 #include "base/basedef.h"
 #include "render/Texture.h"
+#include "font/Font.h"
 
 namespace fei
 {
@@ -10,15 +11,24 @@ namespace fei
 class FontCache
 {
 public:
-	void loadFont();
+	FontCache();
+	~FontCache();
+
+	void loadFont(const char* fontFile);
+	void unloadFont();
 	void updateCache(const std::vector<unsigned long>& str);
 	void deleteCache();
 
 	const Image queryCharactor();
+	int queryKerning();
 
 private:
 	Texture cacheTexture;
-	//FT_Face face;
+
+	FT_Face face;
+
+	bool isLoadedFont;
+	bool useKerning;
 };
 
 }

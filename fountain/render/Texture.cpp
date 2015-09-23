@@ -46,7 +46,7 @@ Texture::Texture(const Texture& tex)
 
 void Texture::operator=(const Texture& tex)
 {
-	fei::Render::getInstance()->releaseTexture(id);
+	unload();
 	id = tex.id;
 	fei::Render::getInstance()->addRefTexture(id);
 	size = tex.size;
@@ -61,7 +61,7 @@ void Texture::load(const char* filename)
 {
 	int queryId = fei::Render::getInstance()->queryTexture(filename);
 	if (queryId) {
-		fei::Render::getInstance()->releaseTexture(id);
+		unload();
 		id = queryId;
 		size = fei::Render::getInstance()->queryTexSize(id);
 		fei::Render::getInstance()->addRefTexture(id);
@@ -113,6 +113,12 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 			0, format, GL_UNSIGNED_BYTE, bits);
 	size = fei::Vec2((float)w, (float)h);
 	fei::Render::getInstance()->registTexSize(id, size);
+}
+
+void Texture::unload()
+{
+	fei::Render::getInstance()->releaseTexture(id);
+	id = 0;
 }
 
 bool Texture::isLoaded() const
