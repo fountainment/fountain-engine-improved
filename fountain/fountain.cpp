@@ -85,7 +85,6 @@ void Engine::unloadModule()
 			if ((*it)->isLoaded()) {
 				(*it)->feiDestroy();
 			}
-			delete (*it);
 		}
 	}
 	moduleList.clear();
