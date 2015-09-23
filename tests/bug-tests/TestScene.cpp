@@ -8,6 +8,7 @@ void TestScene::init()
 	testPhysics();
 	testRender();
 	testAudio();
+	testFont();
 }
 
 void TestScene::destroy()
@@ -51,12 +52,12 @@ void TestScene::testMath()
 	}
 
 	Polygon y;
-	y.pushVertex(Vec2(98.999977, 76.000000));
-	y.pushVertex(Vec2(209.999985, 6.999993));
-	y.pushVertex(Vec2(141.421356, 141.421356));
-	y.pushVertex(Vec2(-141.421356, 141.421356));
-	y.pushVertex(Vec2(141.421326, -141.421371));
-	y.pushVertex(Vec2(-141.421326, -141.421371));
+	y.pushVertex(Vec2(98.999977f, 76.000000f));
+	y.pushVertex(Vec2(209.999985f, 6.999993f));
+	y.pushVertex(Vec2(141.421356f, 141.421356f));
+	y.pushVertex(Vec2(-141.421356f, 141.421356f));
+	y.pushVertex(Vec2(141.421326f, -141.421371f));
+	y.pushVertex(Vec2(-141.421326f, -141.421371f));
 
 	auto tl = y.getVisibleVerticesIndex(1);
 	std::printf("%lu\n", tl.size());
@@ -72,7 +73,12 @@ void TestScene::testPhysics()
 
 void TestScene::testRender()
 {
+}
 
+void TestScene::testFont()
+{
+	FontCache fc;
+	fc.loadFont("wqy.ttc");
 }
 
 void TestScene::testAudio()

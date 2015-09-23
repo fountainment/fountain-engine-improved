@@ -15,6 +15,7 @@ private:
 	void testPhysics();
 	void testRender();
 	void testAudio();
+	void testFont();
 };
 
 #endif

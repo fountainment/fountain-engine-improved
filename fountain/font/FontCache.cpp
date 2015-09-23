@@ -50,7 +50,9 @@ void FontCache::updateCache(const std::vector<unsigned long>& str)
 	if (!cacheTexture.isLoaded()) {
 		cacheTexture.load(nullptr, 2048, 2048, fei::Texture::Format::LUMA);
 	}
-	//TODO: implement updateCache
+	for (auto charactor : str) {
+		//TODO:
+	}
 }
 
 void FontCache::deleteCache()

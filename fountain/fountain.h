@@ -52,6 +52,7 @@
 #include "physics/FixtureGroup.h"
 
 #include "font/Font.h"
+#include "font/FontCache.h"
 
 #ifdef _MSC_VER
 	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")
