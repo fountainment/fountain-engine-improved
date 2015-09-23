@@ -32,6 +32,26 @@ static Texture::Format BPP2FIFormat(int bpp)
 	return result;
 }
 
+static FIBITMAP* loadBitmap(const char* filename)
+{
+	FIBITMAP *dib;
+	if (!fei::isFileExist(filename)) {
+		std::fprintf(stderr, "Texture: \"%s\" file not exist!\n", filename);
+		return nullptr;
+	}
+	auto fif = FreeImage_GetFileType(filename, 0);
+	if (FIF_UNKNOWN == fif) {
+		fif = FreeImage_GetFIFFromFilename(filename);
+	}
+	if (FreeImage_FIFSupportsReading(fif)) {
+		dib = FreeImage_Load(fif, filename, 0);
+	} else {
+		std::fprintf(stderr, "Texture: \"%s\" unsupported file!\n", filename);
+		return nullptr;
+	}
+	return dib;
+}
+
 Texture::Texture()
 : id(0),
   size(fei::Vec2::ZERO)
@@ -46,40 +66,23 @@ Texture::Texture(const Texture& tex)
 
 void Texture::operator=(const Texture& tex)
 {
-	unload();
-	id = tex.id;
-	fei::Render::getInstance()->addRefTexture(id);
-	size = tex.size;
+	setId(tex.id);
 }
 
 Texture::~Texture()
 {
-	fei::Render::getInstance()->releaseTexture(id);
+	unload();
 }
 
 void Texture::load(const char* filename)
 {
 	int queryId = fei::Render::getInstance()->queryTexture(filename);
 	if (queryId) {
-		unload();
-		id = queryId;
-		size = fei::Render::getInstance()->queryTexSize(id);
-		fei::Render::getInstance()->addRefTexture(id);
+		setId(queryId);
 		return;
 	}
-	FIBITMAP *dib;
-	if (!fei::isFileExist(filename)) {
-		std::fprintf(stderr, "Texture: \"%s\" file not exist!\n", filename);
-		return;
-	}
-	auto fif = FreeImage_GetFileType(filename, 0);
-	if (FIF_UNKNOWN == fif) {
-		fif = FreeImage_GetFIFFromFilename(filename);
-	}
-	if (FreeImage_FIFSupportsReading(fif)) {
-		dib = FreeImage_Load(fif, filename, 0);
-	} else {
-		std::fprintf(stderr, "Texture: \"%s\" unsupported file!\n", filename);
+	auto dib = loadBitmap(filename);
+	if (!dib) {
 		return;
 	}
 	auto bits = FreeImage_GetBits(dib);
@@ -126,6 +129,35 @@ bool Texture::isLoaded() const
 	return id && GL_TRUE == glIsTexture(id);
 }
 
+void Texture::subUpdate(const char* filename, int xoffset, int yoffset)
+{
+	if (!isLoaded()) {
+		return;
+	}
+	auto dib = loadBitmap(filename);
+	if (!dib) {
+		return;
+	}
+	auto bits = FreeImage_GetBits(dib);
+	auto w = FreeImage_GetWidth(dib);
+	auto h = FreeImage_GetHeight(dib);
+	auto bpp = FreeImage_GetBPP(dib);
+	Format format = BPP2FIFormat(bpp);
+	subUpdate(bits, w, h, format, xoffset, yoffset);
+	FreeImage_Unload(dib);
+}
+
+void Texture::subUpdate(const unsigned char* bits, int w, int h, Format dataFormat, int xoffset, int yoffset)
+{
+	if (!isLoaded()) {
+		return;
+	}
+	GLenum format = Format2GLFormat(dataFormat);
+	glBindTexture(GL_TEXTURE_2D, id);
+	glTexSubImage2D(GL_TEXTURE_2D, 0, xoffset, yoffset, w, h,
+			format, GL_UNSIGNED_BYTE, bits);
+}
+
 void Texture::drawIt()
 {
 	fei::Render::getInstance()->bindTexture(id);
@@ -148,4 +180,15 @@ const fei::Image Texture::getImage(const fei::Vec2& p, const fei::Vec2& s) const
 const fei::Image Texture::getImage() const
 {
 	return getImage(fei::Vec2::ZERO, size);
+}
+
+void Texture::setId(GLuint _id)
+{
+	if (id == _id) return;
+	if (isLoaded()) {
+		unload();
+	}
+	size = fei::Render::getInstance()->queryTexSize(_id);
+	fei::Render::getInstance()->addRefTexture(_id);
+	id = _id;
 }

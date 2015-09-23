@@ -36,15 +36,18 @@ public:
 
 	bool isLoaded() const;
 
+	void subUpdate(const char* filename, int xoffset, int yoffset);
+	void subUpdate(const unsigned char* bits, int w, int h, Format dataFormat, int xoffset, int yoffset);
+
 	const Image getImage(const Rect& rect) const;
 	const Image getImage(const Vec2& p, const Vec2& s) const;
 	const Image getImage() const;
 
 	void drawIt() override;
 
-	//TODO: design Texture recycle logic (Reference count?)
-
 private:
+	void setId(GLuint _id);
+
 	GLuint id;
 	Vec2 size;
 };
