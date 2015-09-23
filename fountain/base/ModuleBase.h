@@ -16,10 +16,10 @@ public:
 	virtual void executeAfterFrame();
 	void feiDestroy();
 	virtual void destroy();
-	bool isLoad();
+	bool isLoaded();
 
 private:
-	bool _isLoad;
+	bool _isLoaded;
 };
 
 }

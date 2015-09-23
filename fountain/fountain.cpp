@@ -82,7 +82,7 @@ void Engine::unloadModule()
 	}
 	for (auto it = moduleList.rbegin(); it != moduleList.rend(); ++it) {
 		if (*it) {
-			if ((*it)->isLoad()) {
+			if ((*it)->isLoaded()) {
 				(*it)->feiDestroy();
 			}
 			delete (*it);
@@ -130,7 +130,7 @@ bool Application::loadEngine()
 			loadSuccess = engine->feiInit();
 		}
 	} else {
-		loadSuccess = engine->isLoad();
+		loadSuccess = engine->isLoaded();
 	}
 	return loadSuccess;
 }

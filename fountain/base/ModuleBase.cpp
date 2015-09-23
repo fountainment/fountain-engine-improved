@@ -3,7 +3,7 @@
 using fei::ModuleBase;
 
 ModuleBase::ModuleBase()
-: _isLoad(false)
+: _isLoaded(false)
 {
 }
 
@@ -13,9 +13,9 @@ ModuleBase::~ModuleBase()
 
 bool ModuleBase::feiInit()
 {
-	if (_isLoad) return true;
-	_isLoad = init();
-	return _isLoad;
+	if (_isLoaded) return true;
+	_isLoaded = init();
+	return _isLoaded;
 }
 
 bool ModuleBase::init()
@@ -33,16 +33,16 @@ void ModuleBase::executeAfterFrame()
 
 void ModuleBase::feiDestroy()
 {
-	if (!_isLoad) return;
+	if (!_isLoaded) return;
 	destroy();
-	_isLoad = false;
+	_isLoaded = false;
 }
 
 void ModuleBase::destroy()
 {
 }
 
-bool ModuleBase::isLoad()
+bool ModuleBase::isLoaded()
 {
-	return _isLoad;
+	return _isLoaded;
 }
