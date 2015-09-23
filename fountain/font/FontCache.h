@@ -28,7 +28,7 @@ private:
 	FT_Face face;
 
 	bool isLoadedFont;
-	bool useKerning;
+	FT_Bool useKerning;
 };
 
 }

@@ -47,14 +47,10 @@ fei::Window* Interface::applyNewWindow()
 
 void Interface::destroyWindow(fei::Window* window)
 {
-	delete window;
-	auto it = windowList.begin();
-	while (it != windowList.end()) {
-		if ((*it) == window) {
-			it = windowList.erase(it);
-		} else {
-			++it;
-		}
+	auto result = find(windowList.begin(), windowList.end(), window);
+	if (result != windowList.end()) {
+		windowList.erase(result);
+		delete window;
 	}
 }
 

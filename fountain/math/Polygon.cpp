@@ -131,7 +131,7 @@ const std::vector<Polygon> Polygon::cut(int a, int b) const
 int Polygon::closestWhichSegment(const fei::Vec2& p) const
 {
 	int ans = -1;
-	float minR = 1e32;
+	float minR = 1e32f;
 	for (int i = 0; i < (int)data.size(); i++) {
 		auto seg = getSegment(i);
 		float curRatio = std::abs(((p - seg.a).getLength() + (p - seg.b).getLength()) / seg.getLength() - 1.0f);
@@ -420,7 +420,7 @@ const Polygon Polygon::makeRegularPolygon(int edgeNum, float radius, float offse
 {
 	Polygon polygon;
 	for (int i = 0; i < edgeNum; i++) {
-		float angle = 2.0 * fei::pi / edgeNum * i + fei::D2R(offset);
+		float angle = (float)(2.0 * fei::pi / edgeNum * i + fei::D2R(offset));
 		polygon.pushVertex(fei::Vec2(std::cos(angle), std::sin(angle)) * radius);
 	}
 	return polygon;
