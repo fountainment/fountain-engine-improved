@@ -33,6 +33,8 @@ public:
 	void load(const char* filename);
 	void load(const unsigned char* bits, int w, int h, Format dataFormat = Format::RGBA);
 
+	bool isLoaded();
+
 	const Image getImage(const Rect& rect) const;
 	const Image getImage(const Vec2& p, const Vec2& s) const;
 	const Image getImage() const;

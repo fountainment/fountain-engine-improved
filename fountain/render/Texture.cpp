@@ -99,7 +99,7 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 	if ((int)dataFormat % 2 == 0) {
 		internalFormat = GL_RGBA;
 	}
-	if (!id || GL_FALSE == glIsTexture(id)) {
+	if (!isLoaded()) {
 		glGenTextures(1, &id);
 		fei::Render::getInstance()->addRefTexture(id);
 	}
@@ -113,6 +113,11 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 			0, format, GL_UNSIGNED_BYTE, bits);
 	size = fei::Vec2((float)w, (float)h);
 	fei::Render::getInstance()->registTexSize(id, size);
+}
+
+bool Texture::isLoaded()
+{
+	return id && GL_TRUE == glIsTexture(id);
 }
 
 void Texture::drawIt()
