@@ -81,6 +81,8 @@ void TestScene::testFont()
 {
 	FontCache fc;
 	fc.loadFont("wqy.ttc");
+	std::vector<unsigned long> str;
+	fc.updateCache(str);
 }
 
 void TestScene::testAudio()
