@@ -89,9 +89,8 @@ void TestScene::testFont()
 	}
 	fc.updateCache(str);
 
-	testTex.setIsAlpha(true);
 	testTex = fc.getCacheTexture();
-	testTex.setPosition(Vec2(2048));
+	testTex.setPosition(Vec2(2048 - 300));
 	add(&testTex);
 }
 

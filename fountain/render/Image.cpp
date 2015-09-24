@@ -21,9 +21,12 @@ Image::Image(const Image& img)
 
 void Image::operator=(const Image& img)
 {
-	fei::Render::getInstance()->releaseTexture(id);
-	id = img.id;
-	fei::Render::getInstance()->addRefTexture(id);
+	if (id != img.id) {
+		fei::Render::getInstance()->releaseTexture(id);
+		id = img.id;
+		fei::Render::getInstance()->addRefTexture(id);
+	}
+	setIsAlpha(img.isAlpha());
 	size = img.size;
 	for (int i = 0; i < 8; i++) {
 		texCoord[i] = img.texCoord[i];

@@ -66,6 +66,7 @@ Texture::Texture(const Texture& tex)
 
 void Texture::operator=(const Texture& tex)
 {
+	setIsAlpha(tex.isAlpha());
 	setId(tex.id);
 }
 
