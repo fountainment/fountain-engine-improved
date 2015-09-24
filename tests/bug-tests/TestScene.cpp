@@ -4,6 +4,9 @@ using namespace fei;
 
 void TestScene::init()
 {
+	setCamera(&mainCam);
+	mainCam.setCameraSize(Vec2(800, 600));
+
 	testMath();
 	testPhysics();
 	testRender();
@@ -79,10 +82,17 @@ void TestScene::testRender()
 
 void TestScene::testFont()
 {
-	FontCache fc;
-	fc.loadFont("wqy.ttc");
+	fc.loadFont("wqy.ttc", 40);
 	std::vector<unsigned long> str;
+	for (int i = 1; i < 255; i++) {
+		str.push_back(i);
+	}
 	fc.updateCache(str);
+
+	testTex.setIsAlpha(true);
+	testTex = fc.getCacheTexture();
+	testTex.setPosition(Vec2(2048));
+	add(&testTex);
 }
 
 void TestScene::testAudio()

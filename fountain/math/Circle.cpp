@@ -88,6 +88,7 @@ bool Circle::collide(const fei::Shape* shape) const
 		break;
 	case fei::Shape::Type::POLYGON:
 	case fei::Shape::Type::RECT:
+	case fei::Shape::Type::SEGMENT:
 		break;
 	}
 	return result;

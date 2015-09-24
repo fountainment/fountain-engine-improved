@@ -4,9 +4,14 @@
 using fei::FontCache;
 
 FontCache::FontCache()
-: isLoadedFont(false),
+: gridSize(0),
+  gridNum(0),
+  curRow(0),
+  curCol(0),
+  isLoadedFont(false),
   useKerning(false)
 {
+	cacheTexture.setIsAlpha(true);
 }
 
 FontCache::~FontCache()
@@ -15,7 +20,7 @@ FontCache::~FontCache()
 	unloadFont();
 }
 
-void FontCache::loadFont(const char* fontFile)
+void FontCache::loadFont(const char* fontFile, int fontSize)
 {
 	if (!Font::getInstance()->isLoaded()) {
 		std::fprintf(stderr, "FontCache: Font module not loaded!\n");
@@ -29,6 +34,8 @@ void FontCache::loadFont(const char* fontFile)
 		return;
 	}
 	isLoadedFont = true;
+	FT_Set_Pixel_Sizes(face, 0, fontSize);
+	gridSize = fontSize + (fontSize & 1);
 	useKerning = FT_HAS_KERNING(face);
 }
 
@@ -47,12 +54,43 @@ void FontCache::unloadFont()
 
 void FontCache::updateCache(const std::vector<unsigned long>& str)
 {
+	//TODO: optimize updateCache speed
+	assert(isLoadedFont);
 	if (!cacheTexture.isLoaded()) {
-		cacheTexture.load(nullptr, 2048, 2048, fei::Texture::Format::LUMA);
+		int maxTextureSize = Render::getInstance()->getMaxTextureSize();
+		int texSize = std::min(4096, maxTextureSize);
+		gridNum = texSize / gridSize;
+		curRow = 0;
+		curCol = 0;
+		cacheTexture.load(nullptr, texSize, texSize, fei::Texture::Format::LUMA);
 	}
+	FT_GlyphSlot slot = face->glyph;
+	auto bits = new unsigned char[gridSize * gridSize * 2];
 	for (auto charactor : str) {
-		//TODO:
+		if (curRow >= gridNum) {
+			std::fprintf(stderr, "FontCache: Overflow!\n");
+			break;
+		}
+		FT_Load_Char(face, charactor, FT_LOAD_RENDER);
+		FT_Bitmap& bitmap = slot->bitmap;
+		int width = (int)bitmap.width;
+		int rows = (int)bitmap.rows;
+		int &cols = gridSize;
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0; col < cols; col++) {
+				int bitsIndex = row * cols + col;
+				unsigned char bufferBit = (col < width) ? bitmap.buffer[(rows - row - 1) * width + col] : 0;
+				bits[(bitsIndex << 1)] = 255;
+				bits[(bitsIndex << 1) + 1] = bufferBit;
+			}
+		}
+		cacheTexture.subUpdate(bits, cols, rows, fei::Texture::Format::LUMA, curCol * gridSize, curRow * gridSize);
+		if (++curCol >= gridNum) {
+			curCol = 0;
+			curRow++;
+		}
 	}
+	delete [] bits;
 }
 
 void FontCache::deleteCache()
@@ -60,8 +98,19 @@ void FontCache::deleteCache()
 	cacheTexture.unload();
 }
 
-const fei::Image FontCache::queryCharactor()
+const fei::Image FontCache::queryCharactor(unsigned long c)
 {
 	//TODO: implement queryCharactor
 	return cacheTexture.getImage();
+}
+
+int FontCache::queryKerning(unsigned long left, unsigned long right)
+{
+	//TODO: implement queryKerning
+	return 0;
+}
+
+const fei::Texture FontCache::getCacheTexture()
+{
+	return cacheTexture;
 }

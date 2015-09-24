@@ -17,7 +17,10 @@ private:
 	void testAudio();
 	void testFont();
 
+	fei::Texture testTex;
 	fei::Source src;
+	fei::Camera mainCam;
+	fei::FontCache fc;
 };
 
 #endif
