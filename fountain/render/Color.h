@@ -2,6 +2,7 @@
 #define _FEI_COLOR_H_
 
 #include "math/Vec4.h"
+#include "base/basedef.h"
 
 namespace fei {
 
@@ -16,9 +17,13 @@ public:
 	Color();
 	Color(float rgb);
 	Color(float rr, float gg, float bb, float aa = 1.0f);
+	Color(const std::string& colorStr, float aa = 1.0f);
 	Color(const Vec3& rgb, float aa = 1.0f);
 
 	Color& operator=(const Color& rhs);
+
+	void setRGB(const Vec3& rgb);
+	void setRGB(const std::string& colorStr);
 
 	void toGrayScale();
 	void toInverse();
