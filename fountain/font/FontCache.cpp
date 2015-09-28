@@ -106,8 +106,15 @@ const fei::Image FontCache::queryCharactor(unsigned long c)
 
 int FontCache::queryKerning(unsigned long left, unsigned long right)
 {
-	//TODO: implement queryKerning
-	return 0;
+	if (!useKerning) {
+		return 0;
+	}
+	FT_Vector delta;
+	FT_UInt leftIndex, rightIndex;
+	leftIndex = FT_Get_Char_Index(face, left);
+	rightIndex = FT_Get_Char_Index(face, right);
+	FT_Get_Kerning(face, leftIndex, rightIndex, FT_KERNING_DEFAULT, &delta);
+	return delta.x >> 6;
 }
 
 const fei::Texture FontCache::getCacheTexture()
