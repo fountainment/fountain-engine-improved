@@ -91,6 +91,7 @@ void TestScene::testFont()
 
 	testTex = fc.getCacheTexture();
 	testTex.setPosition(Vec2(2048 - 300));
+	testTex.setColor(Color("#ff0"));
 	add(&testTex);
 }
 

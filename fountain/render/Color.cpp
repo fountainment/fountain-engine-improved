@@ -44,7 +44,7 @@ static const fei::Vec3 strToRGB(const std::string& colorStr)
 				result.y = (float)HexToDec(cstr + 2, 1);
 				result.z = (float)HexToDec(cstr + 3, 1);
 				result = (result * 16.0f + result) / 255.0f;
-			} else if (len == 6) {
+			} else if (len == 7) {
 				result.x = (float)HexToDec(cstr + 1, 2);
 				result.y = (float)HexToDec(cstr + 3, 2);
 				result.z = (float)HexToDec(cstr + 5, 2);
@@ -53,8 +53,8 @@ static const fei::Vec3 strToRGB(const std::string& colorStr)
 				throw "Length incorrect!";
 			}
 		}
-	} catch(const std::string& str) {
-		std::printf("Color string format error: %s\n", str.c_str());
+	} catch(const char* str) {
+		std::fprintf(stderr, "Color string format error: %s\n", str);
 		assert(0);
 	}
 	return result;
