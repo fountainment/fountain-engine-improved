@@ -35,7 +35,7 @@ void FontCache::loadFont(const char* fontFile, int fontSize)
 	}
 	isLoadedFont = true;
 	FT_Set_Pixel_Sizes(face, 0, fontSize);
-	gridSize = fontSize + (fontSize & 1);
+	gridSize = fontSize + (fontSize & 1) + 2;
 	useKerning = FT_HAS_KERNING(face);
 }
 
@@ -52,9 +52,56 @@ void FontCache::unloadFont()
 	FT_Done_Face(face);
 }
 
+void FontCache::updateCache(unsigned long* str, int strSize)
+{
+	assert(strSize > 0 && cacheTexture.isLoaded());
+	int gridW = std::min(strSize, gridNum);
+	int gridH = strSize / gridNum;
+	if (!gridH) {
+		gridH = 1;
+	}
+	int bitsW = gridW * gridSize;
+	int bitsH = gridH * gridSize;
+	int xLoc = curCol * gridSize;
+	int yLoc = curRow * gridSize;
+
+	FT_GlyphSlot slot = face->glyph;
+
+	auto bits = new unsigned char[bitsW * bitsH * 2];
+	for (int i = 0; i < strSize; i++) {
+		int gridX = i % gridW;
+		int gridY = i / gridW;
+		FT_Load_Char(face, str[i], FT_LOAD_RENDER);
+		FT_Bitmap& bitmap = slot->bitmap;
+		int bitW = (int)bitmap.width;
+		int bitH = (int)bitmap.rows;
+		int lbX = gridX * gridSize;
+		int lbY = gridY * gridSize;
+		for (int bitY = 0; bitY < gridSize; bitY++) {
+			for (int bitX = 0; bitX < gridSize; bitX++) {
+				int bitsX = lbX + bitX;
+				int bitsY = lbY + bitY;
+				int bitsIndex = bitsY * bitsW * 2 + bitsX * 2;
+				bits[bitsIndex] = 255;
+				bits[bitsIndex + 1] = (bitX >= 1 && bitX <= bitW && bitY >= 1 && bitY <= bitH)?
+					bitmap.buffer[(bitH - bitY) * bitW + bitX - 1]:0;
+			}
+		}
+		fei::Image image = cacheTexture.getImage(fei::Rect(lbX + 1, lbY + 1, bitW, bitH));
+		fei::Vec2 anchor(slot->bitmap_left + bitmap.width / 2.0f, slot->bitmap_top - bitmap.rows / 2.0f);
+		anchor *= -1.0f;
+		image.setAnchor(anchor);
+		//TODO: Store the image
+	}
+	cacheTexture.subUpdate(bits, bitsW, bitsH, fei::Texture::Format::LUMA, xLoc, yLoc);
+	delete bits;
+	curCol += strSize;
+	curRow += curCol / gridNum;
+	curCol %= gridNum;
+}
+
 void FontCache::updateCache(const std::vector<unsigned long>& str)
 {
-	//TODO: optimize updateCache speed
 	assert(isLoadedFont);
 	if (!cacheTexture.isLoaded()) {
 		int maxTextureSize = Render::getInstance()->getMaxTextureSize();
@@ -64,33 +111,27 @@ void FontCache::updateCache(const std::vector<unsigned long>& str)
 		curCol = 0;
 		cacheTexture.load(nullptr, texSize, texSize, fei::Texture::Format::LUMA);
 	}
-	FT_GlyphSlot slot = face->glyph;
-	auto bits = new unsigned char[gridSize * gridSize * 2];
-	for (auto charactor : str) {
-		if (curRow >= gridNum) {
-			std::fprintf(stderr, "FontCache: Overflow!\n");
-			break;
-		}
-		FT_Load_Char(face, charactor, FT_LOAD_RENDER);
-		FT_Bitmap& bitmap = slot->bitmap;
-		int width = (int)bitmap.width;
-		int rows = (int)bitmap.rows;
-		int &cols = gridSize;
-		for (int row = 0; row < rows; row++) {
-			for (int col = 0; col < cols; col++) {
-				int bitsIndex = row * cols + col;
-				unsigned char bufferBit = (col < width) ? bitmap.buffer[(rows - row - 1) * width + col] : 0;
-				bits[(bitsIndex << 1)] = 255;
-				bits[(bitsIndex << 1) + 1] = bufferBit;
+	auto strCopy = str;
+	std::sort(strCopy.begin(), strCopy.end());
+	strCopy.erase(std::unique(strCopy.begin(), strCopy.end()), strCopy.end());
+	int updateSize = strCopy.size();
+	int strIndex = 0;
+	while (updateSize) {
+		int subUpdateSize;
+		if (curCol != 0) {
+			subUpdateSize = std::min(updateSize, gridNum - curCol);
+		} else {
+			int wholeLine = updateSize / gridNum;
+			if (!wholeLine) {
+				subUpdateSize = updateSize;
+			} else {
+				subUpdateSize = wholeLine * gridNum;
 			}
 		}
-		cacheTexture.subUpdate(bits, cols, rows, fei::Texture::Format::LUMA, curCol * gridSize, curRow * gridSize);
-		if (++curCol >= gridNum) {
-			curCol = 0;
-			curRow++;
-		}
+		updateCache(&strCopy[strIndex], subUpdateSize);
+		strIndex += subUpdateSize;
+		updateSize -= subUpdateSize;
 	}
-	delete [] bits;
 }
 
 void FontCache::deleteCache()

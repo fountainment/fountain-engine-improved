@@ -70,6 +70,18 @@ void TestScene::testMath()
 	std::printf("%d\n", y.getBestCutVertexIndex(1));
 }
 
+void TestScene::keyCallback(int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_F11 && action == GLFW_PRESS) {
+		auto window = fei::Interface::getInstance()->getCurrentWindow();
+		window->setFullscreen(!window->isFullscreen());
+		auto winSize = window->getWindowSize();
+		std::printf("%f %f\n", winSize.x, winSize.y);
+		mainCam.setCameraSize(winSize);
+		testTex.setPosition(Vec2(2048) - winSize / 2.0f);
+	}
+}
+
 void TestScene::testPhysics()
 {
 }
@@ -88,9 +100,16 @@ void TestScene::testFont()
 		str.push_back(i);
 	}
 	fc.updateCache(str);
+	str.clear();
+	for (int i = 255; i < 2000; i++) {
+		str.push_back(i);
+	}
+	fc.updateCache(str);
 
+	auto window = fei::Interface::getInstance()->getCurrentWindow();
+	auto winSize = window->getWindowSize();
 	testTex = fc.getCacheTexture();
-	testTex.setPosition(Vec2(2048 - 300));
+	testTex.setPosition(Vec2(2048) - winSize / 2.0f);
 	testTex.setColor(Color("#ff0"));
 	add(&testTex);
 }

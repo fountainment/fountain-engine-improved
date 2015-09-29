@@ -25,6 +25,8 @@ public:
 	const Texture getCacheTexture();
 
 private:
+	void updateCache(unsigned long* str, int strSize);
+
 	Texture cacheTexture;
 
 	FT_Face face;

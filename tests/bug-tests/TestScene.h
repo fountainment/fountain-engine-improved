@@ -10,6 +10,8 @@ public:
 	void destroy() override;
 	void update() override;
 
+	void keyCallback(int key, int scancode, int action, int mods) override;
+
 private:
 	void testMath();
 	void testPhysics();
