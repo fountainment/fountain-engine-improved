@@ -8,7 +8,7 @@ FontCache::FontCache()
   gridNum(0),
   curRow(0),
   curCol(0),
-  isLoadedFont(false),
+  fontIsLoaded(false),
   useKerning(false)
 {
 	cacheTexture.setIsAlpha(true);
@@ -33,7 +33,7 @@ void FontCache::loadFont(const char* fontFile, int fontSize)
 		std::fprintf(stderr, "FontCache: \"%s\" loading error!\n", fontFile);
 		return;
 	}
-	isLoadedFont = true;
+	fontIsLoaded = true;
 	FT_Set_Pixel_Sizes(face, 0, fontSize);
 	gridSize = fontSize + (fontSize & 1) + 2;
 	useKerning = FT_HAS_KERNING(face);
@@ -41,10 +41,10 @@ void FontCache::loadFont(const char* fontFile, int fontSize)
 
 void FontCache::unloadFont()
 {
-	if (!isLoadedFont) {
+	if (!fontIsLoaded) {
 		return;
 	}
-	isLoadedFont = false;
+	fontIsLoaded= false;
 	useKerning = false;
 	if (!Font::getInstance()->isLoaded()) {
 		return;
@@ -65,13 +65,17 @@ void FontCache::updateCache(unsigned long* str, int strSize)
 	int xLoc = curCol * gridSize;
 	int yLoc = curRow * gridSize;
 
+	FT_Error error;
 	FT_GlyphSlot slot = face->glyph;
 
 	auto bits = new unsigned char[bitsW * bitsH * 2];
 	for (int i = 0; i < strSize; i++) {
 		int gridX = i % gridW;
 		int gridY = i / gridW;
-		FT_Load_Char(face, str[i], FT_LOAD_RENDER);
+		error = FT_Load_Char(face, str[i], FT_LOAD_RENDER);
+		if (error) {
+			continue;
+		}
 		FT_Bitmap& bitmap = slot->bitmap;
 		int bitW = (int)bitmap.width;
 		int bitH = (int)bitmap.rows;
@@ -91,7 +95,8 @@ void FontCache::updateCache(unsigned long* str, int strSize)
 		fei::Vec2 anchor(slot->bitmap_left + bitmap.width / 2.0f, slot->bitmap_top - bitmap.rows / 2.0f);
 		anchor *= -1.0f;
 		image.setAnchor(anchor);
-		//TODO: Store the image
+		charImageMap[str[i]] = image;
+		charAdvanceMap[str[i]] = slot->advance.x >> 6;
 	}
 	cacheTexture.subUpdate(bits, bitsW, bitsH, fei::Texture::Format::LUMA, xLoc, yLoc);
 	delete bits;
@@ -102,7 +107,7 @@ void FontCache::updateCache(unsigned long* str, int strSize)
 
 void FontCache::updateCache(const std::vector<unsigned long>& str)
 {
-	assert(isLoadedFont);
+	assert(fontIsLoaded);
 	if (!cacheTexture.isLoaded()) {
 		int maxTextureSize = Render::getInstance()->getMaxTextureSize();
 		int texSize = std::min(4096, maxTextureSize);
@@ -116,7 +121,13 @@ void FontCache::updateCache(const std::vector<unsigned long>& str)
 	strCopy.erase(std::unique(strCopy.begin(), strCopy.end()), strCopy.end());
 	int updateSize = strCopy.size();
 	int strIndex = 0;
-	while (updateSize) {
+	int remainingSpace = getRemainingSpace();
+	if (updateSize > remainingSpace) {
+		int dissmissed = updateSize - remainingSpace;
+		updateSize = remainingSpace;
+		std::fprintf(stderr, "FontCache: Cache overflow! (%d charactors dismissed)\n", dissmissed);
+	}
+	while (updateSize > 0) {
 		int subUpdateSize;
 		if (curCol != 0) {
 			subUpdateSize = std::min(updateSize, gridNum - curCol);
@@ -139,10 +150,22 @@ void FontCache::deleteCache()
 	cacheTexture.unload();
 }
 
+int FontCache::getRemainingSpace()
+{
+	if (!fontIsLoaded) {
+		return 0;
+	}
+	return (gridNum - curRow - 1) * gridNum + (gridNum - curCol);
+}
+
 const fei::Image FontCache::queryCharactor(unsigned long c)
 {
-	//TODO: implement queryCharactor
-	return cacheTexture.getImage();
+	auto it = charImageMap.find(c);
+	if (it == charImageMap.end()) {
+		updateCache(&c, 1);
+		it = charImageMap.find(c);
+	}
+	return it->second;
 }
 
 int FontCache::queryKerning(unsigned long left, unsigned long right)
@@ -156,6 +179,16 @@ int FontCache::queryKerning(unsigned long left, unsigned long right)
 	rightIndex = FT_Get_Char_Index(face, right);
 	FT_Get_Kerning(face, leftIndex, rightIndex, FT_KERNING_DEFAULT, &delta);
 	return delta.x >> 6;
+}
+
+int FontCache::queryAdvance(unsigned long c)
+{
+	auto it = charAdvanceMap.find(c);
+	if (it == charAdvanceMap.end()) {
+		updateCache(&c, 1);
+		it = charAdvanceMap.find(c);
+	}
+	return it->second;
 }
 
 const fei::Texture FontCache::getCacheTexture()

@@ -19,8 +19,11 @@ public:
 	void updateCache(const std::vector<unsigned long>& str);
 	void deleteCache();
 
+	int getRemainingSpace();
+
 	const Image queryCharactor(unsigned long c);
 	int queryKerning(unsigned long left, unsigned long right);
+	int queryAdvance(unsigned long c);
 
 	const Texture getCacheTexture();
 
@@ -36,7 +39,10 @@ private:
 	int curRow;
 	int curCol;
 
-	bool isLoadedFont;
+	std::map<unsigned long, Image> charImageMap;
+	std::map<unsigned long, int> charAdvanceMap;
+
+	bool fontIsLoaded;
 	FT_Bool useKerning;
 };
 

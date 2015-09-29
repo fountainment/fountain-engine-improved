@@ -11,6 +11,7 @@ public:
 	void update() override;
 
 	void keyCallback(int key, int scancode, int action, int mods) override;
+	void scrollCallback(double xoffset, double yoffset) override;
 
 private:
 	void testMath();

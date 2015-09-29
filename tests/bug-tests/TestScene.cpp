@@ -82,6 +82,16 @@ void TestScene::keyCallback(int key, int scancode, int action, int mods)
 	}
 }
 
+void TestScene::scrollCallback(double xoffset, double yoffset)
+{
+	if (yoffset > 0.0) {
+		mainCam.cameraScaleZoom(1.1f);
+	}
+	if (yoffset < 0.0) {
+		mainCam.cameraScaleZoom(0.9f);
+	}
+}
+
 void TestScene::testPhysics()
 {
 }
@@ -94,14 +104,14 @@ void TestScene::testRender()
 
 void TestScene::testFont()
 {
-	fc.loadFont("wqy.ttc", 40);
+	fc.loadFont("wqy.ttc", 10);
 	std::vector<unsigned long> str;
 	for (int i = 1; i < 255; i++) {
 		str.push_back(i);
 	}
 	fc.updateCache(str);
 	str.clear();
-	for (int i = 255; i < 2000; i++) {
+	for (int i = 255; i < 250000; i++) {
 		str.push_back(i);
 	}
 	fc.updateCache(str);
@@ -110,7 +120,7 @@ void TestScene::testFont()
 	auto winSize = window->getWindowSize();
 	testTex = fc.getCacheTexture();
 	testTex.setPosition(Vec2(2048) - winSize / 2.0f);
-	testTex.setColor(Color("#ff0"));
+	testTex.setColor(Color("#3f0"));
 	add(&testTex);
 }
 
