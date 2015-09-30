@@ -60,6 +60,12 @@ void Camera::cameraScaleZoom(float zoom)
 	setCameraScale(cameraScale * zoom);
 }
 
+void Camera::cameraScaleCenterZoom(const Vec2& center, float zoom)
+{
+	move((center - pos) * (1.0f - 1.0f / zoom));
+	setCameraScale(cameraScale * zoom);
+}
+
 void Camera::setCameraSize(const fei::Vec2& v)
 {
 	width = v.x;
