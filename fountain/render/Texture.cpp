@@ -103,10 +103,11 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 	if ((int)dataFormat % 2 == 0) {
 		internalFormat = GL_RGBA;
 	}
-	if (!isLoaded()) {
-		glGenTextures(1, &id);
-		fei::Render::getInstance()->addRefTexture(id);
+	if (isLoaded()) {
+		unload();
 	}
+	glGenTextures(1, &id);
+	fei::Render::getInstance()->addRefTexture(id);
 	glBindTexture(GL_TEXTURE_2D, id);
 	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
