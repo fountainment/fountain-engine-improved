@@ -55,6 +55,11 @@ void Image::drawIt()
 	fei::Render::getInstance()->disableTexture();
 }
 
+const fei::Vec2 Image::getSize() const
+{
+	return size;
+}
+
 const fei::Vec2 Image::getLB()
 {
 	auto v = getTextureSize();
