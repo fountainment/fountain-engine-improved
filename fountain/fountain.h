@@ -16,6 +16,8 @@
 #include "math/Vec2.h"
 #include "math/Vec3.h"
 #include "math/Vec4.h"
+#include "math/hash.h"
+#include "math/coding.h"
 
 #include "time/Time.h"
 #include "time/Clock.h"
@@ -53,6 +55,8 @@
 
 #include "font/Font.h"
 #include "font/FontCache.h"
+
+#include "ui/Label.h"
 
 #ifdef _MSC_VER
 	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")

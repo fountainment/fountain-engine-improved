@@ -125,16 +125,22 @@ void RenderObj::feiUpdate()
 	update();
 }
 
-void RenderObj::matrixTransform()
+void RenderObj::matrixTransformBegin()
 {
 	glTranslatef(pos.x, pos.y, zPos);
 	if (angle != 0.0f) {
 		glRotatef(angle, 0.0f, 0.0f, 1.0f);
 	}
+	glPushMatrix();
 	if (scale != 1.0f) {
 		glScalef(scale, scale, scale);
 	}
 	glTranslatef(-anchor.x, -anchor.y, 0.0f);
+}
+
+void RenderObj::matrixTransformEnd()
+{
+	glPopMatrix();
 }
 
 void RenderObj::draw()
@@ -155,11 +161,13 @@ void RenderObj::draw()
 		shaderProg->push();
 	}
 
-	matrixTransform();
+	matrixTransformBegin();
 
 	if (visible) {
 		drawIt();
 	}
+
+	matrixTransformEnd();
 
 	if (shaderProg && visible) {
 		shaderProg->pop();

@@ -21,7 +21,8 @@ public:
 	virtual void feiDestroy();
 	virtual void feiUpdate();
 
-	void matrixTransform();
+	void matrixTransformBegin();
+	void matrixTransformEnd();
 
 	void draw();
 	virtual void drawIt();

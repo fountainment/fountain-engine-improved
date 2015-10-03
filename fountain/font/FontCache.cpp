@@ -91,7 +91,7 @@ void FontCache::updateCache(unsigned long* str, int strSize)
 					bitmap.buffer[(bitH - bitY) * bitW + bitX - 1]:0;
 			}
 		}
-		fei::Image image = cacheTexture.getImage(fei::Rect(lbX + 1, lbY + 1, bitW, bitH));
+		fei::Image image = cacheTexture.getImage(fei::Rect(xLoc + lbX + 1, yLoc + lbY + 1, bitW, bitH));
 		fei::Vec2 anchor(slot->bitmap_left + bitmap.width / 2.0f, slot->bitmap_top - bitmap.rows / 2.0f);
 		anchor *= -1.0f;
 		image.setAnchor(anchor);

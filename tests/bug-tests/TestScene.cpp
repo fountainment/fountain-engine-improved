@@ -88,7 +88,7 @@ void TestScene::scrollCallback(double xoffset, double yoffset)
 		mainCam.cameraScaleZoom(1.1f);
 	}
 	if (yoffset < 0.0) {
-		mainCam.cameraScaleZoom(0.9f);
+		mainCam.cameraScaleZoom(0.90909f);
 	}
 }
 
@@ -104,7 +104,7 @@ void TestScene::testRender()
 
 void TestScene::testFont()
 {
-	fc.loadFont("wqy.ttc", 10);
+	fc.loadFont("wqy.ttc", 32);
 	std::vector<unsigned long> str;
 	for (int i = 1; i < 255; i++) {
 		str.push_back(i);
@@ -122,6 +122,9 @@ void TestScene::testFont()
 	testTex.setPosition(Vec2(2048) - winSize / 2.0f);
 	testTex.setColor(Color("#3f0"));
 	add(&testTex);
+
+	label.setString(fc, "Hello World! 我能吞下玻璃而不伤身体");
+	add(&label);
 }
 
 void TestScene::testAudio()

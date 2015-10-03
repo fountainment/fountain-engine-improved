@@ -9,4 +9,5 @@ set(FOUNTAIN_MATH_SRC
 	math/Rect.cpp
 	math/Segment.cpp
 	math/hash.cpp
+	math/coding.cpp
 )

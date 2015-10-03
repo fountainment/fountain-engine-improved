@@ -13,14 +13,14 @@ Image::Image()
 }
 
 Image::Image(const Image& img)
-: id(0),
-  size(fei::Vec2::ZERO)
+: id(0)
 {
-	(*this) = img;
+	*this = img;
 }
 
 void Image::operator=(const Image& img)
 {
+	fei::RenderObj::operator=(img);
 	if (id != img.id) {
 		fei::Render::getInstance()->releaseTexture(id);
 		id = img.id;

@@ -24,6 +24,7 @@ private:
 	fei::Source src;
 	fei::Camera mainCam;
 	fei::FontCache fc;
+	fei::Label label;
 };
 
 #endif
