@@ -60,6 +60,7 @@
 
 #ifdef _MSC_VER
 	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")
+	#pragma comment(linker, "/NODEFAULTLIB:MSVCRT.lib")
 	#ifdef NDEBUG
 		#pragma comment(linker, "/SUBSYSTEM:WINDOWS /ENTRY:mainCRTStartup")
 	#else

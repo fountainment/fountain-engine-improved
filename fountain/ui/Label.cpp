@@ -15,11 +15,11 @@ void Label::drawIt()
 	assert((int)advanceList.size() == size);
 	for (int i = 0; i < size; i++) {
 		charList[i].draw();
-		glTranslatef(advanceList[i], 0.0f, 0.0f);
+		glTranslatef((GLfloat)advanceList[i], 0.0f, 0.0f);
 	}
 }
 
-void Label::setString(FontCache& fontCache, const std::vector<unsigned long>& str)
+void Label::setString(fei::FontCache& fontCache, const std::vector<unsigned long>& str)
 {
 	length = 0;
 	for (auto charactor : str) {
@@ -30,7 +30,7 @@ void Label::setString(FontCache& fontCache, const std::vector<unsigned long>& st
 	}
 }
 
-void Label::setString(FontCache& fontCache, const std::string& str)
+void Label::setString(fei::FontCache& fontCache, const std::string& str)
 {
 	auto unicodeStr = fei::utf8ToUnicode(str);
 	setString(fontCache, unicodeStr);
