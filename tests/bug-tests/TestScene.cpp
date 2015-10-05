@@ -20,6 +20,13 @@ void TestScene::destroy()
 
 void TestScene::update()
 {
+	auto window = Interface::getInstance()->getCurrentWindow();
+	static Vec2 oldPos = window->getRHCursorPos();
+	Vec2 deltaV = (window->getRHCursorPos() - oldPos) / -mainCam.getCameraScale();
+	oldPos = window->getRHCursorPos();
+	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE)) {
+		mainCam.move(deltaV);
+	}
 }
 
 void TestScene::testMath()
@@ -104,14 +111,14 @@ void TestScene::testRender()
 
 void TestScene::testFont()
 {
-	fc.loadFont("wqy.ttc", 32);
+	fc.loadFont("wqy.ttc", 24);
 	std::vector<unsigned long> str;
 	for (int i = 1; i < 255; i++) {
 		str.push_back(i);
 	}
 	fc.updateCache(str);
 	str.clear();
-	for (int i = 255; i < 250000; i++) {
+	for (int i = 0x4e00; i <= 0x9fa5; i++) {
 		str.push_back(i);
 	}
 	fc.updateCache(str);
