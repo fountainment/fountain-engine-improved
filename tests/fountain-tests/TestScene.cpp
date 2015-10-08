@@ -17,11 +17,11 @@ void TestScene::init()
 	map.load("map.png");
 
 	UI.load("UI43.png");
-	UI.setIsAlpha(true);
+	UI.setHasAlpha(true);
 
 	UICam.setCameraSize(Vec2(1920, 1440));
 	UILayer.setCamera(&UICam);
-	UILayer.setIsAlpha(true);
+	UILayer.setHasAlpha(true);
 	UILayer.add(&UI);
 
 	UI.setColor(Color(Vec3(1.0f), 0.8f));

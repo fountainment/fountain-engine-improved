@@ -6,7 +6,7 @@ using fei::Label;
 Label::Label()
 : length(0)
 {
-	setIsAlpha(true);
+	setHasAlpha(true);
 }
 
 void Label::drawIt()
@@ -39,4 +39,9 @@ void Label::setString(fei::FontCache& fontCache, const std::string& str)
 int Label::getLength()
 {
 	return length;
+}
+
+void Label::setCenter(const fei::Vec2& center)
+{
+	setPosition(center - fei::Vec2(length, 0.0f) / 2.0f);
 }

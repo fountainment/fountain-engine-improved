@@ -44,14 +44,18 @@ void RenderTree::treeDraw()
 
 void RenderTree::feiInit()
 {
+	if (_isLoaded) return;
 	init();
 	treeInit();
+	_isLoaded = true;
 }
 
 void RenderTree::feiDestroy()
 {
+	if (!_isLoaded) return;
 	treeDestroy();
 	destroy();
+	_isLoaded = false;
 }
 
 void RenderTree::feiUpdate()
@@ -72,6 +76,9 @@ void RenderTree::setRoot(RenderObj* rObj)
 
 void RenderTree::addChild(RenderObj* rObj)
 {
+	if (_isLoaded) {
+		rObj->feiInit();
+	}
 	childList.add(rObj);
 }
 

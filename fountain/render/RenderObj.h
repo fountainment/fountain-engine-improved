@@ -13,14 +13,6 @@ public:
 	RenderObj();
 	virtual ~RenderObj();
 
-	virtual void init();
-	virtual void destroy();
-	virtual void update();
-
-	virtual void feiInit();
-	virtual void feiDestroy();
-	virtual void feiUpdate();
-
 	void matrixTransformBegin();
 	void matrixTransformEnd();
 
@@ -29,8 +21,8 @@ public:
 
 	void setShader(fei::ShaderProgram* sp);
 
-	bool isAlpha() const;
-	void setIsAlpha(bool alpha);
+	bool hasAlpha() const;
+	void setHasAlpha(bool hasAlpha);
 
 	bool isVisible() const;
 	void setVisible(bool _isVisible);
@@ -54,7 +46,7 @@ public:
 	const Color getColor() const;
 
 protected:
-	bool _isAlpha;
+	bool _hasAlpha;
 	bool _isVisible;
 	//int alphaFunc;
 	float angle;

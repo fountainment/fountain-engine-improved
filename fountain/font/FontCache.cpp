@@ -11,7 +11,7 @@ FontCache::FontCache()
   fontIsLoaded(false),
   useKerning(false)
 {
-	cacheTexture.setIsAlpha(true);
+	cacheTexture.setHasAlpha(true);
 }
 
 FontCache::~FontCache()
