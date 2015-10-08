@@ -17,6 +17,7 @@ public:
 	void loadFont(const char* fontFile, int fontSize = 16);
 	void unloadFont();
 	void updateCache(const std::vector<unsigned long>& str);
+	void updateCache(const char* str);
 	void deleteCache();
 
 	int getRemainingSpace();

@@ -1,5 +1,6 @@
 #include "FontCache.h"
 #include "render/Image.h"
+#include "math/coding.h"
 
 using fei::FontCache;
 
@@ -143,6 +144,11 @@ void FontCache::updateCache(const std::vector<unsigned long>& str)
 		strIndex += subUpdateSize;
 		updateSize -= subUpdateSize;
 	}
+}
+
+void FontCache::updateCache(const char* str)
+{
+	updateCache(fei::utf8ToUnicode(str));
 }
 
 void FontCache::deleteCache()
