@@ -12,7 +12,7 @@ class FontCache
 {
 public:
 	FontCache();
-	~FontCache();
+	virtual ~FontCache();
 
 	void loadFont(const char* fontFile, int fontSize = 16);
 	void unloadFont();
