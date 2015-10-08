@@ -22,6 +22,8 @@ void Label::drawIt()
 void Label::setString(fei::FontCache& fontCache, const std::vector<unsigned long>& str)
 {
 	length = 0;
+	charList.clear();
+	advanceList.clear();
 	for (auto charactor : str) {
 		charList.push_back(fontCache.queryCharactor(charactor));
 		int advance = fontCache.queryAdvance(charactor);
