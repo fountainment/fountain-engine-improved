@@ -19,11 +19,27 @@ void Label::drawIt()
 	}
 }
 
-void Label::setString(fei::FontCache& fontCache, const std::vector<unsigned long>& str)
+void Label::clearString()
 {
 	length = 0;
 	charList.clear();
 	advanceList.clear();
+}
+
+void Label::setString(fei::FontCache& fontCache, const std::vector<unsigned long>& str)
+{
+	clearString();
+	addString(fontCache, str);
+}
+
+void Label::setString(fei::FontCache& fontCache, const std::string& str)
+{
+	auto unicodeStr = fei::utf8ToUnicode(str);
+	setString(fontCache, unicodeStr);
+}
+
+void Label::addString(fei::FontCache& fontCache, const std::vector<unsigned long>& str)
+{
 	for (auto charactor : str) {
 		charList.push_back(fontCache.queryCharactor(charactor));
 		int advance = fontCache.queryAdvance(charactor);
@@ -32,10 +48,10 @@ void Label::setString(fei::FontCache& fontCache, const std::vector<unsigned long
 	}
 }
 
-void Label::setString(fei::FontCache& fontCache, const std::string& str)
+void Label::addString(fei::FontCache& fontCache, const std::string& str)
 {
 	auto unicodeStr = fei::utf8ToUnicode(str);
-	setString(fontCache, unicodeStr);
+	addString(fontCache, unicodeStr);
 }
 
 int Label::getLength()
