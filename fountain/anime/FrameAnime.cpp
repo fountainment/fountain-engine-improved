@@ -30,14 +30,14 @@ void FrameAnime::load(const char* textureName, const char* sipName)
 
 void FrameAnime::update()
 {
-	tick();
-	if (isPlay()) {
-		curFrameIndex += getFps() * getDeltaTime();
+	playClock.tick();
+	if (playClock.isPlay()) {
+		curFrameIndex += getFps() * playClock.getDeltaTime();
 		if (curFrameIndex >= getFrameNum()) {
 			if (isLoop()) {
 				curFrameIndex = 0;
 			} else {
-				stop();
+				playClock.stop();
 			}
 		}
 	}
@@ -45,7 +45,7 @@ void FrameAnime::update()
 
 void FrameAnime::drawIt()
 {
-	if (!isStop()) {
+	if (!playClock.isStop()) {
 		fei::Image *image = framePool.getImage((int)curFrameIndex);
 		if (image) {
 			image->draw();

@@ -5,7 +5,7 @@
 
 namespace fei {
 
-class PlayObj : public Clock
+class PlayObj
 {
 public:
 	PlayObj();
@@ -14,6 +14,9 @@ public:
 
 private:
 	bool _isLoop;
+
+protected:
+	Clock playClock;
 };
 
 }

@@ -45,5 +45,5 @@ int Label::getLength()
 
 void Label::setCenter(const fei::Vec2& center)
 {
-	setPosition(center - fei::Vec2(length, 0.0f) / 2.0f);
+	setPosition(center - fei::Vec2((float)length, 0.0f) / 2.0f);
 }
