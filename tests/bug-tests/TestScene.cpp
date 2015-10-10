@@ -92,10 +92,10 @@ void TestScene::keyCallback(int key, int scancode, int action, int mods)
 void TestScene::scrollCallback(double xoffset, double yoffset)
 {
 	if (yoffset > 0.0) {
-		mainCam.cameraScaleZoom(1.1f);
+		mainCam.zoomCameraScale(1.1f);
 	}
 	if (yoffset < 0.0) {
-		mainCam.cameraScaleZoom(0.90909f);
+		mainCam.zoomCameraScale(0.90909f);
 	}
 }
 

@@ -126,10 +126,10 @@ void EditorScene::cursorPosCallback(double xpos, double ypos)
 void EditorScene::scrollCallback(double xoffset, double yoffset)
 {
 	if (yoffset > 0.0f) {
-		mainCam.cameraScaleZoom(1.1f);
+		mainCam.zoomCameraScale(1.1f);
 	}
 	if (yoffset < 0.0f) {
-		mainCam.cameraScaleZoom(0.9f);
+		mainCam.zoomCameraScale(0.9f);
 	}
 }
 

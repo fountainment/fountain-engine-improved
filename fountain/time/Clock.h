@@ -21,6 +21,7 @@ public:
 
 	void setTimeScale(double tScale);
 	double getTimeScale();
+	void zoomTimeScale(double zoom);
 
 	void play();
 	void pause();

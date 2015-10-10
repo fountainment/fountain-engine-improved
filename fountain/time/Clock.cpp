@@ -73,6 +73,11 @@ double Clock::getTimeScale()
 	return timeScale;
 }
 
+void Clock::zoomTimeScale(double zoom)
+{
+	timeScale *= zoom;
+}
+
 void Clock::play()
 {
 	stop();
