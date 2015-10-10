@@ -40,11 +40,16 @@ void Label::setString(fei::FontCache& fontCache, const std::string& str)
 
 void Label::addString(fei::FontCache& fontCache, const std::vector<unsigned long>& str)
 {
+	unsigned long prev = 0;
 	for (auto charactor : str) {
 		charList.push_back(fontCache.queryCharactor(charactor));
 		int advance = fontCache.queryAdvance(charactor);
+		if (prev) {
+			advance += fontCache.queryKerning(prev, charactor);
+		}
 		advanceList.push_back(advance);
 		length += advance;
+		prev = charactor;
 	}
 }
 
