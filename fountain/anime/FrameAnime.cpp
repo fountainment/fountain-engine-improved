@@ -17,7 +17,7 @@ void FrameAnime::load(const fei::ImagePool& imagePool)
 void FrameAnime::load(const fei::Texture& texture, const char* sipName)
 {
 	framePool.load(texture, sipName);
-	setIsAlpha(texture.isAlpha());
+	setHasAlpha(texture.hasAlpha());
 	curFrameIndex = 0;
 }
 

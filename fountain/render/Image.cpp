@@ -26,7 +26,7 @@ void Image::operator=(const Image& img)
 		id = img.id;
 		fei::Render::getInstance()->addRefTexture(id);
 	}
-	setIsAlpha(img.isAlpha());
+	setHasAlpha(img.hasAlpha());
 	size = img.size;
 	for (int i = 0; i < 8; i++) {
 		texCoord[i] = img.texCoord[i];
@@ -77,7 +77,7 @@ const Image Image::getImage(const fei::Rect& imageRect)
 	auto rect = imageRect;
 	rect.move(getLB());
 	Image result = Image(id, getTextureSize(), rect);
-	result.setIsAlpha(isAlpha());
+	result.setHasAlpha(hasAlpha());
 	return result;
 }
 

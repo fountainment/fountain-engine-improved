@@ -2,17 +2,34 @@
 
 using fei::NodeBase;
 
-const fei::Vec2 NodeBase::getPosition() const
+void NodeBase::init()
 {
-	return pos;
 }
 
-void NodeBase::setPosition(const fei::Vec2& v)
+void NodeBase::destroy()
 {
-	pos = v;
 }
 
-void NodeBase::move(const fei::Vec2& v)
+void NodeBase::update()
 {
-	pos.add(v);
 }
+
+void NodeBase::feiInit()
+{
+	if (_isLoaded) return;
+	init();
+	_isLoaded = true;
+}
+
+void NodeBase::feiDestroy()
+{
+	if (!_isLoaded) return;
+	destroy();
+	_isLoaded = false;
+}
+
+void NodeBase::feiUpdate()
+{
+	update();
+}
+

@@ -23,7 +23,7 @@ void RenderList::listUpdate()
 	normalList.clear();
 	for (auto renderObj : objList) {
 		renderObj->feiUpdate();
-		if (renderObj->isAlpha()) {
+		if (renderObj->hasAlpha()) {
 			alphaList.push_back(renderObj);
 		} else {
 			normalList.push_back(renderObj);
@@ -47,14 +47,18 @@ void RenderList::listDraw()
 
 void RenderList::feiInit()
 {
+	if (_isLoaded) return;
 	init();
 	listInit();
+	_isLoaded = true;
 }
 
 void RenderList::feiDestroy()
 {
+	if (!_isLoaded) return;
 	listDestroy();
 	destroy();
+	_isLoaded = false;
 }
 
 void RenderList::feiUpdate()
@@ -70,6 +74,9 @@ void RenderList::drawIt()
 
 void RenderList::add(fei::RenderObj* rObj)
 {
+	if (_isLoaded) {
+		rObj->feiInit();
+	}
 	objList.push_back(rObj);
 }
 

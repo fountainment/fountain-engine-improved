@@ -66,7 +66,7 @@ Texture::Texture(const Texture& tex)
 
 void Texture::operator=(const Texture& tex)
 {
-	setIsAlpha(tex.isAlpha());
+	fei::RenderObj::operator=(tex);
 	setId(tex.id);
 }
 
@@ -170,7 +170,7 @@ void Texture::drawIt()
 const fei::Image Texture::getImage(const fei::Rect& rect) const
 {
 	fei::Image result(id, size, rect);
-	result.setIsAlpha(isAlpha());
+	result.setHasAlpha(hasAlpha());
 	return result;
 }
 

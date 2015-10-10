@@ -19,6 +19,8 @@ public:
 
 	int getLength();
 
+	void setCenter(const Vec2& center);
+
 private:
 	int length;
 	std::vector<Image> charList;

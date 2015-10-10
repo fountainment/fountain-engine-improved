@@ -4,7 +4,7 @@
 using fei::RenderObj;
 
 RenderObj::RenderObj()
-: _isAlpha(false),
+: _hasAlpha(false),
   _isVisible(true),
   angle(0.0f),
   scale(1.0f),
@@ -23,14 +23,14 @@ void RenderObj::setShader(fei::ShaderProgram* sp)
 	shaderProg = sp;
 }
 
-bool RenderObj::isAlpha() const
+bool RenderObj::hasAlpha() const
 {
-	return _isAlpha;
+	return _hasAlpha;
 }
 
-void RenderObj::setIsAlpha(bool alpha)
+void RenderObj::setHasAlpha(bool hasAlpha)
 {
-	_isAlpha = alpha;
+	_hasAlpha = hasAlpha;
 }
 
 bool RenderObj::isVisible() const
@@ -98,33 +98,6 @@ void RenderObj::rotate(float dltAgl)
 	angle += dltAgl;
 }
 
-void RenderObj::init()
-{
-}
-
-void RenderObj::destroy()
-{
-}
-
-void RenderObj::update()
-{
-}
-
-void RenderObj::feiInit()
-{
-	init();
-}
-
-void RenderObj::feiDestroy()
-{
-	destroy();
-}
-
-void RenderObj::feiUpdate()
-{
-	update();
-}
-
 void RenderObj::matrixTransformBegin()
 {
 	glTranslatef(pos.x, pos.y, zPos);
@@ -148,7 +121,7 @@ void RenderObj::draw()
 	color.use();
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
-	if (_isAlpha) {
+	if (_hasAlpha) {
 		glDepthFunc(GL_LEQUAL);
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -174,7 +147,7 @@ void RenderObj::draw()
 	}
 
 	glDisable(GL_DEPTH_TEST);
-	if (_isAlpha) {
+	if (_hasAlpha) {
 		glDisable(GL_BLEND);
 	}
 }
