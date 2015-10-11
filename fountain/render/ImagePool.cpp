@@ -5,15 +5,15 @@
 
 using fei::ImagePool;
 
-const std::vector<std::pair<int, fei::Rect>> loadSipFile(const char* filename)
+const std::vector<std::pair<int, fei::Rect>> loadSipFile(const std::string& filename)
 {
 	std::vector<std::pair<int, fei::Rect>> result;
 	char name[100];
 	int x, y, imageNum, tmp;
 	float rx, ry, rw, rh;
-	std::FILE *sipF = std::fopen(filename, "r");
+	std::FILE *sipF = std::fopen(filename.c_str(), "r");
 	if (!sipF) {
-		std::fprintf(stderr, "loadSipFile: \"%s\" file not exist!\n", filename);
+		std::fprintf(stderr, "loadSipFile: \"%s\" file not exist!\n", filename.c_str());
 		return result;
 	}
 	tmp = std::fscanf(sipF, "%d%d%d", &x, &y, &imageNum);
@@ -31,24 +31,24 @@ ImagePool::ImagePool()
 {
 }
 
-ImagePool::ImagePool(const char* texName, const char* sipName)
+ImagePool::ImagePool(const std::string& texName, const std::string& sipName)
 {
 	load(texName, sipName);
 }
 
-ImagePool::ImagePool(const fei::Texture& texure, const char* sipName)
+ImagePool::ImagePool(const fei::Texture& texure, const std::string& sipName)
 {
 	load(texure, sipName);
 }
 
-void ImagePool::load(const char* texName, const char* sipName)
+void ImagePool::load(const std::string& texName, const std::string& sipName)
 {
 	fei::Texture tmpTex;
 	tmpTex.load(texName);
 	load(tmpTex, sipName);
 }
 
-void ImagePool::load(const fei::Texture& texure, const char* sipName)
+void ImagePool::load(const fei::Texture& texure, const std::string& sipName)
 {
 	imageList.clear();
 	auto result = loadSipFile(sipName);
@@ -59,7 +59,7 @@ void ImagePool::load(const fei::Texture& texure, const char* sipName)
 	}
 }
 
-fei::Image* ImagePool::getImage(const char* imageName)
+fei::Image* ImagePool::getImage(const std::string& imageName)
 {
 	int index = nameHash2ImageIndex[fei::bkdrHash(imageName)];
 	return getImage(index);

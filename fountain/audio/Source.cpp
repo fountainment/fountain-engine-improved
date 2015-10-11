@@ -157,11 +157,11 @@ void Source::setPosition(const fei::Vec2& position)
 	alSourcefv(id, AL_POSITION, &v3p.x);
 }
 
-bool Source::loadWAV(const char* filename)
+bool Source::loadWAV(const std::string& filename)
 {
 	ALsizei size, frequency;
 	ALenum format;
-	bool state = loadWavFile(filename, &buffer, &size, &frequency, &format);
+	bool state = loadWavFile(filename.c_str(), &buffer, &size, &frequency, &format);
 	if (!state) {
 		return false;
 	}

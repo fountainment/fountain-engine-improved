@@ -21,7 +21,7 @@ FontCache::~FontCache()
 	unloadFont();
 }
 
-void FontCache::loadFont(const char* fontFile, int fontSize)
+void FontCache::loadFont(const std::string& fontFile, int fontSize)
 {
 	if (!Font::getInstance()->isLoaded()) {
 		std::fprintf(stderr, "FontCache: Font module not loaded!\n");
@@ -29,9 +29,9 @@ void FontCache::loadFont(const char* fontFile, int fontSize)
 	}
 	unloadFont();
 	FT_Library *library = &Font::getInstance()->library;
-	int error = FT_New_Face(*library, fontFile, 0, &face);
+	int error = FT_New_Face(*library, fontFile.c_str(), 0, &face);
 	if (error) {
-		std::fprintf(stderr, "FontCache: \"%s\" loading error!\n", fontFile);
+		std::fprintf(stderr, "FontCache: \"%s\" loading error!\n", fontFile.c_str());
 		return;
 	}
 	fontIsLoaded = true;
@@ -146,7 +146,7 @@ void FontCache::updateCache(const std::vector<unsigned long>& str)
 	}
 }
 
-void FontCache::updateCache(const char* str)
+void FontCache::updateCache(const std::string& str)
 {
 	updateCache(fei::utf8ToUnicode(str));
 }

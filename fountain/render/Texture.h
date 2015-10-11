@@ -30,13 +30,13 @@ public:
 
 	virtual ~Texture();
 
-	void load(const char* filename);
+	void load(const std::string& filename);
 	void load(const unsigned char* bits, int w, int h, Format dataFormat = Format::RGBA);
 	void unload();
 
 	bool isLoaded() const;
 
-	void subUpdate(const char* filename, int xoffset, int yoffset);
+	void subUpdate(const std::string& filename, int xoffset, int yoffset);
 	void subUpdate(const unsigned char* bits, int w, int h, Format dataFormat, int xoffset, int yoffset);
 
 	const Image getImage(const Rect& rect) const;

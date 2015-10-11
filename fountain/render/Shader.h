@@ -12,8 +12,8 @@ class Shader
 public:
 	friend class ShaderProgram;
 
-	void loadFile(const char* filename);
-	void loadString(const char* source);
+	void loadFile(const std::string& filename);
+	void loadString(const std::string& source);
 
 	void compile();
 	bool compileCheck();
@@ -51,8 +51,8 @@ public:
 
 	void deleteProgram();
 
-	void loadFile(const char* vs, const char* fs);
-	void loadString(const char* vsStr, const char* fsStr);
+	void loadFile(const std::string& vs, const std::string& fs);
+	void loadString(const std::string& vsStr, const std::string& fsStr);
 
 	void attach(Shader* shader);
 	void attach(Shader* vs, Shader* fs);
@@ -63,8 +63,8 @@ public:
 	void push();
 	void pop();
 
-	void setUniform(const char* varName, float value);
-	void setUniform(const char* varName, const Vec2& value);
+	void setUniform(const std::string& varName, float value);
+	void setUniform(const std::string& varName, const Vec2& value);
 
 private:
 	GLuint id;

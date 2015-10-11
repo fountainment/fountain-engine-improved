@@ -40,6 +40,7 @@
 #include "render/Shader.h"
 #include "render/ShapeObj.h"
 
+#include "anime/Anime.h"
 #include "anime/FrameAnime.h"
 
 #include "scene/Layer.h"

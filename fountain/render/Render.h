@@ -31,9 +31,9 @@ public:
 	void popShader(ShaderProgram* shader);
 	ShaderProgram* getShaderProgram();
 
-	void registTexture(const char* filename, GLuint id);
+	void registTexture(const std::string& filename, GLuint id);
 	void deleteTexture(GLuint id);
-	int queryTexture(const char* filename);
+	int queryTexture(const std::string& filename);
 	void registTexSize(GLuint id, const Vec2& s);
 	const Vec2 queryTexSize(GLuint id);
 	void addRefTexture(GLuint id);

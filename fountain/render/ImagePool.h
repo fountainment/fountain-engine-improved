@@ -3,6 +3,7 @@
 
 #include "render/Image.h"
 #include "render/Texture.h"
+#include "base/basedef.h"
 #include <GL/glew.h>
 
 namespace fei {
@@ -11,14 +12,14 @@ class ImagePool
 {
 public:
 	ImagePool();
-	ImagePool(const char* texName, const char* sipName);
-	ImagePool(const fei::Texture& texure, const char* sipName);
+	ImagePool(const std::string& texName, const std::string& sipName);
+	ImagePool(const fei::Texture& texure, const std::string& sipName);
 
-	void load(const char* texName, const char* sipName);
-	void load(const fei::Texture& texure, const char* sipName);
+	void load(const std::string& texName, const std::string& sipName);
+	void load(const fei::Texture& texure, const std::string& sipName);
 
 	Image* getImage(int index);
-	Image* getImage(const char* imagename);
+	Image* getImage(const std::string& imagename);
 
 	int getImageNum();
 

@@ -14,14 +14,14 @@ void FrameAnime::load(const fei::ImagePool& imagePool)
 	curFrameIndex = 0;
 }
 
-void FrameAnime::load(const fei::Texture& texture, const char* sipName)
+void FrameAnime::load(const fei::Texture& texture, const std::string& sipName)
 {
 	framePool.load(texture, sipName);
 	setHasAlpha(texture.hasAlpha());
 	curFrameIndex = 0;
 }
 
-void FrameAnime::load(const char* textureName, const char* sipName)
+void FrameAnime::load(const std::string& textureName, const std::string& sipName)
 {
 	fei::Texture tmpTex;
 	tmpTex.load(textureName);

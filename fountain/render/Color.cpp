@@ -3,12 +3,12 @@
 
 using fei::Color;
 
-static int HexToDec(const char* str, int len = -1)
+static int HexToDec(const std::string& str, int len = -1)
 {
 	int ans = 0;
 	int strLength = len;
 	if (strLength == -1) {
-		strLength = std::strlen(str);
+		strLength = str.length();
 	}
 	for (int i = 0; i < strLength; i++) {
 		if (i != 0) {
@@ -53,8 +53,8 @@ static const fei::Vec3 strToRGB(const std::string& colorStr)
 				throw "Length incorrect!";
 			}
 		}
-	} catch(const char* str) {
-		std::fprintf(stderr, "Color string format error: %s\n", str);
+	} catch(const std::string& str) {
+		std::fprintf(stderr, "Color string format error: %s\n", str.c_str());
 		assert(0);
 	}
 	return result;

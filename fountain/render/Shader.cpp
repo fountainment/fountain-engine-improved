@@ -25,14 +25,14 @@ void Shader::deleteShader()
 	}
 }
 
-void Shader::loadFile(const char* filename)
+void Shader::loadFile(const std::string& filename)
 {
 	auto buffer = fei::readFileBuffer(filename);
 	loadString(buffer);
 	delete [] buffer;
 }
 
-void Shader::loadString(const char* source)
+void Shader::loadString(const std::string& source)
 {
 	shaderSource = source;
 }
@@ -101,7 +101,7 @@ void ShaderProgram::deleteProgram()
 	}
 }
 
-void ShaderProgram::loadFile(const char* vs, const char* fs)
+void ShaderProgram::loadFile(const std::string& vs, const std::string& fs)
 {
 	if (!id) {
 		id = glCreateProgram();
@@ -113,7 +113,7 @@ void ShaderProgram::loadFile(const char* vs, const char* fs)
 	delete [] fsStr;
 }
 
-void ShaderProgram::loadString(const char* vsStr, const char* fsStr)
+void ShaderProgram::loadString(const std::string& vsStr, const std::string& fsStr)
 {
 	if (!id) {
 		id = glCreateProgram();
@@ -168,23 +168,23 @@ void ShaderProgram::pop()
 	Render::getInstance()->popShader(this);
 }
 
-void ShaderProgram::setUniform(const char* varName, float value)
+void ShaderProgram::setUniform(const std::string& varName, float value)
 {
 	if (fei::Render::getInstance()->getShaderProgram() != this) {
 		return;
 	}
-	GLint loc = glGetUniformLocation(id, varName);
+	GLint loc = glGetUniformLocation(id, varName.c_str());
 	if (loc != -1) {
 		glUniform1f(loc, value);
 	}
 }
 
-void ShaderProgram::setUniform(const char* varName, const fei::Vec2& value)
+void ShaderProgram::setUniform(const std::string& varName, const fei::Vec2& value)
 {
 	if (fei::Render::getInstance()->getShaderProgram() != this) {
 		return;
 	}
-	GLint loc = glGetUniformLocation(id, varName);
+	GLint loc = glGetUniformLocation(id, varName.c_str());
 	if (loc != -1) {
 		glUniform2fv(loc, 2, &(value.x));
 	}

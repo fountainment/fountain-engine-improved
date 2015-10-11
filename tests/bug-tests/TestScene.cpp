@@ -130,7 +130,7 @@ void TestScene::testFont()
 	testTex.setColor(Color("#3f0"));
 	add(&testTex);
 
-	label.setString(fc, "Hello World! 我能吞下玻璃而不伤身体.");
+	label.setString(fc, "Hello World! 我能吞下玻璃而不伤身体！");
 	add(&label);
 }
 

@@ -14,10 +14,10 @@ public:
 	FontCache();
 	~FontCache();
 
-	void loadFont(const char* fontFile, int fontSize = 16);
+	void loadFont(const std::string& fontFile, int fontSize = 16);
 	void unloadFont();
 	void updateCache(const std::vector<unsigned long>& str);
-	void updateCache(const char* str);
+	void updateCache(const std::string& str);
 	void deleteCache();
 
 	int getRemainingSpace();

@@ -1,10 +1,10 @@
 #include "fileUtil.h"
 #include "base/basedef.h"
 
-bool fei::isFileExist(const char* filename)
+bool fei::isFileExist(const std::string& filename)
 {
 	bool ans = false;
-	auto fp = std::fopen(filename, "r");
+	auto fp = std::fopen(filename.c_str(), "r");
 	if (fp) {
 		ans = true;
 		std::fclose(fp);
@@ -12,9 +12,9 @@ bool fei::isFileExist(const char* filename)
 	return ans;
 }
 
-char* fei::readFileBuffer(const char* filename)
+char* fei::readFileBuffer(const std::string& filename)
 {
-	std::FILE *fp = std::fopen(filename, "rb");
+	std::FILE *fp = std::fopen(filename.c_str(), "rb");
 	long fSize;
 	char *buffer;
 	size_t result;
@@ -27,11 +27,11 @@ char* fei::readFileBuffer(const char* filename)
 		buffer[fSize] = '\0';
 		std::fclose(fp);
 		if ((long)result != fSize) {
-			std::fprintf(stderr, "FileUtil: \"%s\" reading error!\n", filename);
+			std::fprintf(stderr, "FileUtil: \"%s\" reading error!\n", filename.c_str());
 			return nullptr;
 		}
 	} else {
-		std::fprintf(stderr, "FileUtil: \"%s\" file not exist!\n", filename);
+		std::fprintf(stderr, "FileUtil: \"%s\" file not exist!\n", filename.c_str());
 		return nullptr;
 	}
 	return buffer;

@@ -32,21 +32,21 @@ static Texture::Format BPP2FIFormat(int bpp)
 	return result;
 }
 
-static FIBITMAP* loadBitmap(const char* filename)
+static FIBITMAP* loadBitmap(const std::string& filename)
 {
 	FIBITMAP *dib;
 	if (!fei::isFileExist(filename)) {
-		std::fprintf(stderr, "Texture: \"%s\" file not exist!\n", filename);
+		std::fprintf(stderr, "Texture: \"%s\" file not exist!\n", filename.c_str());
 		return nullptr;
 	}
-	auto fif = FreeImage_GetFileType(filename, 0);
+	auto fif = FreeImage_GetFileType(filename.c_str(), 0);
 	if (FIF_UNKNOWN == fif) {
-		fif = FreeImage_GetFIFFromFilename(filename);
+		fif = FreeImage_GetFIFFromFilename(filename.c_str());
 	}
 	if (FreeImage_FIFSupportsReading(fif)) {
-		dib = FreeImage_Load(fif, filename, 0);
+		dib = FreeImage_Load(fif, filename.c_str(), 0);
 	} else {
-		std::fprintf(stderr, "Texture: \"%s\" unsupported file!\n", filename);
+		std::fprintf(stderr, "Texture: \"%s\" unsupported file!\n", filename.c_str());
 		return nullptr;
 	}
 	return dib;
@@ -75,7 +75,7 @@ Texture::~Texture()
 	unload();
 }
 
-void Texture::load(const char* filename)
+void Texture::load(const std::string& filename)
 {
 	int queryId = fei::Render::getInstance()->queryTexture(filename);
 	if (queryId) {
@@ -131,7 +131,7 @@ bool Texture::isLoaded() const
 	return id && GL_TRUE == glIsTexture(id);
 }
 
-void Texture::subUpdate(const char* filename, int xoffset, int yoffset)
+void Texture::subUpdate(const std::string& filename, int xoffset, int yoffset)
 {
 	if (!isLoaded()) {
 		return;

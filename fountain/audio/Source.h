@@ -20,7 +20,7 @@ public:
 	void setVelocity(const Vec2& velocity);
 	void setPosition(const Vec2& position);
 
-	bool loadWAV(const char* filename);
+	bool loadWAV(const std::string& filename);
 
 	void play();
 	void pause();

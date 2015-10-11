@@ -142,7 +142,7 @@ fei::ShaderProgram* Render::getShaderProgram()
 	}
 }
 
-void Render::registTexture(const char* filename, GLuint id)
+void Render::registTexture(const std::string& filename, GLuint id)
 {
 	int hash = fei::bkdrHash(filename);
 	fileTextureMap[hash] = id;
@@ -160,7 +160,7 @@ void Render::deleteTexture(GLuint id)
 	}
 }
 
-int Render::queryTexture(const char* filename)
+int Render::queryTexture(const std::string& filename)
 {
 	int hash = fei::bkdrHash(filename);
 	GLuint ans = 0;

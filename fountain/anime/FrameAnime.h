@@ -4,18 +4,19 @@
 #include "render/RenderObj.h"
 #include "render/Texture.h"
 #include "render/ImagePool.h"
-#include "time/PlayObj.h"
+#include "anime/Anime.h"
+#include "base/basedef.h"
 
 namespace fei {
 
-class FrameAnime : public RenderObj, public PlayObj
+class FrameAnime : public RenderObj, public Anime
 {
 public:
 	FrameAnime();
 
 	void load(const ImagePool& imagePool);
-	void load(const Texture& texture, const char* sipName);
-	void load(const char* textureName, const char* sipName);
+	void load(const Texture& texture, const std::string& sipName);
+	void load(const std::string& textureName, const std::string& sipName);
 
 	virtual void update() override;
 	virtual void drawIt() override;
