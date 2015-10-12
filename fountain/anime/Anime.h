@@ -19,6 +19,7 @@ public:
 	static Anime* createFrameAnime(float fps, const fei::Texture& texture, const std::string& sipName);
 	static Anime* createFrameAnime(float fps, const std::string& textureName, const std::string& sipName);
 	static Anime* createActionAnime();
+
 private:
 };
 

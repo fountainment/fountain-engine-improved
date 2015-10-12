@@ -23,6 +23,11 @@ void RenderObj::setShader(fei::ShaderProgram* sp)
 	shaderProg = sp;
 }
 
+void RenderObj::setSubstitute(RenderObj* sub)
+{
+	substitute = sub;
+}
+
 bool RenderObj::hasAlpha() const
 {
 	return _hasAlpha;
@@ -137,7 +142,11 @@ void RenderObj::draw()
 	matrixTransformBegin();
 
 	if (visible) {
-		drawIt();
+		if (substitute) {
+			drawIt();
+		} else {
+			drawIt();
+		}
 	}
 
 	matrixTransformEnd();

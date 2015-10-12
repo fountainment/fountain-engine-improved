@@ -21,6 +21,8 @@ public:
 
 	void setShader(fei::ShaderProgram* sp);
 
+	void setSubstitute(fei::RenderObj* sub);
+
 	bool hasAlpha() const;
 	void setHasAlpha(bool hasAlpha);
 
@@ -55,6 +57,7 @@ protected:
 	Vec2 anchor;
 	Color color;
 	ShaderProgram* shaderProg;
+	RenderObj* substitute;
 };
 
 }
