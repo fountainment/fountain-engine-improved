@@ -47,7 +47,7 @@ bool loadWavFile(const std::string filename, ALuint* buffer,
 	try {
 		soundFile = std::fopen(filename.c_str(), "rb");
 		if (!soundFile) {
-			throw ("File not found!");
+			throw "File not found!";
 		}
 
 		tmp = std::fread(&riff_header, sizeof(RIFF_Header), 1, soundFile);
@@ -60,7 +60,7 @@ bool loadWavFile(const std::string filename, ALuint* buffer,
 		         riff_header.format[1] != 'A' ||
 		         riff_header.format[2] != 'V' ||
 		         riff_header.format[3] != 'E')) {
-			throw ("Invalid RIFF or WAVE Header");
+			throw "Invalid RIFF or WAVE Header";
 		}
 
 		tmp = std::fread(&wave_format, sizeof(WAVE_Format), 1, soundFile);
@@ -68,7 +68,7 @@ bool loadWavFile(const std::string filename, ALuint* buffer,
 		        wave_format.subChunkID[1] != 'm' ||
 		        wave_format.subChunkID[2] != 't' ||
 		        wave_format.subChunkID[3] != ' ')
-			throw ("Invalid Wave Format!");
+			throw "Invalid Wave Format!";
 
 		if (wave_format.subChunkSize > 16)
 			std::fseek(soundFile, sizeof(short), SEEK_CUR);
@@ -79,11 +79,11 @@ bool loadWavFile(const std::string filename, ALuint* buffer,
 		        wave_data.subChunkID[1] != 'a' ||
 		        wave_data.subChunkID[2] != 't' ||
 		        wave_data.subChunkID[3] != 'a') {
-			throw ("Invalid data header!");
+			throw "Invalid data header!";
 		}
 		data = new unsigned char[wave_data.subChunk2Size];
 		if (!std::fread(data, wave_data.subChunk2Size, 1, soundFile))
-			throw ("Error loading WAVE data into struct!");
+			throw "Error loading WAVE data into struct!";
 		*size = wave_data.subChunk2Size;
 		*frequency = wave_format.sampleRate;
 		if (wave_format.numChannels == 1) {

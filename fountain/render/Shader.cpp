@@ -28,8 +28,10 @@ void Shader::deleteShader()
 void Shader::loadFile(const std::string& filename)
 {
 	auto buffer = fei::readFileBuffer(filename);
-	loadString(buffer);
-	delete [] buffer;
+	if (buffer) {
+		loadString(buffer);
+		delete [] buffer;
+	}
 }
 
 void Shader::loadString(const std::string& source)
@@ -108,9 +110,17 @@ void ShaderProgram::loadFile(const std::string& vs, const std::string& fs)
 	}
 	auto vsStr = fei::readFileBuffer(vs);
 	auto fsStr = fei::readFileBuffer(fs);
-	loadString(vsStr, fsStr);
-	delete [] vsStr;
-	delete [] fsStr;
+	if (vsStr && fsStr) {
+		loadString(vsStr, fsStr);
+	} else {
+		std::fprintf(stderr, "ShaderProgram: loadFile failed!\n");
+	}
+	if (vsStr) {
+		delete [] vsStr;
+	}
+	if (fsStr) {
+		delete [] fsStr;
+	}
 }
 
 void ShaderProgram::loadString(const std::string& vsStr, const std::string& fsStr)
