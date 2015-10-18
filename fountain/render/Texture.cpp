@@ -184,6 +184,11 @@ const fei::Image Texture::getImage() const
 	return getImage(fei::Vec2::ZERO, size);
 }
 
+GLuint Texture::getId() const
+{
+	return id;
+}
+
 void Texture::setId(GLuint _id)
 {
 	if (id == _id) return;

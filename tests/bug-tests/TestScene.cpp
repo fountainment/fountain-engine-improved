@@ -107,6 +107,11 @@ void TestScene::testRender()
 {
 	int s = Render::getInstance()->getMaxTextureSize();
 	std::printf("%d\n", s);
+	normalShader.loadFile("nm.vert", "nm.frag");
+	emptyTex.load(0, 500, 500);
+	emptyTex.setShader(&normalShader);
+	emptyTex.setZPos(100.0f);
+	add(&emptyTex);
 }
 
 void TestScene::testFont()

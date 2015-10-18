@@ -168,24 +168,32 @@ void ShaderProgram::pop()
 	Render::getInstance()->popShader(this);
 }
 
+void ShaderProgram::setUniform(const std::string& varName, int value)
+{
+	push();
+	GLint loc = glGetUniformLocation(id, varName.c_str());
+	if (loc != -1) {
+		glUniform1i(loc, value);
+	}
+	pop();
+}
+
 void ShaderProgram::setUniform(const std::string& varName, float value)
 {
-	if (fei::Render::getInstance()->getShaderProgram() != this) {
-		return;
-	}
+	push();
 	GLint loc = glGetUniformLocation(id, varName.c_str());
 	if (loc != -1) {
 		glUniform1f(loc, value);
 	}
+	pop();
 }
 
 void ShaderProgram::setUniform(const std::string& varName, const fei::Vec2& value)
 {
-	if (fei::Render::getInstance()->getShaderProgram() != this) {
-		return;
-	}
+	push();
 	GLint loc = glGetUniformLocation(id, varName.c_str());
 	if (loc != -1) {
-		glUniform2fv(loc, 2, &(value.x));
+		glUniform2fv(loc, 1, &(value.x));
 	}
+	pop();
 }

@@ -28,7 +28,7 @@ void TestScene::init()
 
 	audio.loadWAV("test.wav");
 	audio.setLoop(true);
-	audio.play();
+	//audio.play();
 
 	Rect rect[2] = {Rect(Vec2(550.0f, 20.0f)), Rect(Vec2(20.0f, 550.0f))};
 	rect[0].setCenter(Vec2::ZERO);
@@ -41,7 +41,19 @@ void TestScene::init()
 		ground[i]->createFixture(&rect[i / 2]);
 	}
 
+	normalShader.loadFile("res/shader/normal.vert", "res/shader/normal.frag");
+	bomber.load("res/image/Walk_s1.png");
+	bomber.setShader(&normalShader);
+
+	bomberNormal.load("res/image/Walk_s2.png");
+
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, bomberNormal.getId());
+	glActiveTexture(GL_TEXTURE0);
+	normalShader.setUniform("feiNormalTex", 1);
+
 	add(&map);
+	add(&bomber);
 	add(&mainChar);
 	add(&UILayer);
 }
@@ -101,4 +113,8 @@ void TestScene::update()
 		mainChar.setSpeed(speed, 100.0f);
 	}
 	mainCam.setPosition(mainChar.getPosition());
+
+	Vec2 pos = mainCam.screenToWorld(window->getRHCursorPos());
+	normalShader.setUniform("lightPos", pos);
+	normalShader.setUniform("test", pos.x);
 }

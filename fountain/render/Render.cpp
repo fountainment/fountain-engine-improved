@@ -207,11 +207,12 @@ void Render::deleteUnusedTexture()
 
 void Render::bindTexture(GLuint tex)
 {
+	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, tex);
 	auto shader = getShaderProgram();
 	if (shader) {
 		shader->setUniform("feiUseTex", 1.0f);
-		shader->setUniform("feiTex", (float)tex);
+		shader->setUniform("feiTex", 0);
 	}
 }
 

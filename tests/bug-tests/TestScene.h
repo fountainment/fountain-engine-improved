@@ -25,6 +25,10 @@ private:
 	fei::Camera mainCam;
 	fei::FontCache fc;
 	fei::Label label;
+	fei::Image emptyImage;
+	fei::Texture emptyTex;
+
+	fei::ShaderProgram normalShader;
 };
 
 #endif

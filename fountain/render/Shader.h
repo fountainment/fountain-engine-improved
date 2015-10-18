@@ -17,7 +17,6 @@ public:
 
 	void compile();
 	bool compileCheck();
-	void unload();
 
 protected:
 	Shader();
@@ -63,6 +62,7 @@ public:
 	void push();
 	void pop();
 
+	void setUniform(const std::string& varName, int value);
 	void setUniform(const std::string& varName, float value);
 	void setUniform(const std::string& varName, const Vec2& value);
 

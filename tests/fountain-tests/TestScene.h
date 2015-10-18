@@ -19,6 +19,10 @@ private:
 	fei::Source audio;
 	Charactor mainChar;
 
+	fei::Texture bomber;
+	fei::Texture bomberNormal;
+	fei::ShaderProgram normalShader;
+
 	fei::Body *ground[4];
 
 	float pitch;
