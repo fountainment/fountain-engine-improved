@@ -17,7 +17,6 @@ void FrameAnime::load(const fei::ImagePool& imagePool)
 void FrameAnime::load(const fei::Texture& texture, const std::string& sipName)
 {
 	framePool.load(texture, sipName);
-	setHasAlpha(texture.hasAlpha());
 	curFrameIndex = 0;
 }
 
@@ -28,7 +27,7 @@ void FrameAnime::load(const std::string& textureName, const std::string& sipName
 	load(tmpTex, sipName);
 }
 
-void FrameAnime::update()
+void FrameAnime::update(fei::RenderObj* rObj)
 {
 	playClock.tick();
 	if (playClock.isPlay()) {
@@ -41,15 +40,10 @@ void FrameAnime::update()
 			}
 		}
 	}
-}
-
-void FrameAnime::drawIt()
-{
+	rObj->setSubstitute(nullptr);
 	if (!playClock.isStop()) {
 		fei::Image *image = framePool.getImage((int)curFrameIndex);
-		if (image) {
-			image->draw();
-		}
+		rObj->setSubstitute(image);
 	}
 }
 

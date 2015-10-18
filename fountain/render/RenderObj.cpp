@@ -1,5 +1,6 @@
 #include "RenderObj.h"
 #include <GL/glew.h>
+#include "anime/Anime.h"
 
 using fei::RenderObj;
 
@@ -10,7 +11,9 @@ RenderObj::RenderObj()
   scale(1.0f),
   zPos(0.0f),
   anchor(fei::Vec2::ZERO),
-  shaderProg(nullptr)
+  shaderProg(nullptr),
+  substitute(nullptr),
+  anime(nullptr)
 {
 }
 
@@ -26,6 +29,11 @@ void RenderObj::setShader(fei::ShaderProgram* sp)
 void RenderObj::setSubstitute(RenderObj* sub)
 {
 	substitute = sub;
+}
+
+void RenderObj::setAnime(fei::Anime* animePtr)
+{
+	anime = animePtr;
 }
 
 bool RenderObj::hasAlpha() const
@@ -121,6 +129,14 @@ void RenderObj::matrixTransformEnd()
 	glPopMatrix();
 }
 
+void RenderObj::feiUpdate()
+{
+	update();
+	if (anime) {
+		anime->update(this);
+	}
+}
+
 void RenderObj::draw()
 {
 	color.use();
@@ -143,7 +159,7 @@ void RenderObj::draw()
 
 	if (visible) {
 		if (substitute) {
-			drawIt();
+			substitute->drawIt();
 		} else {
 			drawIt();
 		}

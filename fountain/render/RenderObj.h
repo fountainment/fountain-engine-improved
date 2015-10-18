@@ -7,6 +7,8 @@
 
 namespace fei {
 
+class Anime;
+
 class RenderObj : public fei::NodeBase
 {
 public:
@@ -16,12 +18,16 @@ public:
 	void matrixTransformBegin();
 	void matrixTransformEnd();
 
+	void feiUpdate() override;
+
 	void draw();
 	virtual void drawIt();
 
-	void setShader(fei::ShaderProgram* sp);
+	void setShader(ShaderProgram* sp);
 
-	void setSubstitute(fei::RenderObj* sub);
+	void setSubstitute(RenderObj* sub);
+
+	void setAnime(Anime* animePtr);
 
 	bool hasAlpha() const;
 	void setHasAlpha(bool hasAlpha);
@@ -58,6 +64,7 @@ protected:
 	Color color;
 	ShaderProgram* shaderProg;
 	RenderObj* substitute;
+	Anime* anime;
 };
 
 }

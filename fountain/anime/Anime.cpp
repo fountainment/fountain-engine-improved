@@ -10,6 +10,10 @@ Anime::~Anime()
 {
 }
 
+void Anime::update(fei::RenderObj* rObj)
+{
+}
+
 Anime* Anime::createFrameAnime(float fps, const fei::ImagePool& animeImage)
 {
 	FrameAnime* anime = new FrameAnime;

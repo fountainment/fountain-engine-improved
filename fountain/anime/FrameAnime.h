@@ -9,7 +9,7 @@
 
 namespace fei {
 
-class FrameAnime : public RenderObj, public Anime
+class FrameAnime : public Anime
 {
 public:
 	FrameAnime();
@@ -18,8 +18,7 @@ public:
 	void load(const Texture& texture, const std::string& sipName);
 	void load(const std::string& textureName, const std::string& sipName);
 
-	virtual void update() override;
-	virtual void drawIt() override;
+	virtual void update(RenderObj* rObj) override;
 
 	float getFps();
 	void setFps(float f);

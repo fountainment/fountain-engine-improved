@@ -44,18 +44,13 @@ void Charactor::destroy()
 
 void Charactor::drawIt()
 {
-	if (curAnime) {
-		curAnime->draw();
-	}
 }
 
 void Charactor::update()
 {
 	charClock.tick();
 	setPosition(body->getPosition());
-	if (curAnime) {
-		curAnime->update();
-	}
+	setAnime(curAnime);
 }
 
 void Charactor::setSpeed(const Vec2& sp)
