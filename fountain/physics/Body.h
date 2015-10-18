@@ -29,8 +29,12 @@ public:
 
 	b2Fixture* createFixture(const Shape* shape);
 	const std::vector<b2Fixture*> createFixture(const std::vector<Shape*>& shapeList);
+	const std::vector<b2Fixture*> createFixture(const Polygon& poly);
 	const std::vector<b2Fixture*> createFixture(const std::vector<Polygon>& polyList);
 	b2Fixture* createFixture(const b2FixtureDef& fixDef);
+
+	void destroyFixture(b2Fixture* fixture);
+	void destroyFixture(const std::vector<b2Fixture*>& fixtures);
 
 private:
 	Body();
