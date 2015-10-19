@@ -25,7 +25,9 @@
 
 	inline void sysLittleSleep()
 	{
-		//Sleep(1);
+		timeBeginPeriod(1);
+		Sleep(1);
+		timeEndPeriod(1);
 	}
 #endif // Win32 end
 
