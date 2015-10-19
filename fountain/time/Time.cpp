@@ -2,9 +2,39 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#if defined(__linux)
+	#if !defined(_BSD_SOURCE)
+		#define _BSD_SOURCE
+	#endif
+	#include <sys/time.h>
+	#include <unistd.h>
+
+	const double littleSleepTime = 0.000001;
+
+	inline void sysLittleSleep()
+	{
+		usleep(1);
+	}
+#endif // Linux end
+
+#if defined(_WIN32) // Win32
+	#include <time.h>
+	#include <windows.h>
+
+	const double littleSleepTime = 0.001;
+
+	inline void sysLittleSleep()
+	{
+		Sleep(1);
+	}
+#endif // Win32 end
+
 using fei::Time;
 
 Time *Time::instance = nullptr;
+
+const double defaultFps = 60.0;
+const double spf = 1.0 / defaultFps;
 
 Time* Time::getInstance()
 {
@@ -41,15 +71,25 @@ void Time::destroy()
 void Time::executeBeforeFrame()
 {
 	lastTime = curTime;
-	curTime = glfwGetTime() - initTime;
+	curTime = calcCurTime();
 	deltaTime = curTime - lastTime;
-	if (deltaTime > 0.33 || deltaTime < 0.0) {
+	while (deltaTime < spf - littleSleepTime) {
+		littleSleep();
+		curTime = calcCurTime();
+		deltaTime = curTime - lastTime;
+	}
+	if (deltaTime > spf * 10.0 || deltaTime < 0.0) {
 		deltaTime = 0.0;
 	}
 }
 
 void Time::executeAfterFrame()
 {
+	auto &q = frameTimeQueue;
+	q.push(curTime);
+	while (q.back() - q.front() > 1.0) {
+		q.pop();
+	}
 	totalFrame++;
 }
 
@@ -66,4 +106,25 @@ double Time::getDeltaTime()
 long long Time::getFrame()
 {
 	return totalFrame;
+}
+
+void Time::littleSleep()
+{
+	sysLittleSleep();
+}
+
+double Time::calcCurTime()
+{
+	return glfwGetTime() - initTime;
+}
+
+double Time::getFps()
+{
+	auto &q = frameTimeQueue;
+	double frameNum = q.size() - 1;
+	if (frameNum <= 0) {
+		return 0.0;
+	}
+	double frameDuration = q.back() - q.front();
+	return frameNum / frameDuration;
 }

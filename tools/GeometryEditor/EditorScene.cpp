@@ -88,6 +88,8 @@ void EditorScene::update()
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT) && window->getKey(GLFW_KEY_LEFT_CONTROL)) {
 		poly[curEdit].moveVertices(deltaV);
 	}
+
+	std::printf("%.2f\n", Time::getInstance()->getFps());
 }
 
 void EditorScene::mouseButtonCallback(int button, int action, int mods)

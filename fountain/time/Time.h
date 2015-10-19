@@ -2,6 +2,7 @@
 #define _FEI_TIME_H_
 
 #include "base/ModuleBase.h"
+#include "base/basedef.h"
 
 namespace fei {
 
@@ -18,6 +19,10 @@ public:
 	double getDeltaTime();
 	long long getFrame();
 
+	void littleSleep();
+	double calcCurTime();
+	double getFps();
+
 	static Time* getInstance();
 
 private:
@@ -28,6 +33,8 @@ private:
 	double lastTime;
 	double deltaTime;
 	long long totalFrame;
+
+	std::queue<double> frameTimeQueue;
 
 	static Time *instance;
 };

@@ -108,7 +108,9 @@ void FontCache::updateCache(unsigned long* str, int strSize)
 
 void FontCache::updateCache(const std::vector<unsigned long>& str)
 {
-	assert(fontIsLoaded);
+	if (!fontIsLoaded) {
+		return;
+	}
 	if (!cacheTexture.isLoaded()) {
 		int maxTextureSize = Render::getInstance()->getMaxTextureSize();
 		int texSize = std::min(4096, maxTextureSize);
