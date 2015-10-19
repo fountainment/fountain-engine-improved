@@ -2,7 +2,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#if defined(__linux)
+#if defined(__linux) // Linux
 	#if !defined(_BSD_SOURCE)
 		#define _BSD_SOURCE
 	#endif
@@ -25,7 +25,7 @@
 
 	inline void sysLittleSleep()
 	{
-		Sleep(1);
+		//Sleep(1);
 	}
 #endif // Win32 end
 
