@@ -3,6 +3,8 @@
 
 #include "base/basedef.h"
 #include "math/Vec2.h"
+#include "math/Vec3.h"
+#include "math/Vec4.h"
 #include <GL/glew.h>
 
 namespace fei {
@@ -65,6 +67,8 @@ public:
 	void setUniform(const std::string& varName, int value);
 	void setUniform(const std::string& varName, float value);
 	void setUniform(const std::string& varName, const Vec2& value);
+	void setUniform(const std::string& varName, const Vec3& value);
+	void setUniform(const std::string& varName, const Vec4& value);
 
 private:
 	GLuint id;

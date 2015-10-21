@@ -207,3 +207,23 @@ void ShaderProgram::setUniform(const std::string& varName, const fei::Vec2& valu
 	}
 	pop();
 }
+
+void ShaderProgram::setUniform(const std::string& varName, const fei::Vec3& value)
+{
+	push();
+	GLint loc = glGetUniformLocation(id, varName.c_str());
+	if (loc != -1) {
+		glUniform3fv(loc, 1, &(value.x));
+	}
+	pop();
+}
+
+void ShaderProgram::setUniform(const std::string& varName, const fei::Vec4& value)
+{
+	push();
+	GLint loc = glGetUniformLocation(id, varName.c_str());
+	if (loc != -1) {
+		glUniform4fv(loc, 1, &(value.x));
+	}
+	pop();
+}

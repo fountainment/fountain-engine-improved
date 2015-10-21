@@ -18,7 +18,6 @@
 #endif // Linux end
 
 #if defined(_WIN32) // Win32
-	#include <time.h>
 	#include <windows.h>
 
 	const double littleSleepTime = 0.001;
