@@ -116,7 +116,7 @@ void TestScene::testRender()
 
 void TestScene::testFont()
 {
-	fc.loadFont("wqy.ttc", 24);
+	fc.loadFont("res/font/wqy.ttc", 24);
 	std::vector<unsigned long> str;
 	for (int i = 1; i < 255; i++) {
 		str.push_back(i);
@@ -141,6 +141,6 @@ void TestScene::testFont()
 
 void TestScene::testAudio()
 {
-	src.loadWAV("test.wav");
+	src.loadWAV("res/sound/test.wav");
 	src.play();
 }

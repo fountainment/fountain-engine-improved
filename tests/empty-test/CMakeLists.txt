@@ -8,3 +8,7 @@ endif()
 
 add_executable(empty-test ${TEST_SRC} ${TEST_RES})
 target_link_libraries(empty-test ${FOUNTAIN_LINK_LIBRARY} ${PLATFORM_LINK_LIBRARY})
+
+if(WINDOWS)
+	file(COPY ${PROJECT_SOURCE_DIR}/res DESTINATION ./)
+endif()

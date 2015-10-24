@@ -16,7 +16,6 @@ private:
 	fei::Camera mainCam, UICam;
 	fei::Texture UI, map;
 	fei::Layer UILayer;
-	fei::Source audio;
 	Charactor mainChar;
 
 	fei::Texture bomber;

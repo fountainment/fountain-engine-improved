@@ -1,6 +1,7 @@
 bin
 build
 deps
+res
 *.cbp
 *.layout
 *.depend
@@ -13,3 +14,5 @@ CMakeCache.txt
 CMakeFiles
 Makefile
 *.cmake
+deps.zip
+res.zip

@@ -14,9 +14,9 @@ void TestScene::init()
 	Physics::getInstance()->setDebugDrawCamera(&mainCam);
 	Physics::getInstance()->setDoDebugDraw(true);
 
-	map.load("map.png");
+	map.load("res/image/map.png");
 
-	UI.load("UI43.png");
+	UI.load("res/image/UI43.png");
 	UI.setHasAlpha(true);
 
 	UICam.setCameraSize(Vec2(1920, 1440));
@@ -25,10 +25,6 @@ void TestScene::init()
 	UILayer.add(&UI);
 
 	UI.setColor(Color(Vec3(1.0f), 0.8f));
-
-	audio.loadWAV("test.wav");
-	audio.setLoop(true);
-	//audio.play();
 
 	Rect rect[2] = {Rect(Vec2(550.0f, 20.0f)), Rect(Vec2(20.0f, 550.0f))};
 	rect[0].setCenter(Vec2::ZERO);
@@ -80,14 +76,6 @@ void TestScene::update()
 		} else {
 			mainChar.setSpeed(Vec2::ZERO);
 		}
-		if (joystick->getDirectionY() > 0.0f) {
-			pitch *= 1.01f;
-			audio.setPitch(pitch);
-		}
-		if (joystick->getDirectionY() < 0.0f) {
-			pitch *= 0.99f;
-			audio.setPitch(pitch);
-		}
 	} else if (window) {
 		Vec2 speed(Vec2::ZERO);
 		if (window->getKey(GLFW_KEY_UP)) {
@@ -101,14 +89,6 @@ void TestScene::update()
 		}
 		if (window->getKey(GLFW_KEY_RIGHT)) {
 			speed.add(Vec2::RIGHT);
-		}
-		if (window->getKey(GLFW_KEY_W)) {
-			pitch *= 1.01f;
-			audio.setPitch(pitch);
-		}
-		if (window->getKey(GLFW_KEY_S)) {
-			pitch *= 0.99f;
-			audio.setPitch(pitch);
 		}
 		mainChar.setSpeed(speed, 100.0f);
 	}
