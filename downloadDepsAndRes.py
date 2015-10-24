@@ -10,15 +10,14 @@ else:
     import urllib2
 
 workpath = os.path.dirname(os.path.realpath(__file__))
-print(workpath)
 
 def download(filename, url):
     print("Downloading '%s' from '%s'..." % (filename, url))
     u = urllib2.urlopen(url)
-    f = open(workpath + filename, 'wb')
+    f = open(os.path.join(workpath, filename), 'wb')
     f.write(u.read())
     f.close()
-    print("==> Finished!")
+    print("Finished!")
 
 def extract_to(filename, dirname):
 	zfile = zipfile.ZipFile(filename, 'r')
@@ -35,7 +34,7 @@ def extract_to(filename, dirname):
 	zfile.close()
 
 def extract(filename):
-	extract_to(workpath + filename, workpath)
+	extract_to(os.path.join(workpath, filename), workpath)
 
 def main():
 	download("deps.zip", "http://www.fountainment.com/download/deps.zip")
