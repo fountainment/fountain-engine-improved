@@ -26,7 +26,6 @@ bool Interface::init()
 		return false;
 	} else {
 		std::printf("GLFW Version: %s\n", glfwGetVersionString());
-		glfwSwapInterval(1);
 		createRootWindow();
 	}
 	return true;

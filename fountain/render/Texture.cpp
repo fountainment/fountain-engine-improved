@@ -163,7 +163,7 @@ void Texture::subUpdate(const unsigned char* bits, int w, int h, Format dataForm
 void Texture::drawIt()
 {
 	fei::Render::getInstance()->bindTexture(id);
-	fei::Render::getInstance()->drawTexQuad(size);
+	fei::Render::drawTexQuad(size);
 	fei::Render::getInstance()->disableTexture();
 }
 

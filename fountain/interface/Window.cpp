@@ -120,6 +120,7 @@ void Window::setCurrent()
 {
 	if (window) {
 		glfwMakeContextCurrent(window);
+		glfwSwapInterval(1);
 		Interface::getInstance()->setCurrentWindow(this);
 	}
 }

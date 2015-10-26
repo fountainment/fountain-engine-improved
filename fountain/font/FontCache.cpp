@@ -112,7 +112,7 @@ void FontCache::updateCache(const std::vector<unsigned long>& str)
 		return;
 	}
 	if (!cacheTexture.isLoaded()) {
-		int maxTextureSize = Render::getInstance()->getMaxTextureSize();
+		int maxTextureSize = Render::getMaxTextureSize();
 		int texSize = std::min(4096, maxTextureSize);
 		gridNum = texSize / gridSize;
 		curRow = 0;

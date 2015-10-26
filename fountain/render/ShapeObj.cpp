@@ -15,5 +15,5 @@ void ShapeObj::setShape(fei::Shape* sp)
 
 void ShapeObj::drawIt()
 {
-	fei::Render::getInstance()->drawShape(shape);
+	fei::Render::drawShape(shape);
 }

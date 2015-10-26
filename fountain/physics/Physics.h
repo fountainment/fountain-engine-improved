@@ -51,6 +51,26 @@ private:
 	static Physics *instance;
 };
 
+inline const Vec2 Physics::renderToPhysics(const Vec2& v)
+{
+	return v / ratio;
+}
+
+inline const Vec2 Physics::physicsToRender(const Vec2& v)
+{
+	return v * ratio;
+}
+
+inline float Physics::renderToPhysics(float f)
+{
+	return f / ratio;
+}
+
+inline float Physics::physicsToRender(float f)
+{
+	return f * ratio;
+}
+
 }
 
 #endif

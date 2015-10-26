@@ -105,7 +105,7 @@ void TestScene::testPhysics()
 
 void TestScene::testRender()
 {
-	int s = Render::getInstance()->getMaxTextureSize();
+	int s = Render::getMaxTextureSize();
 	std::printf("%d\n", s);
 }
 

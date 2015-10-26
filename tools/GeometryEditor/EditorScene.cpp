@@ -8,21 +8,21 @@ void EShapeObj::drawIt()
 	auto scene = window->sceneManager->getCurScene();
 	auto cam = scene->getCamera();
 
-	Render::getInstance()->drawShape(shape);
+	Render::drawShape(shape);
 
 	Circle circle(7.0f / cam->getCameraScale());
 
 	const float *data = shape->getDataPtr();
 	for (int i = 0; i < shape->getDataSize(); i++) {
 		circle.setPosition(fei::Vec2(data[i << 1], data[i << 1 | 1]));
-		Render::getInstance()->drawShape(&circle);
+		Render::drawShape(&circle);
 	}
 }
 
 void Cross::drawIt()
 {
-	Render::getInstance()->drawShape(&a);
-	Render::getInstance()->drawShape(&b);
+	Render::drawShape(&a);
+	Render::drawShape(&b);
 }
 
 void Cross::setSize(float sz)
@@ -150,7 +150,7 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 
 	if (key == GLFW_KEY_F11 && action == GLFW_PRESS) {
 		window->setFullscreen(!window->isFullscreen());
-		Render::getInstance()->setViewport(window->getFrameSize());
+		Render::setViewport(window->getFrameSize());
 		mainCam.setCameraSize(window->getFrameSize());
 	}
 
@@ -188,6 +188,6 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 void EditorScene::framebufferSizeCallback(int width, int height)
 {
 	Vec2 framebufferSize((float)width, (float)height);
-	Render::getInstance()->setViewport(framebufferSize);
+	Render::setViewport(framebufferSize);
 	mainCam.setCameraSize(framebufferSize);
 }

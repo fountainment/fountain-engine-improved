@@ -23,7 +23,7 @@ public:
 			polygon.pushVertex(Physics::getInstance()->physicsToRender(vec));
 		}
 		polygon.setSolid(false);
-		fei::Render::getInstance()->drawShape(&polygon);
+		fei::Render::drawShape(&polygon);
 	}
 
 	void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
@@ -34,10 +34,10 @@ public:
 			fei::Vec2 vec(vertices[i].x, vertices[i].y);
 			polygon.pushVertex(Physics::getInstance()->physicsToRender(vec));
 		}
-		fei::Render::getInstance()->drawShape(&polygon);
+		fei::Render::drawShape(&polygon);
 		fei::Color(color.r + 0.2f, color.g + 0.2f, color.b + 0.2f).use();
 		polygon.setSolid(false);
-		fei::Render::getInstance()->drawShape(&polygon);
+		fei::Render::drawShape(&polygon);
 	}
 
 	void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
@@ -46,7 +46,7 @@ public:
 		fei::Circle circle(Physics::getInstance()->physicsToRender(radius));
 		circle.setPosition(Physics::getInstance()->physicsToRender(fei::Vec2(center.x, center.y)));
 		circle.setSolid(false);
-		fei::Render::getInstance()->drawShape(&circle);
+		fei::Render::drawShape(&circle);
 	}
 
 	void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
@@ -54,7 +54,7 @@ public:
 		fei::Color(color.r, color.g, color.b, color.a).use();
 		fei::Circle circle(Physics::getInstance()->physicsToRender(radius));
 		circle.setPosition(Physics::getInstance()->physicsToRender(fei::Vec2(center.x, center.y)));
-		fei::Render::getInstance()->drawShape(&circle);
+		fei::Render::drawShape(&circle);
 		fei::Color::White.use();
 		DrawSegment(center, center + radius * axis, b2Color(1.0f, 1.0f, 1.0f));
 		DrawCircle(center, radius, b2Color(color.r + 0.2f, color.g + 0.2f, color.b + 0.2f));
@@ -148,26 +148,6 @@ const fei::Vec2 Physics::getGravity()
 {
 	auto g = world->GetGravity();
 	return fei::Vec2(g.x, g.y);
-}
-
-const fei::Vec2 Physics::renderToPhysics(const fei::Vec2& v)
-{
-	return v / ratio;
-}
-
-const fei::Vec2 Physics::physicsToRender(const fei::Vec2& v)
-{
-	return v * ratio;
-}
-
-float Physics::renderToPhysics(float f)
-{
-	return f / ratio;
-}
-
-float Physics::physicsToRender(float f)
-{
-	return f * ratio;
 }
 
 void Physics::setRatio(float rt)

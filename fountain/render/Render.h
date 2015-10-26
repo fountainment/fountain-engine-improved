@@ -22,11 +22,6 @@ public:
 	void executeBeforeFrame() override;
 	void executeAfterFrame() override;
 
-	void setViewport(const Rect& viewport);
-	const Rect getViewport();
-
-	int getMaxTextureSize();
-
 	void pushShader(ShaderProgram* shader);
 	void popShader(ShaderProgram* shader);
 	ShaderProgram* getShaderProgram();
@@ -43,15 +38,20 @@ public:
 	void bindTexture(GLuint tex);
 	void disableTexture();
 
-	void drawArray2f(const GLfloat* vertex, GLint first, GLsizei count, GLenum mode);
+	static void setViewport(const Rect& viewport);
+	static const Rect getViewport();
 
-	void drawLine(const Vec2& pa, const Vec2& pb);
-	void drawRect(const Vec2& size);
-	void drawQuad(const Vec2& size);
-	void drawTexQuad(const Vec2& size, GLfloat* texCoord = nullptr);
-	void drawShape(const Shape* shape);
+	static int getMaxTextureSize();
 
-	void useColor(const Vec4* color);
+	static void drawArray2f(const GLfloat* vertex, GLint first, GLsizei count, GLenum mode);
+
+	static void drawLine(const Vec2& pa, const Vec2& pb);
+	static void drawRect(const Vec2& size);
+	static void drawQuad(const Vec2& size);
+	static void drawTexQuad(const Vec2& size, GLfloat* texCoord = nullptr);
+	static void drawShape(const Shape* shape);
+
+	static void useColor(const Vec4* color);
 
 	static Render* getInstance();
 
