@@ -97,4 +97,6 @@ void TestScene::update()
 	Vec2 pos = mainCam.screenToWorld(window->getRHCursorPos());
 	normalShader.setUniform("lightPos", pos);
 	normalShader.setUniform("test", pos.x);
+
+	std::printf("%.2f\n", Time::getInstance()->getFps());
 }

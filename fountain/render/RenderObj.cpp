@@ -133,7 +133,7 @@ void RenderObj::feiUpdate()
 {
 	update();
 	if (anime) {
-		anime->update(this);
+		anime->feiUpdate(this);
 	}
 }
 

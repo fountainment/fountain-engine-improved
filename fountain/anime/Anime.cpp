@@ -10,6 +10,11 @@ Anime::~Anime()
 {
 }
 
+void Anime::feiUpdate(fei::RenderObj* rObj)
+{
+	update(rObj);
+}
+
 void Anime::update(fei::RenderObj* rObj)
 {
 }

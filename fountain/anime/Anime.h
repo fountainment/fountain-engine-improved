@@ -14,6 +14,7 @@ class Anime : public PlayObj
 public:
 	virtual ~Anime();
 
+	void feiUpdate(RenderObj* rObj);
 	virtual void update(RenderObj* rObj);
 
 	static Anime* createFrameAnime(float fps, const fei::ImagePool& animeImage);
