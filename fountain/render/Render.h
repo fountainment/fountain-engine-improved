@@ -10,6 +10,7 @@
 #include "render/Camera.h"
 #include "render/Shader.h"
 #include "render/Color.h"
+#include "render/RenderObj.h"
 #include <GL/glew.h>
 
 namespace fei {
@@ -55,6 +56,8 @@ public:
 	static void drawTexQuad(const Vec2& size, GLfloat* texCoord = nullptr);
 	static void drawShape(const Shape* shape);
 
+	static void IndependentDraw(RenderObj* rObj);
+
 	static void useColor(const Vec4* color);
 
 	static Render* getInstance();
@@ -80,6 +83,13 @@ inline void Render::drawArray2f(const GLfloat* vertex, GLint first, GLsizei coun
 	glVertexPointer(2, GL_FLOAT, 0, vertex);
 	glDrawArrays(mode, first, count);
 	glDisableClientState(GL_VERTEX_ARRAY);
+}
+
+inline void Render::IndependentDraw(fei::RenderObj* rObj)
+{
+	glPushMatrix();
+	rObj->draw();
+	glPopMatrix();
 }
 
 }

@@ -29,8 +29,6 @@ public:
 
 private:
 	std::list<RenderObj*> objList;
-	std::list<RenderObj*> normalList;
-	std::list<RenderObj*> alphaList;
 };
 
 }

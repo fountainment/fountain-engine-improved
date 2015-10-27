@@ -1,5 +1,5 @@
 #include "RenderList.h"
-#include <GL/glew.h>
+#include "render/Render.h"
 
 using fei::RenderList;
 
@@ -19,31 +19,22 @@ void RenderList::listDestroy()
 
 void RenderList::listUpdate()
 {
-	//TODO: delete alphaList and normalList
-	alphaList.clear();
-	normalList.clear();
 	for (auto renderObj : objList) {
 		renderObj->feiUpdate();
-		if (renderObj->hasAlpha()) {
-			alphaList.push_back(renderObj);
-		} else {
-			normalList.push_back(renderObj);
-		}
 	}
 }
 
 void RenderList::listDraw()
 {
-	//TODO: add Render::IndependentDraw(RenderObj*);
-	for (auto it = normalList.rbegin(); it != normalList.rend(); ++it) {
-		glPushMatrix();
-		(*it)->draw();
-		glPopMatrix();
+	for (auto it = objList.rbegin(); it != objList.rend(); ++it) {
+		if (!(*it)->hasAlpha()) {
+			fei::Render::IndependentDraw(*it);
+		}
 	}
-	for (auto renderObj : alphaList) {
-		glPushMatrix();
-		renderObj->draw();
-		glPopMatrix();
+	for (auto renderObj : objList) {
+		if (renderObj->hasAlpha()) {
+			fei::Render::IndependentDraw(renderObj);
+		}
 	}
 }
 
