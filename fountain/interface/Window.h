@@ -1,6 +1,8 @@
 #if !defined(_FEI_WINDOW_H_)
 #define _FEI_WINDOW_H_
 
+//TODO: save window's position
+
 #include "base/basedef.h"
 #include "base/ModuleBase.h"
 #include "scene/SceneManager.h"

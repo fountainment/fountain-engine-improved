@@ -1,6 +1,8 @@
 #if !defined(_FEI_FONTCACHE_H_)
 #define _FEI_FONTCACHE_H_
 
+//TODO: add bold function
+
 #include "base/basedef.h"
 #include "render/Texture.h"
 #include "font/Font.h"

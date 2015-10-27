@@ -67,4 +67,5 @@ int Label::getLength()
 void Label::setCenter(const fei::Vec2& center)
 {
 	setPosition(center - fei::Vec2((float)length, 0.0f) / 2.0f);
+	//TODO: label center setting of y axis
 }

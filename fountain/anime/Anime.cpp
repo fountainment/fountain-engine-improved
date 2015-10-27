@@ -29,6 +29,7 @@ Anime* Anime::createFrameAnime(float fps, const fei::ImagePool& animeImage)
 
 Anime* Anime::createFrameAnime(float fps, const fei::Texture& texture, const std::string& sipName)
 {
+	//TODO: redesign Anime::createFrameAnime args
 	FrameAnime* anime = new FrameAnime;
 	anime->load(texture, sipName);
 	anime->setFps(fps);
@@ -45,5 +46,6 @@ Anime* Anime::createFrameAnime(float fps, const std::string& textureName, const 
 
 Anime* Anime::createActionAnime()
 {
+	//TODO: add class ActionAnime and complete this function
 	return nullptr;
 }

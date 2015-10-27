@@ -1,7 +1,7 @@
 #if !defined(_FEI_FILEUTIL_H_)
 #define _FEI_FILEUTIL_H_
 
-#include <string>
+#include <base/basedef.h>
 
 namespace fei {
 

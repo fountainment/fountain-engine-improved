@@ -1,10 +1,12 @@
 #include "Layer.h"
+#include "render/Render.h"
 #include <GL/glew.h>
 
 using fei::Layer;
 
 Layer::Layer()
 : didCameraPush(false),
+  oldCamera(nullptr),
   layerCamera(nullptr)
 {
 }
@@ -20,6 +22,7 @@ void Layer::cameraPush()
 {
 	didCameraPush = false;
 	if (layerCamera) {
+		oldCamera = fei::Render::getInstance()->getCurrentCamera();
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
 		glMatrixMode(GL_MODELVIEW);
@@ -34,6 +37,9 @@ void Layer::cameraPop()
 		glMatrixMode(GL_PROJECTION);
 		glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
+		if (oldCamera) {
+			oldCamera->update();
+		}
 		didCameraPush = false;
 	}
 }

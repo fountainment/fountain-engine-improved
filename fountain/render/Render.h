@@ -7,6 +7,7 @@
 #include "math/Vec4.h"
 #include "math/Rect.h"
 #include "math/Shape.h"
+#include "render/Camera.h"
 #include "render/Shader.h"
 #include "render/Color.h"
 #include <GL/glew.h>
@@ -38,6 +39,9 @@ public:
 	void bindTexture(GLuint tex);
 	void disableTexture();
 
+	void setCurrentCamera(Camera* camera);
+	Camera* getCurrentCamera();
+
 	static void setViewport(const Rect& viewport);
 	static const Rect getViewport();
 
@@ -57,6 +61,8 @@ public:
 
 private:
 	Render();
+
+	Camera* currentCamera;
 
 	ShaderProgram basicShader;
 	std::stack<ShaderProgram*> shaderStack;

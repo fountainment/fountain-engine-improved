@@ -15,6 +15,13 @@ Camera::Camera()
 {
 }
 
+Camera::~Camera()
+{
+	if (fei::Render::getInstance()->getCurrentCamera() == this) {
+		fei::Render::getInstance()->setCurrentCamera(nullptr);
+	}
+}
+
 void Camera::update()
 {
 	updateCameraData();
@@ -27,6 +34,7 @@ void Camera::update()
 	}
 	glTranslatef(-pos.x, -pos.y, 0);
 	glMatrixMode(GL_MODELVIEW);
+	fei::Render::getInstance()->setCurrentCamera(this);
 }
 
 void Camera::setCameraType(Type type)

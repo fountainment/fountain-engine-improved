@@ -1,6 +1,8 @@
 #if !defined(_FEI_VEC4_H_)
 #define _FEI_VEC4_H_
 
+//TODO: add Vec4 calculation functions
+
 #include "math/Vec3.h"
 
 namespace fei {

@@ -41,6 +41,7 @@ Render* Render::getInstance()
 }
 
 Render::Render()
+: currentCamera(nullptr)
 {
 }
 
@@ -91,6 +92,16 @@ void Render::executeBeforeFrame()
 void Render::executeAfterFrame()
 {
 	deleteUnusedTexture();
+}
+
+void Render::setCurrentCamera(fei::Camera* camera)
+{
+	currentCamera = camera;
+}
+
+fei::Camera* Render::getCurrentCamera()
+{
+	return currentCamera;
 }
 
 void Render::setViewport(const fei::Rect& viewport)

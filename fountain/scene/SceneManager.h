@@ -20,7 +20,6 @@ public:
 
 	void renderCurScene();
 
-	//TODO: add Clock logic in SceneManager
 	static SceneManager* getCurrentSceneManager();
 
 	Camera defaultCamera;

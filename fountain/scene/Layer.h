@@ -19,6 +19,7 @@ public:
 
 private:
 	bool didCameraPush;
+	Camera *oldCamera;
 	Camera *layerCamera;
 
 	void cameraPush();

@@ -1,6 +1,8 @@
 #if !defined(_FEI_AUDIO_H_)
 #define _FEI_AUDIO_H_
 
+//TODO: add a non-conflict audio source class
+
 #include "base/ModuleBase.h"
 #include "math/Vec2.h"
 #include "math/Vec3.h"

@@ -1,5 +1,4 @@
 #include "fileUtil.h"
-#include "base/basedef.h"
 
 bool fei::isFileExist(const std::string& filename)
 {

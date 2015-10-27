@@ -1,6 +1,8 @@
 #if !defined(_FEI_JOYSTICK_H_)
 #define _FEI_JOYSTICK_H_
 
+//TODO: test different joysticks and support them
+
 #include "math/Vec2.h"
 
 namespace fei {

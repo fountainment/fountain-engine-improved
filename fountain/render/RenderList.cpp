@@ -19,6 +19,7 @@ void RenderList::listDestroy()
 
 void RenderList::listUpdate()
 {
+	//TODO: delete alphaList and normalList
 	alphaList.clear();
 	normalList.clear();
 	for (auto renderObj : objList) {
@@ -33,6 +34,7 @@ void RenderList::listUpdate()
 
 void RenderList::listDraw()
 {
+	//TODO: add Render::IndependentDraw(RenderObj*);
 	for (auto it = normalList.rbegin(); it != normalList.rend(); ++it) {
 		glPushMatrix();
 		(*it)->draw();

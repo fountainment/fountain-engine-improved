@@ -15,6 +15,8 @@ public:
 	};
 
 	Camera();
+	~Camera();
+
 	void update();
 	void setCameraType(Type type);
 	Type getCameraType();

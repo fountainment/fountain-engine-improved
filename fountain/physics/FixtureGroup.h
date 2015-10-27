@@ -1,6 +1,8 @@
 #if !defined(_FEI_FIXTURE_GROUP_H_)
 #define _FEI_FIXTURE_GROUP_H_
 
+//TODO: test FixtureGroup
+
 #include "base/basedef.h"
 #include <Box2D/Box2D.h>
 
