@@ -3,6 +3,7 @@
 #include "base/basedef.h"
 #include "math/hash.h"
 #include "math/Circle.h"
+
 #include <GL/glew.h>
 
 using fei::Render;
@@ -19,7 +20,8 @@ static const GLchar *basicVertexShader = {
 static const GLchar *basicFragmentShader = {
 	"uniform sampler2D feiTex;"
 	"uniform float feiUseTex;"
-	"void main() {"
+	"void main()"
+	"{"
 	"	vec4 color = gl_Color;"
 	"	if (feiUseTex == 1.0) {"
 	"		vec4 texColor = texture2D(feiTex, gl_TexCoord[0].st);"
