@@ -3,27 +3,12 @@
 
 using fei::Polygon;
 
-int Polygon::getDataSize() const
-{
-	return data.size();
-}
-
 const float* Polygon::getDataPtr() const
 {
 	if (!data.empty()) {
 		return &data[0].x;
 	}
 	return nullptr;
-}
-
-void Polygon::pushVertex(const fei::Vec2& p)
-{
-	data.push_back(p);
-}
-
-void Polygon::clearVertex()
-{
-	data.clear();
 }
 
 float Polygon::getArea() const
@@ -190,16 +175,6 @@ const std::vector<fei::Vec2> Polygon::collideRay(const fei::Vec2& src, const fei
 	return uniqueResult;
 }
 
-const std::vector<fei::Vec2> Polygon::getDataVector() const
-{
-	return data;
-}
-
-void Polygon::setDataVector(const std::vector<fei::Vec2>& v)
-{
-	data = v;
-}
-
 void Polygon::normalize()
 {
 	std::vector<fei::Vec2> nData;
@@ -222,11 +197,6 @@ const Polygon Polygon::normalized() const
 	Polygon poly(*this);
 	poly.normalize();
 	return poly;
-}
-
-bool Polygon::isValid() const
-{
-	return data.size() >= 3;
 }
 
 bool Polygon::isConcaveVertex(int index) const

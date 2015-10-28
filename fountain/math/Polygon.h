@@ -61,6 +61,36 @@ private:
 
 }
 
+inline int fei::Polygon::getDataSize() const
+{
+	return data.size();
+}
+
+inline void fei::Polygon::pushVertex(const fei::Vec2& p)
+{
+	data.push_back(p);
+}
+
+inline void fei::Polygon::clearVertex()
+{
+	data.clear();
+}
+
+inline const std::vector<fei::Vec2> fei::Polygon::getDataVector() const
+{
+	return data;
+}
+
+inline void fei::Polygon::setDataVector(const std::vector<fei::Vec2>& v)
+{
+	data = v;
+}
+
+inline bool fei::Polygon::isValid() const
+{
+	return data.size() >= 3;
+}
+
 inline int fei::Polygon::indexNormalize(int index) const
 {
 	if (data.empty()) {
