@@ -28,7 +28,7 @@ public:
 	void zoom(const Vec2& v);
 	void normalize();
 
-	bool collidePoint(const Vec2& pt) const;
+	bool collidePoint(const Vec2& pt) const override;
 
 	void getStripCoord(float* coord) const;
 

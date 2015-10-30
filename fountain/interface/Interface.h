@@ -2,6 +2,7 @@
 #define _FEI_INTERFACE_H_
 
 #include "base/ModuleBase.h"
+#include "math/Vec2.h"
 #include "Window.h"
 
 namespace fei {
@@ -21,6 +22,9 @@ public:
 
 	void setCurrentWindow(Window* window);
 	Window* getCurrentWindow();
+
+	const Vec2 getCursorPos();
+	const Vec2 getRHCursorPos();
 
 	void executeAfterFrame() override;
 

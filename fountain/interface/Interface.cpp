@@ -88,6 +88,22 @@ fei::Window* Interface::getCurrentWindow()
 	return currentWindow;
 }
 
+const fei::Vec2 Interface::getCursorPos()
+{
+	if (!currentWindow) {
+		return fei::Vec2::ZERO;
+	}
+	return currentWindow->getCursorPos();
+}
+
+const fei::Vec2 Interface::getRHCursorPos()
+{
+	if (!currentWindow) {
+		return fei::Vec2::ZERO;
+	}
+	return currentWindow->getRHCursorPos();
+}
+
 void Interface::executeAfterFrame()
 {
 	currentWindow->swapBuffers();

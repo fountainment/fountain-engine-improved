@@ -12,6 +12,11 @@ Shape::~Shape()
 {
 }
 
+bool Shape::collidePoint(const fei::Vec2& p) const
+{
+	return false;
+}
+
 bool Shape::collide(const Shape* other) const
 {
 	return false;
