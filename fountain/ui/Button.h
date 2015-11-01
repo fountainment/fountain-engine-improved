@@ -6,6 +6,7 @@
 #include "render/RenderObj.h"
 #include "render/Camera.h"
 #include "render/Image.h"
+#include "font/FontCache.h"
 #include "ui/Label.h"
 #include "math/Rect.h"
 
@@ -17,15 +18,31 @@ public:
 	Button();
 
 	void drawIt() override;
-	void update() override;
+	void feiUpdate() override;
 
-	virtual void click();
+	void setLabel(const Label& label);
+
+	void setRectSize(const Vec2& rectSize);
+
+	void setBackColor(const Color& color);
+	void setLabelColor(const Color& color);
+
+	void setLabelString(FontCache& fontCache, const std::string& str);
+
+	virtual void onEnter();
+	virtual void onLeave();
+	virtual void onCollide();
+	virtual void onClick();
 
 private:
 	Camera* _drawCamera;
 	Rect _backRect;
 	Image _backImage;
 	Label _label;
+
+	Color _backColor;
+
+	bool _collide;
 };
 
 }
