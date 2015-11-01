@@ -22,6 +22,7 @@ public:
 	void setResizable(bool resizable);
 	void setFullscreen(bool fullscreen);
 	void setHide(bool isHide);
+	void setSamples(int samples);
 
 	void setContextRoot(Window* root);
 
@@ -50,6 +51,7 @@ public:
 
 private:
 	void setCallback();
+	void unsetCallback();
 	static std::queue<GLFWwindow*> delWindows;
 
 	GLFWwindow *window;
@@ -61,6 +63,7 @@ private:
 	bool _isFullscreen;
 	bool _isResizable;
 	bool _isHide;
+	int _samples;
 };
 
 }

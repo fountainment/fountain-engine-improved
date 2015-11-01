@@ -14,7 +14,8 @@ Window::Window()
   title(fei::EngineName),
   _isFullscreen(false),
   _isResizable(false),
-  _isHide(false)
+  _isHide(true),
+  _samples(0)
 {
 	sceneManager = new fei::SceneManager();
 }
@@ -57,6 +58,7 @@ void Window::setFullscreen(bool fullscreen)
 			_isFullscreen = fullscreen;
 			getWindow();
 			setCurrent();
+			show();
 			return;
 		}
 	} else {
@@ -74,6 +76,11 @@ void Window::setHide(bool isHide)
 	}
 }
 
+void Window::setSamples(int samples)
+{
+	_samples = samples;
+}
+
 void Window::setContextRoot(Window* root)
 {
 	if (root) {
@@ -88,15 +95,20 @@ GLFWwindow* Window::getWindow()
 		auto monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
 		int w = width, h = height;
+
+		if (_samples > 0) {
+			glfwWindowHint(GLFW_SAMPLES, _samples);
+		}
+
 		glfwWindowHint(GLFW_RED_BITS, mode->redBits);
 		glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
 		glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
 		glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 		if (_isHide) {
-			glfwWindowHint(GLFW_VISIBLE, 0);
+			glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
 		}
 		if (!_isResizable) {
-			glfwWindowHint(GLFW_RESIZABLE, 0);
+			glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
 		}
 		if (_isFullscreen) {
 			w = mode->width;
@@ -114,6 +126,7 @@ GLFWwindow* Window::getWindow()
 void Window::delWindow()
 {
 	if (window) {
+		unsetCallback();
 		delWindows.push(window);
 		window = nullptr;
 	}
@@ -301,3 +314,13 @@ void Window::setCallback()
 	glfwSetDropCallback(window, drop_callback);
 }
 
+void Window::unsetCallback()
+{
+	glfwSetKeyCallback(window, nullptr);
+	glfwSetMouseButtonCallback(window, nullptr);
+	glfwSetCursorPosCallback(window, nullptr);
+	glfwSetScrollCallback(window, nullptr);
+	glfwSetCharCallback(window, nullptr);
+	glfwSetFramebufferSizeCallback(window, nullptr);
+	glfwSetDropCallback(window, nullptr);
+}

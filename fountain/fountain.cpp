@@ -43,6 +43,7 @@ void Engine::mainLoop()
 void Engine::run()
 {
 	createWindow();
+	window->show();
 	mainLoop();
 }
 
