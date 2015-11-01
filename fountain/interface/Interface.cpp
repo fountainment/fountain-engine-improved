@@ -108,5 +108,6 @@ void Interface::executeAfterFrame()
 {
 	currentWindow->swapBuffers();
 	glfwPollEvents();
+	Window::doDelWindows();
 }
 

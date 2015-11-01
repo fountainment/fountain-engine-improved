@@ -27,6 +27,7 @@ public:
 
 	GLFWwindow* getWindow(); 
 	void delWindow();
+	static void doDelWindows();
 
 	void setCurrent();
 
@@ -49,6 +50,7 @@ public:
 
 private:
 	void setCallback();
+	static std::queue<GLFWwindow*> delWindows;
 
 	GLFWwindow *window;
 	GLFWwindow *contextRoot;

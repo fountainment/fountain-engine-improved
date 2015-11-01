@@ -3,6 +3,8 @@
 
 using fei::Window;
 
+std::queue<GLFWwindow*> Window::delWindows;
+
 Window::Window()
 : sceneManager(nullptr),
   window(nullptr),
@@ -20,6 +22,7 @@ Window::Window()
 Window::~Window()
 {
 	delWindow();
+	doDelWindows();
 	delete sceneManager;
 }
 
@@ -111,8 +114,19 @@ GLFWwindow* Window::getWindow()
 void Window::delWindow()
 {
 	if (window) {
-		glfwDestroyWindow(window);
+		delWindows.push(window);
 		window = nullptr;
+	}
+}
+
+void Window::doDelWindows()
+{
+	while (!delWindows.empty()) {
+		auto win = delWindows.front();
+		delWindows.pop();
+		if (win) {
+			glfwDestroyWindow(win);
+		}
 	}
 }
 
@@ -269,14 +283,12 @@ static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	}
 }
 
-/*
 static void drop_callback(GLFWwindow* window, int count, const char** paths)
 {
 	for (int i = 0; i < count; i++) {
 		std::printf("%s\n", paths[i]);
 	}
 }
-*/
 
 void Window::setCallback()
 {
@@ -286,6 +298,6 @@ void Window::setCallback()
 	glfwSetScrollCallback(window, scroll_callback);
 	glfwSetCharCallback(window, character_callback);
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	//glfwSetDropCallback(window, drop_callback);
+	glfwSetDropCallback(window, drop_callback);
 }
 

@@ -31,10 +31,10 @@ endif()
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
+add_subdirectory(deps/proj/glfw)
 add_subdirectory(deps/proj/Box2D)
 
 if(WINDOWS)
-  add_subdirectory(deps/proj/glfw)
   include_directories(deps/include)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 endif()
@@ -50,7 +50,8 @@ include_directories(fountain deps/proj/Box2D)
 set(FOUNTAIN_LINK_LIBRARY fountain)
 
 if(LINUX)
-	set(PLATFORM_LINK_LIBRARY glfw GLEW GL freeimage openal Box2D freetype)
+	set(GLFW_DEPS_LIBRARY X11 Xrandr Xinerama Xi Xxf86vm Xcursor pthread rt m dl)
+	set(PLATFORM_LINK_LIBRARY glfw ${GLFW_DEPS_LIBRARY} GLEW GL freeimage openal Box2D freetype)
 	file(COPY ${PROJECT_SOURCE_DIR}/res DESTINATION ${EXECUTABLE_OUTPUT_PATH})
 endif()
 
