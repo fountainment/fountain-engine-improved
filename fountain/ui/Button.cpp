@@ -8,10 +8,10 @@ Button::Button()
 : _drawCamera(nullptr),
   _backRect(Rect(fei::Vec2::ZERO, fei::Vec2(10.0f))),
   _backColor(fei::Color::White),
+  _frontColor(fei::Color::Black),
   _collide(false)
 {
-	_label.setHasAlpha(true);
-	_label.setColor(fei::Color::Black);
+	setHasAlpha(true);
 }
 
 void Button::drawIt()
@@ -21,7 +21,8 @@ void Button::drawIt()
 	Render::useColor(&_backColor);
 	fei::Render::drawShape(&_backRect);
 
-	_label.draw();
+	Render::useColor(&_frontColor);
+	_label.drawIt();
 }
 
 void Button::feiUpdate()
@@ -60,9 +61,9 @@ void Button::setBackColor(const fei::Color& color)
 	_backColor = color;
 }
 
-void Button::setLabelColor(const fei::Color& color)
+void Button::setFrontColor(const fei::Color& color)
 {
-	_label.setColor(color);
+	_frontColor = color;
 }
 
 void Button::setLabelString(fei::FontCache& fontCache, const std::string& str)

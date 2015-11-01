@@ -3,6 +3,22 @@
 
 #include "fountain.h"
 
+class MyButton : public fei::Button
+{
+private:
+	void onEnter() override
+	{
+		setBackColor(fei::Color::Orange);
+		setFrontColor(fei::Color::White);
+	}
+
+	void onLeave() override
+	{
+		setBackColor(fei::Color::White);
+		setFrontColor(fei::Color::Black);
+	}
+};
+
 class TestScene : public fei::Scene
 {
 public:
@@ -25,6 +41,7 @@ private:
 	fei::Camera mainCam;
 	fei::FontCache fc;
 	fei::Label label;
+	MyButton button;
 	fei::Image emptyImage;
 };
 

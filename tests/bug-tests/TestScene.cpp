@@ -132,6 +132,10 @@ void TestScene::testFont()
 
 	label.setString(fc, "Hello World! 我能吞下玻璃而不伤身体！");
 	add(&label);
+
+	button.setRectSize(Vec2(100.0f, 20.0f));
+	button.setLabelString(fc, "Test!");
+	add(&button);
 }
 
 void TestScene::testAudio()

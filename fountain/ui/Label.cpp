@@ -11,9 +11,11 @@ Label::Label()
 
 void Label::drawIt()
 {
+	//TODO: make setColor useful for label
 	int size = charList.size();
 	assert((int)advanceList.size() == size);
 	for (int i = 0; i < size; i++) {
+		//TODO: make single charactor draw without color
 		charList[i].draw();
 		glTranslatef((GLfloat)advanceList[i], 0.0f, 0.0f);
 	}

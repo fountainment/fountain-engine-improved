@@ -58,6 +58,7 @@
 #include "font/FontCache.h"
 
 #include "ui/Label.h"
+#include "ui/Button.h"
 
 #ifdef _MSC_VER
 	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")

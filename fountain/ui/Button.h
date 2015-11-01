@@ -25,22 +25,23 @@ public:
 	void setRectSize(const Vec2& rectSize);
 
 	void setBackColor(const Color& color);
-	void setLabelColor(const Color& color);
+	void setFrontColor(const Color& color);
 
 	void setLabelString(FontCache& fontCache, const std::string& str);
 
+private:
 	virtual void onEnter();
 	virtual void onLeave();
 	virtual void onCollide();
 	virtual void onClick();
 
-private:
 	Camera* _drawCamera;
 	Rect _backRect;
 	Image _backImage;
 	Label _label;
 
 	Color _backColor;
+	Color _frontColor;
 
 	bool _collide;
 };
