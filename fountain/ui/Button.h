@@ -1,6 +1,8 @@
 #if !defined(_FEI_BUTTON_H_)
 #define _FEI_BUTTON_H_
 
+//TODO: finish class Button
+
 #include "render/RenderObj.h"
 #include "render/Camera.h"
 #include "render/Image.h"
@@ -16,6 +18,8 @@ public:
 
 	void drawIt() override;
 	void update() override;
+
+	virtual void click();
 
 private:
 	Camera* _drawCamera;

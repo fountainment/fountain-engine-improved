@@ -18,8 +18,15 @@ void Button::drawIt()
 
 void Button::update()
 {
+	bool collide = false;
 	if (_drawCamera) {
 		fei::Vec2 cPos = fei::Interface::getInstance()->getRHCursorPos();
 		cPos = _drawCamera->screenToWorld(cPos);
+		collide = _backRect.collidePoint(cPos);
 	}
+
+}
+
+void Button::click()
+{
 }
