@@ -32,6 +32,8 @@ static const GLchar *basicFragmentShader = {
 	"}"
 };
 
+const GLfloat Render::stripTexCoord[8] = {0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
+
 Render* Render::instance = nullptr;
 
 Render* Render::getInstance()
@@ -235,39 +237,6 @@ void Render::disableTexture()
 	if (shader) {
 		shader->setUniform("feiUseTex", 0.0f);
 	}
-}
-
-void Render::drawLine(const fei::Vec2& pa, const fei::Vec2& pb)
-{
-	GLfloat vertex[] = {pa.x, pa.y, pb.x, pb.y};
-	drawArray2f(vertex, 0, 2, GL_LINES);
-}
-
-void Render::drawRect(const fei::Vec2& size)
-{
-	GLfloat vertex[] = {-size.x, size.y, 0.0f, 0.0f, size.x, size.y, size.x, -size.y};
-	drawArray2f(vertex, 0, 4, GL_TRIANGLE_STRIP);
-}
-
-void Render::drawQuad(const fei::Vec2& size)
-{
-	GLfloat w2 = size.x / 2.0f;
-	GLfloat h2 = size.y / 2.0f;
-	GLfloat vertex[] = {-w2, h2, -w2, -h2, w2, h2, w2, -h2};
-	drawArray2f(vertex, 0, 4, GL_TRIANGLE_STRIP);
-}
-
-void Render::drawTexQuad(const fei::Vec2& size, GLfloat* texCoord)
-{
-	GLfloat defaultTexCoord[] = {0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
-	GLfloat *useTexCoord = defaultTexCoord;
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	if (texCoord) {
-		useTexCoord = texCoord;
-	}
-	glTexCoordPointer(2, GL_FLOAT, 0, useTexCoord);
-	drawQuad(size);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
 void Render::drawShape(const fei::Shape* shape)

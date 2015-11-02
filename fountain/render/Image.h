@@ -20,6 +20,9 @@ public:
 	void drawIt() override;
 
 	const Vec2 getSize() const;
+	const GLfloat* getTextureCoord() const;
+
+	bool empty() const;
 	
 	const Image getImage(const Rect& imageRect);
 	const Image getImage(const Vec2& p, const Vec2& s);
@@ -28,7 +31,10 @@ public:
 private:
 	GLuint id;
 	Vec2 size;
+	Vec2 size2;
 	GLfloat texCoord[8];
+
+	void setSize(const Vec2& s);
 
 	const fei::Vec2 getLB();
 	const fei::Vec2 getTextureSize();

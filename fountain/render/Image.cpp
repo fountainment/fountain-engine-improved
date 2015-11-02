@@ -5,7 +5,8 @@ using fei::Image;
 
 Image::Image()
 : id(0),
-  size(fei::Vec2::ZERO)
+  size(fei::Vec2::ZERO),
+  size2(fei::Vec2::ZERO)
 {
 	for (int i = 0; i < 8; i++) {
 		texCoord[i] = 0.0f;
@@ -27,7 +28,7 @@ void Image::operator=(const Image& img)
 		fei::Render::getInstance()->addRefTexture(id);
 	}
 	setHasAlpha(img.hasAlpha());
-	size = img.size;
+	setSize(img.size);
 	for (int i = 0; i < 8; i++) {
 		texCoord[i] = img.texCoord[i];
 	}
@@ -43,7 +44,7 @@ Image::Image(GLuint texId, const fei::Vec2& texSize, const fei::Rect& imageRect)
 	fei::Render::getInstance()->addRefTexture(texId);
 	auto rect = imageRect;
 	id = texId;
-	size = imageRect.getSize();
+	setSize(imageRect.getSize());
 	rect.zoom(texSize.reciprocal());
 	rect.getStripCoord(texCoord);
 }
@@ -51,13 +52,29 @@ Image::Image(GLuint texId, const fei::Vec2& texSize, const fei::Rect& imageRect)
 void Image::drawIt()
 {
 	fei::Render::getInstance()->bindTexture(id);
-	fei::Render::drawTexQuad(size, texCoord);
+	fei::Render::drawTexQuadH(size2, texCoord);
 	fei::Render::getInstance()->disableTexture();
+}
+
+void Image::setSize(const fei::Vec2& s)
+{
+	size = s;
+	size2 = size * 0.5f;
 }
 
 const fei::Vec2 Image::getSize() const
 {
 	return size;
+}
+
+const GLfloat* Image::getTextureCoord() const
+{
+	return texCoord;
+}
+
+bool Image::empty() const
+{
+	return (id == 0);
 }
 
 const fei::Vec2 Image::getLB()
@@ -69,7 +86,7 @@ const fei::Vec2 Image::getLB()
 
 const fei::Vec2 Image::getTextureSize()
 {
-	return fei::Vec2(size.x / (texCoord[4] - texCoord[2]), size.y / (texCoord[5] - texCoord[3]));
+	return fei::Render::getInstance()->queryTexSize(id);
 }
 
 const Image Image::getImage(const fei::Rect& imageRect)

@@ -16,12 +16,15 @@ Button::Button()
 
 void Button::drawIt()
 {
-	_drawCamera = Render::getInstance()->getCurrentCamera();
+	_drawCamera = fei::Render::getInstance()->getCurrentCamera();
 
-	Render::useColor(&_backColor);
+	_backColor.use();
 	fei::Render::drawShape(&_backRect);
+	if (!_backImage.empty()) {
+		_backImage.drawIt();
+	}
 
-	Render::useColor(&_frontColor);
+	_frontColor.use();
 	_label.drawIt();
 }
 
@@ -64,6 +67,11 @@ void Button::setBackColor(const fei::Color& color)
 void Button::setFrontColor(const fei::Color& color)
 {
 	_frontColor = color;
+}
+
+void Button::setBackImage(const fei::Image& image)
+{
+	_backImage = image;
 }
 
 void Button::setLabelString(fei::FontCache& fontCache, const std::string& str)

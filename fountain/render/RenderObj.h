@@ -38,6 +38,8 @@ public:
 	void hide();
 	void show();
 
+	void setUseColor(bool useColor);
+
 	void setScale(float scl);
 	void setAngle(float agl);
 	void setAnchor(const Vec2& acr);
@@ -56,6 +58,7 @@ public:
 protected:
 	bool _hasAlpha;
 	bool _isVisible;
+	bool _useColor;
 	//int alphaFunc;
 	float angle;
 	float scale;

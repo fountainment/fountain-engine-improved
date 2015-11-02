@@ -7,6 +7,7 @@ using fei::RenderObj;
 RenderObj::RenderObj()
 : _hasAlpha(false),
   _isVisible(true),
+  _useColor(true),
   angle(0.0f),
   scale(1.0f),
   zPos(0.0f),
@@ -64,6 +65,11 @@ void RenderObj::hide()
 void RenderObj::show()
 {
 	setVisible(true);
+}
+
+void RenderObj::setUseColor(bool useColor)
+{
+	_useColor = useColor;
 }
 
 void RenderObj::setScale(float scl)
@@ -139,7 +145,9 @@ void RenderObj::feiUpdate()
 
 void RenderObj::draw()
 {
-	color.use();
+	if (_useColor) {
+		color.use();
+	}
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
 	if (_hasAlpha) {

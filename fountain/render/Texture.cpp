@@ -54,7 +54,8 @@ static FIBITMAP* loadBitmap(const std::string& filename)
 
 Texture::Texture()
 : id(0),
-  size(fei::Vec2::ZERO)
+  size(fei::Vec2::ZERO),
+  size2(fei::Vec2::ZERO)
 {
 }
 
@@ -116,7 +117,7 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, w, h,
 			0, format, GL_UNSIGNED_BYTE, bits);
-	size = fei::Vec2((float)w, (float)h);
+	setSize(fei::Vec2((float)w, (float)h));
 	fei::Render::getInstance()->registTexSize(id, size);
 }
 
@@ -163,7 +164,7 @@ void Texture::subUpdate(const unsigned char* bits, int w, int h, Format dataForm
 void Texture::drawIt()
 {
 	fei::Render::getInstance()->bindTexture(id);
-	fei::Render::drawTexQuad(size);
+	fei::Render::drawTexQuadH(size2);
 	fei::Render::getInstance()->disableTexture();
 }
 
@@ -195,7 +196,13 @@ void Texture::setId(GLuint _id)
 	if (isLoaded()) {
 		unload();
 	}
-	size = fei::Render::getInstance()->queryTexSize(_id);
+	setSize(fei::Render::getInstance()->queryTexSize(_id));
 	fei::Render::getInstance()->addRefTexture(_id);
 	id = _id;
+}
+
+void Texture::setSize(const fei::Vec2& sz)
+{
+	size = sz;
+	size2 = size * 0.5f;
 }

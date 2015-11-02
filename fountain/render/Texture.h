@@ -49,9 +49,11 @@ public:
 
 private:
 	void setId(GLuint _id);
+	void setSize(const Vec2& s);
 
 	GLuint id;
 	Vec2 size;
+	Vec2 size2;
 };
 
 }

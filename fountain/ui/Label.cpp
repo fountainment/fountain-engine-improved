@@ -44,7 +44,9 @@ void Label::addString(fei::FontCache& fontCache, const std::vector<unsigned long
 {
 	unsigned long prev = 0;
 	for (auto charactor : str) {
-		charList.push_back(fontCache.queryCharactor(charactor));
+		auto image = fontCache.queryCharactor(charactor); 
+		image.setUseColor(false);
+		charList.push_back(image);
 		int advance = fontCache.queryAdvance(charactor);
 		if (prev) {
 			advance += fontCache.queryKerning(prev, charactor);

@@ -27,6 +27,8 @@ public:
 	void setBackColor(const Color& color);
 	void setFrontColor(const Color& color);
 
+	void setBackImage(const Image& image);
+
 	void setLabelString(FontCache& fontCache, const std::string& str);
 
 private:
