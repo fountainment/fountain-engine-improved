@@ -9,7 +9,7 @@ What's Improved Now
 -------------------
 
 - Use cmake to build
-- Codes fully support Visual Stdio
+- Codes fully support Visual Studio
 - Add RenderList logic
 - Clearer module logic
 
