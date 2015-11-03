@@ -303,6 +303,8 @@ static void drop_callback(GLFWwindow* window, int count, const char** paths)
 	}
 }
 
+//TODO: Event queue for input control detection
+
 void Window::setCallback()
 {
 	glfwSetKeyCallback(window, key_callback);
