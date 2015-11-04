@@ -31,6 +31,15 @@ public:
 
 	void setLabelString(FontCache& fontCache, const std::string& str);
 
+	const Vec2 getCenter();
+	void setCenter(const Vec2& v);
+
+	bool isCollide();
+
+	void click();
+
+	//TODO: add Button::setLabelAlign
+
 private:
 	virtual void onEnter();
 	virtual void onLeave();
