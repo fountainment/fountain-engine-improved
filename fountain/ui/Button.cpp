@@ -80,22 +80,22 @@ void Button::setLabelString(fei::FontCache& fontCache, const std::string& str)
 	_label.setString(fontCache, str);
 }
 
-const fei::Vec2 getCenter()
+const fei::Vec2 Button::getCenter()
 {
 	return getPosition() + _backRect.getCenter();
 }
 
-void setCenter(const fei::Vec2& v)
+void Button::setCenter(const fei::Vec2& v)
 {
 	setPosition(v - _backRect.getSize() / 2.f);
 }
 
-bool isCollide()
+bool Button::isCollide()
 {
 	return _collide;
 }
 
-void click()
+void Button::click()
 {
 	if (_collide) {
 		onClick();
