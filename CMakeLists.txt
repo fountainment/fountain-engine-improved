@@ -34,6 +34,9 @@ set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 add_subdirectory(deps/proj/glfw)
 add_subdirectory(deps/proj/Box2D)
 
+include_directories(deps/proj/glfw/include)
+include_directories(deps/proj/Box2D)
+
 if(WINDOWS)
   include_directories(deps/include)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
