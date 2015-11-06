@@ -1,11 +1,11 @@
 #if !defined(_FEI_FRAMEANIME_H_)
 #define _FEI_FRAMEANIME_H_
 
-#include "render/RenderObj.h"
-#include "render/Texture.h"
-#include "render/ImagePool.h"
 #include "anime/Anime.h"
 #include "base/basedef.h"
+#include "render/ImagePool.h"
+#include "render/RenderObj.h"
+#include "render/Texture.h"
 
 namespace fei {
 
@@ -19,6 +19,8 @@ public:
 	void load(const std::string& textureName, const std::string& sipName);
 
 	virtual void update(RenderObj* rObj) override;
+	void updateFrameIndex();
+	virtual void updateFrameContent(RenderObj* rObj);
 
 	float getFps();
 	void setFps(float f);

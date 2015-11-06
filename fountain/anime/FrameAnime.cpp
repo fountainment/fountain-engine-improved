@@ -29,6 +29,12 @@ void FrameAnime::load(const std::string& textureName, const std::string& sipName
 
 void FrameAnime::update(fei::RenderObj* rObj)
 {
+	updateFrameIndex();
+	updateFrameContent(rObj);
+}
+
+void FrameAnime::updateFrameIndex()
+{
 	playClock.tick();
 	if (playClock.isPlay()) {
 		curFrameIndex += getFps() * playClock.getDeltaTime();
@@ -40,6 +46,10 @@ void FrameAnime::update(fei::RenderObj* rObj)
 			}
 		}
 	}
+}
+
+void FrameAnime::updateFrameContent(fei::RenderObj* rObj)
+{
 	rObj->setSubstitute(nullptr);
 	if (!playClock.isStop()) {
 		fei::Image *image = framePool.getImage((int)curFrameIndex);

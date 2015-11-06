@@ -12,6 +12,7 @@ include(physics/CMakeLists.txt)
 include(sprite/CMakeLists.txt)
 include(ui/CMakeLists.txt)
 include(network/CMakeLists.txt)
+include(util/CMakeLists.txt)
 
 set(FOUNTAIN_SRC fountain.cpp
 	${FOUNTAIN_BASE_SRC}
@@ -28,6 +29,7 @@ set(FOUNTAIN_SRC fountain.cpp
 	${FOUNTAIN_PHYSICS_SRC}
 	${FOUNTAIN_UI_SRC}
 	${FOUNTAIN_NETWORK_SRC}
+	${FOUNTAIN_UTIL_SRC}
 )
 
 add_library(fountain STATIC ${FOUNTAIN_SRC})

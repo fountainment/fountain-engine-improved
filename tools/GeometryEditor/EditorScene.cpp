@@ -89,6 +89,12 @@ void EditorScene::update()
 		poly[curEdit].moveVertices(deltaV);
 	}
 
+	if (window->getKey(GLFW_KEY_A)) {
+		auto list = poly[curEdit].box2dDecomposition();
+		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
+		body->createFixture(list);
+	}
+
 	std::printf("%.2f\n", Time::getInstance()->getFps());
 }
 
