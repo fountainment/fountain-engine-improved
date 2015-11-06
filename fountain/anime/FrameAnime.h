@@ -18,7 +18,7 @@ public:
 	void load(const Texture& texture, const std::string& sipName);
 	void load(const std::string& textureName, const std::string& sipName);
 
-	virtual void update(RenderObj* rObj) override;
+	virtual void feiUpdate(RenderObj* rObj) override;
 	void updateFrameIndex();
 	virtual void updateFrameContent(RenderObj* rObj);
 

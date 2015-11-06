@@ -2,6 +2,7 @@
 #define _CHARACTOR_H_
 
 #include "fountain.h"
+#include "util/PhysicsAnime.h"
 
 class Charactor : public fei::RenderObj
 {
@@ -25,6 +26,7 @@ private:
 	fei::FrameAnime *curAnime;
 	fei::FrameAnime walkAnime[4];
 	fei::FrameAnime runAnime[4];
+	fut::CollisionFrameAnime colliAnime;
 
 	//TODO: anime state control
 };

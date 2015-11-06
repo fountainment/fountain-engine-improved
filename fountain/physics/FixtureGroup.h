@@ -11,6 +11,7 @@ namespace fei {
 class FixtureGroup
 {
 public:
+	FixtureGroup();
 	FixtureGroup(const std::vector<b2Fixture*>& _fixtures);
 	FixtureGroup(b2Fixture* _fixture);
 

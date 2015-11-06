@@ -35,6 +35,8 @@ void Charactor::init()
 	b2bd->SetFixedRotation(true);
 	b2bd->SetGravityScale(0.0f);
 	body->createFixture(&rect);
+
+	colliAnime.setBody(body);
 }
 
 void Charactor::destroy()

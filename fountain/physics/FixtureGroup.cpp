@@ -2,6 +2,10 @@
 
 using fei::FixtureGroup;
 
+FixtureGroup::FixtureGroup()
+{
+}
+
 FixtureGroup::FixtureGroup(const std::vector<b2Fixture*>& _fixtures)
 {
 	clone(_fixtures);

@@ -27,10 +27,11 @@ void FrameAnime::load(const std::string& textureName, const std::string& sipName
 	load(tmpTex, sipName);
 }
 
-void FrameAnime::update(fei::RenderObj* rObj)
+void FrameAnime::feiUpdate(fei::RenderObj* rObj)
 {
 	updateFrameIndex();
 	updateFrameContent(rObj);
+	update(rObj);
 }
 
 void FrameAnime::updateFrameIndex()
