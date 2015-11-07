@@ -25,6 +25,7 @@ public:
 	virtual void cursorPosCallback(double xpos, double ypos);
 	virtual void charactorCallback(unsigned int codepoint);
 	virtual void framebufferSizeCallback(int width, int height);
+	virtual void dropCallback(int count, const char** paths);
 
 private:
 	Clock *sceneClock;

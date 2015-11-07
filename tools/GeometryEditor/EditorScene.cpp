@@ -197,3 +197,8 @@ void EditorScene::framebufferSizeCallback(int width, int height)
 	Render::setViewport(framebufferSize);
 	mainCam.setCameraSize(framebufferSize);
 }
+
+void EditorScene::dropCallback(int count, const char** paths)
+{
+	std::printf("%s\n", paths[0]);
+}

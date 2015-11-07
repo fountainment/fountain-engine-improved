@@ -30,6 +30,7 @@ public:
 	void scrollCallback(double xoffset, double yoffset) override;
 	void keyCallback(int key, int scancode, int action, int mods) override;
 	void framebufferSizeCallback(int width, int height) override;
+	void dropCallback(int count, const char** paths) override;
 
 private:
 	fei::Camera mainCam;

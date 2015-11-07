@@ -298,8 +298,9 @@ static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 static void drop_callback(GLFWwindow* window, int count, const char** paths)
 {
-	for (int i = 0; i < count; i++) {
-		std::printf("%s\n", paths[i]);
+	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	if (scene) {
+		scene->dropCallback(count, paths);
 	}
 }
 

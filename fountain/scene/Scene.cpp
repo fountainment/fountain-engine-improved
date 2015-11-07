@@ -53,3 +53,8 @@ void Scene::charactorCallback(unsigned int codepoint)
 void Scene::framebufferSizeCallback(int width, int height)
 {
 }
+
+void Scene::dropCallback(int count, const char** paths)
+{
+}
+
