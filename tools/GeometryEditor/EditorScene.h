@@ -2,6 +2,7 @@
 #define _EDITORSCENE_H_
 
 #include "fountain.h"
+#include "util/PhysicsAnime.h"
 
 class EShapeObj : public fei::ShapeObj
 {
@@ -25,6 +26,8 @@ public:
 	void init() override;
 	void update() override;
 
+	void loadAnime(const std::string& path);
+
 	void mouseButtonCallback(int button, int action, int mods) override;
 	void cursorPosCallback(double xpos, double ypos) override;
 	void scrollCallback(double xoffset, double yoffset) override;
@@ -36,6 +39,11 @@ private:
 	fei::Camera mainCam;
 	fei::Polygon poly[10];
 	fei::Texture tex[10];
+
+	fei::Body* animeBody;
+	fei::RenderObj animeObj;
+	fut::CollisionFrameAnime anime[10];
+
 	fei::Image image;
 	EShapeObj polyObj;
 

@@ -12,11 +12,21 @@ public:
 	bool isLoop();
 	void setLoop(bool isloop);
 
+	void play();
+	void pause();
+	void stop();
+	void tick();
+
+	bool isStop();
+	bool isPlay();
+
+	double getDeltaTime();
+
+	void setMasterClock(Clock* clock);
+
 private:
 	bool _isLoop;
-
-protected:
-	Clock playClock;
+	Clock _playClock;
 };
 
 }

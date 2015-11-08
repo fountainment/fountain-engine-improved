@@ -67,6 +67,10 @@ void EditorScene::init()
 
 	curEdit = 0;
 	holdVertex = -1;
+
+	animeBody = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::STATIC);
+	animeBody->getB2Body()->SetGravityScale(0.0f);
+	add(&animeObj);
 }
 
 void EditorScene::update()
@@ -96,6 +100,18 @@ void EditorScene::update()
 	}
 
 	std::printf("%.2f\n", Time::getInstance()->getFps());
+}
+
+void EditorScene::loadAnime(const std::string& path)
+{
+	auto name = path;
+	name.erase(name.size() - 3, 3);
+	anime[curEdit].load(name + "png", name + "sip");
+	animeObj.setAnime(&anime[curEdit]);
+	anime[curEdit].setFps(15);
+	anime[curEdit].setLoop(true);
+	anime[curEdit].setBody(animeBody);
+	anime[curEdit].play();
 }
 
 void EditorScene::mouseButtonCallback(int button, int action, int mods)
@@ -180,14 +196,25 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 		body->createFixture(list);
 	}
 
-	if (key >= GLFW_KEY_0 && key <= GLFW_KEY_9 && action == GLFW_PRESS) {
-		curEdit = key - GLFW_KEY_0;
+	if (key >= GLFW_KEY_F1 && key <= GLFW_KEY_F10 && action == GLFW_PRESS) {
+		curEdit = key - GLFW_KEY_F1;
 		image = tex[curEdit].getImage();
 		polyObj.setShape(&poly[curEdit]);
 		holdVertex = -1;
 	}
 
-	if (key == GLFW_KEY_E && action == GLFW_PRESS) {
+	if (key >= GLFW_KEY_0 && key <= GLFW_KEY_9 && action == GLFW_PRESS) {
+		int t = key - GLFW_KEY_0;
+		anime[curEdit].setCurFrameIndex(t);
+		anime[curEdit].pause();
+	}
+
+	if (key == GLFW_KEY_I && action == GLFW_PRESS) {
+		anime[curEdit].insertFrame(anime[curEdit].getCurFrameIndex(), poly[curEdit]);
+	}
+
+	if (key == GLFW_KEY_P && action == GLFW_PRESS) {
+		anime[curEdit].play();
 	}
 }
 
@@ -200,5 +227,11 @@ void EditorScene::framebufferSizeCallback(int width, int height)
 
 void EditorScene::dropCallback(int count, const char** paths)
 {
-	std::printf("%s\n", paths[0]);
+	int len = std::strlen(paths[0]);
+	if (len < 3) {
+		return;
+	}
+	if (std::strcmp(&paths[0][len - 3], "sip") == 0) {
+		loadAnime(paths[0]);
+	}
 }

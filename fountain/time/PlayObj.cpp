@@ -16,3 +16,44 @@ void PlayObj::setLoop(bool loop)
 {
 	_isLoop = loop;
 }
+
+void PlayObj::play()
+{
+	_playClock.play();
+}
+
+void PlayObj::pause()
+{
+	_playClock.pause();
+}
+
+void PlayObj::stop()
+{
+	_playClock.stop();
+}
+
+void PlayObj::tick()
+{
+	_playClock.tick();
+}
+
+bool PlayObj::isStop()
+{
+	return _playClock.isStop();
+}
+
+bool PlayObj::isPlay()
+{
+	return _playClock.isPlay();
+}
+
+double PlayObj::getDeltaTime()
+{
+	return _playClock.getDeltaTime();
+}
+
+void PlayObj::setMasterClock(fei::Clock* clock)
+{
+	_playClock.setMasterClock(clock);
+}
+

@@ -36,14 +36,14 @@ void FrameAnime::feiUpdate(fei::RenderObj* rObj)
 
 void FrameAnime::updateFrameIndex()
 {
-	playClock.tick();
-	if (playClock.isPlay()) {
-		curFrameIndex += getFps() * playClock.getDeltaTime();
+	tick();
+	if (isPlay()) {
+		curFrameIndex += getFps() * getDeltaTime();
 		if (curFrameIndex >= getFrameNum()) {
 			if (isLoop()) {
 				curFrameIndex = 0;
 			} else {
-				playClock.stop();
+				stop();
 			}
 		}
 	}
@@ -52,7 +52,7 @@ void FrameAnime::updateFrameIndex()
 void FrameAnime::updateFrameContent(fei::RenderObj* rObj)
 {
 	rObj->setSubstitute(nullptr);
-	if (!playClock.isStop()) {
+	if (!isStop()) {
 		fei::Image *image = framePool.getImage((int)curFrameIndex);
 		rObj->setSubstitute(image);
 	}
