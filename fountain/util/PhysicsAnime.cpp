@@ -33,12 +33,10 @@ void CollisionFrameAnime::insertFrame(const std::map<int, const fei::Polygon>& f
 void CollisionFrameAnime::update(fei::RenderObj* rObj)
 {
 	int cfi = getCurFrameIndex();
-	std::printf("%d\n", cfi);
 	if (_oldFrameIndex != cfi) {
 		auto frame = _frameMap.find(cfi);
 		if (frame != _frameMap.end()) {
 			destroyFixture();
-			std::printf("%d!!!!\n", cfi);
 			createFixture(frame->second);
 		}
 		_oldFrameIndex = cfi;
