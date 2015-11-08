@@ -4,7 +4,7 @@ using fut::CollisionFrameAnime;
 
 CollisionFrameAnime::CollisionFrameAnime()
 : _body(nullptr),
-  _oldFrameIndex(0)
+  _oldFrameIndex(-1)
 {
 }
 
@@ -30,11 +30,27 @@ void CollisionFrameAnime::insertFrame(const std::map<int, const fei::Polygon>& f
 	}
 }
 
+void CollisionFrameAnime::setFrameMap(const std::map<int, std::vector<fei::Polygon>> frameMap)
+{
+	_frameMap = frameMap;
+}
+
+void CollisionFrameAnime::deleteFrame(int frameIndex)
+{
+	auto frame = _frameMap.find(frameIndex);
+	if (frame != _frameMap.end()) {
+		_frameMap.erase(frame);
+	}
+}
+
 void CollisionFrameAnime::update(fei::RenderObj* rObj)
 {
 	int cfi = getCurFrameIndex();
 	if (_oldFrameIndex != cfi) {
 		auto frame = _frameMap.find(cfi);
+		if (cfi < _oldFrameIndex) {
+			destroyFixture();
+		}
 		if (frame != _frameMap.end()) {
 			destroyFixture();
 			createFixture(frame->second);
@@ -43,12 +59,23 @@ void CollisionFrameAnime::update(fei::RenderObj* rObj)
 	}
 }
 
+void CollisionFrameAnime::print()
+{
+	for (auto& frame : _frameMap) {
+		std::printf("%d\n", frame.first);
+		std::printf("%d\n", (int)frame.second.size());
+		for (auto& poly : frame.second) {
+			poly.print();
+		}
+	}
+}
+
 void CollisionFrameAnime::destroyFixture()
 {
 	if (_body) {
 		_body->destroyFixture(_fixture.fixtures);
-		_fixture.fixtures.clear();
 	}
+	_fixture.fixtures.clear();
 }
 
 void CollisionFrameAnime::createFixture(const std::vector<fei::Polygon>& polyVec)

@@ -98,8 +98,6 @@ void EditorScene::update()
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
 		body->createFixture(list);
 	}
-
-	std::printf("%.2f\n", Time::getInstance()->getFps());
 }
 
 void EditorScene::loadAnime(const std::string& path)
@@ -215,6 +213,10 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 
 	if (key == GLFW_KEY_P && action == GLFW_PRESS) {
 		anime[curEdit].play();
+	}
+
+	if (key == GLFW_KEY_L && action == GLFW_PRESS) {
+		anime[curEdit].print();
 	}
 }
 

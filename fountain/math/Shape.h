@@ -31,6 +31,8 @@ public:
 
 	Type getType() const;
 
+	void print();
+
 private:
 	bool _isSolid;
 

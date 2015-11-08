@@ -21,7 +21,13 @@ public:
 
 	void insertFrame(int frameIndex, const fei::Polygon& poly);
 	void insertFrame(const std::map<int, const fei::Polygon>& frames);
+	void setFrameMap(const std::map<int, std::vector<fei::Polygon>> frameMap);
+
+	void deleteFrame(int frameIndex);
+
 	virtual void update(fei::RenderObj* rObj) override;
+
+	void print();
 
 private:
 	void destroyFixture();
