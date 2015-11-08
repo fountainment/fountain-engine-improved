@@ -20,6 +20,11 @@ void FrameAnime::load(const fei::Texture& texture, const std::string& sipName)
 	curFrameIndex = 0;
 }
 
+void FrameAnime::load(const std::string& name)
+{
+	load(name + ".png", name + ".sip");
+}
+
 void FrameAnime::load(const std::string& textureName, const std::string& sipName)
 {
 	fei::Texture tmpTex;

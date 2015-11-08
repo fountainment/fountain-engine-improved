@@ -1,10 +1,11 @@
-#if !defined(_CHARACTOR_H_)
-#define _CHARACTOR_H_
+#if !defined(_BOMBER_H_)
+#define _BOMBER_H_
 
 #include "fountain.h"
-#include "util/PhysicsAnime.h"
 
-class Charactor : public fei::RenderObj
+//TODO: test a bomber on the map
+
+class Bomber : public fei::RenderObj
 {
 public:
 	Charactor();
@@ -17,7 +18,7 @@ public:
 	void setSpeed(const fei::Vec2& sp);
 	void setSpeed(const fei::Vec2& drct, float sp);
 
-	void attack();
+	void die();
 
 	fei::Clock charClock;
 
@@ -26,13 +27,6 @@ private:
 	fei::Body *body;
 
 	fei::FrameAnime *curAnime;
-	fei::FrameAnime walkAnime[4];
-	fei::FrameAnime runAnime[4];
-	fut::CollisionFrameAnime atk1Anime;
-	fut::CollisionFrameAnime atk2Anime;
-	fut::CollisionFrameAnime atk3Anime;
-
-	//TODO: anime state control
 };
 
 #endif

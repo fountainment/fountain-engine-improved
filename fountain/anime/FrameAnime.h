@@ -16,6 +16,7 @@ public:
 
 	void load(const ImagePool& imagePool);
 	void load(const Texture& texture, const std::string& sipName);
+	void load(const std::string& name);
 	void load(const std::string& textureName, const std::string& sipName);
 
 	virtual void feiUpdate(RenderObj* rObj) override;

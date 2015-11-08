@@ -100,3 +100,10 @@ void TestScene::update()
 
 	std::printf("%.2f\n", Time::getInstance()->getFps());
 }
+
+void TestScene::keyCallback(int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_X && action == GLFW_PRESS) {
+		mainChar.attack();
+	}
+}

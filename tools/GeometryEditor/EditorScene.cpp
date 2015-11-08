@@ -233,7 +233,8 @@ void EditorScene::dropCallback(int count, const char** paths)
 	if (len < 3) {
 		return;
 	}
-	if (std::strcmp(&paths[0][len - 3], "sip") == 0) {
+	if (std::strcmp(&paths[0][len - 3], "sip") == 0 || \
+			std::strcmp(&paths[0][len - 3], "png") == 0) {
 		loadAnime(paths[0]);
 	}
 }

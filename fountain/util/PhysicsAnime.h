@@ -27,10 +27,13 @@ public:
 
 	virtual void update(fei::RenderObj* rObj) override;
 
+	void loadCollisionFile(const std::string& filename);
+
 	void print();
 
-private:
 	void destroyFixture();
+
+private:
 	void createFixture(const std::vector<fei::Polygon>& polyVec);
 
 	std::map<int, std::vector<fei::Polygon>> _frameMap;
