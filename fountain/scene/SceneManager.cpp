@@ -1,4 +1,5 @@
 #include "scene/SceneManager.h"
+
 #include "interface/Interface.h"
 
 using fei::SceneManager;

@@ -1,4 +1,5 @@
-#include "Image.h"
+#include "render/Image.h"
+
 #include "render/Render.h"
 
 using fei::Image;

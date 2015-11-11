@@ -18,6 +18,7 @@ public:
 	Joystick* getJoystick();
 
 	static Control* getInstance();
+
 private:
 	Control();
 
@@ -26,6 +27,6 @@ private:
 	static Control *instance;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_CONTROL_H_

@@ -29,7 +29,7 @@ public:
 	virtual void feiUpdate();
 };
 
-}
+} // namespace fei
 
 inline fei::NodeBase::NodeBase()
 : pos(fei::Vec2::ZERO),
@@ -57,4 +57,4 @@ inline bool fei::NodeBase::isLoaded() const
 	return _isLoaded;
 }
 
-#endif
+#endif // _FEI_NODEBASE_H_

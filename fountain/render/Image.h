@@ -1,10 +1,11 @@
 #if !defined(_FEI_IMAGE_H_)
 #define _FEI_IMAGE_H_
 
-#include "render/RenderObj.h"
-#include "math/Vec2.h"
-#include "math/Rect.h"
 #include <GL/glew.h>
+
+#include "math/Rect.h"
+#include "math/Vec2.h"
+#include "render/RenderObj.h"
 
 namespace fei {
 
@@ -40,6 +41,6 @@ private:
 	const fei::Vec2 getTextureSize();
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_IMAGE_H_

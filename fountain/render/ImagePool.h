@@ -1,10 +1,11 @@
 #if !defined(_FEI_IMAGEPOOL_H_)
 #define _FEI_IMAGEPOOL_H_
 
+#include <GL/glew.h>
+
+#include "base/basedef.h"
 #include "render/Image.h"
 #include "render/Texture.h"
-#include "base/basedef.h"
-#include <GL/glew.h>
 
 namespace fei {
 
@@ -29,6 +30,6 @@ private:
 	std::vector<Image> imageList;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_IMAGEPOOL_H_

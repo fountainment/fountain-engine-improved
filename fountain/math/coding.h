@@ -7,6 +7,6 @@ namespace fei {
 
 std::vector<unsigned long> utf8ToUnicode(const std::string& str);
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_CODING_H_

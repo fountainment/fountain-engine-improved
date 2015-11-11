@@ -1,5 +1,4 @@
-#include "coding.h"
-
+#include "math/coding.h"
 
 std::vector<unsigned long> fei::utf8ToUnicode(const std::string& str)
 {

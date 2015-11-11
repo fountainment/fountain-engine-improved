@@ -1,12 +1,13 @@
 #if !defined(_FEI_PHYSICS_H_)
 #define _FEI_PHYSICS_H_
 
+#include <Box2D/Box2D.h>
+
 #include "base/ModuleBase.h"
 #include "math/Vec2.h"
 #include "math/Shape.h"
 #include "physics/Body.h"
 #include "render/Camera.h"
-#include <Box2D/Box2D.h>
 
 namespace fei {
 
@@ -71,6 +72,6 @@ inline float Physics::physicsToRender(float f)
 	return f * ratio;
 }
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_PHYSICS_H_

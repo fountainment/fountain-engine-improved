@@ -1,9 +1,10 @@
-#include "Physics.h"
-#include "math/Polygon.h"
+#include "physics/Physics.h"
+
 #include "math/Circle.h"
+#include "math/Polygon.h"
 #include "math/Rect.h"
-#include "render/Render.h"
 #include "render/Color.h"
+#include "render/Render.h"
 
 using fei::Physics;
 

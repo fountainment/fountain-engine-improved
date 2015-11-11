@@ -1,6 +1,7 @@
-#include "Joystick.h"
-#include "base/basedef.h"
+#include "control/Joystick.h"
+
 #include <GLFW/glfw3.h>
+#include "base/basedef.h"
 
 using fei::Joystick;
 

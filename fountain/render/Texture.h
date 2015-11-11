@@ -1,12 +1,13 @@
 #if !defined(_FEI_TEXTURE_H_)
 #define _FEI_TEXTURE_H_
 
-#include "Render.h"
-#include "render/RenderObj.h"
-#include "render/Image.h"
-#include "math/Vec2.h"
-#include "math/Rect.h"
 #include <GL/glew.h>
+
+#include "render/Image.h"
+#include "render/Render.h"
+#include "render/RenderObj.h"
+#include "math/Rect.h"
+#include "math/Vec2.h"
 
 namespace fei {
 
@@ -56,6 +57,6 @@ private:
 	Vec2 size2;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_TEXTURE_H_

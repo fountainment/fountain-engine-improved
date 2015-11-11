@@ -1,8 +1,8 @@
 #if !defined(_FEI_RECT_H_)
 #define _FEI_RECT_H_
 
-#include "Vec2.h"
 #include "math/Shape.h"
+#include "math/Vec2.h"
 
 namespace fei {
 
@@ -39,7 +39,7 @@ private:
 	Vec2 size;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_RECT_H_
 

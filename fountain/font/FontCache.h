@@ -4,8 +4,8 @@
 //TODO: add bold function
 
 #include "base/basedef.h"
-#include "render/Texture.h"
 #include "font/Font.h"
+#include "render/Texture.h"
 
 namespace fei
 {
@@ -49,6 +49,6 @@ private:
 	FT_Bool useKerning;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_FONTCACHE_H_

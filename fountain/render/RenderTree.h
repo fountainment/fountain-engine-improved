@@ -1,8 +1,8 @@
 #if !defined(_FEI_RENDERTREE_H_)
 #define _FEI_RENDERTREE_H_
 
-#include "render/RenderObj.h"
 #include "render/RenderList.h"
+#include "render/RenderObj.h"
 
 namespace fei {
 
@@ -32,6 +32,6 @@ private:
 	RenderList childList;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_RENDERTREE_H_

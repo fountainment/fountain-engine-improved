@@ -1,9 +1,9 @@
 #if !defined(_FEI_SEGMENT_H_)
 #define _FEI_SEGMENT_H_
 
-#include "math/Vec2.h"
-#include "math/Shape.h"
 #include "math/mathdef.h"
+#include "math/Shape.h"
+#include "math/Vec2.h"
 
 namespace fei {
 
@@ -32,7 +32,7 @@ public:
 	Vec2 b;
 };
 
-}
+} // namespace fei
 
 inline const fei::Vec2 fei::Segment::getVector() const
 {
@@ -74,5 +74,4 @@ inline int fei::Segment::onLeftOrRight(const fei::Vec2& pt) const
 	}
 }
 		  
-#endif
-
+#endif // _FEI_SEGMENT_H_

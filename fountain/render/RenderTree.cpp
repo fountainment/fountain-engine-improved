@@ -1,4 +1,5 @@
-#include "RenderTree.h"
+#include "render/RenderTree.h"
+
 #include <GL/glew.h>
 
 using fei::RenderTree;

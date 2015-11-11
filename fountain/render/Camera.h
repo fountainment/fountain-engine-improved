@@ -39,6 +39,6 @@ private:
 	void updateCameraData();
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_CAMERA_H_

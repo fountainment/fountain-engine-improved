@@ -1,8 +1,9 @@
-#include "Anime.h"
+#include "anime/Anime.h"
+
 #include "anime/FrameAnime.h"
+#include "base/basedef.h"
 #include "render/Texture.h"
 #include "render/ImagePool.h"
-#include "base/basedef.h"
 
 using fei::Anime;
 

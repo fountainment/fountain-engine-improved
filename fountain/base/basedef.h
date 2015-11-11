@@ -1,23 +1,23 @@
 #if !defined(_FEI_BASEDEF_H_)
 #define _FEI_BASEDEF_H_
 
+#include <algorithm>
+#include <cassert>
+#include <cstddef>
 #include <cstdio>
 #include <cstdlib>
-#include <cassert>
 #include <cstring>
-#include <cstddef>
-#include <vector>
-#include <queue>
 #include <stack>
 #include <list>
 #include <map>
+#include <queue>
 #include <utility>
-#include <algorithm>
+#include <vector>
 
 namespace fei {
 
 extern const std::string EngineName;
 
-}
+} // namespace fei
 
-#endif
+#endif _FEI_BASEDEF_H_

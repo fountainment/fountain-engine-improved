@@ -1,4 +1,4 @@
-#include "mathdef.h"
+#include "math/mathdef.h"
 
 const double fei::eps = 1e-8;
 const float fei::epsf = 1e-5f;

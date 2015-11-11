@@ -36,6 +36,6 @@ private:
 	ImagePool framePool;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_FRAMEANIME_H_

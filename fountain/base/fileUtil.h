@@ -8,6 +8,6 @@ namespace fei {
 bool isFileExist(const std::string& filename);
 char* readFileBuffer(const std::string& filename);
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_FILEUTIL_H_

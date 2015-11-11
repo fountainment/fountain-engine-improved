@@ -43,6 +43,6 @@ public:
 	static const Color Gray;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_COLOR_H_ 

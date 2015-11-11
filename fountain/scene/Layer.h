@@ -26,6 +26,6 @@ private:
 	void cameraPop();
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_LAYER_H_

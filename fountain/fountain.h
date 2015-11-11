@@ -119,6 +119,6 @@ private:
 	static Engine *engine;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_FOUNTAIN_H_

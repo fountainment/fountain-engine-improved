@@ -1,8 +1,8 @@
 #if !defined(_FEI_SHAPEOBJ_H_)
 #define _FEI_SHAPEOBJ_H_
 
-#include "render/RenderObj.h"
 #include "math/Shape.h"
+#include "render/RenderObj.h"
 
 namespace fei {
 
@@ -18,6 +18,6 @@ protected:
 	Shape* shape;
 };
 
-}
+} // namepsace fei
 
-#endif
+#endif // _FEI_SHAPEOBJ_H_

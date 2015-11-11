@@ -1,4 +1,5 @@
-#include "Label.h"
+#include "ui/Label.h"
+
 #include "math/coding.h"
 
 using fei::Label;

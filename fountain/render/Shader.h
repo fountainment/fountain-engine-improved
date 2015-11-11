@@ -1,11 +1,12 @@
 #if !defined(_FEI_SHADER_H_)
 #define _FEI_SHADER_H_
 
+#include <GL/glew.h>
+
 #include "base/basedef.h"
 #include "math/Vec2.h"
 #include "math/Vec3.h"
 #include "math/Vec4.h"
-#include <GL/glew.h>
 
 namespace fei {
 
@@ -74,6 +75,6 @@ private:
 	GLuint id;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_SHADER_H_

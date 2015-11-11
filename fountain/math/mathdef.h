@@ -22,6 +22,6 @@ inline double R2D(double rad)
 	return rad * r2d;
 }
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_MATHDEF_H_

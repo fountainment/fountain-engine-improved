@@ -3,12 +3,12 @@
 
 //TODO: finish class Button
 
-#include "render/RenderObj.h"
+#include "font/FontCache.h"
 #include "render/Camera.h"
 #include "render/Image.h"
-#include "font/FontCache.h"
-#include "ui/Label.h"
+#include "render/RenderObj.h"
 #include "math/Rect.h"
+#include "ui/Label.h"
 
 namespace fei {
 
@@ -57,6 +57,6 @@ private:
 	bool _collide;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_BUTTON_H_

@@ -1,8 +1,8 @@
 #if !defined(_FEI_SCENEMANAGER_H_)
 #define _FEI_SCENEMANAGER_H_
 
-#include "scene/Scene.h"
 #include "render/Camera.h"
+#include "scene/Scene.h"
 #include "time/Clock.h"
 
 namespace fei {
@@ -32,6 +32,6 @@ private:
 	bool doDestroyCurScene;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_SCENEMANAGER_H_

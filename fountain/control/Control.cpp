@@ -1,6 +1,7 @@
-#include "Control.h"
-#include "interface/Interface.h"
+#include "control/Control.h"
+
 #include <GLFW/glfw3.h>
+#include "interface/Interface.h"
 
 using fei::Control;
 

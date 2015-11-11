@@ -1,8 +1,10 @@
-#include "Texture.h"
+#include "render/Texture.h"
+
+#include <FreeImage.h>
+
 #include "base/basedef.h"
 #include "base/fileUtil.h"
 #include "render/Render.h"
-#include <FreeImage.h>
 
 using fei::Texture;
 

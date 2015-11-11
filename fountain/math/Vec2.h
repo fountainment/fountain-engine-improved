@@ -1,7 +1,7 @@
 #if !defined(_FEI_VEC2_H_)
 #define _FEI_VEC2_H_
 
-#include "mathdef.h"
+#include "math/mathdef.h"
 
 namespace fei {
 
@@ -65,7 +65,7 @@ public:
 
 const Vec2 collideLine(const Vec2& pa, const Vec2& pb, const Vec2& pc, const Vec2& pd);
 
-}
+} // namespace fei
 
 
 inline void fei::Vec2::set(float xx, float yy)
@@ -270,5 +270,4 @@ inline const fei::Vec2 fei::collideLine(const fei::Vec2& pa, const fei::Vec2& pb
 	return fei::Vec2(x, y);
 }
 
-#endif
-
+#endif // _FEI_VEC2_H_

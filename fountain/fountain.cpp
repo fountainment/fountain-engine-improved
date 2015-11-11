@@ -1,7 +1,7 @@
 #include "fountain.h"
 
-using fei::Engine;
 using fei::Application;
+using fei::Engine;
 
 Engine::Engine()
 : window(nullptr)

@@ -1,7 +1,8 @@
-#include "ImagePool.h"
+#include "render/ImagePool.h"
+
 #include "base/basedef.h"
-#include "math/Rect.h"
 #include "math/hash.h"
+#include "math/Rect.h"
 
 using fei::ImagePool;
 

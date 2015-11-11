@@ -1,4 +1,5 @@
-#include "Window.h"
+#include "interface/Window.h"
+
 #include "interface/Interface.h"
 
 using fei::Window;

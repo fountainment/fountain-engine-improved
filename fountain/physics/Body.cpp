@@ -1,4 +1,5 @@
-#include "Body.h"
+#include "physics/Body.h"
+
 #include "physics/Physics.h"
 
 using fei::Body;

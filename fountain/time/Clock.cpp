@@ -1,5 +1,6 @@
-#include "Clock.h"
-#include "Time.h"
+#include "time/Clock.h"
+
+#include "time/Time.h"
 
 using fei::Clock;
 

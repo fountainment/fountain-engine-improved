@@ -70,6 +70,6 @@ protected:
 	Anime* anime;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_RENDEROBJ_H_

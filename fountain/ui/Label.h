@@ -1,9 +1,9 @@
 #if !defined(_FEI_LABEL_H_)
 #define _FEI_LABEL_H_
 
-#include "render/RenderObj.h"
-#include "render/Image.h"
 #include "font/FontCache.h"
+#include "render/Image.h"
+#include "render/RenderObj.h"
 
 namespace fei {
 
@@ -30,6 +30,6 @@ private:
 	std::vector<int> advanceList;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_LABEL_H_

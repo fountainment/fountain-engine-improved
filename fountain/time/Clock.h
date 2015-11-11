@@ -51,6 +51,6 @@ private:
 	Clock* masterClock;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_CLOCK_H_

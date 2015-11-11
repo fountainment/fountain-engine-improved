@@ -5,9 +5,6 @@ namespace fei {
 	
 class ModuleBase
 {
-protected:
-	ModuleBase();
-
 public:
 	virtual ~ModuleBase();
 	bool feiInit();
@@ -18,10 +15,13 @@ public:
 	virtual void destroy();
 	bool isLoaded();
 
+protected:
+	ModuleBase();
+
 private:
 	bool _isLoaded;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_MODULEBASE_H_

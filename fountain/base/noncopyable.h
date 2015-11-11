@@ -13,6 +13,6 @@ class noncopyable
 		const noncopyable& operator=(const noncopyable&);
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_NONCOPYABLE_H_

@@ -31,6 +31,6 @@ private:
 	std::list<RenderObj*> objList;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_RENDERLIST_H_

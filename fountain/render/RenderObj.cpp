@@ -1,5 +1,7 @@
-#include "RenderObj.h"
+#include "render/RenderObj.h"
+
 #include <GL/glew.h>
+
 #include "anime/Anime.h"
 
 using fei::RenderObj;

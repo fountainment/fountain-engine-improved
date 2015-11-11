@@ -1,4 +1,4 @@
-#include "hash.h"
+#include "math/hash.h"
 
 int fei::bkdrHash(const std::string& str)
 {

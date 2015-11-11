@@ -29,6 +29,6 @@ private:
 	Clock _playClock;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_PLAYOBJ_H_

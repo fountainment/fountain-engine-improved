@@ -1,8 +1,8 @@
 #if !defined(_FEI_TIME_H_)
 #define _FEI_TIME_H_
 
-#include "base/ModuleBase.h"
 #include "base/basedef.h"
+#include "base/ModuleBase.h"
 
 namespace fei {
 
@@ -39,6 +39,6 @@ private:
 	static Time *instance;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_TIME_H_

@@ -35,7 +35,7 @@ public:
 	static const Vec3 ZERO;
 };
 
-}
+} // namespace fei
 
 inline void fei::Vec3::add(const fei::Vec3& v)
 {
@@ -111,4 +111,4 @@ inline void fei::Vec3::operator/=(float f)
 	div(f);
 }
 
-#endif
+#endif // _FEI_VEC3_H_

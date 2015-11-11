@@ -1,6 +1,7 @@
-#include "FontCache.h"
-#include "render/Image.h"
+#include "font/FontCache.h"
+
 #include "math/coding.h"
+#include "render/Image.h"
 
 using fei::FontCache;
 

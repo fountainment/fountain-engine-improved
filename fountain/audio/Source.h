@@ -1,11 +1,12 @@
 #if !defined(_FEI_SOURCE_H_)
 #define _FEI_SOURCE_H_
 
+#include <AL/al.h>
+#include <AL/alc.h>
+
 #include "base/noncopyable.h"
 #include "math/Vec2.h"
 #include "math/Vec3.h"
-#include <AL/al.h>
-#include <AL/alc.h>
 
 namespace fei {
 
@@ -32,6 +33,6 @@ private:
 	ALuint buffer;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_SOURCE_H_

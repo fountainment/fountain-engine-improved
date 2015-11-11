@@ -21,6 +21,6 @@ public:
 	float w;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_VEC4_H_

@@ -2,9 +2,9 @@
 #define _FEI_POLYGON_H_
 
 #include "base/basedef.h"
-#include "math/Vec2.h"
 #include "math/Segment.h"
 #include "math/Shape.h"
+#include "math/Vec2.h"
 
 namespace fei {
 
@@ -59,7 +59,7 @@ private:
 	std::vector<Vec2> data;
 };
 
-}
+} // namespace fei
 
 inline int fei::Polygon::getDataSize() const
 {
@@ -124,5 +124,5 @@ inline const fei::Segment fei::Polygon::getSegment(int index) const
 	return fei::Segment(data[index], data[indexNormalize(index + 1)]);
 }
 
-#endif
+#endif // _FEI_POLYGON_H_
 

@@ -3,11 +3,12 @@
 
 //TODO: add a non-conflict audio source class
 
+#include <AL/al.h>
+#include <AL/alc.h>
+
 #include "base/ModuleBase.h"
 #include "math/Vec2.h"
 #include "math/Vec3.h"
-#include <AL/al.h>
-#include <AL/alc.h>
 
 namespace fei {
 
@@ -41,6 +42,6 @@ private:
 	static Audio *instance;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_AUDIO_H_

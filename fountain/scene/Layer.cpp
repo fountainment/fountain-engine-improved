@@ -1,6 +1,8 @@
-#include "Layer.h"
-#include "render/Render.h"
+#include "scene/Layer.h"
+
 #include <GL/glew.h>
+
+#include "render/Render.h"
 
 using fei::Layer;
 

@@ -7,6 +7,6 @@ namespace fei {
 
 int bkdrHash(const std::string& str);
 
-}
+} // namespace fei
 
-#endif
+#endif _FEI_HASH_H_

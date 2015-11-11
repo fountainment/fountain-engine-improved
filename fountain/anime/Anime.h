@@ -1,11 +1,11 @@
 #if !defined(_FEI_ANIME_H_)
 #define _FEI_ANIME_H_
 
-#include "time/PlayObj.h"
-#include "render/RenderObj.h"
-#include "render/ImagePool.h"
-#include "render/Texture.h"
 #include "base/basedef.h"
+#include "render/ImagePool.h"
+#include "render/RenderObj.h"
+#include "render/Texture.h"
+#include "time/PlayObj.h"
 
 namespace fei {
 
@@ -25,6 +25,6 @@ public:
 private:
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_ANIME_H_

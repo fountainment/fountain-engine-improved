@@ -2,8 +2,8 @@
 #define _FEI_INTERFACE_H_
 
 #include "base/ModuleBase.h"
+#include "interface/Window.h"
 #include "math/Vec2.h"
-#include "Window.h"
 
 namespace fei {
 
@@ -39,6 +39,6 @@ private:
 	static Interface* instance;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_INTERFACE_H_

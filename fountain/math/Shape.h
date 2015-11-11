@@ -40,6 +40,6 @@ protected:
 	Type shapeType;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_SHAPE_H_

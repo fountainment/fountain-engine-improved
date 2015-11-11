@@ -3,8 +3,9 @@
 
 //TODO: test FixtureGroup
 
-#include "base/basedef.h"
 #include <Box2D/Box2D.h>
+
+#include "base/basedef.h"
 
 namespace fei {
 
@@ -29,6 +30,6 @@ private:
 	void clone(b2Fixture* _fixture);
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_FIXTURE_GROUP_H_

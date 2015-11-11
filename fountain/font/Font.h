@@ -1,10 +1,11 @@
 #if !defined(_FEI_FONT_H_)
 #define _FEI_FONT_H_
 
-#include "base/basedef.h"
-#include "base/ModuleBase.h"
 #include <ft2build.h>
 #include FT_FREETYPE_H
+
+#include "base/basedef.h"
+#include "base/ModuleBase.h"
 
 namespace fei {
 
@@ -22,6 +23,6 @@ private:
 	static Font* instance;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_FONT_H_

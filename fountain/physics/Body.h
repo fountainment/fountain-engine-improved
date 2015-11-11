@@ -2,10 +2,11 @@
 #define _FEI_BODY_H_
 
 #include <Box2D/Box2D.h>
+
 #include "base/basedef.h"
-#include "math/Vec2.h"
-#include "math/Shape.h"
 #include "math/Polygon.h"
+#include "math/Shape.h"
+#include "math/Vec2.h"
 
 namespace fei {
 
@@ -46,6 +47,6 @@ private:
 	Type type;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_BODY_H_

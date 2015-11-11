@@ -1,4 +1,4 @@
-#include "Segment.h"
+#include "math/Segment.h"
 
 using fei::Segment;
 

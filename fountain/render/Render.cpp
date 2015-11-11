@@ -1,10 +1,11 @@
-#include "Render.h"
-#include "interface/Interface.h"
-#include "base/basedef.h"
-#include "math/hash.h"
-#include "math/Circle.h"
+#include "render/Render.h"
 
 #include <GL/glew.h>
+
+#include "base/basedef.h"
+#include "interface/Interface.h"
+#include "math/hash.h"
+#include "math/Circle.h"
 
 using fei::Render;
 

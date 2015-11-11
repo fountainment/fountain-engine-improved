@@ -1,17 +1,18 @@
 #if !defined(_FEI_RENDER_H_)
 #define _FEI_RENDER_H_
 
+#include <GL/glew.h>
+
 #include "base/basedef.h"
 #include "base/ModuleBase.h"
-#include "math/Vec2.h"
-#include "math/Vec4.h"
 #include "math/Rect.h"
 #include "math/Shape.h"
+#include "math/Vec2.h"
+#include "math/Vec4.h"
 #include "render/Camera.h"
-#include "render/Shader.h"
 #include "render/Color.h"
 #include "render/RenderObj.h"
-#include <GL/glew.h>
+#include "render/Shader.h"
 
 namespace fei {
 
@@ -179,6 +180,6 @@ inline void Render::IndependentDraw(fei::RenderObj* rObj)
 	glPopMatrix();
 }
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_RENDER_H_

@@ -1,4 +1,5 @@
-#include "Time.h"
+#include "time/Time.h"
+
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 

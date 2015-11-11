@@ -1,8 +1,10 @@
-#include "Camera.h"
-#include "Render.h"
+#include "render/Camera.h"
+
+#include <GL/glew.h>
+
 #include "base/basedef.h"
 #include "math/mathdef.h"
-#include <GL/glew.h>
+#include "render/Render.h"
 
 using fei::Camera;
 

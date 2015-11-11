@@ -54,6 +54,6 @@ private:
 	float accuracy;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_JOYSTICK_H_

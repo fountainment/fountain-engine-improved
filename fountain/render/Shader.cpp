@@ -1,10 +1,11 @@
-#include "Shader.h"
-#include "Render.h"
+#include "render/Shader.h"
+
 #include "base/fileUtil.h"
+#include "render/Render.h"
 
 using fei::Shader;
-using fei::VertexShader;
 using fei::FragmentShader;
+using fei::VertexShader;
 using fei::ShaderProgram;
 
 Shader::Shader()
