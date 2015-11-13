@@ -30,4 +30,4 @@ private:
 
 } // namespace fei
 
-#endif _FEI_CIRCLE_H_
+#endif // _FEI_CIRCLE_H_

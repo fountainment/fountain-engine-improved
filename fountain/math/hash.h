@@ -9,4 +9,4 @@ int bkdrHash(const std::string& str);
 
 } // namespace fei
 
-#endif _FEI_HASH_H_
+#endif // _FEI_HASH_H_

@@ -20,4 +20,4 @@ extern const std::string EngineName;
 
 } // namespace fei
 
-#endif _FEI_BASEDEF_H_
+#endif // _FEI_BASEDEF_H_
