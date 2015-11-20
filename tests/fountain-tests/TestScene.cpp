@@ -1,4 +1,5 @@
 #include "TestScene.h"
+#include "TestApplication.h"
 
 using namespace fei;
 
@@ -23,6 +24,8 @@ void TestScene::init()
 	UILayer.setCamera(&UICam);
 	UILayer.setHasAlpha(true);
 	UILayer.add(&UI);
+	UILayer.add(&fpsLabel);
+	fpsLabel.setPosition(UICam.getCameraSize() / -2.0f);
 
 	UI.setColor(Color(Vec3(1.0f), 0.8f));
 
@@ -98,7 +101,9 @@ void TestScene::update()
 	normalShader.setUniform("lightPos", pos);
 	normalShader.setUniform("test", pos.x);
 
-	std::printf("%.2f\n", Time::getInstance()->getFps());
+	char tmp[100];
+	std::sprintf(tmp, "%.2f", Time::getInstance()->getFps());
+	fpsLabel.setString(TestApplication::font, tmp);
 }
 
 void TestScene::keyCallback(int key, int scancode, int action, int mods)

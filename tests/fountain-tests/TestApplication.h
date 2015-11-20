@@ -6,6 +6,8 @@
 class TestApplication : public fei::Application
 {
 public:
+	static fei::FontCache font;
+
 	void engineSetting(fei::Engine *eg) override;
 };
 

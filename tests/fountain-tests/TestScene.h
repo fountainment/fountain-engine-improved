@@ -24,6 +24,8 @@ private:
 	fei::Texture bomberNormal;
 	fei::ShaderProgram normalShader;
 
+	fei::Label fpsLabel;
+
 	fei::Body *ground[4];
 
 	float pitch;
