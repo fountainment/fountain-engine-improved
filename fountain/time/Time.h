@@ -6,6 +6,8 @@
 
 namespace fei {
 
+class Clock;
+
 class Time : public ModuleBase
 {
 public:
@@ -23,6 +25,9 @@ public:
 	double calcCurTime();
 	double getFps();
 
+	void addClock(Clock* pobj);
+	void delClock(Clock* pobj);
+
 	static Time* getInstance();
 
 private:
@@ -35,6 +40,7 @@ private:
 	long long totalFrame;
 
 	std::queue<double> frameTimeQueue;
+	std::list<Clock*> _clockList;
 
 	static Time *instance;
 };

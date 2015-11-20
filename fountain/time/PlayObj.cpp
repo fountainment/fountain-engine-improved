@@ -1,5 +1,7 @@
 #include "time/PlayObj.h"
 
+#include "time/Time.h"
+
 using fei::PlayObj;
 
 PlayObj::PlayObj()
@@ -30,11 +32,6 @@ void PlayObj::pause()
 void PlayObj::stop()
 {
 	_playClock.stop();
-}
-
-void PlayObj::tick()
-{
-	_playClock.tick();
 }
 
 bool PlayObj::isStop()

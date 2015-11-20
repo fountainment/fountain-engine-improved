@@ -6,7 +6,7 @@
 
 namespace fei {
 
-bool zCmp(fei::RenderObj* a, fei::RenderObj* b);
+bool RenderListZCmp(fei::RenderObj* a, fei::RenderObj* b);
 
 class RenderList : public fei::RenderObj
 {
@@ -25,7 +25,7 @@ public:
 	void add(RenderObj* rObj);
 	void del(RenderObj* rObj);
 
-	void sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*) = zCmp);
+	void sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*) = RenderListZCmp);
 
 private:
 	std::list<RenderObj*> objList;

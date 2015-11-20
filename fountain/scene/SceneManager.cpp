@@ -40,7 +40,6 @@ void SceneManager::gotoScene(fei::Scene* goScene, bool destroyCurrent)
 
 void SceneManager::renderCurScene()
 {
-	defaultClock.tick();
 	defaultCamera.update();
 	if (curScene) {
 		curScene->feiUpdate();

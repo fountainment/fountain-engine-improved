@@ -1,9 +1,9 @@
 #if !defined(_FEI_SCENE_H_)
 #define _FEI_SCENE_H_
 
+#include "render/Camera.h"
 #include "scene/Layer.h"
 #include "time/Clock.h"
-#include "render/Camera.h"
 
 namespace fei {
 
@@ -16,8 +16,6 @@ public:
 
 	void setClock(Clock* clock);
 	Clock* getClock();
-
-	void clockTick();
 
 	virtual void keyCallback(int key, int scancode, int action, int mods);
 	virtual void mouseButtonCallback(int button, int action, int mods);

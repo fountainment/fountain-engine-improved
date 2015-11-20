@@ -14,6 +14,12 @@ Clock::Clock()
   _isStop(false),
   masterClock(nullptr)
 {
+	fei::Time::getInstance()->addClock(this);
+}
+
+Clock::~Clock()
+{
+	fei::Time::getInstance()->delClock(this);
 }
 
 void Clock::init()

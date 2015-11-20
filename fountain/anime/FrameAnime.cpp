@@ -41,7 +41,6 @@ void FrameAnime::feiUpdate(fei::RenderObj* rObj)
 
 void FrameAnime::updateFrameIndex()
 {
-	tick();
 	if (isPlay()) {
 		curFrameIndex += getFps() * getDeltaTime();
 		if (curFrameIndex >= getFrameNum()) {

@@ -63,7 +63,6 @@ void Charactor::drawIt()
 
 void Charactor::update()
 {
-	charClock.tick();
 	setPosition(body->getPosition());
 	if (curAnime && curAnime->isStop()) {
 		curAnime = &walkAnime[0];

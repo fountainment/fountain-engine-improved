@@ -7,6 +7,7 @@ class Clock
 {
 public:
 	Clock();
+	virtual ~Clock();
 
 	void init();
 	void init(Clock* mClock);

@@ -8,7 +8,6 @@ Scene::~Scene()
 
 void Scene::feiUpdate()
 {
-	clockTick();
 	update();
 	listUpdate();
 }
@@ -21,13 +20,6 @@ void Scene::setClock(fei::Clock* clock)
 fei::Clock* Scene::getClock()
 {
 	return sceneClock;
-}
-
-void Scene::clockTick()
-{
-	if (sceneClock) {
-		sceneClock->tick();
-	}
 }
 
 void Scene::keyCallback(int key, int scancode, int action, int mods)

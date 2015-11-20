@@ -3,6 +3,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include "time/Clock.h"
+
 #if defined(__linux) // Linux
 	#if !defined(_BSD_SOURCE)
 		#define _BSD_SOURCE
@@ -84,6 +86,10 @@ void Time::executeBeforeFrame()
 	if (deltaTime > spf * 10.0 || deltaTime < 0.0) {
 		deltaTime = 0.0;
 	}
+
+	for (auto clock : _clockList) {
+		clock->tick();
+	}
 }
 
 void Time::executeAfterFrame()
@@ -130,4 +136,14 @@ double Time::getFps()
 	}
 	double frameDuration = q.back() - q.front();
 	return frameNum / frameDuration;
+}
+
+void Time::addClock(fei::Clock* clock)
+{
+	_clockList.push_back(clock);
+}
+
+void Time::delClock(fei::Clock* clock)
+{
+	_clockList.remove(clock);
 }

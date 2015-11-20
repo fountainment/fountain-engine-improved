@@ -9,13 +9,13 @@ class PlayObj
 {
 public:
 	PlayObj();
+
 	bool isLoop();
 	void setLoop(bool isloop);
 
 	void play();
 	void pause();
 	void stop();
-	void tick();
 
 	bool isStop();
 	bool isPlay();
