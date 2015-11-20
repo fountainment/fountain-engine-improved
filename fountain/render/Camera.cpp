@@ -83,6 +83,11 @@ void Camera::setCameraSize(const fei::Vec2& v)
 	needDataUpdate = true;
 }
 
+const fei::Vec2 Camera::getCameraSize()
+{
+	return fei::Vec2(width, height);
+}
+
 const fei::Vec2 Camera::screenToWorld(const fei::Vec2& scrPos)
 {
 	updateCameraData();

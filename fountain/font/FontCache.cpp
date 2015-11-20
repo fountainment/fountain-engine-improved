@@ -171,7 +171,9 @@ const fei::Image FontCache::queryCharactor(unsigned long c)
 {
 	auto it = charImageMap.find(c);
 	if (it == charImageMap.end()) {
-		updateCache(&c, 1);
+		std::vector<unsigned long> tmp;
+		tmp.push_back(c);
+		updateCache(tmp);
 		it = charImageMap.find(c);
 	}
 	return it->second;
