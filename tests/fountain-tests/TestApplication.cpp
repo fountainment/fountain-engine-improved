@@ -16,7 +16,7 @@ void TestApplication::engineSetting(Engine *eg)
 	Physics::getInstance()->setRatio(30.0f);
 	Physics::getInstance()->setGravity(Vec2::ZERO);
 
-	font.loadFont("res/font/wqy.ttc", 32);
+	font.loadFont("res/font/wqy.ttc");
 
 	eg->window->sceneManager->defaultCamera.setCameraSize(Vec2(800, 600));
 	eg->window->sceneManager->gotoScene(new TestScene());

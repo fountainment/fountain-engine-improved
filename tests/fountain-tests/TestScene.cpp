@@ -17,15 +17,18 @@ void TestScene::init()
 
 	map.load("res/image/map.png");
 
+	auto winsize = fei::Interface::getInstance()->getCurrentWindow()->getWindowSize();
 	UI.load("res/image/UI43.png");
 	UI.setHasAlpha(true);
+	UI.setScale(0.43f);
 
-	UICam.setCameraSize(Vec2(1920, 1440));
+	UICam.setCameraSize(winsize);
 	UILayer.setCamera(&UICam);
 	UILayer.setHasAlpha(true);
 	UILayer.add(&UI);
 	UILayer.add(&fpsLabel);
-	fpsLabel.setPosition(UICam.getCameraSize() / -2.0f);
+
+	fpsLabel.setPosition(UICam.getCameraSize() * -0.5f);
 
 	UI.setColor(Color(Vec3(1.0f), 0.8f));
 
@@ -102,7 +105,7 @@ void TestScene::update()
 	normalShader.setUniform("test", pos.x);
 
 	char tmp[100];
-	std::sprintf(tmp, "%.2f", Time::getInstance()->getFps());
+	std::sprintf(tmp, "FPS: %.2f", Time::getInstance()->getFps());
 	fpsLabel.setString(TestApplication::font, tmp);
 }
 
