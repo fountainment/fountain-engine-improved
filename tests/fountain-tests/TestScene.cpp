@@ -49,9 +49,7 @@ void TestScene::init()
 
 	bomberNormal.load("res/image/Walk_s2.png");
 
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, bomberNormal.getId());
-	glActiveTexture(GL_TEXTURE0);
+	bomberNormal.bindLocation(1);
 	normalShader.setUniform("feiNormalTex", 1);
 
 	add(&map);

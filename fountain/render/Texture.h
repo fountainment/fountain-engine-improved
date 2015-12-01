@@ -44,6 +44,8 @@ public:
 	const Image getImage(const Vec2& p, const Vec2& s) const;
 	const Image getImage() const;
 
+	void bindLocation(int loc) const;
+
 	GLuint getId() const;
 
 	void drawIt() override;

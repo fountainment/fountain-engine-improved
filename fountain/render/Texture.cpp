@@ -187,6 +187,13 @@ const fei::Image Texture::getImage() const
 	return getImage(fei::Vec2::ZERO, size);
 }
 
+void Texture::bindLocation(int loc) const
+{
+	glActiveTexture(GL_TEXTURE0 + loc);
+	glBindTexture(GL_TEXTURE_2D, id);
+	glActiveTexture(GL_TEXTURE0);
+}
+
 GLuint Texture::getId() const
 {
 	return id;
