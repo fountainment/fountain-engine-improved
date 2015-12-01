@@ -129,6 +129,10 @@ void RenderObj::matrixTransformBegin()
 	if (scale != 1.0f) {
 		glScalef(scale, scale, scale);
 	}
+}
+
+void RenderObj::anchorTransform()
+{
 	glTranslatef(-anchor.x, -anchor.y, 0.0f);
 }
 
@@ -169,8 +173,10 @@ void RenderObj::draw()
 
 	if (visible) {
 		if (substitute) {
+			substitute->anchorTransform();
 			substitute->drawIt();
 		} else {
+			anchorTransform();
 			drawIt();
 		}
 	}

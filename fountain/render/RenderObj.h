@@ -16,6 +16,7 @@ public:
 	virtual ~RenderObj();
 
 	void matrixTransformBegin();
+	void anchorTransform();
 	void matrixTransformEnd();
 
 	void feiUpdate() override;
