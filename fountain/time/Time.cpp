@@ -78,7 +78,7 @@ void Time::executeBeforeFrame()
 	curTime = calcCurTime();
 	deltaTime = curTime - lastTime;
 
-	while (deltaTime < spf - littleSleepTime) {
+	while (deltaTime < spf - littleSleepTime * 0.7) {
 		littleSleep();
 		curTime = calcCurTime();
 		deltaTime = curTime - lastTime;
