@@ -1,0 +1,7 @@
+*Standardize function name (many meanning-unclear load())
+*Add FSM class
+*Design and implement physics collision logic
+*Resource manager
+*Render to texture support
+*Add test and debug support (like log file)
+*Replace Box2D with LiquidFun
