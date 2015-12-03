@@ -18,6 +18,7 @@ public:
 
 	void load(const std::string& texName, const std::string& sipName);
 	void load(const fei::Texture& texure, const std::string& sipName);
+	void loadTextureAndIPI(const fei::Texture& texure, const std::string& ipiName);
 
 	Image* getImage(int index);
 	Image* getImage(const std::string& imagename);

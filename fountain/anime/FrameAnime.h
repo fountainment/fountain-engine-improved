@@ -15,9 +15,12 @@ public:
 	FrameAnime();
 
 	void load(const ImagePool& imagePool);
-	void load(const Texture& texture, const std::string& sipName);
 	void load(const std::string& name);
-	void load(const std::string& textureName, const std::string& sipName);
+	void load(const std::string& name1, const std::string& name2);
+	void loadTextureAndSIP(const Texture& texture, const std::string& sipName);
+	void loadImageFileAndSIP(const std::string& textureName, const std::string& sipName);
+	void loadImageFileAndIPI(const std::string& textureName, const std::string& ipiName);
+	void loadTextureAndIPI(const Texture& texture, const std::string& ipiName);
 
 	virtual void feiUpdate(RenderObj* rObj) override;
 	void updateFrameIndex();

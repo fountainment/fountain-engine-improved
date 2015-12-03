@@ -32,7 +32,7 @@ Anime* Anime::createFrameAnime(float fps, const fei::Texture& texture, const std
 {
 	//TODO: redesign Anime::createFrameAnime args
 	FrameAnime* anime = new FrameAnime;
-	anime->load(texture, sipName);
+	anime->loadTextureAndSIP(texture, sipName);
 	anime->setFps(fps);
 	return anime;
 }
@@ -40,7 +40,7 @@ Anime* Anime::createFrameAnime(float fps, const fei::Texture& texture, const std
 Anime* Anime::createFrameAnime(float fps, const std::string& textureName, const std::string& sipName)
 {
 	FrameAnime* anime = new FrameAnime;
-	anime->load(textureName, sipName);
+	anime->loadImageFileAndSIP(textureName, sipName);
 	anime->setFps(fps);
 	return anime;
 }
