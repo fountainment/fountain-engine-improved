@@ -1,7 +1,21 @@
-*Standardize function name (many meanning-unclear load())
-*Add FSM class
-*Design and implement physics collision logic
-*Resource manager
-*Render to texture support
-*Add test and debug support (like log file)
-*Replace Box2D with LiquidFun
+Function:
+	! FSM logic
+	! Physics collision logic
+	* Resource manager
+	! Render to texture
+	* VBO
+	* Test and debug module (e.g. log file debug output)
+
+
+Optimization:
+	* Standardize function name (e.g. razor meanning-unclear load())
+	! Replace Box2D with LiquidFun
+
+
+External:
+	Tool:
+		! .sip to .ipi file transform tool
+
+	Test:
+		? FlappyMario using new engine (just for test)
+
