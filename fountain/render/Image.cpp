@@ -53,7 +53,7 @@ Image::Image(GLuint texId, const fei::Vec2& texSize, const fei::Rect& imageRect)
 void Image::drawIt()
 {
 	fei::Render::getInstance()->bindTexture(id);
-	fei::Render::drawTexQuadH(size2, texCoord);
+	fei::Render::drawTexQuadDS(size2, texCoord);
 	fei::Render::getInstance()->disableTexture();
 }
 
