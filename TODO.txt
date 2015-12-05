@@ -14,7 +14,7 @@ Optimization:
 
 External:
 	Tool:
-		! .sip to .ipi file transform tool
+		C .sip to .ipi file transform tool
 
 	Test:
 		? FlappyMario using new engine (just for test)

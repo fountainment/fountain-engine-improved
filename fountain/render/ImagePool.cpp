@@ -72,17 +72,17 @@ ImagePool::ImagePool(const std::string& texName, const std::string& sipName)
 
 ImagePool::ImagePool(const fei::Texture& texure, const std::string& sipName)
 {
-	load(texure, sipName);
+	loadTextureAndSIP(texure, sipName);
 }
 
 void ImagePool::load(const std::string& texName, const std::string& sipName)
 {
 	fei::Texture tmpTex;
 	tmpTex.load(texName);
-	load(tmpTex, sipName);
+	loadTextureAndSIP(tmpTex, sipName);
 }
 
-void ImagePool::load(const fei::Texture& texure, const std::string& sipName)
+void ImagePool::loadTextureAndSIP(const fei::Texture& texure, const std::string& sipName)
 {
 	imageList.clear();
 	auto result = loadSipFile(sipName);
