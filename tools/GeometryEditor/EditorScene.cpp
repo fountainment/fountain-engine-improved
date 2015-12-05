@@ -93,6 +93,10 @@ void EditorScene::update()
 		poly[curEdit].moveVertices(deltaV);
 	}
 
+	if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT) && window->getKey(GLFW_KEY_LEFT_ALT)) {
+		//TODO: add anime anchor edit
+	}
+
 	if (window->getKey(GLFW_KEY_A)) {
 		auto list = poly[curEdit].box2dDecomposition();
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
