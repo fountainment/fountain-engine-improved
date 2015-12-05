@@ -22,8 +22,7 @@ void Button::drawIt()
 	_backColor.use();
 	fei::Render::drawShape(&_backRect);
 	if (!_backImage.empty()) {
-		//TODO: Button::_backImage: drawIt with _backRect
-		_backImage.drawIt();
+		_backImage.drawRect(_backRect);
 	}
 
 	_frontColor.use();

@@ -50,6 +50,13 @@ Image::Image(GLuint texId, const fei::Vec2& texSize, const fei::Rect& imageRect)
 	rect.getStripCoord(texCoord);
 }
 
+void Image::drawRect(const fei::Rect& rect)
+{
+	fei::Render::getInstance()->bindTexture(id);
+	fei::Render::drawTexRect(rect, texCoord);
+	fei::Render::getInstance()->disableTexture();
+}
+
 void Image::drawIt()
 {
 	fei::Render::getInstance()->bindTexture(id);

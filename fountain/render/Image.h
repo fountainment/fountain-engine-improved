@@ -18,6 +18,9 @@ public:
 
 	~Image();
 	Image(GLuint texId, const Vec2& texSize, const Rect& imageRect);
+
+	void drawRect(const Rect& rect);
+
 	void drawIt() override;
 
 	const Vec2 getSize() const;

@@ -53,14 +53,17 @@ public:
 
 	static void drawLine(const Vec2& pa, const Vec2& pb);
 	static void drawRect(const Vec2& size);
+	static void drawRect(const Rect& rect);
 	static void drawQuad(const Vec2& size);
 	static void drawQuadDS(const Vec2& size);
 
 	static void drawTexRect(const Vec2& size);
+	static void drawTexRect(const Rect& rect);
 	static void drawTexQuad(const Vec2& size);
 	static void drawTexQuadDS(const Vec2& size);
 
 	static void drawTexRect(const Vec2& size, GLfloat* texCoord);
+	static void drawTexRect(const Rect& rect, GLfloat* texCoord);
 	static void drawTexQuad(const Vec2& size, GLfloat* texCoord);
 	static void drawTexQuadDS(const Vec2& size, GLfloat* texCoord);
 
@@ -109,6 +112,13 @@ inline void Render::drawRect(const fei::Vec2& size)
 	drawArray2f(vertex, 0, 4, GL_TRIANGLE_STRIP);
 }
 
+inline void Render::drawRect(const fei::Rect& rect)
+{
+	GLfloat vertex[8];
+	rect.getStripCoord(vertex);
+	drawArray2f(vertex, 0, 4, GL_TRIANGLE_STRIP);
+}
+
 inline void Render::drawQuad(const fei::Vec2& size)
 {
 	GLfloat w2 = size.x * 0.5f;
@@ -133,6 +143,14 @@ inline void Render::drawTexRect(const fei::Vec2& size)
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
+inline void Render::drawTexRect(const fei::Rect& rect)
+{
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, 0, stripTexCoord);
+	drawRect(rect);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
 inline void Render::drawTexQuad(const fei::Vec2& size)
 {
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
@@ -154,6 +172,14 @@ inline void Render::drawTexRect(const fei::Vec2& size, GLfloat* texCoord)
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
 	glTexCoordPointer(2, GL_FLOAT, 0, texCoord);
 	drawRect(size);
+	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+}
+
+inline void Render::drawTexRect(const fei::Rect& rect, GLfloat* texCoord)
+{
+	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
+	glTexCoordPointer(2, GL_FLOAT, 0, texCoord);
+	drawRect(rect);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
 
