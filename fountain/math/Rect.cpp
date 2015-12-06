@@ -94,6 +94,27 @@ void Rect::normalize()
 	}
 }
 
+bool Rect::collide(const fei::Shape* other) const
+{
+	bool result = false;
+	switch(other->getType()) {
+	case fei::Shape::Type::RECT:
+		{
+			auto rect = (fei::Rect*)other;
+			auto dv = getCenter() - rect->getCenter();
+			float wSum = getSize().x + rect->getSize().x;
+			float hSum = getSize().y + rect->getSize().y;
+			float xD = std::abs(dv.x * 2.0f);
+			float yD = std::abs(dv.y * 2.0f);
+			result = (xD <= wSum) && (yD <= hSum);
+		}
+		break;
+	default:
+		break;
+	}
+	return result;
+}
+
 bool Rect::collidePoint(const fei::Vec2& pt) const
 {
 	fei::Vec2 rt = pos + size;
