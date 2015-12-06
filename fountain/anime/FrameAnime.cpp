@@ -16,7 +16,7 @@ void FrameAnime::load(const fei::ImagePool& imagePool)
 
 void FrameAnime::loadTextureAndSIP(const fei::Texture& texture, const std::string& sipName)
 {
-	framePool.load(texture, sipName);
+	framePool.loadTextureAndSIP(texture, sipName);
 	curFrameIndex = 0;
 }
 

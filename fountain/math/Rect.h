@@ -42,4 +42,3 @@ private:
 } // namespace fei
 
 #endif // _FEI_RECT_H_
-
