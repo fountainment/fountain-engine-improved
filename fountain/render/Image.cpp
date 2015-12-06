@@ -97,6 +97,17 @@ const fei::Vec2 Image::getTextureSize()
 	return fei::Render::getInstance()->queryTexSize(id);
 }
 
+const fei::Rect Image::getTextureCoordRect()
+{
+	return fei::Rect(texCoord[0], texCoord[1], \
+			texCoord[2] - texCoord[0], texCoord[3] - texCoord[1]);
+}
+
+const fei::Rect Image::getTexturePixelRect()
+{
+	return getTextureCoordRect().zoomed(getTextureSize());
+}
+
 const Image Image::getImage(const fei::Rect& imageRect)
 {
 	auto rect = imageRect;

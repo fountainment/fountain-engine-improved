@@ -24,6 +24,7 @@ public:
 	Image* getImage(const std::string& imagename);
 
 	int getImageNum();
+	void moveImageAnchor(const Vec2& v);
 
 	void dumpIPI(const std::string& name);
 

@@ -82,6 +82,20 @@ void Rect::zoom(const fei::Vec2& v)
 	size.zoom(v);
 }
 
+const Rect Rect::zoomed(float scale) const
+{
+	Rect result(*this);
+	result.zoom(scale);
+	return result;
+}
+
+const Rect Rect::zoomed(const fei::Vec2& v) const
+{
+	Rect result(*this);
+	result.zoom(v);
+	return result;
+}
+
 void Rect::normalize()
 {
 	if (size.x < 0) {

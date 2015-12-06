@@ -114,6 +114,11 @@ float RenderObj::getZPos() const
 	return zPos;
 }
 
+void RenderObj::moveAnchor(const Vec2& v)
+{
+	anchor.add(v);
+}
+
 void RenderObj::rotate(float dltAgl)
 {
 	angle += dltAgl;

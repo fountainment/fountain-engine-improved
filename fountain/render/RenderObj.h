@@ -51,6 +51,8 @@ public:
 	const Vec2 getAnchor() const;
 	float getZPos() const;
 
+	void moveAnchor(const Vec2& v);
+
 	void rotate(float dltAgl);
 
 	void setColor(const Color& c);

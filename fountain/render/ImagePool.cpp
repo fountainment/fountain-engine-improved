@@ -151,14 +151,27 @@ int ImagePool::getImageNum()
 	return imageNum;
 }
 
+void ImagePool::moveImageAnchor(const fei::Vec2& v)
+{
+	for (auto& image : imageList) {
+		image.moveAnchor(v);
+	}
+}
+
 void ImagePool::dumpIPI(const std::string& name)
 {
 	std::vector<ImageInfo> infoVec;
 	fei::Vec2 texSize;
-	//TODO: get ImageInfo and texSize
+	if (!imageList.empty()) {
+		texSize = imageList[0].getTextureSize();
+	}
 	for (auto image : imageList) {
-		//auto rect = image.getRect();
-		//infoVec.push_back(ImageInfo());
+		auto rect = image.getTexturePixelRect();
+		auto pos = rect.getPosition();
+		pos.y = texSize.y - pos.y - image.getSize().y;
+		rect.setPosition(pos);
+		auto anchor = image.getAnchor();
+		infoVec.push_back(ImageInfo("test", 123, rect, anchor));
 	}
 	writeIpiFile(name, texSize, infoVec);
 }

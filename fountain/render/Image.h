@@ -32,6 +32,10 @@ public:
 	const Image getImage(const Vec2& p, const Vec2& s);
 	const Image getImage();
 
+	const fei::Vec2 getTextureSize();
+	const fei::Rect getTextureCoordRect();
+	const fei::Rect getTexturePixelRect();
+
 private:
 	GLuint id;
 	Vec2 size;
@@ -41,7 +45,6 @@ private:
 	void setSize(const Vec2& s);
 
 	const fei::Vec2 getLB();
-	const fei::Vec2 getTextureSize();
 };
 
 } // namespace fei

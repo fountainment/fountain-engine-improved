@@ -26,6 +26,8 @@ public:
 
 	void zoom(float scale);
 	void zoom(const Vec2& v);
+	const Rect zoomed(float scale) const;
+	const Rect zoomed(const Vec2& v) const;
 	void normalize();
 
 	bool collide(const Shape* other) const override;
