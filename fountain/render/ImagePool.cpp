@@ -155,10 +155,10 @@ void ImagePool::dumpIPI(const std::string& name)
 {
 	std::vector<ImageInfo> infoVec;
 	fei::Vec2 texSize;
-	//TODO: get
+	//TODO: get ImageInfo and texSize
 	for (auto image : imageList) {
-		auto rect = image.getRect();
-		infoVec
+		//auto rect = image.getRect();
+		//infoVec.push_back(ImageInfo());
 	}
 	writeIpiFile(name, texSize, infoVec);
 }
