@@ -95,6 +95,7 @@ void EditorScene::update()
 
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT) && window->getKey(GLFW_KEY_LEFT_ALT)) {
 		//TODO: add anime anchor edit
+		//anime.moveAnchor();
 	}
 
 	if (window->getKey(GLFW_KEY_A)) {

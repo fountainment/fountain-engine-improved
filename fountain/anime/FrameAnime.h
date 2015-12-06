@@ -33,6 +33,8 @@ public:
 	int getCurFrameIndex();
 	void setCurFrameIndex(int cfi);
 
+	ImagePool* getFramePool();
+
 private:
 	double curFrameIndex;
 	float fps;

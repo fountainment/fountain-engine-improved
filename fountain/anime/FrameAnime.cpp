@@ -104,3 +104,8 @@ void FrameAnime::setCurFrameIndex(int cfi)
 {
 	curFrameIndex = cfi;
 }
+
+fei::ImagePool* FrameAnime::getFramePool()
+{
+	return &framePool;
+}
