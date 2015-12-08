@@ -1,5 +1,11 @@
+* Normal
+! TODO soon
+F Finished
+? Uncertain
+
 Function:
-	! FSM logic
+	F FSM logic
+	! FSM test
 	! Physics collision logic
 	* Resource manager
 	! Render to texture
@@ -14,7 +20,7 @@ Optimization:
 
 External:
 	Tool:
-		! .sip to .ipi file transform tool
+		F .sip to .ipi file transform tool
 
 	Test:
 		? FlappyMario using new engine (just for test)
