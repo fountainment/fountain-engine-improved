@@ -93,6 +93,10 @@ void EditorScene::update()
 		poly[curEdit].moveVertices(deltaV);
 	}
 
+	if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT) && window->getKey(GLFW_KEY_LEFT_SHIFT)) {
+		anime[curEdit].getFramePool()->moveImageAnchor(-deltaV);
+	}
+
 	if (window->getKey(GLFW_KEY_A)) {
 		auto list = poly[curEdit].box2dDecomposition();
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
@@ -104,7 +108,7 @@ void EditorScene::loadAnime(const std::string& path)
 {
 	auto name = path;
 	name.erase(name.size() - 3, 3);
-	anime[curEdit].load(name + "png", name + "sip");
+	anime[curEdit].loadImageFileAndIPI(name + "png", name + "ipi");
 	animeObj.setAnime(&anime[curEdit]);
 	anime[curEdit].setFps(15);
 	anime[curEdit].setLoop(true);
@@ -218,6 +222,11 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 	if (key == GLFW_KEY_L && action == GLFW_PRESS) {
 		anime[curEdit].print();
 	}
+
+
+	if (key == GLFW_KEY_V && action == GLFW_PRESS) {
+		anime[curEdit].getFramePool()->dumpIPI("new.ipi");
+	}
 }
 
 void EditorScene::framebufferSizeCallback(int width, int height)
@@ -233,8 +242,9 @@ void EditorScene::dropCallback(int count, const char** paths)
 	if (len < 3) {
 		return;
 	}
-	if (std::strcmp(&paths[0][len - 3], "sip") == 0 || \
-			std::strcmp(&paths[0][len - 3], "png") == 0) {
+	if (std::strcmp(&paths[0][len - 3], "ipi") == 0 || \
+				std::strcmp(&paths[0][len - 3], "png") == 0) {
+		\
 		loadAnime(paths[0]);
 	}
 }
