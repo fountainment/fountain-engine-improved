@@ -17,7 +17,7 @@ public:
 
 	void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 	{
-		fei::Color(color.r, color.g, color.b, color.a).use();
+		fei::Color(color.r, color.g, color.b).use();
 		fei::Polygon polygon;
 		for (int i = 0; i < vertexCount; ++i) {
 			fei::Vec2 vec(vertices[i].x, vertices[i].y);
@@ -29,7 +29,7 @@ public:
 
 	void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 	{
-		fei::Color(color.r, color.g, color.b, color.a).use();
+		fei::Color(color.r, color.g, color.b).use();
 		fei::Polygon polygon;
 		for (int i = 0; i < vertexCount; ++i) {
 			fei::Vec2 vec(vertices[i].x, vertices[i].y);
@@ -43,7 +43,7 @@ public:
 
 	void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
 	{
-		fei::Color(color.r, color.g, color.b, color.a).use();
+		fei::Color(color.r, color.g, color.b).use();
 		fei::Circle circle(Physics::getInstance()->physicsToRender(radius));
 		circle.setPosition(Physics::getInstance()->physicsToRender(fei::Vec2(center.x, center.y)));
 		circle.setSolid(false);
@@ -52,7 +52,7 @@ public:
 
 	void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
 	{
-		fei::Color(color.r, color.g, color.b, color.a).use();
+		fei::Color(color.r, color.g, color.b).use();
 		fei::Circle circle(Physics::getInstance()->physicsToRender(radius));
 		circle.setPosition(Physics::getInstance()->physicsToRender(fei::Vec2(center.x, center.y)));
 		fei::Render::drawShape(&circle);
@@ -67,7 +67,7 @@ public:
 		fei::Vec2 b(p2.x, p2.y);
 		a = Physics::getInstance()->physicsToRender(a);
 		b = Physics::getInstance()->physicsToRender(b);
-		fei::Color(color.r, color.g, color.b, color.a).use();
+		fei::Color(color.r, color.g, color.b).use();
 		//Render::getInstance()->drawSegment(a, b);
 	}
 
@@ -80,6 +80,11 @@ public:
 
 		p2 = p1 + k_axisScale * xf.q.GetYAxis();
 		DrawSegment(p1, p2, b2Color(0.0f, 1.0f, 0.0f));
+	}
+
+	void DrawParticles(const b2Vec2 *, float32, const b2ParticleColor *, int32)
+	{
+		//TODO implement DebugDraw::DrawParticles
 	}
 };
 
