@@ -25,10 +25,14 @@ public:
 	float getArea() const;
 	bool isCCW() const;
 
+	void setVertices(int vertexNumber, float* dataPtr);
 	void insertVertex(const Vec2& p, int index);
 	void deleteVertex(int index);
 	void moveVertices(const Vec2& v);
 	void reverseVertices();
+
+	void zoom(float f);
+
 	const std::vector<Polygon> cut(int index) const;
 	const std::vector<Polygon> cut(int a, int b) const;
 

@@ -29,6 +29,7 @@ public:
 	float physicsToRender(float f);
 
 	void setRatio(float rt);
+	float getRatio();
 
 	Body* createBody(const Vec2& pos, Body::Type type = Body::Type::DYNAMIC);
 	void destroyBody(Body* body);

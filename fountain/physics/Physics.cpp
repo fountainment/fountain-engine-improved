@@ -19,10 +19,8 @@ public:
 	{
 		fei::Color(color.r, color.g, color.b).use();
 		fei::Polygon polygon;
-		for (int i = 0; i < vertexCount; ++i) {
-			fei::Vec2 vec(vertices[i].x, vertices[i].y);
-			polygon.pushVertex(Physics::getInstance()->physicsToRender(vec));
-		}
+		polygon.setVertices(vertexCount, (float*)&(vertices[0].x));
+		polygon.zoom(fei::Physics::getInstance()->getRatio());
 		polygon.setSolid(false);
 		fei::Render::drawShape(&polygon);
 	}
@@ -31,10 +29,8 @@ public:
 	{
 		fei::Color(color.r, color.g, color.b).use();
 		fei::Polygon polygon;
-		for (int i = 0; i < vertexCount; ++i) {
-			fei::Vec2 vec(vertices[i].x, vertices[i].y);
-			polygon.pushVertex(Physics::getInstance()->physicsToRender(vec));
-		}
+		polygon.setVertices(vertexCount, (float*)&(vertices[0].x));
+		polygon.zoom(fei::Physics::getInstance()->getRatio());
 		fei::Render::drawShape(&polygon);
 		fei::Color(color.r + 0.2f, color.g + 0.2f, color.b + 0.2f).use();
 		polygon.setSolid(false);
@@ -132,7 +128,7 @@ void Physics::destroy()
 
 void Physics::executeBeforeFrame()
 {
-	world->Step(0.0166f, 8, 3);
+	world->Step(0.0167f, 8, 3);
 }
 
 void Physics::executeAfterFrame()
@@ -159,6 +155,11 @@ const fei::Vec2 Physics::getGravity()
 void Physics::setRatio(float rt)
 {
 	ratio = rt;
+}
+
+float Physics::getRatio()
+{
+	return ratio;
 }
 
 fei::Body* Physics::createBody(const fei::Vec2& pos, fei::Body::Type type)

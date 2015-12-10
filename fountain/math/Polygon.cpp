@@ -33,6 +33,14 @@ bool Polygon::isCCW() const
 	return getArea() > 0.0f;
 }
 
+void Polygon::setVertices(int vertexNumber, float* dataPtr)
+{
+	data.resize(vertexNumber);
+	for (int i = 0; i < vertexNumber; i++) {
+		data[i] = fei::Vec2(dataPtr[i << 1], dataPtr[i << 1 | 1]);
+	}
+}
+
 void Polygon::insertVertex(const fei::Vec2& p, int index)
 {
 	//TODO: assertion
@@ -47,7 +55,7 @@ void Polygon::deleteVertex(int index)
 
 void Polygon::moveVertices(const fei::Vec2& v)
 {
-	for (auto &vertex : data) {
+	for (auto& vertex : data) {
 		vertex.add(v);
 	}
 }
@@ -55,6 +63,13 @@ void Polygon::moveVertices(const fei::Vec2& v)
 void Polygon::reverseVertices()
 {
 	std::reverse(data.begin(), data.end());
+}
+
+void Polygon::zoom(float f)
+{
+	for (auto& vertex : data) {
+		vertex.zoom(f);
+	}
 }
 
 const std::vector<Polygon> Polygon::cut(int index) const
