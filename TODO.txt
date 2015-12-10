@@ -1,30 +1,38 @@
-* Normal
-! TODO soon
 F Finished
+C Current
+! TODO soon
+* Normal
 ? Uncertain
 
 Function:
-	F FSM logic
 	! FSM test
-	! Physics collision logic
-	* Resource manager
-	! Render to texture
+	! Physics Collision Logic
+	! Render to Texture
+	! File Utility Class
+	* Resource Manager
 	* VBO
-	* Test and debug module (e.g. log file debug output)
+	* Test and Debug module (e.g. log file debug output)
 
 
 Optimization:
+	C Replace Box2D with LiquidFun
+	! Framerate Control
 	* Standardize function name (e.g. razor meanning-unclear load())
-	! Replace Box2D with LiquidFun
 
 
 External:
 	Tool:
-		F .sip to .ipi file transform tool
+		! FSM Editor
 
 	Test:
 		? FlappyMario using new engine (just for test)
 
 	Doc:
-		* Engine manual (doxygen?)
+		* Engine Manual (doxygen?)
+
+	Study:
+		* LiquidFun Particle System
+		* Physics-based Rendering
+		* Valkan API
+		* Unreal Source
 
