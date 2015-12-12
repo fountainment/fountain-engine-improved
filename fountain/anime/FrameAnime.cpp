@@ -62,9 +62,8 @@ void FrameAnime::updateFrameIndex()
 	if (isPlay()) {
 		curFrameIndex += getFps() * getDeltaTime();
 		if (curFrameIndex >= getFrameNum()) {
-			if (isLoop()) {
-				curFrameIndex = 0;
-			} else {
+			curFrameIndex = 0;
+			if (!isLoop()) {
 				stop();
 			}
 		}
