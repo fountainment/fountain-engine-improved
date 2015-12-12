@@ -99,8 +99,8 @@ const fei::Vec2 Image::getTextureSize()
 
 const fei::Rect Image::getTextureCoordRect()
 {
-	return fei::Rect(texCoord[0], texCoord[1], \
-			texCoord[2] - texCoord[0], texCoord[3] - texCoord[1]);
+	return fei::Rect(texCoord[0], texCoord[3], \
+			texCoord[4] - texCoord[0], texCoord[1] - texCoord[3]);
 }
 
 const fei::Rect Image::getTexturePixelRect()

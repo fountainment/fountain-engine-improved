@@ -25,6 +25,7 @@ public:
 	void zoom(float scale);
 	void zoom(const Vec2& v);
 	void rotate(float degree);
+	void round();
 
 	const Vec2 zoomed(float scale) const;
 	const Vec2 zoomed(const Vec2& v) const;
@@ -123,6 +124,12 @@ inline void fei::Vec2::rotate(float degree)
 	double s = std::sin(rad);
 	double c = std::cos(rad);
 	set((float)(x * c - y * s), (float)(x * s + y * c));
+}
+
+inline void fei::Vec2::round()
+{
+	x = (float)((int)(x + 0.5f));
+	y = (float)((int)(y + 0.5f));
 }
 
 inline const fei::Vec2 fei::Vec2::zoomed(float scale) const

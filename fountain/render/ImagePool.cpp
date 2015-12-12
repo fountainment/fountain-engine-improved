@@ -75,10 +75,11 @@ void writeIpiFile(const std::string& filename, const fei::Vec2& size, const std:
 	for (auto im : imageInfo) {
 		auto pos = im._rect.getPosition();
 		auto imsize = im._rect.getSize();
-		std::fprintf(ipiF, "%s %.0f %.0f %.0f %.0f %f %f\n", \
+		auto anchor = im._anchor;
+		std::fprintf(ipiF, "%s %.0f %.0f %.0f %.0f %.1f %.1f\n", \
 				im._name.c_str(), imsize.x, imsize.y, \
 				pos.x, size.y - pos.y - imsize.y, \
-				im._anchor.x, -im._anchor.y);
+				anchor.x, -anchor.y);
 	}
 	std::fclose(ipiF);
 }
@@ -167,9 +168,6 @@ void ImagePool::dumpIPI(const std::string& name)
 	}
 	for (auto image : imageList) {
 		auto rect = image.getTexturePixelRect();
-		auto pos = rect.getPosition();
-		pos.y = texSize.y - pos.y - image.getSize().y;
-		rect.setPosition(pos);
 		auto anchor = image.getAnchor();
 		infoVec.push_back(ImageInfo("test", 123, rect, anchor));
 	}
