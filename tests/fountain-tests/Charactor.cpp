@@ -66,6 +66,7 @@ void Charactor::update()
 	setPosition(body->getPosition());
 	if (curAnime && curAnime->isStop()) {
 		curAnime = &walkAnime[0];
+		curAnime->update(this);
 	}
 	setAnime(curAnime);
 }
@@ -102,7 +103,6 @@ void Charactor::attack()
 	} else {
 		curAnime = &atk1Anime;
 	}
-	curAnime->stop();
 	curAnime->play();
 	curAnime->setCurFrameIndex(0);
 }
