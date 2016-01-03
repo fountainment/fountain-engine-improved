@@ -14,7 +14,7 @@ struct ImageInfo {
 	  _anchor(anchor)
 	{}
 
-	const std::string& _name;
+	std::string _name;
 	int _hash;
 	fei::Rect _rect;
 	fei::Vec2 _anchor;
@@ -159,6 +159,13 @@ void ImagePool::moveImageAnchor(const fei::Vec2& v)
 	}
 }
 
+void ImagePool::roundAnchor()
+{
+	for (auto& image : imageList) {
+		image.roundAnchor();
+	}
+}
+
 void ImagePool::dumpIPI(const std::string& name)
 {
 	std::vector<ImageInfo> infoVec;
@@ -169,7 +176,7 @@ void ImagePool::dumpIPI(const std::string& name)
 	for (auto image : imageList) {
 		auto rect = image.getTexturePixelRect();
 		auto anchor = image.getAnchor();
-		infoVec.push_back(ImageInfo("test", 123, rect, anchor));
+		infoVec.push_back(ImageInfo("image", 123, rect, anchor));
 	}
 	writeIpiFile(name, texSize, infoVec);
 }

@@ -114,6 +114,13 @@ float RenderObj::getZPos() const
 	return zPos;
 }
 
+void RenderObj::roundAnchor()
+{
+	anchor *= 2.0f;
+	anchor.round();
+	anchor *= 0.5f;
+}
+
 void RenderObj::moveAnchor(const fei::Vec2& v)
 {
 	anchor.add(v);

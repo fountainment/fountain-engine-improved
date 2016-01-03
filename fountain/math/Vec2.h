@@ -128,7 +128,12 @@ inline void fei::Vec2::rotate(float degree)
 
 inline void fei::Vec2::round()
 {
-	//TODO: round negative
+	if (x < 0.0f) {
+		x -= 1.0f;
+	}
+	if (y < 0.0f) {
+		y -= 1.0f;
+	}
 	x = (float)((int)(x + 0.5f));
 	y = (float)((int)(y + 0.5f));
 }

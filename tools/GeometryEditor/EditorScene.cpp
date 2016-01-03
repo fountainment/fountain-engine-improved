@@ -108,7 +108,8 @@ void EditorScene::loadAnime(const std::string& path)
 {
 	auto name = path;
 	name.erase(name.size() - 3, 3);
-	anime[curEdit].loadImageFileAndIPI(name + "png", name + "ipi");
+	ipiName = name + "ipi";
+	anime[curEdit].loadImageFileAndIPI(name + "png", ipiName);
 	animeObj.setAnime(&anime[curEdit]);
 	anime[curEdit].setFps(15);
 	anime[curEdit].setLoop(true);
@@ -223,9 +224,15 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 		anime[curEdit].print();
 	}
 
+	if (key == GLFW_KEY_C && action == GLFW_PRESS) {
+		anime[curEdit].getFramePool()->roundAnchor();
+	}
 
 	if (key == GLFW_KEY_V && action == GLFW_PRESS) {
-		anime[curEdit].getFramePool()->dumpIPI("new.ipi");
+		if (ipiName == "") {
+			ipiName = "new.ipi";
+		}
+		anime[curEdit].getFramePool()->dumpIPI(ipiName);
 	}
 }
 
@@ -244,7 +251,6 @@ void EditorScene::dropCallback(int count, const char** paths)
 	}
 	if (std::strcmp(&paths[0][len - 3], "ipi") == 0 || \
 				std::strcmp(&paths[0][len - 3], "png") == 0) {
-		\
 		loadAnime(paths[0]);
 	}
 }

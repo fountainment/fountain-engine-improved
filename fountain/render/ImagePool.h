@@ -26,6 +26,7 @@ public:
 	int getImageNum();
 	void moveImageAnchor(const Vec2& v);
 
+	void roundAnchor();
 	void dumpIPI(const std::string& name);
 
 private:

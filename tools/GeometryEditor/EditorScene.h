@@ -43,6 +43,7 @@ private:
 	fei::Body* animeBody;
 	fei::RenderObj animeObj;
 	fut::CollisionFrameAnime anime[10];
+	std::string ipiName;
 
 	fei::Image image;
 	EShapeObj polyObj;
