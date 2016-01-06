@@ -128,14 +128,8 @@ inline void fei::Vec2::rotate(float degree)
 
 inline void fei::Vec2::round()
 {
-	if (x < 0.0f) {
-		x -= 1.0f;
-	}
-	if (y < 0.0f) {
-		y -= 1.0f;
-	}
-	x = (float)((int)(x + 0.5f));
-	y = (float)((int)(y + 0.5f));
+	x = (float)((int)(x < 0.0f ? x - 0.5f : x + 0.5f));
+	y = (float)((int)(y < 0.0f ? y - 0.5f : y + 0.5f));
 }
 
 inline const fei::Vec2 fei::Vec2::zoomed(float scale) const
