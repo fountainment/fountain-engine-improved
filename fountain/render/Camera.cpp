@@ -92,7 +92,7 @@ const fei::Vec2 Camera::screenToWorld(const fei::Vec2& scrPos)
 {
 	updateCameraData();
 	auto camSize = fei::Vec2(right - left, top - bottom);
-	auto vpSize = fei::Render::getViewport().getSize();
+	auto vpSize = fei::Render::getInstance()->getViewport().getSize();
 	auto ans = camSize.zoomed(scrPos.zoomed(vpSize.reciprocal()) - fei::Vec2(0.5f)) + pos;
 	return ans;
 }
@@ -101,7 +101,7 @@ const fei::Vec2 Camera::worldToScreen(const fei::Vec2& wrdPos)
 {
 	updateCameraData();
 	auto camSize = fei::Vec2(right - left, top - bottom);
-	auto vpSize = fei::Render::getViewport().getSize();
+	auto vpSize = fei::Render::getInstance()->getViewport().getSize();
 	auto ans = ((wrdPos - pos).zoomed(camSize.reciprocal()) + fei::Vec2(0.5f)).zoomed(vpSize);
 	return ans;
 }

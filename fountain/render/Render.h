@@ -25,6 +25,11 @@ public:
 	void executeBeforeFrame() override;
 	void executeAfterFrame() override;
 
+	void clearBuffer();
+	void initViewport();
+	void initMatrix();
+	void initShader();
+
 	void pushShader(ShaderProgram* shader);
 	void popShader(ShaderProgram* shader);
 	ShaderProgram* getShaderProgram();
@@ -44,8 +49,8 @@ public:
 	void setCurrentCamera(Camera* camera);
 	Camera* getCurrentCamera();
 
-	static void setViewport(const Rect& viewport);
-	static const Rect getViewport();
+	void setViewport(const Rect& viewport);
+	const Rect getViewport();
 
 	static int getMaxTextureSize();
 
@@ -86,6 +91,8 @@ private:
 	std::map<int, GLuint> fileTextureMap;
 	std::map<GLuint, Vec2> textureSizeMap;
 	std::map<GLuint, int> textureRCMap;
+
+	Rect _viewport;
 
 	static const GLfloat stripTexCoord[8];
 

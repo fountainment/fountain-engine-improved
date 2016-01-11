@@ -85,18 +85,42 @@ void Render::destroy()
 
 void Render::executeBeforeFrame()
 {
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
-	auto shader = getShaderProgram();
-	if (shader) {
-		shader->use();
-	}
+	clearBuffer();
+	initViewport();
+	initMatrix();
+	initShader();
 }
 
 void Render::executeAfterFrame()
 {
 	deleteUnusedTexture();
+	glFlush();
+}
+
+void fei::Render::clearBuffer()
+{
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void fei::Render::initViewport()
+{
+	GLint viewport[4];
+	glGetIntegerv(GL_VIEWPORT, viewport);
+	_viewport = fei::Rect((float)viewport[0], (float)viewport[1], (float)viewport[2], (float)viewport[3]);
+}
+
+void fei::Render::initMatrix()
+{
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
+}
+
+void fei::Render::initShader()
+{
+	auto shader = getShaderProgram();
+	if (shader) {
+		shader->use();
+	}
 }
 
 void Render::setCurrentCamera(fei::Camera* camera)
@@ -113,13 +137,12 @@ void Render::setViewport(const fei::Rect& viewport)
 {
 	glViewport((GLint)viewport.getPosition().x, (GLint)viewport.getPosition().y,
 		(GLsizei)viewport.getSize().x, (GLsizei)viewport.getSize().y);
+	_viewport = viewport;
 }
 
 const fei::Rect Render::getViewport()
 {
-	int viewport[4];
-	glGetIntegerv(GL_VIEWPORT, viewport);
-	return fei::Rect((float)viewport[0], (float)viewport[1], (float)viewport[2], (float)viewport[3]);
+	return _viewport;
 }
 
 int Render::getMaxTextureSize()
@@ -223,6 +246,7 @@ void Render::deleteUnusedTexture()
 
 void Render::bindTexture(GLuint tex)
 {
+	if (!tex) return;
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, tex);
 	auto shader = getShaderProgram();

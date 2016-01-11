@@ -54,10 +54,11 @@ bool Control::joystickCheck()
 	if (joystick.usable()) {
 			ans = true;
 	} else {
+		/*
 		findJoystick();
 		if (joystick.usable()) {
 			ans = true;
-		}
+		} */
 	}
 	return ans;
 }
