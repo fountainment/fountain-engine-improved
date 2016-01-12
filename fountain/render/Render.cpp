@@ -86,6 +86,7 @@ void Render::destroy()
 void Render::executeBeforeFrame()
 {
 	clearBuffer();
+	initViewport();
 	initMatrix();
 	initShader();
 }
@@ -99,6 +100,14 @@ void Render::executeAfterFrame()
 void fei::Render::clearBuffer()
 {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+}
+
+void fei::Render::initViewport()
+{
+	auto window = fei::Interface::getInstance()->getCurrentWindow();
+	if (window) {
+		setViewport(fei::Rect(window->getFrameSize()));
+	}
 }
 
 void fei::Render::initMatrix()

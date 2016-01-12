@@ -82,7 +82,7 @@ void TestScene::keyCallback(int key, int scancode, int action, int mods)
 	if (key == GLFW_KEY_F11 && action == GLFW_PRESS) {
 		auto window = fei::Interface::getInstance()->getCurrentWindow();
 		window->setFullscreen(!window->isFullscreen());
-		auto winSize = window->getWindowSize();
+		auto winSize = window->getFrameSize();
 		std::printf("%f %f\n", winSize.x, winSize.y);
 		mainCam.setCameraSize(winSize);
 		testTex.setPosition(Vec2(2048) - winSize / 2.0f);
