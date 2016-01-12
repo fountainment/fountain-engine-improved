@@ -26,7 +26,6 @@ public:
 	void executeAfterFrame() override;
 
 	void clearBuffer();
-	void initViewport();
 	void initMatrix();
 	void initShader();
 

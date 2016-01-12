@@ -25,6 +25,7 @@ bool Engine::createWindow()
 	window->setContextRoot(fei::Interface::getInstance()->getRootWindow());
 	if (window->getWindow()) {
 		window->setCurrent();
+		fei::Render::getInstance()->setViewport(fei::Rect(window->getFrameSize()));
 		return true;
 	} else {
 		return false;
