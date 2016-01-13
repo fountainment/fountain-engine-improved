@@ -10,6 +10,7 @@ res
 *.so
 *.lib
 *.dll
+.*.swp
 CMakeCache.txt
 CMakeFiles
 Makefile

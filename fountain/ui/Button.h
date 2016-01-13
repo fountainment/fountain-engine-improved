@@ -23,6 +23,7 @@ public:
 	void setLabel(const Label& label);
 
 	void setRectSize(const Vec2& rectSize);
+	const Vec2 getRectSize();
 
 	void setBackColor(const Color& color);
 	void setFrontColor(const Color& color);

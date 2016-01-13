@@ -60,6 +60,11 @@ void Button::setRectSize(const fei::Vec2& rectSize)
 	_backRect.setSize(rectSize);
 }
 
+const fei::Vec2 Button::getRectSize()
+{
+	return _backRect.getSize();
+}
+
 void Button::setBackColor(const fei::Color& color)
 {
 	_backColor = color;
