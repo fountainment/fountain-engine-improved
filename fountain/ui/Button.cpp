@@ -26,6 +26,7 @@ void Button::drawIt()
 	}
 
 	_frontColor.use();
+	glTranslatef(_label.getPosition().x, _label.getPosition().y, 0.0f);
 	_label.drawIt();
 }
 
@@ -53,6 +54,11 @@ void Button::feiUpdate()
 void Button::setLabel(const fei::Label& label)
 {
 	_label = label;
+}
+
+fei::Label* Button::getLabel()
+{
+	return &_label;
 }
 
 void Button::setRectSize(const fei::Vec2& rectSize)
@@ -83,6 +89,11 @@ void Button::setBackImage(const fei::Image& image)
 void Button::setLabelString(fei::FontCache& fontCache, const std::string& str)
 {
 	_label.setString(fontCache, str);
+}
+
+void Button::setLabelCenterAligned(bool b)
+{
+	_label.setCenterAligned(b);
 }
 
 const fei::Vec2 Button::getCenter()

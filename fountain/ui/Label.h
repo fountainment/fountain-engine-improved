@@ -22,12 +22,16 @@ public:
 
 	int getLength();
 
+	void setCenterAligned(bool b);
 	void setCenter(const Vec2& center);
 
 private:
 	int length;
+	int height;
 	std::vector<Image> charList;
 	std::vector<int> advanceList;
+
+	bool _centerAligned;
 };
 
 } // namespace fei

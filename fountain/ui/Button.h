@@ -21,6 +21,7 @@ public:
 	void feiUpdate() override;
 
 	void setLabel(const Label& label);
+	fei::Label* getLabel();
 
 	void setRectSize(const Vec2& rectSize);
 	const Vec2 getRectSize();
@@ -31,6 +32,7 @@ public:
 	void setBackImage(const Image& image);
 
 	void setLabelString(FontCache& fontCache, const std::string& str);
+	void setLabelCenterAligned(bool b);
 
 	const Vec2 getCenter();
 	void setCenter(const Vec2& v);

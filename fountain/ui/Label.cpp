@@ -5,7 +5,9 @@
 using fei::Label;
 
 Label::Label()
-: length(0)
+: length(0),
+  height(0),
+  _centerAligned(false)
 {
 	setHasAlpha(true);
 }
@@ -14,6 +16,7 @@ void Label::drawIt()
 {
 	int size = charList.size();
 	assert((int)advanceList.size() == size);
+	glTranslatef(-getAnchor().x, -getAnchor().y, 0.0f);
 	for (int i = 0; i < size; i++) {
 		charList[i].draw();
 		glTranslatef((GLfloat)advanceList[i], 0.0f, 0.0f);
@@ -54,6 +57,9 @@ void Label::addString(fei::FontCache& fontCache, const std::vector<unsigned long
 		length += advance;
 		prev = charactor;
 	}
+	if (_centerAligned) {
+		setAnchor(Vec2(length, 0.0f) / 2.0f);
+	}
 }
 
 void Label::addString(fei::FontCache& fontCache, const std::string& str)
@@ -67,8 +73,22 @@ int Label::getLength()
 	return length;
 }
 
+void Label::setCenterAligned(bool b)
+{
+	_centerAligned = b;
+	if (_centerAligned) {
+		setAnchor(fei::Vec2(length, 0.0f) / 2.0f);
+	} else {
+		setAnchor(fei::Vec2::ZERO);
+	}
+}
+
 void Label::setCenter(const fei::Vec2& center)
 {
-	setPosition(center - fei::Vec2((float)length, 0.0f) / 2.0f);
+	if (_centerAligned) {
+		setPosition(center);
+	} else {
+		setPosition(center - fei::Vec2((float)length, 0.0f) / 2.0f);
+	}
 	//TODO: label center setting of y axis
 }

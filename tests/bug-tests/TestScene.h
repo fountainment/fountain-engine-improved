@@ -5,6 +5,14 @@
 
 class MyButton : public fei::Button
 {
+public:
+	void init() override
+	{
+		setRectSize(fei::Vec2(100.0f, 40.0f));
+		getLabel()->setCenterAligned(true);
+		getLabel()->setPosition((getRectSize() - fei::Vec2(0.0f, 16.0f)) / 2.0f);
+	}
+
 private:
 	void onEnter() override
 	{

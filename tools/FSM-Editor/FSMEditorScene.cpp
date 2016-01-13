@@ -12,7 +12,10 @@ SignalButton::SignalButton(int sig)
 void SignalButton::init()
 {
 	setRectSize(Vec2(50.0f));
-	setLabelString(FSMEditor::font, "+");
+	getLabel()->setString(FSMEditor::font, "+");
+	getLabel()->setCenterAligned(true);
+	getLabel()->setPosition(getRectSize() / 2.0f);
+	getLabel()->move(Vec2(0.0f, -16.0f));
 
 	setFrontColor(FSMEditor::brightColor);
 	setBackColor(FSMEditor::darkColor);
