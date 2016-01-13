@@ -58,7 +58,7 @@ void Label::addString(fei::FontCache& fontCache, const std::vector<unsigned long
 		prev = charactor;
 	}
 	if (_centerAligned) {
-		setAnchor(Vec2(length, 0.0f) / 2.0f);
+		setAnchor(Vec2((float)length, 0.0f) / 2.0f);
 	}
 }
 
@@ -77,7 +77,7 @@ void Label::setCenterAligned(bool b)
 {
 	_centerAligned = b;
 	if (_centerAligned) {
-		setAnchor(fei::Vec2(length, 0.0f) / 2.0f);
+		setAnchor(fei::Vec2((float)length, 0.0f) / 2.0f);
 	} else {
 		setAnchor(fei::Vec2::ZERO);
 	}
