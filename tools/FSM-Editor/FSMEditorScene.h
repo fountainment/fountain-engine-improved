@@ -12,6 +12,10 @@ public:
 
 	void onEnter() override;
 	void onLeave() override;
+	void onClick() override;
+	void onMouseDown() override;
+	void onMouseUp() override;
+
 	void update() override;
 
 private:

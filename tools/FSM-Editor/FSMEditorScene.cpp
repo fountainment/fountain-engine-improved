@@ -31,6 +31,20 @@ void SignalButton::onLeave()
 	setBackColor(FSMEditor::darkColor);
 }
 
+void SignalButton::onClick()
+{
+}
+
+void SignalButton::onMouseDown()
+{
+	setBackColor(FSMEditor::lightColor);
+}
+
+void SignalButton::onMouseUp()
+{
+	setBackColor(FSMEditor::midColor);
+}
+
 void SignalButton::update()
 {
 }

@@ -41,13 +41,15 @@ public:
 
 	void click();
 
-	//TODO: add Button::setLabelAlign
-
 private:
 	virtual void onEnter();
 	virtual void onLeave();
 	virtual void onCollide();
+	virtual void onMouseDown();
+	virtual void onButtonDown();
 	virtual void onClick();
+	virtual void onButtonUp();
+	virtual void onMouseUp();
 
 	Camera* _drawCamera;
 	Rect _backRect;
@@ -58,6 +60,7 @@ private:
 	Color _frontColor;
 
 	bool _collide;
+	bool _mouseDown;
 };
 
 } // namespace fei

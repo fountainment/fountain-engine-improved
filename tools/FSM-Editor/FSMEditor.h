@@ -9,6 +9,7 @@ public:
 	const static fei::Color& darkColor;
 	const static fei::Color& brightColor;
 	const static fei::Color& midColor;
+	const static fei::Color& lightColor;
 	static fei::FontCache font;
 };
 

@@ -8,6 +8,7 @@ using namespace fei;
 const Color& FSMEditor::darkColor = fei::Color::Black;
 const Color& FSMEditor::brightColor = fei::Color::White;
 const Color& FSMEditor::midColor = fei::Color("#333");
+const Color& FSMEditor::lightColor = fei::Color("#0099CC");
 FontCache FSMEditor::font;
 
 void FSMEditor::engineSetting(Engine* e)

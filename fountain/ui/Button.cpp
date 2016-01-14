@@ -10,7 +10,8 @@ Button::Button()
   _backRect(Rect(fei::Vec2::ZERO, fei::Vec2(10.0f))),
   _backColor(fei::Color::White),
   _frontColor(fei::Color::Black),
-  _collide(false)
+  _collide(false),
+  _mouseDown(false)
 {
 	setHasAlpha(true);
 }
@@ -32,20 +33,47 @@ void Button::drawIt()
 
 void Button::feiUpdate()
 {
+	static int state = 0;
 	if (_drawCamera) {
 		fei::Vec2 cPos = fei::Interface::getInstance()->getRHCursorPos();
 		cPos = _drawCamera->screenToWorld(cPos);
 		bool collide = _backRect.collidePoint(cPos - getPosition());
+		bool mouseDown = fei::Interface::getInstance()->getCurrentWindow()->getMouseButton(GLFW_MOUSE_BUTTON_LEFT) != 0;
 		if (collide != _collide) {
 			_collide = collide;
 			if (_collide) {
 				onEnter();
+				if (_mouseDown) {
+					onMouseDown();
+				}
+				state = 0;
 			} else {
+				if (state == 1) {
+					onButtonUp();
+				}
 				onLeave();
+				state = 0;
 			}
 		}
 		if (_collide) {
 			onCollide();
+		}
+		if (mouseDown != _mouseDown) {
+			_mouseDown = mouseDown;
+			if (_collide) {
+				if (_mouseDown) {
+					onMouseDown();
+					onButtonDown();
+					state = 1;
+				} else {
+					if (state == 1) {
+						click();
+						onButtonUp();
+						state = 0;
+					}
+					onMouseUp();
+				}
+			}
 		}
 	}
 	update();
@@ -130,6 +158,22 @@ void Button::onCollide()
 {
 }
 
+void Button::onMouseDown()
+{
+}
+
+void Button::onButtonDown()
+{
+}
+
 void Button::onClick()
+{
+}
+
+void Button::onButtonUp()
+{
+}
+
+void Button::onMouseUp()
 {
 }
