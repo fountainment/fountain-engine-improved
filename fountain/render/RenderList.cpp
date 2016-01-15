@@ -79,6 +79,11 @@ void RenderList::del(fei::RenderObj* rObj)
 	objList.remove(rObj);
 }
 
+void RenderList::clear()
+{
+	objList.clear();
+}
+
 void RenderList::sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*))
 {
 	objList.sort(cmp);

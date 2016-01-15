@@ -24,6 +24,7 @@ public:
 
 	void add(RenderObj* rObj);
 	void del(RenderObj* rObj);
+	void clear();
 
 	void sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*) = RenderListZCmp);
 

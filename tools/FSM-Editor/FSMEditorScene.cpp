@@ -61,7 +61,7 @@ void FSMEditorScene::init()
 	_mainCam.setCameraSize(winS);
 	setCamera(&_mainCam);
 
-	_signalListLayer.add(new SignalButton(1));
+	_signalListLayer.clear();
 
 	_rect.setSize(Vec2(100.0f));
 	_rectObj.setShape(&_rect);
