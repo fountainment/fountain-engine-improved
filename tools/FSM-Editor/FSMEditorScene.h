@@ -4,22 +4,38 @@
 #include <fountain.h>
 #include <util/FSM.h>
 
-class SignalButton : public fei::Button
+class ButtonBase : public fei::Button
 {
 public:
-	SignalButton(int sig);
+	ButtonBase();
+
 	void init() override;
 
 	void onEnter() override;
 	void onLeave() override;
-	void onClick() override;
 	void onMouseDown() override;
 	void onMouseUp() override;
+};
 
+class SignalButton : public ButtonBase
+{
+public:
+	SignalButton(int sig);
+
+	void onClick() override;
 	void update() override;
 
 private:
 	int _sig;
+};
+
+class StateButton : public ButtonBase
+{
+public:
+	StateButton();
+
+	void onClick() override;
+	void update() override;
 };
 
 class FSMEditorScene : public fei::Scene

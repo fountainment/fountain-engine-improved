@@ -7,49 +7,70 @@ using namespace fei;
 static FSMEditorScene* scene;
 static fut::FSM* fsm;
 
-SignalButton::SignalButton(int sig)
+ButtonBase::ButtonBase()
 {
-	_sig = sig;
+	setFrontColor(FSMEditor::brightColor);
+	setBackColor(FSMEditor::darkColor);
 }
 
-void SignalButton::init()
+void ButtonBase::init()
 {
 	setRectSize(Vec2(getLabel()->getLength() + 30.0f, 50.0f));
 	getLabel()->setCenterAligned(true);
 	getLabel()->setPosition(getRectSize() / 2.0f);
 	getLabel()->move(Vec2(0.0f, -16.0f));
-
-	setFrontColor(FSMEditor::brightColor);
-	setBackColor(FSMEditor::darkColor);
 }
 
-void SignalButton::onEnter()
+void ButtonBase::onEnter()
 {
 	setBackColor(FSMEditor::midColor);
 }
 
-void SignalButton::onLeave()
+void ButtonBase::onLeave()
 {
 	setBackColor(FSMEditor::darkColor);
 }
 
-void SignalButton::onClick()
-{
-	fsm->registerSignal("Hello");
-	scene->updateSignalList();
-}
-
-void SignalButton::onMouseDown()
+void ButtonBase::onMouseDown()
 {
 	setBackColor(FSMEditor::lightColor);
 }
 
-void SignalButton::onMouseUp()
+void ButtonBase::onMouseUp()
 {
 	setBackColor(FSMEditor::midColor);
 }
 
+SignalButton::SignalButton(int sig)
+{
+	_sig = sig;
+}
+
+void SignalButton::onClick()
+{
+	if (_sig == -1) {
+		fsm->registerSignal("Hello");
+		scene->updateSignalList();
+	} else {
+		//scene->setSignal()
+	}
+}
+
 void SignalButton::update()
+{
+}
+
+StateButton::StateButton()
+{
+	setFrontColor(FSMEditor::lightColor);
+	setBackColor(FSMEditor::darkColor);
+}
+
+void StateButton::onClick()
+{
+}
+
+void StateButton::update()
 {
 }
 
@@ -67,6 +88,13 @@ void FSMEditorScene::init()
 	add(&_signalListLayer);
 	add(&_helpLayer);
 
+	Vec2 startPosition = Interface::getInstance()->getWindowSize();
+	startPosition.zoom(Vec2(0.5f, -0.5f));
+	auto button = new StateButton();
+	button->setLabelString(FSMEditor::font, "+");
+	button->feiInit();
+	button->setPosition(startPosition + Vec2(-button->getRectSize().x - 1.0f, 1.0f));
+	_fsmLayer.add(button);
 	updateSignalList();
 
 	_mainCam.setCameraSize(winS);
