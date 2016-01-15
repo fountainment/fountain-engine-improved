@@ -25,6 +25,7 @@ public:
 
 	const Vec2 getCursorPos();
 	const Vec2 getRHCursorPos();
+	const Vec2 getWindowSize();
 
 	void executeAfterFrame() override;
 

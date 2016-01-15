@@ -51,6 +51,7 @@ public:
 
 	void setViewport(const Rect& viewport);
 	const Rect getViewport();
+	void setClearColor(const Vec4* color);
 
 	static int getMaxTextureSize();
 

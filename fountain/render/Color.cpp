@@ -141,7 +141,12 @@ const Color Color::inversed() const
 
 void Color::use() const
 {
-	fei::Render::useColor(this);
+	fei::Render::getInstance()->useColor(this);
+}
+
+void Color::setClearColor() const
+{
+	fei::Render::getInstance()->setClearColor(this);
 }
 
 const Color Color::Red    = Color(1.0f, 0.0f, 0.0f);

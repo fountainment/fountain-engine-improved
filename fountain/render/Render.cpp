@@ -146,6 +146,11 @@ const fei::Rect Render::getViewport()
 	return _viewport;
 }
 
+void Render::setClearColor(const fei::Vec4* color)
+{
+	glClearColor(color->x, color->y, color->z, color->w);
+}
+
 int Render::getMaxTextureSize()
 {
 	GLint maxTexSize;

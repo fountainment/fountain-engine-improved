@@ -32,6 +32,7 @@ public:
 	const Color inversed() const;
 
 	void use() const;
+	void setClearColor() const;
 
 	static const Color Red;
 	static const Color Green;

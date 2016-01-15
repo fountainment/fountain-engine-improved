@@ -105,6 +105,14 @@ const fei::Vec2 Interface::getRHCursorPos()
 	return currentWindow->getRHCursorPos();
 }
 
+const fei::Vec2 Interface::getWindowSize()
+{
+	if (!currentWindow) {
+		return fei::Vec2::ZERO;
+	}
+	return currentWindow->getWindowSize();
+}
+
 void Interface::executeAfterFrame()
 {
 	currentWindow->swapBuffers();

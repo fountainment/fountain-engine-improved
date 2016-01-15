@@ -28,6 +28,9 @@ public:
 	void init() override;
 	void update() override;
 
+	void updateSignalList();
+	void updateFSM();
+
 private:
 	fei::Camera _mainCam;
 

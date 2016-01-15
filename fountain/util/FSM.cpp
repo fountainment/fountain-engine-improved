@@ -64,6 +64,11 @@ void FSM::registerLink(int curState, int nextState, int signal)
 	_fsmMap[curState][signal] = nextState;
 }
 
+const std::vector<std::pair<int, std::string>> FSM::getSignalVector()
+{
+	return std::vector<std::pair<int, std::string>>(_signalNameMap.begin(), _signalNameMap.end());
+}
+
 int FSM::getState()
 {
 	return _state;

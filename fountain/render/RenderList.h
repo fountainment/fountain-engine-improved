@@ -11,6 +11,8 @@ bool RenderListZCmp(fei::RenderObj* a, fei::RenderObj* b);
 class RenderList : public fei::RenderObj
 {
 public:
+	virtual ~RenderList();
+
 	void listInit();
 	void listDestroy();
 	void listUpdate();
@@ -25,11 +27,16 @@ public:
 	void add(RenderObj* rObj);
 	void del(RenderObj* rObj);
 	void clear();
+	void throwAway(RenderObj* garbage);
 
+	std::list<RenderObj*> getListVector();
+
+	void garbageRecycle();
 	void sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*) = RenderListZCmp);
 
 private:
-	std::list<RenderObj*> objList;
+	std::list<RenderObj*> _objList;
+	std::queue<RenderObj*> _garbageQueue;
 };
 
 } // namespace fei

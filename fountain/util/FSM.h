@@ -3,6 +3,7 @@
 
 #include <string>
 #include <map>
+#include <vector>
 
 namespace fut {
 
@@ -21,6 +22,8 @@ public:
 	int registerSignal();
 	int registerState();
 	void registerLink(int curState, int nextState, int signal);
+
+	const std::vector<std::pair<int, std::string>> getSignalVector();
 
 	int getState();
 	void setState(int state);
