@@ -18,7 +18,7 @@ void ButtonBase::init()
 	setRectSize(Vec2(getLabel()->getLength() + 30.0f, 50.0f));
 	getLabel()->setCenterAligned(true);
 	getLabel()->setPosition(getRectSize() / 2.0f);
-	getLabel()->move(Vec2(0.0f, -16.0f));
+	getLabel()->move(Vec2(0.0f, -14.0f));
 }
 
 void ButtonBase::onEnter()
@@ -49,10 +49,14 @@ SignalButton::SignalButton(int sig)
 void SignalButton::onClick()
 {
 	if (_sig == -1) {
-		fsm->registerSignal("Hello");
-		scene->updateSignalList();
+		if (scene->_sigName != "") {
+			fsm->registerSignal(scene->_sigName);
+			scene->_sigName = "";
+			scene->_sigLabel.clearString();
+			scene->updateSignalList();
+		}
 	} else {
-		//scene->setSignal()
+		scene->setSignal(_sig);
 	}
 }
 
@@ -62,7 +66,7 @@ void SignalButton::update()
 
 StateButton::StateButton()
 {
-	setFrontColor(FSMEditor::lightColor);
+	setFrontColor(FSMEditor::lighterColor);
 	setBackColor(FSMEditor::darkColor);
 }
 
@@ -103,6 +107,9 @@ void FSMEditorScene::init()
 	_rect.setSize(Vec2(100.0f));
 	_rectObj.setShape(&_rect);
 	_helpLayer.add(&_rectObj);
+
+	_sigLabel.setPosition(Interface::getInstance()->getWindowSize() * -0.5f + Vec2(20.0f));
+	add(&_sigLabel);
 }
 
 void FSMEditorScene::update()
@@ -145,4 +152,28 @@ void FSMEditorScene::updateSignalList()
 
 void FSMEditorScene::updateFSM()
 {
+}
+
+void FSMEditorScene::setSignal(int sig)
+{
+	std::printf("%d\n", sig);
+}
+
+void FSMEditorScene::charactorCallback(unsigned int codepoint)
+{
+	char inputChar = (char)codepoint;
+	if (inputChar != ' ') {
+		_sigName += inputChar;
+		_sigLabel.setString(FSMEditor::font, _sigName);
+	}
+}
+
+void FSMEditorScene::keyCallback(int key, int scancode, int action, int mods)
+{
+	if (key == GLFW_KEY_BACKSPACE && action == GLFW_PRESS) {
+		if (!_sigName.empty()) {
+			_sigName.pop_back();
+			_sigLabel.setString(FSMEditor::font, _sigName);
+		}
+	}
 }

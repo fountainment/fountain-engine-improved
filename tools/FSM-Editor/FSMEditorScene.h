@@ -46,6 +46,13 @@ public:
 
 	void updateSignalList();
 	void updateFSM();
+	void setSignal(int signal);
+
+	void charactorCallback(unsigned int codepoint) override;
+	void keyCallback(int key, int scancode, int action, int mods) override;
+
+	std::string _sigName;
+	fei::Label _sigLabel;
 
 private:
 	fei::Camera _mainCam;
