@@ -4,6 +4,8 @@
 #include <fountain.h>
 #include <util/FSM.h>
 
+//TODO: add pointer and signalLabel class
+
 class ButtonBase : public fei::Button
 {
 public:
@@ -32,10 +34,13 @@ private:
 class StateButton : public ButtonBase
 {
 public:
-	StateButton();
+	StateButton(int state);
 
 	void onClick() override;
 	void update() override;
+
+private:
+	int _state;
 };
 
 class FSMEditorScene : public fei::Scene
@@ -47,12 +52,13 @@ public:
 	void updateSignalList();
 	void updateFSM();
 	void setSignal(int signal);
+	void setState(int state);
 
 	void charactorCallback(unsigned int codepoint) override;
 	void keyCallback(int key, int scancode, int action, int mods) override;
 
-	std::string _sigName;
-	fei::Label _sigLabel;
+	std::string _tmpName;
+	fei::Label _tmpLabel;
 
 private:
 	fei::Camera _mainCam;

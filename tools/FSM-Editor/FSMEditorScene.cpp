@@ -49,10 +49,10 @@ SignalButton::SignalButton(int sig)
 void SignalButton::onClick()
 {
 	if (_sig == -1) {
-		if (scene->_sigName != "") {
-			fsm->registerSignal(scene->_sigName);
-			scene->_sigName = "";
-			scene->_sigLabel.clearString();
+		if (scene->_tmpName != "") {
+			fsm->registerSignal(scene->_tmpName);
+			scene->_tmpName = "";
+			scene->_tmpLabel.clearString();
 			scene->updateSignalList();
 		}
 	} else {
@@ -64,14 +64,25 @@ void SignalButton::update()
 {
 }
 
-StateButton::StateButton()
+StateButton::StateButton(int state)
 {
+	_state = state;
 	setFrontColor(FSMEditor::lighterColor);
 	setBackColor(FSMEditor::darkColor);
 }
 
 void StateButton::onClick()
 {
+	if (_state == -1) {
+		if (scene->_tmpName != "") {
+			fsm->registerState(scene->_tmpName);
+			scene->_tmpName = "";
+			scene->_tmpLabel.clearString();
+			scene->updateFSM();
+		}
+	} else {
+		scene->setState(_state);
+	}
 }
 
 void StateButton::update()
@@ -94,7 +105,7 @@ void FSMEditorScene::init()
 
 	Vec2 startPosition = Interface::getInstance()->getWindowSize();
 	startPosition.zoom(Vec2(0.5f, -0.5f));
-	auto button = new StateButton();
+	auto button = new StateButton(-1);
 	button->setLabelString(FSMEditor::font, "+");
 	button->feiInit();
 	button->setPosition(startPosition + Vec2(-button->getRectSize().x - 1.0f, 1.0f));
@@ -108,8 +119,8 @@ void FSMEditorScene::init()
 	_rectObj.setShape(&_rect);
 	_helpLayer.add(&_rectObj);
 
-	_sigLabel.setPosition(Interface::getInstance()->getWindowSize() * -0.5f + Vec2(20.0f));
-	add(&_sigLabel);
+	_tmpLabel.setPosition(Interface::getInstance()->getWindowSize() * -0.5f + Vec2(20.0f));
+	add(&_tmpLabel);
 }
 
 void FSMEditorScene::update()
@@ -126,11 +137,13 @@ void FSMEditorScene::update()
 
 void FSMEditorScene::updateSignalList()
 {
+	//clear signalListLayer
 	auto lv = _signalListLayer.getListVector();
 	for (auto i : lv) {
 		throwAway(i);
 	}
 	_signalListLayer.clear();
+
 	auto signalList =_fsm.getSignalVector();
 	Vec2 startPosition = Interface::getInstance()->getWindowSize();
 	startPosition.zoom(Vec2(-0.5f, 0.5f));
@@ -152,28 +165,49 @@ void FSMEditorScene::updateSignalList()
 
 void FSMEditorScene::updateFSM()
 {
+	//clear fsmLayer
+	auto lv = _fsmLayer.getListVector();
+	for (auto i : lv) {
+		throwAway(i);
+	}
+	_fsmLayer.clear();
+
+	//TODO:
+	//  memorize StateButton's position
+	//  add all relations to fsm
+	//  add save button saving fsm to text file
 }
 
 void FSMEditorScene::setSignal(int sig)
 {
-	std::printf("%d\n", sig);
+	std::printf("Signal: %d\n", sig);
+	//TODO:
+	//  memorize the select signal
+	//  highlight the select SignalButton
+}
+
+void FSMEditorScene::setState(int state)
+{
+	std::printf("State: %d\n", state);
+	//TODO:
+	//  implement UI component draging logic
 }
 
 void FSMEditorScene::charactorCallback(unsigned int codepoint)
 {
 	char inputChar = (char)codepoint;
 	if (inputChar != ' ') {
-		_sigName += inputChar;
-		_sigLabel.setString(FSMEditor::font, _sigName);
+		_tmpName += inputChar;
+		_tmpLabel.setString(FSMEditor::font, _tmpName);
 	}
 }
 
 void FSMEditorScene::keyCallback(int key, int scancode, int action, int mods)
 {
 	if (key == GLFW_KEY_BACKSPACE && action == GLFW_PRESS) {
-		if (!_sigName.empty()) {
-			_sigName.pop_back();
-			_sigLabel.setString(FSMEditor::font, _sigName);
+		if (!_tmpName.empty()) {
+			_tmpName.pop_back();
+			_tmpLabel.setString(FSMEditor::font, _tmpName);
 		}
 	}
 }
