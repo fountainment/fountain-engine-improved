@@ -67,9 +67,12 @@ private:
 	fei::Layer _helpLayer;
 	fei::Layer _signalListLayer;
 	fei::Layer _fsmLayer;
+	fei::Layer _fixLayer;
 
 	fei::Rect _rect;
 	fei::ShapeObj _rectObj;
+
+	std::map<int, fei::Vec2> _statePositionMap;
 };
 
 #endif // _FEIEDITORSCENE_H_

@@ -102,6 +102,7 @@ void FSMEditorScene::init()
 	add(&_fsmLayer);
 	add(&_signalListLayer);
 	add(&_helpLayer);
+	add(&_fixLayer);
 
 	Vec2 startPosition = Interface::getInstance()->getWindowSize();
 	startPosition.zoom(Vec2(0.5f, -0.5f));
@@ -109,7 +110,15 @@ void FSMEditorScene::init()
 	button->setLabelString(FSMEditor::font, "+");
 	button->feiInit();
 	button->setPosition(startPosition + Vec2(-button->getRectSize().x - 1.0f, 1.0f));
-	_fsmLayer.add(button);
+	_fixLayer.add(button);
+	auto button1 = new SignalButton(-1);
+	button1->setLabelString(FSMEditor::font, "+");
+	button1->feiInit();
+	startPosition = Interface::getInstance()->getWindowSize();
+	startPosition.zoom(Vec2(0.5f, 0.5f));
+	startPosition -= button1->getRectSize() + Vec2(1.0f);
+	button1->setPosition(startPosition);
+	_fixLayer.add(button1);
 	updateSignalList();
 
 	_mainCam.setCameraSize(winS);
@@ -156,11 +165,6 @@ void FSMEditorScene::updateSignalList()
 		startPosition.add(Vec2(button->getRectSize().x + 1.0f, 0.0f));
 		_signalListLayer.add(button);
 	}
-	auto button = new SignalButton(-1);
-	button->setLabelString(FSMEditor::font, "+");
-	button->feiInit();
-	button->setPosition(startPosition);
-	_signalListLayer.add(button);
 }
 
 void FSMEditorScene::updateFSM()
@@ -172,6 +176,14 @@ void FSMEditorScene::updateFSM()
 	}
 	_fsmLayer.clear();
 
+	auto stateList = _fsm.getStateVector();
+	for (auto& state : stateList) {
+		auto button = new StateButton(state.first);
+		button->setLabelString(FSMEditor::font, state.second);
+		button->feiInit();
+		button->setPosition(_statePositionMap[state.first]);
+		_fsmLayer.add(button);
+	}
 	//TODO:
 	//  memorize StateButton's position
 	//  add all relations to fsm
