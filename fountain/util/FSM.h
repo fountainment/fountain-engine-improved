@@ -24,6 +24,7 @@ public:
 	void registerLink(int curState, int nextState, int signal);
 
 	const std::vector<std::pair<int, std::string>> getSignalVector();
+	const std::vector<std::pair<int, std::string>> getStateVector();
 
 	int getState();
 	void setState(int state);

@@ -69,6 +69,11 @@ const std::vector<std::pair<int, std::string>> FSM::getSignalVector()
 	return std::vector<std::pair<int, std::string>>(_signalNameMap.begin(), _signalNameMap.end());
 }
 
+const std::vector<std::pair<int, std::string>> FSM::getStateVector()
+{
+	return std::vector<std::pair<int, std::string>>(_stateNameMap.begin(), _stateNameMap.end());
+}
+
 int FSM::getState()
 {
 	return _state;
