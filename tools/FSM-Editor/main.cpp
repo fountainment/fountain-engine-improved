@@ -16,7 +16,8 @@ void FSMEditor::engineSetting(Engine* e)
 {
 	font.loadFont("res/font/wqy.ttc", 40);
 
-	e->window->setFullscreen(true);
+	//e->window->setFullscreen(true);
+	e->window->setSize(1366, 768);
 	e->window->setSamples(8);
 	e->window->setTitle("FSM-Editor");
 	e->window->sceneManager->gotoScene(new FSMEditorScene());
