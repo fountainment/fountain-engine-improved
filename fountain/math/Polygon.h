@@ -65,11 +65,6 @@ private:
 
 } // namespace fei
 
-inline int fei::Polygon::getDataSize() const
-{
-	return data.size();
-}
-
 inline void fei::Polygon::pushVertex(const fei::Vec2& p)
 {
 	data.push_back(p);

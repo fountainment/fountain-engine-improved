@@ -37,7 +37,7 @@ void EditorScene::init()
 {
 	Physics::getInstance()->setDoDebugDraw(true);
 	Physics::getInstance()->setDebugDrawCamera(&mainCam);
-	Physics::getInstance()->setRatio(128.0f);
+	Physics::getInstance()->setRatio(64.0f);
 
 	for (int i = 0; i < 10; i++) {
 		poly[i] = Polygon::makeRegularPolygon(4, 100.0f, 45.0f);

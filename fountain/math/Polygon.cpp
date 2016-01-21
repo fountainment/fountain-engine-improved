@@ -4,6 +4,11 @@
 
 using fei::Polygon;
 
+int fei::Polygon::getDataSize() const
+{
+	return data.size();
+}
+
 const float* Polygon::getDataPtr() const
 {
 	if (!data.empty()) {
@@ -299,7 +304,7 @@ int Polygon::getBestCutVertexIndex(int index) const
 	}
 	if (!uList.empty()) {
 		auto maxPcp = uList[0];
-		for (auto pcp : uList) {
+		for (auto& pcp : uList) {
 			if (pcp > maxPcp) {
 				maxPcp = pcp;
 			}
@@ -356,7 +361,7 @@ const std::vector<Polygon> Polygon::convexDecomposition() const
 				result.push_back(currentPoly);
 			} else {
 				auto twoPoly = currentPoly.cut(concavePoint);
-				for (auto poly : twoPoly) {
+				for (auto& poly : twoPoly) {
 					poly.normalize();
 					if (poly.isValid()) {
 						processQueue.push(poly);
@@ -376,7 +381,7 @@ const std::vector<Polygon> Polygon::box2dDecomposition() const
 	std::vector<Polygon> result;
 	std::queue<Polygon> processQueue;
 	auto convexList = convexDecomposition();
-	for (auto poly : convexList) {
+	for (auto& poly : convexList) {
 		processQueue.push(poly);
 	}
 	while(!processQueue.empty()) {
@@ -387,7 +392,7 @@ const std::vector<Polygon> Polygon::box2dDecomposition() const
 				result.push_back(currentPoly);
 			} else {
 				auto twoPoly = currentPoly.cut(0);
-				for (auto poly : twoPoly) {
+				for (auto& poly : twoPoly) {
 					poly.normalize();
 					if (poly.isValid() && (poly.getArea() > fei::epsf)) {
 						processQueue.push(poly);
