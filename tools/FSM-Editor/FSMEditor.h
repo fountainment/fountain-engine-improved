@@ -14,4 +14,4 @@ public:
 	static fei::FontCache font;
 };
 
-#endif
+#endif // _FSMEDITOR_H_

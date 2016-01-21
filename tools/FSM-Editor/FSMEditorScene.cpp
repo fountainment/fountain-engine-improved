@@ -91,7 +91,7 @@ void StateButton::update()
 
 void FSMEditorScene::init()
 {
-	Color("#111").setClearColor();
+	Color("#555").setClearColor();
 
 	auto win = Interface::getInstance()->getCurrentWindow();
 	auto winS = win->getFrameSize();
@@ -154,13 +154,17 @@ void FSMEditorScene::updateSignalList()
 	_signalListLayer.clear();
 
 	auto signalList =_fsm.getSignalVector();
-	Vec2 startPosition = Interface::getInstance()->getWindowSize();
-	startPosition.zoom(Vec2(-0.5f, 0.5f));
+	Vec2 winSize = Interface::getInstance()->getWindowSize();
+	Vec2 startPosition = winSize.zoomed(Vec2(-0.5f, 0.5f));
 	startPosition.add(Vec2(1.0f, -50.0f - 1.0f));
 	for (auto& signal : signalList) {
 		auto button = new SignalButton(signal.first);
 		button->setLabelString(FSMEditor::font, signal.second);
 		button->feiInit();
+		if (startPosition.x + button->getRectSize().x > winSize.x / 2.0f - 100.0f) {
+			startPosition.x = winSize.x / -2.0f + 1.0f;
+			startPosition.y -= 51.0f;
+		}
 		button->setPosition(startPosition);
 		startPosition.add(Vec2(button->getRectSize().x + 1.0f, 0.0f));
 		_signalListLayer.add(button);
@@ -208,7 +212,7 @@ void FSMEditorScene::setState(int state)
 void FSMEditorScene::charactorCallback(unsigned int codepoint)
 {
 	char inputChar = (char)codepoint;
-	if (inputChar != ' ') {
+	if (_tmpName.length() < 25 && inputChar != ' ') {
 		_tmpName += inputChar;
 		_tmpLabel.setString(FSMEditor::font, _tmpName);
 	}
