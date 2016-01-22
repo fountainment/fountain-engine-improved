@@ -219,7 +219,7 @@ void FSMEditorScene::charactorCallback(unsigned int codepoint)
 
 void FSMEditorScene::keyCallback(int key, int scancode, int action, int mods)
 {
-	if (key == GLFW_KEY_BACKSPACE && action == GLFW_PRESS) {
+	if (key == GLFW_KEY_BACKSPACE && action != GLFW_RELEASE) {
 		if (!_tmpName.empty()) {
 			_tmpName.pop_back();
 			_tmpLabel.setString(FSMEditor::font, _tmpName);
