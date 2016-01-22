@@ -49,9 +49,9 @@ SignalButton::SignalButton(int sig)
 void SignalButton::onClick()
 {
 	if (_sig == -1) {
-		if (scene->_tmpName != "") {
-			fsm->registerSignal(scene->_tmpName);
-			scene->_tmpName = "";
+		if (!scene->_tmpName.empty()) {
+			fsm->registerSignal(unicodeToUtf8(scene->_tmpName));
+			scene->_tmpName.clear();
 			scene->_tmpLabel.clearString();
 			scene->updateSignalList();
 		}
@@ -74,9 +74,9 @@ StateButton::StateButton(int state)
 void StateButton::onClick()
 {
 	if (_state == -1) {
-		if (scene->_tmpName != "") {
-			fsm->registerState(scene->_tmpName);
-			scene->_tmpName = "";
+		if (!scene->_tmpName.empty()) {
+			fsm->registerState(unicodeToUtf8(scene->_tmpName));
+			scene->_tmpName.clear();
 			scene->_tmpLabel.clearString();
 			scene->updateFSM();
 		}
@@ -211,9 +211,8 @@ void FSMEditorScene::setState(int state)
 
 void FSMEditorScene::charactorCallback(unsigned int codepoint)
 {
-	char inputChar = (char)codepoint;
-	if (_tmpName.length() < 25 && inputChar != ' ') {
-		_tmpName += inputChar;
+	if (_tmpName.size() < 25) {
+		_tmpName.push_back(codepoint);
 		_tmpLabel.setString(FSMEditor::font, _tmpName);
 	}
 }

@@ -28,3 +28,45 @@ std::vector<unsigned long> fei::utf8ToUnicode(const std::string& str)
 	}
 	return ans;
 }
+
+const std::string fei::unicodeToUtf8(const std::vector<unsigned long>& str)
+{
+	std::string ans;
+	const unsigned long prefix = 0x00000080, mask = 0x0000003f;
+	for (auto ul : str) {
+		if (ul <= 0x000007f) {
+			ans += (char)ul;
+		}
+		else if (ul <= 0x000007ff) {
+			ans += (char)(0x000000c0 | (ul >> 6));
+			ans += (char)(prefix | (ul & mask));
+		}
+		else if (ul <= 0x0000ffff) {
+			ans += (char)(0x000000e0 | (ul >> 12));
+			ans += (char)(prefix | ((ul >> 6) & mask));
+			ans += (char)(prefix | (ul & mask));
+		}
+		else if (ul <= 0x001fffff) {
+			ans += (char)(0x000000f0 | (ul >> 18));
+			ans += (char)(prefix | ((ul >> 12) & mask));
+			ans += (char)(prefix | ((ul >> 6) & mask));
+			ans += (char)(prefix | (ul & mask));
+		}
+		else if (ul <= 0x03ffffff) {
+			ans += (char)(0x000000f8 | (ul >> 24));
+			ans += (char)(prefix | ((ul >> 18) & mask));
+			ans += (char)(prefix | ((ul >> 12) & mask));
+			ans += (char)(prefix | ((ul >> 6) & mask));
+			ans += (char)(prefix | (ul & mask));
+		}
+		else {
+			ans += (char)(0x000000fc | (ul >> 30));
+			ans += (char)(prefix | ((ul >> 24) & mask));
+			ans += (char)(prefix | ((ul >> 18) & mask));
+			ans += (char)(prefix | ((ul >> 12) & mask));
+			ans += (char)(prefix | ((ul >> 6) & mask));
+			ans += (char)(prefix | (ul & mask));
+		}
+	}
+	return ans;
+}

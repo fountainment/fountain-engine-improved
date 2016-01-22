@@ -6,6 +6,7 @@
 namespace fei {
 
 std::vector<unsigned long> utf8ToUnicode(const std::string& str);
+const std::string unicodeToUtf8(const std::vector<unsigned long>& str);
 
 } // namespace fei
 

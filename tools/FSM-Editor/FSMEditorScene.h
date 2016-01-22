@@ -57,7 +57,7 @@ public:
 	void charactorCallback(unsigned int codepoint) override;
 	void keyCallback(int key, int scancode, int action, int mods) override;
 
-	std::string _tmpName;
+	std::vector<unsigned long> _tmpName;
 	fei::Label _tmpLabel;
 
 private:
