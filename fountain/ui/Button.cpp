@@ -141,9 +141,7 @@ bool Button::isCollide()
 
 void Button::click()
 {
-	if (_collide) {
-		onClick();
-	}
+	onClick();
 }
 
 void Button::onEnter()
