@@ -125,6 +125,8 @@ void FSMEditorScene::init()
 
 	_mainCam.setCameraSize(winS);
 	setCamera(&_mainCam);
+	_fsmCam.setCameraSize(winS);
+	_fsmLayer.setCamera(&_fsmCam);
 
 	_rect.setSize(Vec2(100.0f));
 	_rectObj.setShape(&_rect);
@@ -149,6 +151,7 @@ void FSMEditorScene::update()
 		} else {
 			_helpLayer.setVisible(false);
 		}
+		mouseDrag(&_fsmCam, &_fsmCam);
 	}
 }
 
@@ -240,5 +243,26 @@ void FSMEditorScene::keyCallback(int key, int scancode, int action, int mods)
 		} else {
 			_addStateButton->click();
 		}
+	}
+}
+
+void FSMEditorScene::scrollCallback(double xoffset, double yoffset)
+{
+	if (yoffset > 0.0) {
+		_fsmCam.zoomCameraScale(1.1f);
+	}
+	else if (yoffset < 0.0) {
+		_fsmCam.zoomCameraScale(0.90909f);
+	}
+}
+
+void FSMEditorScene::mouseDrag(Camera* cam, NodeBase* node)
+{
+	auto window = Interface::getInstance()->getCurrentWindow();
+	static Vec2 oldPos = window->getRHCursorPos();
+	Vec2 deltaV = (window->getRHCursorPos() - oldPos) / -cam->getCameraScale();
+	oldPos = window->getRHCursorPos();
+	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE)) {
+		node->move(deltaV);
 	}
 }
