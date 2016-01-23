@@ -91,10 +91,6 @@ void StateButton::update()
 
 void FSMEditorScene::init()
 {
-	Color("#555").setClearColor();
-
-	auto win = Interface::getInstance()->getCurrentWindow();
-	auto winS = win->getFrameSize();
 
 	scene = this;
 	fsm = &_fsm;
@@ -104,36 +100,27 @@ void FSMEditorScene::init()
 	add(&_helpLayer);
 	add(&_fixLayer);
 
-	Vec2 startPosition = Interface::getInstance()->getWindowSize();
-	startPosition.zoom(Vec2(0.5f, -0.5f));
-	auto button = new StateButton(-1);
-	_addStateButton = button;
-	button->setLabelString(FSMEditor::font, "+");
-	button->feiInit();
-	button->setPosition(startPosition + Vec2(-button->getRectSize().x - 1.0f, 1.0f));
-	_fixLayer.add(button);
-	auto button1 = new SignalButton(-1);
-	_addSignalButton = button1;
-	button1->setLabelString(FSMEditor::font, "+");
-	button1->feiInit();
-	startPosition = Interface::getInstance()->getWindowSize();
-	startPosition.zoom(Vec2(0.5f, 0.5f));
-	startPosition -= button1->getRectSize() + Vec2(1.0f);
-	button1->setPosition(startPosition);
-	_fixLayer.add(button1);
+	_addStateButton = new StateButton(-1);
+	_addSignalButton = new SignalButton(-1);
+	_addSignalButton->setLabelString(FSMEditor::font, "+");
+	_addStateButton->setLabelString(FSMEditor::font, "+");
+	_addSignalButton->feiInit();
+	_addStateButton->feiInit();
 	updateSignalList();
+	updateFSM();
 
-	_mainCam.setCameraSize(winS);
+	_fixLayer.add(_addSignalButton);
+	_fixLayer.add(_addStateButton);
 	setCamera(&_mainCam);
-	_fsmCam.setCameraSize(winS);
 	_fsmLayer.setCamera(&_fsmCam);
 
 	_rect.setSize(Vec2(100.0f));
 	_rectObj.setShape(&_rect);
 	_helpLayer.add(&_rectObj);
 
-	_tmpLabel.setPosition(Interface::getInstance()->getWindowSize() * -0.5f + Vec2(20.0f));
 	add(&_tmpLabel);
+
+	refreshWindow();
 }
 
 void FSMEditorScene::destroy()
@@ -235,7 +222,7 @@ void FSMEditorScene::keyCallback(int key, int scancode, int action, int mods)
 	if (key == GLFW_KEY_F11 && action == GLFW_RELEASE) {
 		auto window = Interface::getInstance()->getCurrentWindow();
 		window->setFullscreen(!window->isFullscreen());
-		Color("#555").setClearColor();
+		refreshWindow();
 	}
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
 		if (mods & GLFW_MOD_CONTROL) {
@@ -265,4 +252,24 @@ void FSMEditorScene::mouseDrag(Camera* cam, NodeBase* node)
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE)) {
 		node->move(deltaV);
 	}
+}
+
+void FSMEditorScene::refreshWindow()
+{
+	Color("#555").setClearColor();
+	auto win = Interface::getInstance()->getCurrentWindow();
+	auto winS = win->getFrameSize();
+	_mainCam.setCameraSize(winS);
+	_fsmCam.setCameraSize(winS);
+
+	Vec2 startPosition = winS;
+	startPosition.zoom(Vec2(0.5f, 0.5f));
+	startPosition -= _addStateButton->getRectSize() + Vec2(1.0f);
+	_addSignalButton->setPosition(startPosition);
+
+	startPosition = winS;
+	startPosition.zoom(Vec2(0.5f, -0.5f));
+	_addStateButton->setPosition(startPosition + Vec2(-_addStateButton->getRectSize().x - 1.0f, 1.0f));
+
+	_tmpLabel.setPosition(winS * -0.5f + Vec2(20.0f));
 }

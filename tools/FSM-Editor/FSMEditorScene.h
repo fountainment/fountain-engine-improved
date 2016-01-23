@@ -60,6 +60,8 @@ public:
 	void scrollCallback(double xoffset, double yoffset);
 	void mouseDrag(fei::Camera* cam, fei::NodeBase* node);
 
+	void refreshWindow();
+
 	std::vector<unsigned long> _tmpName;
 	fei::Label _tmpLabel;
 
