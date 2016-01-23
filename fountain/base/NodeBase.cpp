@@ -28,6 +28,12 @@ void NodeBase::feiDestroy()
 	_isLoaded = false;
 }
 
+void NodeBase::feiReinit()
+{
+	feiDestroy();
+	feiInit();
+}
+
 void NodeBase::feiUpdate()
 {
 	update();

@@ -107,11 +107,13 @@ void FSMEditorScene::init()
 	Vec2 startPosition = Interface::getInstance()->getWindowSize();
 	startPosition.zoom(Vec2(0.5f, -0.5f));
 	auto button = new StateButton(-1);
+	_addStateButton = button;
 	button->setLabelString(FSMEditor::font, "+");
 	button->feiInit();
 	button->setPosition(startPosition + Vec2(-button->getRectSize().x - 1.0f, 1.0f));
 	_fixLayer.add(button);
 	auto button1 = new SignalButton(-1);
+	_addSignalButton = button1;
 	button1->setLabelString(FSMEditor::font, "+");
 	button1->feiInit();
 	startPosition = Interface::getInstance()->getWindowSize();
@@ -132,6 +134,12 @@ void FSMEditorScene::init()
 	add(&_tmpLabel);
 }
 
+void FSMEditorScene::destroy()
+{
+	throwAway(_addSignalButton);
+	throwAway(_addStateButton);
+}
+
 void FSMEditorScene::update()
 {
 	auto win = Interface::getInstance()->getCurrentWindow();
@@ -147,11 +155,9 @@ void FSMEditorScene::update()
 void FSMEditorScene::updateSignalList()
 {
 	//clear signalListLayer
-	auto lv = _signalListLayer.getListVector();
-	for (auto i : lv) {
-		throwAway(i);
-	}
+	_signalListLayer.throwAwayAll();
 	_signalListLayer.clear();
+	_signalListLayer.garbageRecycle();
 
 	auto signalList =_fsm.getSignalVector();
 	Vec2 winSize = Interface::getInstance()->getWindowSize();
@@ -174,11 +180,9 @@ void FSMEditorScene::updateSignalList()
 void FSMEditorScene::updateFSM()
 {
 	//clear fsmLayer
-	auto lv = _fsmLayer.getListVector();
-	for (auto i : lv) {
-		throwAway(i);
-	}
+	_fsmLayer.throwAwayAll();
 	_fsmLayer.clear();
+	_fsmLayer.garbageRecycle();
 
 	auto stateList = _fsm.getStateVector();
 	for (auto& state : stateList) {
@@ -223,6 +227,18 @@ void FSMEditorScene::keyCallback(int key, int scancode, int action, int mods)
 		if (!_tmpName.empty()) {
 			_tmpName.pop_back();
 			_tmpLabel.setString(FSMEditor::font, _tmpName);
+		}
+	}
+	if (key == GLFW_KEY_F11 && action == GLFW_RELEASE) {
+		auto window = Interface::getInstance()->getCurrentWindow();
+		window->setFullscreen(!window->isFullscreen());
+		Color("#555").setClearColor();
+	}
+	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
+		if (mods & GLFW_MOD_CONTROL) {
+			_addSignalButton->click();
+		} else {
+			_addStateButton->click();
 		}
 	}
 }

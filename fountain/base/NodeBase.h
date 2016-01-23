@@ -27,6 +27,7 @@ public:
 	virtual void feiInit();
 	virtual void feiDestroy();
 	virtual void feiUpdate();
+	void feiReinit();
 };
 
 } // namespace fei

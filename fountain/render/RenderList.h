@@ -28,6 +28,7 @@ public:
 	void del(RenderObj* rObj);
 	void clear();
 	void throwAway(RenderObj* garbage);
+	void throwAwayAll();
 
 	std::list<RenderObj*> getListVector();
 

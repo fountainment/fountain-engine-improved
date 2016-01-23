@@ -95,6 +95,13 @@ void RenderList::throwAway(fei::RenderObj* garbage)
 	_garbageQueue.push(garbage);
 }
 
+void RenderList::throwAwayAll()
+{
+	for (auto renderObj : _objList) {
+		throwAway(renderObj);
+	}
+}
+
 std::list<fei::RenderObj*> RenderList::getListVector()
 {
 	return _objList;

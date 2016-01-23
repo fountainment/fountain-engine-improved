@@ -47,6 +47,7 @@ class FSMEditorScene : public fei::Scene
 {
 public:
 	void init() override;
+	void destroy() override;
 	void update() override;
 
 	void updateSignalList();
@@ -69,6 +70,8 @@ private:
 	fei::Layer _fsmLayer;
 	fei::Layer _fixLayer;
 
+	fei::Button* _addSignalButton;
+	fei::Button* _addStateButton;
 	fei::Rect _rect;
 	fei::ShapeObj _rectObj;
 
