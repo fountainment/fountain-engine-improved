@@ -308,22 +308,26 @@ static void drop_callback(GLFWwindow* window, int count, const char** paths)
 
 void Window::setCallback()
 {
-	glfwSetKeyCallback(window, key_callback);
-	glfwSetMouseButtonCallback(window, mouse_button_callback);
-	glfwSetCursorPosCallback(window, cursor_pos_callback);
-	glfwSetScrollCallback(window, scroll_callback);
-	glfwSetCharCallback(window, character_callback);
-	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-	glfwSetDropCallback(window, drop_callback);
+	if (window) {
+		glfwSetKeyCallback(window, key_callback);
+		glfwSetMouseButtonCallback(window, mouse_button_callback);
+		glfwSetCursorPosCallback(window, cursor_pos_callback);
+		glfwSetScrollCallback(window, scroll_callback);
+		glfwSetCharCallback(window, character_callback);
+		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+		glfwSetDropCallback(window, drop_callback);
+	}
 }
 
 void Window::unsetCallback()
 {
-	glfwSetKeyCallback(window, nullptr);
-	glfwSetMouseButtonCallback(window, nullptr);
-	glfwSetCursorPosCallback(window, nullptr);
-	glfwSetScrollCallback(window, nullptr);
-	glfwSetCharCallback(window, nullptr);
-	glfwSetFramebufferSizeCallback(window, nullptr);
-	glfwSetDropCallback(window, nullptr);
+	if (window) {
+		glfwSetKeyCallback(window, nullptr);
+		glfwSetMouseButtonCallback(window, nullptr);
+		glfwSetCursorPosCallback(window, nullptr);
+		glfwSetScrollCallback(window, nullptr);
+		glfwSetCharCallback(window, nullptr);
+		glfwSetFramebufferSizeCallback(window, nullptr);
+		glfwSetDropCallback(window, nullptr);
+	}
 }

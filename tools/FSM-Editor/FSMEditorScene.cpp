@@ -205,7 +205,7 @@ void FSMEditorScene::setState(int state)
 
 void FSMEditorScene::charactorCallback(unsigned int codepoint)
 {
-	if (_tmpName.size() < 25) {
+	if (_tmpName.size() < 25 && codepoint != (unsigned int)' ') {
 		_tmpName.push_back(codepoint);
 		_tmpLabel.setString(FSMEditor::font, _tmpName);
 	}
