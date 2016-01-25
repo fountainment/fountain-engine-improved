@@ -106,8 +106,6 @@ void FSMEditorScene::init()
 	_addStateButton->setLabelString(FSMEditor::font, "+");
 	_addSignalButton->feiInit();
 	_addStateButton->feiInit();
-	updateSignalList();
-	updateFSM();
 
 	_fixLayer.add(_addSignalButton);
 	_fixLayer.add(_addStateButton);
@@ -272,4 +270,7 @@ void FSMEditorScene::refreshWindow()
 	_addStateButton->setPosition(startPosition + Vec2(-_addStateButton->getRectSize().x - 1.0f, 1.0f));
 
 	_tmpLabel.setPosition(winS * -0.5f + Vec2(20.0f));
+
+	updateSignalList();
+	updateFSM();
 }
