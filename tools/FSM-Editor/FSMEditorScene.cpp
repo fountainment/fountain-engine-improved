@@ -136,7 +136,7 @@ void FSMEditorScene::update()
 		} else {
 			_helpLayer.setVisible(false);
 		}
-		mouseDrag(&_fsmCam, &_fsmCam);
+		mouseDrag(&_fsmCam, &_fsmCam, -1);
 	}
 }
 
@@ -241,14 +241,14 @@ void FSMEditorScene::scrollCallback(double xoffset, double yoffset)
 	}
 }
 
-void FSMEditorScene::mouseDrag(Camera* cam, NodeBase* node)
+void FSMEditorScene::mouseDrag(Camera* cam, NodeBase* node, float k)
 {
 	auto window = Interface::getInstance()->getCurrentWindow();
 	static Vec2 oldPos = window->getRHCursorPos();
-	Vec2 deltaV = (window->getRHCursorPos() - oldPos) / -cam->getCameraScale();
+	Vec2 deltaV = (window->getRHCursorPos() - oldPos) / cam->getCameraScale();
 	oldPos = window->getRHCursorPos();
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE)) {
-		node->move(deltaV);
+		node->move(deltaV * k);
 	}
 }
 

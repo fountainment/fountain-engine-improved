@@ -33,6 +33,7 @@ External:
 		* Engine Manual (doxygen?)
 
 	Study:
+		! C++11 std::thread
 		* LiquidFun Particle System
 		* Physics-based Rendering
 		* Valkan API

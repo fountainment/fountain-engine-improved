@@ -58,7 +58,7 @@ public:
 	void charactorCallback(unsigned int codepoint) override;
 	void keyCallback(int key, int scancode, int action, int mods) override;
 	void scrollCallback(double xoffset, double yoffset);
-	void mouseDrag(fei::Camera* cam, fei::NodeBase* node);
+	void mouseDrag(fei::Camera* cam, fei::NodeBase* node, float k);
 
 	void refreshWindow();
 
