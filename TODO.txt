@@ -15,14 +15,16 @@ Function:
 
 
 Optimization:
-	C Replace Box2D with LiquidFun
 	! Framerate Control
 	* Standardize function name (e.g. razor meanning-unclear load())
 
 
 External:
 	Tool:
-		! FSM Editor
+		C FSM Editor
+			Draging logic
+			Line and arrow rendering
+			FSM file format
 
 	Test:
 		? FlappyMario using new engine (just for test)
