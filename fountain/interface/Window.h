@@ -44,6 +44,7 @@ public:
 	int getMouseButton(int button);
 	const Vec2 getCursorPos();
 	const Vec2 getRHCursorPos();
+	const Vec2 getRHCursorDeltaV();
 	const Vec2 getWindowSize();
 	const Vec2 getFrameSize();
 

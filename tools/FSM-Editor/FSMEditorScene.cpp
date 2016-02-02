@@ -244,10 +244,8 @@ void FSMEditorScene::scrollCallback(double xoffset, double yoffset)
 void FSMEditorScene::mouseDrag(Camera* cam, NodeBase* node, float k)
 {
 	auto window = Interface::getInstance()->getCurrentWindow();
-	static Vec2 oldPos = window->getRHCursorPos();
-	Vec2 deltaV = (window->getRHCursorPos() - oldPos) / cam->getCameraScale();
-	oldPos = window->getRHCursorPos();
-	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE)) {
+	Vec2 deltaV = window->getRHCursorDeltaV() / cam->getCameraScale();
+	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE) || window->getKey(GLFW_KEY_SPACE)) {
 		node->move(deltaV * k);
 	}
 }

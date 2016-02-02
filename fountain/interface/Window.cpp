@@ -226,6 +226,14 @@ const fei::Vec2 Window::getRHCursorPos()
 	return result;
 }
 
+const fei::Vec2 Window::getRHCursorDeltaV()
+{
+	static Vec2 oldRHCursorPos = getRHCursorPos();
+	Vec2 deltaV = getRHCursorPos() - oldRHCursorPos;
+	oldRHCursorPos += deltaV;
+	return deltaV;
+}
+
 const fei::Vec2 Window::getWindowSize()
 {
 	fei::Vec2 result;
