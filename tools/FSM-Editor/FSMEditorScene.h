@@ -69,6 +69,8 @@ public:
 	fei::Label _tmpLabel;
 	fei::Camera _fsmCam;
 
+	std::map<int, fei::Vec2> _statePositionMap;
+
 private:
 	fei::Camera _mainCam;
 
@@ -84,8 +86,6 @@ private:
 	fei::ShapeObj _rectObj;
 
 	fei::Vec2 _cursorDeltaV;
-
-	std::map<int, fei::Vec2> _statePositionMap;
 };
 
 #endif // _FEIEDITORSCENE_H_

@@ -101,6 +101,7 @@ void StateButton::update()
 {
 	if (DownStateButton == this) {
 		scene->mouseDrag(&scene->_fsmCam, this);
+		scene->_statePositionMap[_state] = this->getPosition();
 	}
 }
 
