@@ -37,10 +37,13 @@ public:
 	StateButton(int state);
 
 	void onClick() override;
+	void onButtonDown() override;
+	void onMouseUp() override;
 	void update() override;
 
 private:
 	int _state;
+	static StateButton* DownStateButton;
 };
 
 class FSMEditorScene : public fei::Scene
@@ -58,16 +61,16 @@ public:
 	void charactorCallback(unsigned int codepoint) override;
 	void keyCallback(int key, int scancode, int action, int mods) override;
 	void scrollCallback(double xoffset, double yoffset);
-	void mouseDrag(fei::Camera* cam, fei::NodeBase* node, float k);
+	void mouseDrag(fei::Camera* cam, fei::NodeBase* node, float k = 1.0f);
 
 	void refreshWindow();
 
 	std::vector<unsigned long> _tmpName;
 	fei::Label _tmpLabel;
+	fei::Camera _fsmCam;
 
 private:
 	fei::Camera _mainCam;
-	fei::Camera _fsmCam;
 
 	fut::FSM _fsm;
 	fei::Layer _helpLayer;
@@ -79,6 +82,8 @@ private:
 	fei::Button* _addStateButton;
 	fei::Rect _rect;
 	fei::ShapeObj _rectObj;
+
+	fei::Vec2 _cursorDeltaV;
 
 	std::map<int, fei::Vec2> _statePositionMap;
 };

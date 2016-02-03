@@ -61,6 +61,7 @@ private:
 
 	bool _collide;
 	bool _mouseDown;
+	int _state;
 };
 
 } // namespace fei

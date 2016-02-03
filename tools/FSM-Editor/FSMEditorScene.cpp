@@ -4,6 +4,7 @@
 
 using namespace fei;
 
+StateButton* StateButton::DownStateButton;
 static FSMEditorScene* scene;
 static fut::FSM* fsm;
 
@@ -85,8 +86,22 @@ void StateButton::onClick()
 	}
 }
 
+void StateButton::onButtonDown()
+{
+	DownStateButton = this;
+}
+
+void StateButton::onMouseUp()
+{
+	DownStateButton = nullptr;
+	setBackColor(FSMEditor::midColor);
+}
+
 void StateButton::update()
 {
+	if (DownStateButton == this) {
+		scene->mouseDrag(&scene->_fsmCam, this);
+	}
 }
 
 void FSMEditorScene::init()
@@ -131,12 +146,15 @@ void FSMEditorScene::update()
 {
 	auto win = Interface::getInstance()->getCurrentWindow();
 	if (win) {
+		_cursorDeltaV = win->getRHCursorDeltaV();
 		if (win->getKey(GLFW_KEY_H)) {
 			_helpLayer.setVisible(true);
 		} else {
 			_helpLayer.setVisible(false);
 		}
-		mouseDrag(&_fsmCam, &_fsmCam, -1);
+		if (win->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE) || win->getKey(GLFW_KEY_SPACE)) {
+			mouseDrag(&_fsmCam, &_fsmCam, -1);
+		}
 	}
 }
 
@@ -243,11 +261,8 @@ void FSMEditorScene::scrollCallback(double xoffset, double yoffset)
 
 void FSMEditorScene::mouseDrag(Camera* cam, NodeBase* node, float k)
 {
-	auto window = Interface::getInstance()->getCurrentWindow();
-	Vec2 deltaV = window->getRHCursorDeltaV() / cam->getCameraScale();
-	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE) || window->getKey(GLFW_KEY_SPACE)) {
-		node->move(deltaV * k);
-	}
+	Vec2 deltaV = _cursorDeltaV / cam->getCameraScale();
+	node->move(deltaV * k);
 }
 
 void FSMEditorScene::refreshWindow()

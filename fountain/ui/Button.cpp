@@ -11,7 +11,8 @@ Button::Button()
   _backColor(fei::Color::White),
   _frontColor(fei::Color::Black),
   _collide(false),
-  _mouseDown(false)
+  _mouseDown(false),
+  _state(0)
 {
 	setHasAlpha(true);
 }
@@ -33,7 +34,6 @@ void Button::drawIt()
 
 void Button::feiUpdate()
 {
-	static int state = 0;
 	if (_drawCamera) {
 		fei::Vec2 cPos = fei::Interface::getInstance()->getRHCursorPos();
 		cPos = _drawCamera->screenToWorld(cPos);
@@ -46,13 +46,11 @@ void Button::feiUpdate()
 				if (_mouseDown) {
 					onMouseDown();
 				}
-				state = 0;
 			} else {
-				if (state == 1) {
+				if (_state == 1) {
 					onButtonUp();
 				}
 				onLeave();
-				state = 0;
 			}
 		}
 		if (_collide) {
@@ -64,15 +62,17 @@ void Button::feiUpdate()
 				if (_mouseDown) {
 					onMouseDown();
 					onButtonDown();
-					state = 1;
+					_state = 1;
 				} else {
-					if (state == 1) {
+					if (_state == 1) {
 						click();
 						onButtonUp();
-						state = 0;
+						_state = 0;
 					}
 					onMouseUp();
 				}
+			} else {
+				_state = 0;
 			}
 		}
 	}
