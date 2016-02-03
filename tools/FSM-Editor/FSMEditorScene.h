@@ -38,7 +38,7 @@ public:
 
 	void onClick() override;
 	void onButtonDown() override;
-	void onMouseUp() override;
+	void onButtonUp() override;
 	void update() override;
 
 private:

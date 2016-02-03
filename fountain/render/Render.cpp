@@ -35,6 +35,9 @@ static const GLchar *basicFragmentShader = {
 
 const GLfloat Render::stripTexCoord[8] = {0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
 
+const std::string Render::shaderTextureSwitchStr = "feiUseTex";
+const std::string Render::shaderTextureIdStr = "feiTex";
+
 Render* Render::instance = nullptr;
 
 Render* Render::getInstance()
@@ -257,8 +260,8 @@ void Render::bindTexture(GLuint tex)
 	glBindTexture(GL_TEXTURE_2D, tex);
 	auto shader = getShaderProgram();
 	if (shader) {
-		shader->setUniform("feiUseTex", 1.0f);
-		shader->setUniform("feiTex", 0);
+		shader->setUniform(shaderTextureSwitchStr, 1.0f);
+		shader->setUniform(shaderTextureIdStr, 0);
 	}
 }
 
@@ -266,7 +269,7 @@ void Render::disableTexture()
 {
 	auto shader = getShaderProgram();
 	if (shader) {
-		shader->setUniform("feiUseTex", 0.0f);
+		shader->setUniform(shaderTextureSwitchStr, 0.0f);
 	}
 }
 

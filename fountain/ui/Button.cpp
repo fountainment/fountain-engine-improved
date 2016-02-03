@@ -12,7 +12,7 @@ Button::Button()
   _frontColor(fei::Color::Black),
   _collide(false),
   _mouseDown(false),
-  _state(0)
+  _buttonDown(false)
 {
 	setHasAlpha(true);
 }
@@ -43,13 +43,7 @@ void Button::feiUpdate()
 			_collide = collide;
 			if (_collide) {
 				onEnter();
-				if (_mouseDown) {
-					onMouseDown();
-				}
 			} else {
-				if (_state == 1) {
-					onButtonUp();
-				}
 				onLeave();
 			}
 		}
@@ -62,17 +56,20 @@ void Button::feiUpdate()
 				if (_mouseDown) {
 					onMouseDown();
 					onButtonDown();
-					_state = 1;
+					_buttonDown = true;
 				} else {
-					if (_state == 1) {
+					if (_buttonDown) {
 						click();
 						onButtonUp();
-						_state = 0;
+						_buttonDown = false;
 					}
 					onMouseUp();
 				}
 			} else {
-				_state = 0;
+				if (_buttonDown) {
+					onButtonUp();
+					_buttonDown = false;
+				}
 			}
 		}
 	}
@@ -137,6 +134,11 @@ void Button::setCenter(const fei::Vec2& v)
 bool Button::isCollide()
 {
 	return _collide;
+}
+
+bool Button::isButtonDown()
+{
+	return _buttonDown;
 }
 
 void Button::click()

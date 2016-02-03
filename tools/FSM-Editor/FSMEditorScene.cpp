@@ -24,7 +24,11 @@ void ButtonBase::init()
 
 void ButtonBase::onEnter()
 {
-	setBackColor(FSMEditor::midColor);
+	if (isButtonDown()) {
+		setBackColor(FSMEditor::lightColor);
+	} else {
+		setBackColor(FSMEditor::midColor);
+	}
 }
 
 void ButtonBase::onLeave()
@@ -88,13 +92,14 @@ void StateButton::onClick()
 
 void StateButton::onButtonDown()
 {
-	DownStateButton = this;
+	if (_state != -1) {
+		DownStateButton = this;
+	}
 }
 
-void StateButton::onMouseUp()
+void StateButton::onButtonUp()
 {
 	DownStateButton = nullptr;
-	setBackColor(FSMEditor::midColor);
 }
 
 void StateButton::update()

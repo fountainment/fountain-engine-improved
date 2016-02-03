@@ -97,6 +97,9 @@ private:
 
 	static const GLfloat stripTexCoord[8];
 
+	static const std::string shaderTextureSwitchStr;
+	static const std::string shaderTextureIdStr;
+
 	static Render *instance;
 };
 

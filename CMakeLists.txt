@@ -63,9 +63,6 @@ if(WINDOWS)
   link_directories(${PROJECT_SOURCE_DIR}/deps/lib)
 
   set(PLATFORM_LINK_LIBRARY glfw glew32s opengl32 FreeImage OpenAL32 Box2D freetype winmm)
-  if (MSVC14)
-    set(PLATFORM_LINK_LIBRARY ${PLATFORM_LINK_LIBRARY} legacy_stdio_definitions)
-  endif()
 
   file(COPY ${PROJECT_SOURCE_DIR}/deps/bin/ DESTINATION ${EXECUTABLE_OUTPUT_PATH}/Debug)
   file(COPY ${PROJECT_SOURCE_DIR}/deps/bin/ DESTINATION ${EXECUTABLE_OUTPUT_PATH}/Release)

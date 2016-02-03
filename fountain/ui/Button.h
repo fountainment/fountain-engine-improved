@@ -38,6 +38,7 @@ public:
 	void setCenter(const Vec2& v);
 
 	bool isCollide();
+	bool isButtonDown();
 
 	void click();
 
@@ -61,7 +62,7 @@ private:
 
 	bool _collide;
 	bool _mouseDown;
-	int _state;
+	bool _buttonDown;
 };
 
 } // namespace fei
