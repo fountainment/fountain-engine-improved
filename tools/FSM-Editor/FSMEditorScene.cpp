@@ -115,6 +115,7 @@ void FSMEditorScene::init()
 
 	scene = this;
 	fsm = &_fsm;
+	_currentSignal = -1;
 
 	add(&_fsmLayer);
 	add(&_signalListLayer);
@@ -205,7 +206,6 @@ void FSMEditorScene::updateFSM()
 		_fsmLayer.add(button);
 	}
 	//TODO:
-	//  memorize StateButton's position
 	//  add all relations to fsm
 	//  add save button saving fsm to text file
 }
@@ -213,6 +213,7 @@ void FSMEditorScene::updateFSM()
 void FSMEditorScene::setSignal(int sig)
 {
 	std::printf("Signal: %d\n", sig);
+	_currentSignal = sig;
 	//TODO:
 	//  memorize the select signal
 	//  highlight the select SignalButton

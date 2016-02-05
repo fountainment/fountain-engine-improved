@@ -86,6 +86,8 @@ private:
 	fei::ShapeObj _rectObj;
 
 	fei::Vec2 _cursorDeltaV;
+
+	int _currentSignal;
 };
 
 #endif // _FEIEDITORSCENE_H_
