@@ -61,6 +61,7 @@ public:
 	void charactorCallback(unsigned int codepoint) override;
 	void keyCallback(int key, int scancode, int action, int mods) override;
 	void scrollCallback(double xoffset, double yoffset);
+	void mouseButtonCallback(int button, int action, int mods);
 	void mouseDrag(fei::Camera* cam, fei::NodeBase* node, float k = 1.0f);
 
 	void refreshWindow();
@@ -70,6 +71,7 @@ public:
 	fei::Camera _fsmCam;
 
 	std::map<int, fei::Vec2> _statePositionMap;
+	fei::Button* _collideStateButton;
 
 private:
 	fei::Camera _mainCam;
@@ -88,6 +90,8 @@ private:
 	fei::Vec2 _cursorDeltaV;
 
 	int _currentSignal;
+
+	bool _drawLine;
 };
 
 #endif // _FEIEDITORSCENE_H_

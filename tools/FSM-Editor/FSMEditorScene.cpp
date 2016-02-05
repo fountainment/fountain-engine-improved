@@ -29,6 +29,7 @@ void ButtonBase::onEnter()
 	} else {
 		setBackColor(FSMEditor::midColor);
 	}
+	scene->_collideStateButton = this;
 }
 
 void ButtonBase::onLeave()
@@ -115,7 +116,10 @@ void FSMEditorScene::init()
 
 	scene = this;
 	fsm = &_fsm;
+
 	_currentSignal = -1;
+	_drawLine = false;
+	_collideStateButton = nullptr;
 
 	add(&_fsmLayer);
 	add(&_signalListLayer);
@@ -161,6 +165,10 @@ void FSMEditorScene::update()
 		}
 		if (win->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE) || win->getKey(GLFW_KEY_SPACE)) {
 			mouseDrag(&_fsmCam, &_fsmCam, -1);
+		}
+		if (_collideStateButton && _drawLine) {
+			//TODO: add line shape
+			//fei::Render::drawLine(_collideStateButton->getCenter(), _fsmCam.screenToWorld(win->getRHCursorPos()));
 		}
 	}
 }
@@ -263,6 +271,23 @@ void FSMEditorScene::scrollCallback(double xoffset, double yoffset)
 	}
 	else if (yoffset < 0.0) {
 		_fsmCam.zoomCameraScale(0.90909f);
+	}
+}
+
+void FSMEditorScene::mouseButtonCallback(int button, int action, int mods)
+{
+	if (GLFW_MOUSE_BUTTON_RIGHT == button) {
+		if (action == GLFW_PRESS) {
+			if (nullptr != _collideStateButton) {
+				_collideStateButton->getPosition();
+				_drawLine = true;
+			}
+		} else if (action == GLFW_RELEASE) {
+			if (nullptr != _collideStateButton) {
+				_collideStateButton->getPosition();
+				_drawLine = false;
+			}
+		}
 	}
 }
 
