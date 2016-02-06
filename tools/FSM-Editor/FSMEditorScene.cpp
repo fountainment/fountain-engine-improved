@@ -29,7 +29,9 @@ void ButtonBase::onEnter()
 	} else {
 		setBackColor(FSMEditor::midColor);
 	}
-	scene->_collideStateButton = this;
+	if (!scene->_drawLine) {
+		scene->_collideStateButton = this;
+	}
 }
 
 void ButtonBase::onLeave()
@@ -121,6 +123,7 @@ void FSMEditorScene::init()
 	_drawLine = false;
 	_collideStateButton = nullptr;
 
+	add(&_lineLayer);
 	add(&_fsmLayer);
 	add(&_signalListLayer);
 	add(&_helpLayer);
@@ -141,6 +144,11 @@ void FSMEditorScene::init()
 	_rect.setSize(Vec2(100.0f));
 	_rectObj.setShape(&_rect);
 	_helpLayer.add(&_rectObj);
+
+	_editingLineObj.setShape(&_editingLine);
+	_editingLineObj.setVisible(false);
+	_lineLayer.add(&_editingLineObj);
+	_lineLayer.setCamera(&_fsmCam);
 
 	add(&_tmpLabel);
 
@@ -168,7 +176,11 @@ void FSMEditorScene::update()
 		}
 		if (_collideStateButton && _drawLine) {
 			//TODO: add line shape
-			//fei::Render::drawLine(_collideStateButton->getCenter(), _fsmCam.screenToWorld(win->getRHCursorPos()));
+			_editingLine.a = _collideStateButton->getCenter();
+			_editingLine.b = _fsmCam.screenToWorld(win->getRHCursorPos());
+			_editingLineObj.setVisible(true);
+		} else {
+			_editingLineObj.setVisible(false);
 		}
 	}
 }

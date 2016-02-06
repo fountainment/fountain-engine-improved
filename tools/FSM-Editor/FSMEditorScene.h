@@ -72,6 +72,7 @@ public:
 
 	std::map<int, fei::Vec2> _statePositionMap;
 	fei::Button* _collideStateButton;
+	bool _drawLine;
 
 private:
 	fei::Camera _mainCam;
@@ -80,6 +81,7 @@ private:
 	fei::Layer _helpLayer;
 	fei::Layer _signalListLayer;
 	fei::Layer _fsmLayer;
+	fei::Layer _lineLayer;
 	fei::Layer _fixLayer;
 
 	fei::Button* _addSignalButton;
@@ -91,7 +93,8 @@ private:
 
 	int _currentSignal;
 
-	bool _drawLine;
+	fei::Segment _editingLine;
+	fei::ShapeObj _editingLineObj;
 };
 
 #endif // _FEIEDITORSCENE_H_
