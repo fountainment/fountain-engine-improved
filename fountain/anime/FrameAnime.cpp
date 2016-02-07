@@ -50,7 +50,7 @@ void FrameAnime::loadTextureAndIPI(const fei::Texture& texture, const std::strin
 	curFrameIndex = 0;
 }
 
-void FrameAnime::feiUpdate(fei::RenderObj* rObj)
+void FrameAnime::feiObjectUpdate(fei::RenderObj* rObj)
 {
 	updateFrameIndex();
 	updateFrameContent(rObj);

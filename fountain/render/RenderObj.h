@@ -19,7 +19,7 @@ public:
 	void anchorTransform();
 	void matrixTransformEnd();
 
-	void feiUpdate() override;
+	virtual void feiBasicUpdate() override;
 
 	void draw();
 	virtual void drawIt();

@@ -18,7 +18,7 @@ public:
 
 	virtual void feiInit() override;
 	virtual void feiDestroy() override;
-	virtual void feiUpdate() override;
+	virtual void feiBasicUpdate() override;
 
 	virtual void drawIt() override;
 

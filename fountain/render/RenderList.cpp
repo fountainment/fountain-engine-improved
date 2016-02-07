@@ -61,9 +61,8 @@ void RenderList::feiDestroy()
 	_isLoaded = false;
 }
 
-void RenderList::feiUpdate()
+void RenderList::feiBasicUpdate()
 {
-	update();
 	listUpdate();
 }
 

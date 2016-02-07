@@ -22,11 +22,14 @@ public:
 
 	virtual void init();
 	virtual void destroy();
+	virtual void beforeUpdate();
 	virtual void update();
+	virtual void afterUpdate();
 
 	virtual void feiInit();
 	virtual void feiDestroy();
 	virtual void feiUpdate();
+	virtual void feiBasicUpdate();
 	void feiReinit();
 };
 

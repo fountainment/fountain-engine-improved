@@ -10,7 +10,15 @@ void NodeBase::destroy()
 {
 }
 
+void NodeBase::beforeUpdate()
+{
+}
+
 void NodeBase::update()
+{
+}
+
+void NodeBase::afterUpdate()
 {
 }
 
@@ -36,6 +44,12 @@ void NodeBase::feiReinit()
 
 void NodeBase::feiUpdate()
 {
+	beforeUpdate();
+	feiBasicUpdate();
 	update();
+	afterUpdate();
 }
 
+void NodeBase::feiBasicUpdate()
+{
+}

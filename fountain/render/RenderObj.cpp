@@ -153,11 +153,10 @@ void RenderObj::matrixTransformEnd()
 	glPopMatrix();
 }
 
-void RenderObj::feiUpdate()
+void RenderObj::feiBasicUpdate()
 {
-	update();
 	if (anime) {
-		anime->feiUpdate(this);
+		anime->feiObjectUpdate(this);
 	}
 }
 

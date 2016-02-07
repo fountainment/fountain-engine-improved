@@ -18,7 +18,7 @@ public:
 	Button();
 
 	void drawIt() override;
-	void feiUpdate() override;
+	void feiBasicUpdate() override;
 
 	void setLabel(const Label& label);
 	fei::Label* getLabel();

@@ -6,12 +6,6 @@ Scene::~Scene()
 {
 }
 
-void Scene::feiUpdate()
-{
-	update();
-	listUpdate();
-}
-
 void Scene::setClock(fei::Clock* clock)
 {
 	sceneClock = clock;

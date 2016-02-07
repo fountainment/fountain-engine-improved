@@ -32,7 +32,7 @@ void Button::drawIt()
 	_label.drawIt();
 }
 
-void Button::feiUpdate()
+void Button::feiBasicUpdate()
 {
 	if (_drawCamera) {
 		fei::Vec2 cPos = fei::Interface::getInstance()->getRHCursorPos();

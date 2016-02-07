@@ -25,7 +25,6 @@ public:
 	SignalButton(int sig);
 
 	void onClick() override;
-	void update() override;
 
 private:
 	int _sig;
@@ -39,7 +38,7 @@ public:
 	void onClick() override;
 	void onButtonDown() override;
 	void onButtonUp() override;
-	void update() override;
+	void beforeUpdate() override;
 
 private:
 	int _state;
@@ -51,7 +50,7 @@ class FSMEditorScene : public fei::Scene
 public:
 	void init() override;
 	void destroy() override;
-	void update() override;
+	void beforeUpdate() override;
 
 	void updateSignalList();
 	void updateFSM();

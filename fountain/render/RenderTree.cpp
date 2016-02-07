@@ -59,9 +59,8 @@ void RenderTree::feiDestroy()
 	_isLoaded = false;
 }
 
-void RenderTree::feiUpdate()
+void RenderTree::feiBasicUpdate()
 {
-	update();
 	treeUpdate();
 }
 

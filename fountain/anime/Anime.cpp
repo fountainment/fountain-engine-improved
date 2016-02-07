@@ -11,7 +11,7 @@ Anime::~Anime()
 {
 }
 
-void Anime::feiUpdate(fei::RenderObj* rObj)
+void Anime::feiObjectUpdate(fei::RenderObj* rObj)
 {
 	update(rObj);
 }

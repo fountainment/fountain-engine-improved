@@ -22,7 +22,7 @@ public:
 	void loadImageFileAndIPI(const std::string& textureName, const std::string& ipiName);
 	void loadTextureAndIPI(const Texture& texture, const std::string& ipiName);
 
-	virtual void feiUpdate(RenderObj* rObj) override;
+	virtual void feiObjectUpdate(RenderObj* rObj) override;
 	void updateFrameIndex();
 	virtual void updateFrameContent(RenderObj* rObj);
 

@@ -12,8 +12,6 @@ class Scene : public Layer
 public:
 	virtual ~Scene();
 
-	virtual void feiUpdate() override;
-
 	void setClock(Clock* clock);
 	Clock* getClock();
 

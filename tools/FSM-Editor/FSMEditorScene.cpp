@@ -68,10 +68,6 @@ void SignalButton::onClick()
 	}
 }
 
-void SignalButton::update()
-{
-}
-
 StateButton::StateButton(int state)
 {
 	_state = state;
@@ -105,7 +101,7 @@ void StateButton::onButtonUp()
 	DownStateButton = nullptr;
 }
 
-void StateButton::update()
+void StateButton::beforeUpdate()
 {
 	if (DownStateButton == this) {
 		scene->mouseDrag(&scene->_fsmCam, this);
@@ -161,7 +157,7 @@ void FSMEditorScene::destroy()
 	throwAway(_addStateButton);
 }
 
-void FSMEditorScene::update()
+void FSMEditorScene::beforeUpdate()
 {
 	auto win = Interface::getInstance()->getCurrentWindow();
 	if (win) {
