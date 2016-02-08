@@ -29,9 +29,6 @@ void ButtonBase::onEnter()
 	} else {
 		setBackColor(FSMEditor::midColor);
 	}
-	if (!scene->_drawLine) {
-		scene->_collideStateButton = this;
-	}
 }
 
 void ButtonBase::onLeave()
@@ -75,6 +72,24 @@ StateButton::StateButton(int state)
 	setBackColor(FSMEditor::darkColor);
 }
 
+void StateButton::onEnter()
+{
+	if (isButtonDown()) {
+		setBackColor(FSMEditor::lightColor);
+	} else {
+		setBackColor(FSMEditor::midColor);
+	}
+	scene->_collideStateButton = this;
+}
+
+void StateButton::onLeave()
+{
+	if (scene->_collideStateButton == this) {
+		scene->_collideStateButton = nullptr;
+	}
+	setBackColor(FSMEditor::darkColor);
+}
+
 void StateButton::onClick()
 {
 	if (_state == -1) {
@@ -109,6 +124,11 @@ void StateButton::beforeUpdate()
 	}
 }
 
+int StateButton::getState()
+{
+	return _state;
+}
+
 void FSMEditorScene::init()
 {
 
@@ -118,6 +138,8 @@ void FSMEditorScene::init()
 	_currentSignal = -1;
 	_drawLine = false;
 	_collideStateButton = nullptr;
+	_startStateButton = nullptr;
+	_endStateButton = nullptr;
 
 	add(&_lineLayer);
 	add(&_fsmLayer);
@@ -170,9 +192,9 @@ void FSMEditorScene::beforeUpdate()
 		if (win->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE) || win->getKey(GLFW_KEY_SPACE)) {
 			mouseDrag(&_fsmCam, &_fsmCam, -1);
 		}
-		if (_collideStateButton && _drawLine) {
+		if (_startStateButton && _drawLine) {
 			//TODO: add line shape
-			_editingLine.a = _collideStateButton->getCenter();
+			_editingLine.a = _startStateButton->getCenter();
 			_editingLine.b = _fsmCam.screenToWorld(win->getRHCursorPos());
 			_editingLineObj.setVisible(true);
 		} else {
@@ -222,8 +244,14 @@ void FSMEditorScene::updateFSM()
 		_fsmLayer.add(button);
 	}
 	//TODO:
-	//  add all relations to fsm
 	//  add save button saving fsm to text file
+	updateFSMConnection();
+}
+
+void FSMEditorScene::updateFSMConnection()
+{
+	//TODO:
+	//  add all relations to fsm
 }
 
 void FSMEditorScene::setSignal(int sig)
@@ -242,6 +270,17 @@ void FSMEditorScene::setState(int state)
 	//  implement UI component draging logic
 }
 
+void FSMEditorScene::establishLink(StateButton* a, StateButton* b)
+{
+	if (_currentSignal != -1) {
+		int stateA = a->getState();
+		int stateB = b->getState();
+		_fsm.registerLink(stateA, stateB, _currentSignal);
+		updateFSMConnection();
+		std::printf("Link: %d->%d (%d)\n", stateA, stateB, _currentSignal);
+	}
+}
+
 void FSMEditorScene::charactorCallback(unsigned int codepoint)
 {
 	if (_tmpName.size() < 25 && codepoint != (unsigned int)' ') {
@@ -258,7 +297,7 @@ void FSMEditorScene::keyCallback(int key, int scancode, int action, int mods)
 			_tmpLabel.setString(FSMEditor::font, _tmpName);
 		}
 	}
-	if (key == GLFW_KEY_F11 && action == GLFW_RELEASE) {
+	if (key == GLFW_KEY_F11 && action == GLFW_PRESS) {
 		auto window = Interface::getInstance()->getCurrentWindow();
 		window->setFullscreen(!window->isFullscreen());
 		refreshWindow();
@@ -286,15 +325,20 @@ void FSMEditorScene::mouseButtonCallback(int button, int action, int mods)
 {
 	if (GLFW_MOUSE_BUTTON_RIGHT == button) {
 		if (action == GLFW_PRESS) {
-			if (nullptr != _collideStateButton) {
-				_collideStateButton->getPosition();
+			if (_collideStateButton && _collideStateButton->getState() != -1) {
+				_startStateButton = _collideStateButton;
 				_drawLine = true;
 			}
 		} else if (action == GLFW_RELEASE) {
-			if (nullptr != _collideStateButton) {
-				_collideStateButton->getPosition();
-				_drawLine = false;
+			if (_collideStateButton) {
+				if (_drawLine) {
+					_endStateButton = _collideStateButton;
+					if (_startStateButton && _endStateButton->getState() != -1) {
+						establishLink(_startStateButton, _endStateButton);
+					}
+				}
 			}
+			_drawLine = false;
 		}
 	}
 }

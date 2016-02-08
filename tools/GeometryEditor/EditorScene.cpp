@@ -229,7 +229,7 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 	}
 
 	if (key == GLFW_KEY_V && action == GLFW_PRESS) {
-		if (ipiName == "") {
+		if (ipiName == fei::EmptyStr) {
 			ipiName = "new.ipi";
 		}
 		anime[curEdit].getFramePool()->dumpIPI(ipiName);

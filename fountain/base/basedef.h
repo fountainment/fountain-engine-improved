@@ -17,6 +17,7 @@
 namespace fei {
 
 extern const std::string EngineName;
+extern const std::string EmptyStr;
 
 } // namespace fei
 

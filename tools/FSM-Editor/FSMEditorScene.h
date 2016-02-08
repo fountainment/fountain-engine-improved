@@ -35,10 +35,15 @@ class StateButton : public ButtonBase
 public:
 	StateButton(int state);
 
+	void onEnter() override;
+	void onLeave() override;
+
 	void onClick() override;
 	void onButtonDown() override;
 	void onButtonUp() override;
 	void beforeUpdate() override;
+
+	int getState();
 
 private:
 	int _state;
@@ -54,8 +59,11 @@ public:
 
 	void updateSignalList();
 	void updateFSM();
+	void updateFSMConnection();
 	void setSignal(int signal);
 	void setState(int state);
+
+	void establishLink(StateButton* a, StateButton* b);
 
 	void charactorCallback(unsigned int codepoint) override;
 	void keyCallback(int key, int scancode, int action, int mods) override;
@@ -70,7 +78,7 @@ public:
 	fei::Camera _fsmCam;
 
 	std::map<int, fei::Vec2> _statePositionMap;
-	fei::Button* _collideStateButton;
+	StateButton* _collideStateButton;
 	bool _drawLine;
 
 private:
@@ -91,6 +99,9 @@ private:
 	fei::Vec2 _cursorDeltaV;
 
 	int _currentSignal;
+
+	StateButton* _startStateButton;
+	StateButton* _endStateButton;
 
 	fei::Segment _editingLine;
 	fei::ShapeObj _editingLineObj;
