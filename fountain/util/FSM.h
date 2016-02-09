@@ -32,6 +32,8 @@ public:
 	const std::vector<std::pair<int, int>> getStateLinkVector(int state);
 	const std::vector<std::pair<int, int>> getStateLinkVector(const std::string& state);
 
+	const std::vector<int> getLinkSignalVector(int stateA, int stateB);
+
 	int getState();
 	void setState(int state);
 

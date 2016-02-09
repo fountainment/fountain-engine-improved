@@ -123,6 +123,18 @@ const std::vector<std::pair<int, int>> FSM::getStateLinkVector(const std::string
 	return getStateLinkVector(getStateId(state));
 }
 
+const std::vector<int> FSM::getLinkSignalVector(int stateA, int stateB)
+{
+	std::vector<int> ret;
+	auto slv = getStateLinkVector(stateA);
+	for (auto sl : slv) {
+		if (sl.second == stateB) {
+			ret.push_back(sl.first);
+		}
+	}
+	return ret;
+}
+
 int FSM::getState()
 {
 	return _state;

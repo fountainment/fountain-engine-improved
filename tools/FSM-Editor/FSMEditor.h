@@ -1,6 +1,8 @@
 #if !defined(_FSMEDITOR_H_)
 #define _FSMEDITOR_H_
 
+#include "fountain.h"
+
 class FSMEditor : public fei::Application
 {
 public:
@@ -11,6 +13,7 @@ public:
 	const static fei::Color& midColor;
 	const static fei::Color& lightColor;
 	const static fei::Color& lighterColor;
+	static fei::FontCache font20;
 	static fei::FontCache font;
 };
 

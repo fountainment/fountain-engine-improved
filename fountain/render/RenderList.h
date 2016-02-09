@@ -30,7 +30,7 @@ public:
 	void throwAway(RenderObj* garbage);
 	void throwAwayAll();
 
-	std::list<RenderObj*> getListVector();
+	const std::vector<RenderObj*> getListVector();
 
 	void garbageRecycle();
 	void sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*) = RenderListZCmp);

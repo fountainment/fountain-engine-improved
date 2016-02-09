@@ -101,9 +101,9 @@ void RenderList::throwAwayAll()
 	}
 }
 
-std::list<fei::RenderObj*> RenderList::getListVector()
+const std::vector<fei::RenderObj*> RenderList::getListVector()
 {
-	return _objList;
+	return std::vector<fei::RenderObj*>(_objList.begin(), _objList.end());
 }
 
 void RenderList::garbageRecycle()

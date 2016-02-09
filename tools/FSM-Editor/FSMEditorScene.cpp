@@ -260,10 +260,32 @@ void FSMEditorScene::updateFSMConnection()
 	_lineLayer.clear();
 	_lineLayer.garbageRecycle();
 
-	auto stateV = _fsm.getStateVector();
+	auto stateV = _stateListLayer.getListVector();
 	int len = stateV.size();
 	for (int i = 0; i < len - 1; i++) {
 		for (int j = i + 1; j < len; j++) {
+			auto ba = dynamic_cast<StateButton*>(stateV[i]);
+			auto bb = dynamic_cast<StateButton*>(stateV[j]);
+			auto bai = ba->getState();
+			auto bbi = bb->getState();
+			auto abs = _fsm.getLinkSignalVector(bai, bbi);
+			auto bbs = _fsm.getLinkSignalVector(bbi, bai);
+			if (!abs.empty()) {
+				std::string labelStr = _fsm.getSignalName(abs[0]);
+				int len = abs.size();
+				for (int i = 1; i < len; i++) {
+					labelStr += ", " + _fsm.getSignalName(abs[i]);
+				}
+				_lineLayer.add(new ButtonArrow(ba, bb, labelStr));
+			}
+			if (!bbs.empty()) {
+				std::string labelStr = _fsm.getSignalName(bbs[0]);
+				int len = bbs.size();
+				for (int i = 1; i < len; i++) {
+					labelStr += ", " + _fsm.getSignalName(bbs[i]);
+				}
+				_lineLayer.add(new ButtonArrow(bb, ba, labelStr));
+			}
 		}
 	}
 }
@@ -273,15 +295,12 @@ void FSMEditorScene::setSignal(int sig)
 	std::printf("Signal: %d\n", sig);
 	_currentSignal = sig;
 	//TODO:
-	//  memorize the select signal
 	//  highlight the select SignalButton
 }
 
 void FSMEditorScene::setState(int state)
 {
 	std::printf("State: %d\n", state);
-	//TODO:
-	//  implement UI component draging logic
 }
 
 void FSMEditorScene::establishLink(StateButton* a, StateButton* b)
@@ -291,7 +310,7 @@ void FSMEditorScene::establishLink(StateButton* a, StateButton* b)
 		int stateB = b->getState();
 		_fsm.registerLink(stateA, stateB, _currentSignal);
 		std::printf("Link: %d->%d (%d)\n", stateA, stateB, _currentSignal);
-		_lineLayer.add(new ButtonArrow(a, b));
+		updateFSMConnection();
 	}
 }
 

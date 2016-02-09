@@ -10,10 +10,12 @@ const Color& FSMEditor::brightColor = fei::Color::White;
 const Color& FSMEditor::midColor = fei::Color("#333");
 const Color& FSMEditor::lightColor = fei::Color("#09C");
 const Color& FSMEditor::lighterColor = fei::Color("#0AD");
+FontCache FSMEditor::font20;
 FontCache FSMEditor::font;
 
 void FSMEditor::engineSetting(Engine* e)
 {
+	font20.loadFont("res/font/wqy.ttc", 20);
 	font.loadFont("res/font/wqy.ttc", 40);
 
 	//e->window->setFullscreen(true);
