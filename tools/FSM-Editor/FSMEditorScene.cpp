@@ -144,7 +144,7 @@ void FSMEditorScene::init()
 
 	add(&_lineLayer);
 	add(&_editingLineLayer);
-	add(&_fsmLayer);
+	add(&_stateListLayer);
 	add(&_signalListLayer);
 	add(&_helpLayer);
 	add(&_fixLayer);
@@ -159,7 +159,7 @@ void FSMEditorScene::init()
 	_fixLayer.add(_addSignalButton);
 	_fixLayer.add(_addStateButton);
 	setCamera(&_mainCam);
-	_fsmLayer.setCamera(&_fsmCam);
+	_stateListLayer.setCamera(&_fsmCam);
 
 	_rect.setSize(Vec2(100.0f));
 	_rectObj.setShape(&_rect);
@@ -234,10 +234,10 @@ void FSMEditorScene::updateSignalList()
 
 void FSMEditorScene::updateFSM()
 {
-	//clear fsmLayer
-	_fsmLayer.throwAwayAll();
-	_fsmLayer.clear();
-	_fsmLayer.garbageRecycle();
+	//clear stateListLayer
+	_stateListLayer.throwAwayAll();
+	_stateListLayer.clear();
+	_stateListLayer.garbageRecycle();
 
 	auto stateList = _fsm.getStateVector();
 	for (auto& state : stateList) {
@@ -245,7 +245,7 @@ void FSMEditorScene::updateFSM()
 		button->setLabelString(FSMEditor::font, state.second);
 		button->feiInit();
 		button->setPosition(_statePositionMap[state.first]);
-		_fsmLayer.add(button);
+		_stateListLayer.add(button);
 	}
 	//TODO:
 	//  add save button saving fsm to text file
@@ -259,6 +259,13 @@ void FSMEditorScene::updateFSMConnection()
 	_lineLayer.throwAwayAll();
 	_lineLayer.clear();
 	_lineLayer.garbageRecycle();
+
+	auto stateV = _fsm.getStateVector();
+	int len = stateV.size();
+	for (int i = 0; i < len - 1; i++) {
+		for (int j = i + 1; j < len; j++) {
+		}
+	}
 }
 
 void FSMEditorScene::setSignal(int sig)

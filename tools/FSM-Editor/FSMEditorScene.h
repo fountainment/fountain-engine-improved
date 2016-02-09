@@ -87,7 +87,7 @@ private:
 	fut::FSM _fsm;
 	fei::Layer _helpLayer;
 	fei::Layer _signalListLayer;
-	fei::Layer _fsmLayer;
+	fei::Layer _stateListLayer;
 	fei::Layer _lineLayer;
 	fei::Layer _editingLineLayer;
 	fei::Layer _fixLayer;
