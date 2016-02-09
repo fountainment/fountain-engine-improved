@@ -12,13 +12,13 @@ void ButtonArrow::drawIt()
 {
 	auto pa = _ba->getCenter();
 	auto pb = _bb->getCenter();
-	auto segVec = (pb - pa).normalized();
-	auto segVVec = segVec.getVerticalVec2();
-	seg.a = pa - segVVec * 5.0f;
-	seg.b = pb - segVVec * 5.0f;
+	seg.a = pa;
+	seg.b = pb;
 	fei::Vec2 collideP;
 	if (_bb->getRect().collideSegment(collideP, seg)) {
-		auto arrowP = collideP - segVec * 21.0f - segVVec * 7.0f;
+		auto segVec = seg.getVector().normalized();
+		auto segVVec = segVec.getVerticalVector();
+		auto arrowP = seg.b - segVec * 10.0f + segVVec * 5.0f;
 		fei::Render::drawLine(collideP, arrowP);
 	}
 	fei::Render::drawShape(&seg);
