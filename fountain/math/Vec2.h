@@ -5,6 +5,8 @@
 
 namespace fei {
 
+class Vec3;
+
 class Vec2
 {
 public:
@@ -13,6 +15,7 @@ public:
 
 	Vec2();
 	explicit Vec2(float xy);
+	explicit Vec2(const Vec3& v3);
 	Vec2(float xx, float yy);
 
 	void set(float xx, float yy);
@@ -56,6 +59,8 @@ public:
 	float getLengthSq() const;
 	float getLength() const;
 	float getAngle() const;
+
+	const Vec2 getVerticalVec2() const;
 
 	static const Vec2 ZERO;
 	static const Vec2 UP;
