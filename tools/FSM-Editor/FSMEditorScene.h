@@ -89,6 +89,7 @@ private:
 	fei::Layer _signalListLayer;
 	fei::Layer _fsmLayer;
 	fei::Layer _lineLayer;
+	fei::Layer _editingLineLayer;
 	fei::Layer _fixLayer;
 
 	fei::Button* _addSignalButton;

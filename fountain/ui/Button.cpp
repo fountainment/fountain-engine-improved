@@ -37,7 +37,7 @@ void Button::feiBasicUpdate()
 	if (_drawCamera) {
 		fei::Vec2 cPos = fei::Interface::getInstance()->getRHCursorPos();
 		cPos = _drawCamera->screenToWorld(cPos);
-		bool collide = _backRect.collidePoint(cPos - getPosition());
+		bool collide = getRect().collidePoint(cPos);
 		bool mouseDown = fei::Interface::getInstance()->getCurrentWindow()->getMouseButton(GLFW_MOUSE_BUTTON_LEFT) != 0;
 		if (collide != _collide) {
 			_collide = collide;
@@ -84,6 +84,11 @@ void Button::setLabel(const fei::Label& label)
 fei::Label* Button::getLabel()
 {
 	return &_label;
+}
+
+const fei::Rect Button::getRect()
+{
+	return fei::Rect(getPosition(), getRectSize());
 }
 
 void Button::setRectSize(const fei::Vec2& rectSize)

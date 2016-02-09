@@ -1,5 +1,6 @@
 #include "FSMEditorScene.h"
 
+#include "ButtonArrow.h"
 #include "FSMEditor.h"
 
 using namespace fei;
@@ -142,6 +143,7 @@ void FSMEditorScene::init()
 	_endStateButton = nullptr;
 
 	add(&_lineLayer);
+	add(&_editingLineLayer);
 	add(&_fsmLayer);
 	add(&_signalListLayer);
 	add(&_helpLayer);
@@ -165,7 +167,9 @@ void FSMEditorScene::init()
 
 	_editingLineObj.setShape(&_editingLine);
 	_editingLineObj.setVisible(false);
-	_lineLayer.add(&_editingLineObj);
+	_editingLineLayer.add(&_editingLineObj);
+	_editingLineLayer.setCamera(&_fsmCam);
+
 	_lineLayer.setCamera(&_fsmCam);
 
 	add(&_tmpLabel);
@@ -252,6 +256,9 @@ void FSMEditorScene::updateFSMConnection()
 {
 	//TODO:
 	//  add all relations to fsm
+	_lineLayer.throwAwayAll();
+	_lineLayer.clear();
+	_lineLayer.garbageRecycle();
 }
 
 void FSMEditorScene::setSignal(int sig)
@@ -276,8 +283,8 @@ void FSMEditorScene::establishLink(StateButton* a, StateButton* b)
 		int stateA = a->getState();
 		int stateB = b->getState();
 		_fsm.registerLink(stateA, stateB, _currentSignal);
-		updateFSMConnection();
 		std::printf("Link: %d->%d (%d)\n", stateA, stateB, _currentSignal);
+		_lineLayer.add(new ButtonArrow(a, b));
 	}
 }
 

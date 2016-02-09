@@ -1,6 +1,7 @@
 #if !defined(_FEI_RECT_H_)
 #define _FEI_RECT_H_
 
+#include "math/Segment.h"
 #include "math/Shape.h"
 #include "math/Vec2.h"
 
@@ -19,10 +20,18 @@ public:
 	const Vec2 getSize() const;
 	void setSize(const Vec2& sz);
 
-	float getLeft();
-	float getRight();
-	float getTop();
-	float getBottom();
+	float getLength() const;
+	float getLengthSq() const;
+
+	float getLeft() const;
+	float getRight() const;
+	float getTop() const;
+	float getBottom() const;
+
+	Segment getLeftSegment() const;
+	Segment getRightSegment() const;
+	Segment getTopSegment() const;
+	Segment getBottomSegment() const;
 
 	void zoom(float scale);
 	void zoom(const Vec2& v);
@@ -33,6 +42,10 @@ public:
 	bool collide(const Shape* other) const override;
 
 	bool collidePoint(const Vec2& pt) const override;
+
+	bool collideSegment(Vec2& pt, const Segment& seg) const;
+
+	bool collideRect(const Rect& rct) const;
 
 	void getStripCoord(float* coord) const;
 

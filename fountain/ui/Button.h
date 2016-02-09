@@ -23,6 +23,7 @@ public:
 	void setLabel(const Label& label);
 	fei::Label* getLabel();
 
+	const Rect getRect();
 	void setRectSize(const Vec2& rectSize);
 	const Vec2 getRectSize();
 

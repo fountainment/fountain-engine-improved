@@ -1,5 +1,6 @@
 set(TEST_SRC
 	main.cpp
+	ButtonArrow.cpp
 	FSMEditorScene.cpp
 )
 
