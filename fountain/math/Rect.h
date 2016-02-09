@@ -20,9 +20,6 @@ public:
 	const Vec2 getSize() const;
 	void setSize(const Vec2& sz);
 
-	float getLength() const;
-	float getLengthSq() const;
-
 	float getLeft() const;
 	float getRight() const;
 	float getTop() const;
