@@ -71,6 +71,8 @@ public:
 	void mouseButtonCallback(int button, int action, int mods);
 	void mouseDrag(fei::Camera* cam, fei::NodeBase* node, float k = 1.0f);
 
+	bool processCmd(const std::string& cmd);
+
 	void refreshWindow();
 
 	std::vector<unsigned long> _tmpName;

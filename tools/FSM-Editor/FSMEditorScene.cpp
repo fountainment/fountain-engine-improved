@@ -132,7 +132,6 @@ int StateButton::getState()
 
 void FSMEditorScene::init()
 {
-
 	scene = this;
 	fsm = &_fsm;
 
@@ -336,10 +335,12 @@ void FSMEditorScene::keyCallback(int key, int scancode, int action, int mods)
 		refreshWindow();
 	}
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
-		if (mods & GLFW_MOD_CONTROL) {
-			_addSignalButton->click();
-		} else {
-			_addStateButton->click();
+		if (!processCmd(unicodeToUtf8(_tmpName))) {
+			if (mods & GLFW_MOD_CONTROL) {
+				_addSignalButton->click();
+			} else {
+				_addStateButton->click();
+			}
 		}
 	}
 }
@@ -380,6 +381,25 @@ void FSMEditorScene::mouseDrag(Camera* cam, NodeBase* node, float k)
 {
 	Vec2 deltaV = _cursorDeltaV / cam->getCameraScale();
 	node->move(deltaV * k);
+}
+
+bool FSMEditorScene::processCmd(const std::string& cmd)
+{
+	if (cmd.length() > 1 && cmd.front() == ':') {
+		std::string filename = cmd.substr(2);
+		_tmpLabel.clearString();
+		switch (cmd[1]) {
+		case 'w':
+			//_fsm.dump(filename);
+			break;
+		case 'e':
+			//_fsm.load(filename);
+			break;
+		}
+		_tmpName.clear();
+		return true;
+	}
+	return false;
 }
 
 void FSMEditorScene::refreshWindow()

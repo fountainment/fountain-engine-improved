@@ -19,6 +19,7 @@ void ButtonArrow::drawIt()
 	_seg.a = pa - segVVec * 5.0f;
 	_seg.b = pb - segVVec * 5.0f;
 	fei::Vec2 collideP;
+	//TODO: draw differently when _ba == _bb
 	if (_bb->getRect().collideSegment(collideP, _seg)) {
 		fei::Vec2 bac;
 		auto bbc = collideP;
