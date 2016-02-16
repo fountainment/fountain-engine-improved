@@ -72,6 +72,8 @@ public:
 	void mouseDrag(fei::Camera* cam, fei::NodeBase* node, float k = 1.0f);
 
 	bool processCmd(const std::string& cmd);
+	void dumpPosition(const std::string& filename);
+	void loadPosition(const std::string& filename);
 
 	void refreshWindow();
 

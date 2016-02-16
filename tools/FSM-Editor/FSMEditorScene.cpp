@@ -390,16 +390,47 @@ bool FSMEditorScene::processCmd(const std::string& cmd)
 		_tmpLabel.clearString();
 		switch (cmd[1]) {
 		case 'w':
-			//_fsm.dump(filename);
+			_fsm.dump(filename);
+			dumpPosition(filename + ".pos");
 			break;
 		case 'e':
-			//_fsm.load(filename);
+			_fsm.load(filename);
+			loadPosition(filename + ".pos");
+			updateSignalList();
+			updateFSM();
 			break;
 		}
 		_tmpName.clear();
 		return true;
 	}
 	return false;
+}
+
+void FSMEditorScene::dumpPosition(const std::string& filename)
+{
+	auto file = std::fopen(filename.c_str(), "w");
+	for (const auto& statePosition : _statePositionMap) {
+		auto name = _fsm.getStateName(statePosition.first);
+		auto pos = statePosition.second;
+		std::fprintf(file, "%s %f %f\n", name.c_str(), pos.x, pos.y);
+	}
+	std::fclose(file);
+}
+
+void FSMEditorScene::loadPosition(const std::string& filename)
+{
+	char a[50];
+	float x, y;
+	auto file = std::fopen(filename.c_str(), "r");
+	if (!file) {
+		return;
+	}
+	_statePositionMap.clear();
+	while (std::fscanf(file, "%s %f %f", a, &x, &y) != EOF) {
+		int id = _fsm.getStateId(a);
+		_statePositionMap[id] = Vec2(x, y);
+	}
+	std::fclose(file);
 }
 
 void FSMEditorScene::refreshWindow()

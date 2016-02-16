@@ -34,8 +34,13 @@ public:
 
 	const std::vector<int> getLinkSignalVector(int stateA, int stateB);
 
+	void clearAll();
+
 	int getState();
 	void setState(int state);
+
+	void dump(const std::string& filename);
+	void load(const std::string& filename);
 
 	static const int NoneSig = 0;
 	static const int ChangeSig = 1;

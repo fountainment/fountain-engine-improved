@@ -135,6 +135,18 @@ const std::vector<int> FSM::getLinkSignalVector(int stateA, int stateB)
 	return ret;
 }
 
+void FSM::clearAll()
+{
+	_state = NoneState;
+	_maxSignal = 1;
+	_maxState = 1;
+	_nameSignalMap.clear();
+	_signalNameMap.clear();
+	_nameStateMap.clear();
+	_stateNameMap.clear();
+	_fsmMap.clear();
+}
+
 int FSM::getState()
 {
 	return _state;
@@ -146,6 +158,34 @@ void FSM::setState(int state)
 		_state = state;
 		outputSignal(ChangeSig);
 	}
+}
+
+void FSM::dump(const std::string& filename)
+{
+	auto file = std::fopen(filename.c_str(), "w");
+	for (const auto& stateMap : _fsmMap) {
+		std::string stateA = getStateName(stateMap.first);
+		for (const auto& singleLink : stateMap.second) {
+			std::string stateB = getStateName(singleLink.second);
+			std::string signal = getSignalName(singleLink.first);
+			std::fprintf(file, "%s %s %s\n", stateA.c_str(), stateB.c_str(), signal.c_str());
+		}
+	}
+	std::fclose(file);
+}
+
+void FSM::load(const std::string& filename)
+{
+	char a[50], b[50], s[50];
+	auto file = std::fopen(filename.c_str(), "r");
+	if (!file) {
+		return;
+	}
+	clearAll();
+	while (std::fscanf(file, "%s %s %s\n", a, b, s) != EOF) {
+		registerLink(a, b, s);
+	}
+	std::fclose(file);
 }
 
 void FSM::outputSignal(int signal)
