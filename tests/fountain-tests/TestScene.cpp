@@ -13,7 +13,7 @@ void TestScene::init()
 	mainCam.setCameraScale(2.0f);
 	setCamera(&mainCam);
 	Physics::getInstance()->setDebugDrawCamera(&mainCam);
-	Physics::getInstance()->setDoDebugDraw(true);
+	//Physics::getInstance()->setDoDebugDraw(true);
 
 	map.load("res/image/map.png");
 
@@ -78,7 +78,7 @@ void TestScene::update()
 		} else if (sp > 0.0001f) {
 			mainChar.setSpeed(speed, 100.0f);
 		} else {
-			mainChar.setSpeed(Vec2::ZERO);
+			mainChar.setSpeed(speed, 0.0f);
 		}
 	} else if (window) {
 		Vec2 speed(Vec2::ZERO);

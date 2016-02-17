@@ -11,9 +11,12 @@ public:
 	FSM();
 
 	void inputSignal(int signal);
+	void inputSignal(const std::string& signal);
 
 	int registerSignal(const std::string& signal);
+	const std::vector<int> registerSignal(const std::vector<std::string> signalList);
 	int registerState(const std::string& state);
+	const std::vector<int> registerState(const std::vector<std::string> stateList);
 	void registerLink(const std::string& curState, \
 			const std::string& nextState, const std::string& signal);
 
@@ -28,7 +31,6 @@ public:
 
 	const std::vector<std::pair<int, std::string>> getSignalVector();
 	const std::vector<std::pair<int, std::string>> getStateVector();
-	//const std::vector<std::pair<int, int>> getLinkVector();
 	const std::vector<std::pair<int, int>> getStateLinkVector(int state);
 	const std::vector<std::pair<int, int>> getStateLinkVector(const std::string& state);
 
@@ -37,7 +39,9 @@ public:
 	void clearAll();
 
 	int getState();
+	const std::string getStateName();
 	void setState(int state);
+	void setState(const std::string& state);
 
 	void dump(const std::string& filename);
 	void load(const std::string& filename);

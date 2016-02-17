@@ -10,25 +10,45 @@ Charactor::Charactor()
 
 void Charactor::init()
 {
-	walkAnime[0].load("res/image/Walk_B.png", "res/image/Walk_B.sip");
-	walkAnime[1].load("res/image/Walk_L.png", "res/image/Walk_L.sip");
-	walkAnime[2].load("res/image/Walk_F.png", "res/image/Walk_F.sip");
-	walkAnime[3].load("res/image/Walk_R.png", "res/image/Walk_R.sip");
-	runAnime[0].load("res/image/Run_B.png", "res/image/Run_B.sip");
-	runAnime[1].load("res/image/Run_B.png", "res/image/Run_B.sip");
-	runAnime[2].load("res/image/Run_F.png", "res/image/Run_F.sip");
-	runAnime[3].load("res/image/Run_F.png", "res/image/Run_F.sip");
+	load("res/fsm/test");
+	setState("standW");
+	walkW = getStateId("walkW");
+	walkA = getStateId("walkA");
+	walkS = getStateId("walkS");
+	walkD = getStateId("walkD");
+	runW = getStateId("runW");
+	runA = getStateId("runA");
+	runS = getStateId("runS");
+	runD = getStateId("runD");
+	standW = getStateId("standW");
+	standA = getStateId("standA");
+	standS = getStateId("standS");
+	standD = getStateId("standD");
+	walkAnime[0].loadImageFileAndIPI("res/image/Latte_N_walk_B");
+	walkAnime[1].loadImageFileAndIPI("res/image/Latte_N_walk_L");
+	walkAnime[2].loadImageFileAndIPI("res/image/Latte_N_walk_F");
+	walkAnime[3].loadImageFileAndIPI("res/image/Latte_N_walk_R");
+	runAnime[0].loadImageFileAndIPI("res/image/Latte_N_run_B");
+	runAnime[1].loadImageFileAndIPI("res/image/Latte_N_run_B");
+	runAnime[2].loadImageFileAndIPI("res/image/Latte_N_run_F");
+	runAnime[3].loadImageFileAndIPI("res/image/Latte_N_run_F");
+	standAnime[0].loadImageFileAndIPI("res/image/Latte_N_breath_B");
+	standAnime[1].loadImageFileAndIPI("res/image/Latte_N_breath_L");
+	standAnime[2].loadImageFileAndIPI("res/image/Latte_N_breath_F");
+	standAnime[3].loadImageFileAndIPI("res/image/Latte_N_breath_R");
 	for (int i = 0; i < 4; i++) {
 		walkAnime[i].setLoop(true);
 		walkAnime[i].setFps(15);
 		runAnime[i].setLoop(true);
 		runAnime[i].setFps(15);
+		standAnime[i].setLoop(true);
+		standAnime[i].setFps(15);
 	}
-	curAnime = &walkAnime[0];
+	curAnime = &standAnime[0];
 	charClock.init();
 
-	Rect rect(Vec2(40, 20));
-	rect.setCenter(Vec2(0, -20));
+	Rect rect(Vec2(25, 10));
+	rect.setCenter(Vec2(0, 0));
 
 	body = Physics::getInstance()->createBody(Vec2::ZERO);
 	auto b2bd = body->getB2Body();
@@ -64,17 +84,7 @@ void Charactor::drawIt()
 void Charactor::update()
 {
 	setPosition(body->getPosition());
-	if (curAnime && curAnime->isStop()) {
-		curAnime = &walkAnime[0];
-		curAnime->update(this);
-	}
 	setAnime(curAnime);
-}
-
-void Charactor::setSpeed(const Vec2& sp)
-{
-	speed = sp;
-	body->setSpeed(speed);
 }
 
 void Charactor::setSpeed(const fei::Vec2& drct, float sp)
@@ -85,13 +95,18 @@ void Charactor::setSpeed(const fei::Vec2& drct, float sp)
 	int ri = v.getQuadrantIndex();
 	v.rotate(-45.0f);
 	int i = v.getQuadrantIndex();
-	if (speed.getLength() < 1.0f) return; 
-	if (sp < 150) curAnime = &walkAnime[i];
-	else curAnime = &runAnime[ri];
+	if (sp < 1.0f) {
+		inputSignal("stop");
+	} else if (sp < 150) {
+		inputSignal(_walkSignal[i]);
+	} else {
+		inputSignal(_runSignal[i]);
+	}
 }
 
 void Charactor::attack()
 {
+	inputSignal("attack");
 	if (curAnime == &atk1Anime) {
 		atk1Anime.destroyFixture();
 		curAnime = &atk2Anime;
@@ -105,4 +120,61 @@ void Charactor::attack()
 	}
 	curAnime->play();
 	curAnime->setCurFrameIndex(0);
+}
+
+void Charactor::outputSignal(int signal)
+{
+	if (signal == ChangeSig) {
+		int state = getState();
+		do {
+			if (state == walkW) {
+				curAnime = &walkAnime[0];
+				break;
+			}
+			if (state == walkA) {
+				curAnime = &walkAnime[1];
+				break;
+			}
+			if (state == walkS) {
+				curAnime = &walkAnime[2];
+				break;
+			}
+			if (state == walkD) {
+				curAnime = &walkAnime[3];
+				break;
+			}
+			if (state == runW) {
+				curAnime = &runAnime[0];
+				break;
+			}
+			if (state == runA) {
+				curAnime = &runAnime[1];
+				break;
+			}
+			if (state == runS) {
+				curAnime = &runAnime[2];
+				break;
+			}
+			if (state == runD) {
+				curAnime = &runAnime[3];
+				break;
+			}
+			if (state == standW) {
+				curAnime = &standAnime[0];
+				break;
+			}
+			if (state == standA) {
+				curAnime = &standAnime[1];
+				break;
+			}
+			if (state == standS) {
+				curAnime = &standAnime[2];
+				break;
+			}
+			if (state == standD) {
+				curAnime = &standAnime[3];
+				break;
+			}
+		} while(0);
+	}
 }

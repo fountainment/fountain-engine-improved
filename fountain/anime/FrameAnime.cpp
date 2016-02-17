@@ -22,7 +22,7 @@ void FrameAnime::loadTextureAndSIP(const fei::Texture& texture, const std::strin
 
 void FrameAnime::load(const std::string& name)
 {
-	loadImageFileAndSIP(name + ".png", name + ".sip");
+	loadImageFileAndSIP(name);
 }
 
 void FrameAnime::load(const std::string& name1, const std::string& name2)
@@ -30,11 +30,21 @@ void FrameAnime::load(const std::string& name1, const std::string& name2)
 	loadImageFileAndSIP(name1, name2);
 }
 
+void FrameAnime::loadImageFileAndSIP(const std::string& name)
+{
+	loadImageFileAndSIP(name + ".png", name + ".sip");
+}
+
 void FrameAnime::loadImageFileAndSIP(const std::string& textureName, const std::string& sipName)
 {
 	fei::Texture tmpTex;
 	tmpTex.load(textureName);
 	loadTextureAndSIP(tmpTex, sipName);
+}
+
+void FrameAnime::loadImageFileAndIPI(const std::string& name)
+{
+	loadImageFileAndIPI(name + ".png", name + ".ipi");
 }
 
 void FrameAnime::loadImageFileAndIPI(const std::string& textureName, const std::string& ipiName)

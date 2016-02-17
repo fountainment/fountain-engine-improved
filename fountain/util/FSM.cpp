@@ -15,6 +15,11 @@ void FSM::inputSignal(int signal)
 	}
 }
 
+void FSM::inputSignal(const std::string& signal)
+{
+	inputSignal(getSignalId(signal));
+}
+
 int FSM::registerSignal(const std::string& signal)
 {
 	int signalId = getSignalId(signal);
@@ -26,6 +31,15 @@ int FSM::registerSignal(const std::string& signal)
 	return signalId;
 }
 
+const std::vector<int> FSM::registerSignal(const std::vector<std::string> signalList)
+{
+	std::vector<int> ret;
+	for (const auto& signal : signalList) {
+		ret.push_back(registerSignal(signal));
+	}
+	return ret;
+}
+
 int FSM::registerState(const std::string& state)
 {
 	int stateId = getStateId(state);
@@ -35,6 +49,15 @@ int FSM::registerState(const std::string& state)
 	_nameStateMap[state] = stateId;
 	_stateNameMap[stateId] = state;
 	return stateId;
+}
+
+const std::vector<int> FSM::registerState(const std::vector<std::string> stateList)
+{
+	std::vector<int> ret;
+	for (const auto& state : stateList) {
+		ret.push_back(registerState(state));
+	}
+	return ret;
 }
 
 void FSM::registerLink(const std::string& curState, \
@@ -152,12 +175,22 @@ int FSM::getState()
 	return _state;
 }
 
+const std::string FSM::getStateName()
+{
+	return getStateName(getState());
+}
+
 void FSM::setState(int state)
 {
 	if (_state != state) {
 		_state = state;
 		outputSignal(ChangeSig);
 	}
+}
+
+void FSM::setState(const std::string& state)
+{
+	setState(getStateId(state));
 }
 
 void FSM::dump(const std::string& filename)
