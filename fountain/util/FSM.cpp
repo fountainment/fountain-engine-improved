@@ -162,7 +162,8 @@ void FSM::setState(int state)
 
 void FSM::dump(const std::string& filename)
 {
-	auto file = std::fopen(filename.c_str(), "w");
+	auto file = std::fopen(filename.c_str(), "wb");
+	std::fprintf(file, "%s\n", "#FSM");
 	for (const auto& stateMap : _fsmMap) {
 		std::string stateA = getStateName(stateMap.first);
 		for (const auto& singleLink : stateMap.second) {
@@ -177,12 +178,13 @@ void FSM::dump(const std::string& filename)
 void FSM::load(const std::string& filename)
 {
 	char a[50], b[50], s[50];
-	auto file = std::fopen(filename.c_str(), "r");
+	auto file = std::fopen(filename.c_str(), "rb");
 	if (!file) {
 		return;
 	}
 	clearAll();
-	while (std::fscanf(file, "%s %s %s\n", a, b, s) != EOF) {
+	std::fscanf(file, "%s", a);
+	while (std::fscanf(file, "%s%s%s", a, b, s) != EOF) {
 		registerLink(a, b, s);
 	}
 	std::fclose(file);

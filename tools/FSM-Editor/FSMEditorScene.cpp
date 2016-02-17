@@ -408,7 +408,7 @@ bool FSMEditorScene::processCmd(const std::string& cmd)
 
 void FSMEditorScene::dumpPosition(const std::string& filename)
 {
-	auto file = std::fopen(filename.c_str(), "w");
+	auto file = std::fopen(filename.c_str(), "wb");
 	for (const auto& statePosition : _statePositionMap) {
 		auto name = _fsm.getStateName(statePosition.first);
 		auto pos = statePosition.second;
@@ -421,7 +421,7 @@ void FSMEditorScene::loadPosition(const std::string& filename)
 {
 	char a[50];
 	float x, y;
-	auto file = std::fopen(filename.c_str(), "r");
+	auto file = std::fopen(filename.c_str(), "rb");
 	if (!file) {
 		return;
 	}
