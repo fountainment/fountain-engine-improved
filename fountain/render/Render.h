@@ -53,7 +53,7 @@ public:
 	const Rect getViewport();
 	void setClearColor(const Vec4* color);
 
-	static int getMaxTextureSize();
+	int getMaxTextureSize();
 
 	static void drawArray2f(const GLfloat* vertex, GLint first, GLsizei count, GLenum mode);
 
@@ -94,6 +94,7 @@ private:
 	std::map<GLuint, int> textureRCMap;
 
 	Rect _viewport;
+	int _maxTexSize;
 
 	static const GLfloat stripTexCoord[8];
 

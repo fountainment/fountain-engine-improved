@@ -31,22 +31,23 @@ public:
 	const Texture getCacheTexture();
 
 private:
+	void initCacheTexture();
 	void updateCache(unsigned long* str, int strSize);
 
-	Texture cacheTexture;
+	Texture _cacheTexture;
 
-	FT_Face face;
+	FT_Face _face;
 
-	int gridSize;
-	int gridNum;
-	int curRow;
-	int curCol;
+	int _gridSize;
+	int _gridNum;
+	int _curRow;
+	int _curCol;
 
-	std::map<unsigned long, Image> charImageMap;
-	std::map<unsigned long, int> charAdvanceMap;
+	std::map<unsigned long, Image> _charImageMap;
+	std::map<unsigned long, int> _charAdvanceMap;
 
-	bool fontIsLoaded;
-	FT_Bool useKerning;
+	bool _fontIsLoaded;
+	FT_Bool _useKerning;
 };
 
 } // namespace fei

@@ -6,14 +6,14 @@
 using fei::FontCache;
 
 FontCache::FontCache()
-: gridSize(0),
-  gridNum(0),
-  curRow(0),
-  curCol(0),
-  fontIsLoaded(false),
-  useKerning(false)
+: _gridSize(0),
+  _gridNum(0),
+  _curRow(0),
+  _curCol(0),
+  _fontIsLoaded(false),
+  _useKerning(false)
 {
-	cacheTexture.setHasAlpha(true);
+	_cacheTexture.setHasAlpha(true);
 }
 
 FontCache::~FontCache()
@@ -30,61 +30,61 @@ void FontCache::loadFont(const std::string& fontFile, int fontSize)
 	}
 	unloadFont();
 	FT_Library *library = &Font::getInstance()->library;
-	int error = FT_New_Face(*library, fontFile.c_str(), 0, &face);
+	int error = FT_New_Face(*library, fontFile.c_str(), 0, &_face);
 	if (error) {
 		std::fprintf(stderr, "FontCache: \"%s\" loading error!\n", fontFile.c_str());
 		return;
 	}
-	fontIsLoaded = true;
-	FT_Set_Pixel_Sizes(face, 0, fontSize);
-	gridSize = fontSize + (fontSize & 1) + 2;
-	useKerning = FT_HAS_KERNING(face);
+	_fontIsLoaded = true;
+	FT_Set_Pixel_Sizes(_face, 0, fontSize);
+	_gridSize = fontSize + (fontSize & 1) + 2;
+	_useKerning = FT_HAS_KERNING(_face);
 }
 
 void FontCache::unloadFont()
 {
-	if (!fontIsLoaded) {
+	if (!_fontIsLoaded) {
 		return;
 	}
-	fontIsLoaded= false;
-	useKerning = false;
+	_fontIsLoaded= false;
+	_useKerning = false;
 	if (!Font::getInstance()->isLoaded()) {
 		return;
 	}
-	FT_Done_Face(face);
+	FT_Done_Face(_face);
 }
 
 void FontCache::updateCache(unsigned long* str, int strSize)
 {
-	assert(strSize > 0 && cacheTexture.isLoaded());
-	int gridW = std::min(strSize, gridNum);
-	int gridH = strSize / gridNum;
+	assert(strSize > 0 && _cacheTexture.isLoaded());
+	int gridW = std::min(strSize, _gridNum);
+	int gridH = strSize / _gridNum;
 	if (!gridH) {
 		gridH = 1;
 	}
-	int bitsW = gridW * gridSize;
-	int bitsH = gridH * gridSize;
-	int xLoc = curCol * gridSize;
-	int yLoc = curRow * gridSize;
+	int bitsW = gridW * _gridSize;
+	int bitsH = gridH * _gridSize;
+	int xLoc = _curCol * _gridSize;
+	int yLoc = _curRow * _gridSize;
 
 	FT_Error error;
-	FT_GlyphSlot slot = face->glyph;
+	FT_GlyphSlot slot = _face->glyph;
 
 	auto bits = new unsigned char[bitsW * bitsH * 2];
 	for (int i = 0; i < strSize; i++) {
 		int gridX = i % gridW;
 		int gridY = i / gridW;
-		error = FT_Load_Char(face, str[i], FT_LOAD_RENDER);
+		error = FT_Load_Char(_face, str[i], FT_LOAD_RENDER);
 		if (error) {
 			continue;
 		}
 		FT_Bitmap& bitmap = slot->bitmap;
 		int bitW = (int)bitmap.width;
 		int bitH = (int)bitmap.rows;
-		int lbX = gridX * gridSize;
-		int lbY = gridY * gridSize;
-		for (int bitY = 0; bitY < gridSize; bitY++) {
-			for (int bitX = 0; bitX < gridSize; bitX++) {
+		int lbX = gridX * _gridSize;
+		int lbY = gridY * _gridSize;
+		for (int bitY = 0; bitY < _gridSize; bitY++) {
+			for (int bitX = 0; bitX < _gridSize; bitX++) {
 				int bitsX = lbX + bitX;
 				int bitsY = lbY + bitY;
 				int bitsIndex = bitsY * bitsW * 2 + bitsX * 2;
@@ -93,32 +93,37 @@ void FontCache::updateCache(unsigned long* str, int strSize)
 					bitmap.buffer[(bitH - bitY) * bitW + bitX - 1]:0;
 			}
 		}
-		fei::Image image = cacheTexture.getImage(fei::Rect((float)xLoc + lbX + 1, (float)yLoc + lbY + 1, (float)bitW, (float)bitH));
+		fei::Image image = _cacheTexture.getImage(fei::Rect((float)xLoc + lbX + 1, (float)yLoc + lbY + 1, (float)bitW, (float)bitH));
 		fei::Vec2 anchor(slot->bitmap_left + bitmap.width / 2.0f, slot->bitmap_top - bitmap.rows / 2.0f);
 		anchor *= -1.0f;
 		image.setAnchor(anchor);
-		charImageMap[str[i]] = image;
-		charAdvanceMap[str[i]] = slot->advance.x >> 6;
+		_charImageMap[str[i]] = image;
+		_charAdvanceMap[str[i]] = slot->advance.x >> 6;
 	}
-	cacheTexture.subUpdate(bits, bitsW, bitsH, fei::Texture::Format::LUMA, xLoc, yLoc);
+	_cacheTexture.subUpdate(bits, bitsW, bitsH, fei::Texture::Format::LUMA, xLoc, yLoc);
 	delete bits;
-	curCol += strSize;
-	curRow += curCol / gridNum;
-	curCol %= gridNum;
+	_curCol += strSize;
+	_curRow += _curCol / _gridNum;
+	_curCol %= _gridNum;
+}
+
+void FontCache::initCacheTexture()
+{
+	int maxTextureSize = Render::getInstance()->getMaxTextureSize();
+	int texSize = std::min(4096, maxTextureSize);
+	_gridNum = texSize / _gridSize;
+	_curRow = 0;
+	_curCol = 0;
+	_cacheTexture.load(nullptr, texSize, texSize, fei::Texture::Format::LUMA);
 }
 
 void FontCache::updateCache(const std::vector<unsigned long>& str)
 {
-	if (!fontIsLoaded) {
+	if (!_fontIsLoaded) {
 		return;
 	}
-	if (!cacheTexture.isLoaded()) {
-		int maxTextureSize = Render::getMaxTextureSize();
-		int texSize = std::min(4096, maxTextureSize);
-		gridNum = texSize / gridSize;
-		curRow = 0;
-		curCol = 0;
-		cacheTexture.load(nullptr, texSize, texSize, fei::Texture::Format::LUMA);
+	if (!_cacheTexture.isLoaded()) {
+		initCacheTexture();
 	}
 	auto strCopy = str;
 	std::sort(strCopy.begin(), strCopy.end());
@@ -133,14 +138,14 @@ void FontCache::updateCache(const std::vector<unsigned long>& str)
 	}
 	while (updateSize > 0) {
 		int subUpdateSize;
-		if (curCol != 0) {
-			subUpdateSize = std::min(updateSize, gridNum - curCol);
+		if (_curCol != 0) {
+			subUpdateSize = std::min(updateSize, _gridNum - _curCol);
 		} else {
-			int wholeLine = updateSize / gridNum;
+			int wholeLine = updateSize / _gridNum;
 			if (!wholeLine) {
 				subUpdateSize = updateSize;
 			} else {
-				subUpdateSize = wholeLine * gridNum;
+				subUpdateSize = wholeLine * _gridNum;
 			}
 		}
 		updateCache(&strCopy[strIndex], subUpdateSize);
@@ -156,53 +161,53 @@ void FontCache::updateCache(const std::string& str)
 
 void FontCache::deleteCache()
 {
-	cacheTexture.unload();
+	_cacheTexture.unload();
 }
 
 int FontCache::getRemainingSpace()
 {
-	if (!fontIsLoaded) {
+	if (!_fontIsLoaded) {
 		return 0;
 	}
-	return (gridNum - curRow - 1) * gridNum + (gridNum - curCol);
+	return (_gridNum - _curRow - 1) * _gridNum + (_gridNum - _curCol);
 }
 
 const fei::Image FontCache::queryCharactor(unsigned long c)
 {
-	auto it = charImageMap.find(c);
-	if (it == charImageMap.end()) {
+	auto it = _charImageMap.find(c);
+	if (it == _charImageMap.end()) {
 		std::vector<unsigned long> tmp;
 		tmp.push_back(c);
 		updateCache(tmp);
-		it = charImageMap.find(c);
+		it = _charImageMap.find(c);
 	}
 	return it->second;
 }
 
 int FontCache::queryKerning(unsigned long left, unsigned long right)
 {
-	if (!useKerning) {
+	if (!_useKerning) {
 		return 0;
 	}
 	FT_Vector delta;
 	FT_UInt leftIndex, rightIndex;
-	leftIndex = FT_Get_Char_Index(face, left);
-	rightIndex = FT_Get_Char_Index(face, right);
-	FT_Get_Kerning(face, leftIndex, rightIndex, FT_KERNING_DEFAULT, &delta);
+	leftIndex = FT_Get_Char_Index(_face, left);
+	rightIndex = FT_Get_Char_Index(_face, right);
+	FT_Get_Kerning(_face, leftIndex, rightIndex, FT_KERNING_DEFAULT, &delta);
 	return delta.x >> 6;
 }
 
 int FontCache::queryAdvance(unsigned long c)
 {
-	auto it = charAdvanceMap.find(c);
-	if (it == charAdvanceMap.end()) {
+	auto it = _charAdvanceMap.find(c);
+	if (it == _charAdvanceMap.end()) {
 		updateCache(&c, 1);
-		it = charAdvanceMap.find(c);
+		it = _charAdvanceMap.find(c);
 	}
 	return it->second;
 }
 
 const fei::Texture FontCache::getCacheTexture()
 {
-	return cacheTexture;
+	return _cacheTexture;
 }

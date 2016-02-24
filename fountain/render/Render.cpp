@@ -74,6 +74,9 @@ bool Render::init()
 		}
 		glEnable(GL_CULL_FACE);
 		glCullFace(GL_FRONT);
+		GLint maxTexSize;
+		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
+		_maxTexSize = maxTexSize;
 	}
 	return true;
 }
@@ -156,9 +159,7 @@ void Render::setClearColor(const fei::Vec4* color)
 
 int Render::getMaxTextureSize()
 {
-	GLint maxTexSize;
-	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
-	return maxTexSize;
+	return _maxTexSize;
 }
 
 void Render::pushShader(fei::ShaderProgram* shader)
