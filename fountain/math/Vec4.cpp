@@ -2,14 +2,6 @@
 
 using fei::Vec4;
 
-Vec4::Vec4()
-: x(0.0f),
-  y(0.0f),
-  z(0.0f),
-  w(0.0f)
-{
-}
-
 Vec4::Vec4(float xyzw)
 {
 	x = y = w = z = xyzw;

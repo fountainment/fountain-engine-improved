@@ -8,7 +8,7 @@ namespace fei {
 class Vec3
 {
 public:
-	Vec3();
+	Vec3() = default;
 	explicit Vec3(float xyz);
 	Vec3(float xx, float yy, float zz);
 	Vec3(const Vec2& v, float zz);

@@ -6,11 +6,10 @@ namespace fei {
 class noncopyable
 {
 	protected:
-		noncopyable() {}
-		~noncopyable() {}
-	private:
-		noncopyable(const noncopyable&);
-		const noncopyable& operator=(const noncopyable&);
+		noncopyable() = default;
+		~noncopyable() = default;
+		noncopyable(const noncopyable&) = delete;
+		const noncopyable& operator=(const noncopyable&) = delete;
 };
 
 } // namespace fei

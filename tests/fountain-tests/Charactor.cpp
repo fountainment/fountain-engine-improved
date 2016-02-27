@@ -92,7 +92,6 @@ void Charactor::setSpeed(const fei::Vec2& drct, float sp)
 	auto v = drct.normalized();
 	speed = v * sp;
 	body->setSpeed(speed);
-	int ri = v.getQuadrantIndex();
 	v.rotate(-45.0f);
 	int i = v.getQuadrantIndex();
 	if (sp < 1.0f) {

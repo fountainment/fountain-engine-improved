@@ -13,7 +13,7 @@ public:
 	float x;
 	float y;
 
-	Vec2();
+	Vec2() = default;
 	explicit Vec2(float xy);
 	explicit Vec2(const Vec3& v3);
 	Vec2(float xx, float yy);

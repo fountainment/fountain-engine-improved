@@ -10,7 +10,7 @@ namespace fei {
 class Vec4
 {
 public:
-	Vec4();
+	Vec4() = default;
 	explicit Vec4(float xyzw);
 	Vec4(float xx, float yy, float zz, float ww);
 	Vec4(const Vec3& xyz, float ww);
