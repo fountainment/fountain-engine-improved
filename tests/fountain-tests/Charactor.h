@@ -43,8 +43,8 @@ private:
 	fut::CollisionFrameAnime atk2Anime;
 	fut::CollisionFrameAnime atk3Anime;
 	//TODO: anime state control
-	const std::vector<std::string> _walkSignal = {"walkW", "walkA", "walkS", "walkD"};
-	const std::vector<std::string> _runSignal = {"runW", "runA", "runS", "runD"};;
+	static const std::vector<std::string> _walkSignal;
+	static const std::vector<std::string> _runSignal;
 	int walkW;
 	int walkA;
 	int walkS;

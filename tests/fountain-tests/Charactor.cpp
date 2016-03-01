@@ -3,6 +3,9 @@
 
 using namespace fei;
 
+const std::vector<std::string> Charactor::_walkSignal = { "walkW", "walkA", "walkS", "walkD" };
+const std::vector<std::string> Charactor::_runSignal = { "runW", "runA", "runS", "runD" };
+
 Charactor::Charactor()
 : curAnime(nullptr)
 {
