@@ -1,11 +1,14 @@
 F Finished
+O Optimizing
 C Current
 ! TODO soon
 * Normal
 ? Uncertain
 
 Function:
-	! FSM test
+	C FSM test
+	C InputBox Class
+	C UI Widget border
 	! Physics Collision Logic
 	! Render to Texture
 	! File Utility Class
@@ -17,25 +20,27 @@ Function:
 Optimization:
 	! Framerate Control
 	* Standardize function name (e.g. razor meanning-unclear load())
+	* Reduce texture switch
 
 
 External:
 	Tool:
-		C FSM Editor
-			Draging logic
-			Line and arrow rendering
-			FSM file format
+		O FSM Editor
+			! Hilight selected signal arrow
+			! Signal Deletion
+			! State Deletion
+			! Self-directed signal rendering
 
 	Test:
-		? FlappyMario using new engine (just for test)
+		! Implement a STG demo using new engine (just for test)
 
 	Doc:
 		* Engine Manual (doxygen?)
 
 	Study:
-		! C++11 std::thread
+		C Physically Based Rendering
+		C C++11 std::thread
+		! Valkan API
 		* LiquidFun Particle System
-		* Physics-based Rendering
-		* Valkan API
 		* Unreal Source
 
