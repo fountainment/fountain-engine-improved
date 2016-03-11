@@ -209,5 +209,8 @@ int FontCache::queryAdvance(unsigned long c)
 
 const fei::Texture FontCache::getCacheTexture()
 {
+	if (!_cacheTexture.isLoaded()) {
+		initCacheTexture();
+	}
 	return _cacheTexture;
 }

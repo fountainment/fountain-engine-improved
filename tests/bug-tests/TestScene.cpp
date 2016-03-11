@@ -128,6 +128,7 @@ void TestScene::testFont()
 	testTex = fc.getCacheTexture();
 	testTex.setPosition(Vec2(2048) - winSize / 2.0f);
 	testTex.setColor(Color("#3f0"));
+	testTex.setMagFilter(GL_LINEAR);
 	add(&testTex);
 
 	label.setString(fc, "Hello World! 我能吞下玻璃而不伤身体！");

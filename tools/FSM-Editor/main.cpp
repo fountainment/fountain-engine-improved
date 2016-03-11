@@ -18,6 +18,11 @@ void FSMEditor::engineSetting(Engine* e)
 	font20.loadFont("res/font/wqy.ttc", 20);
 	font.loadFont("res/font/wqy.ttc", 40);
 
+	auto tex = font.getCacheTexture();
+	tex.setMagFilter(GL_LINEAR);
+	auto tex20 = font20.getCacheTexture();
+	tex20.setMagFilter(GL_LINEAR);
+
 	//e->window->setFullscreen(true);
 	e->window->setSize(800, 600);
 	e->window->setSamples(8);
