@@ -105,6 +105,8 @@ private:
 
 	int _currentSignal;
 
+	std::string _openFile;
+
 	StateButton* _startStateButton;
 	StateButton* _endStateButton;
 

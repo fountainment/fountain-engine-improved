@@ -390,10 +390,15 @@ bool FSMEditorScene::processCmd(const std::string& cmd)
 		_tmpLabel.clearString();
 		switch (cmd[1]) {
 		case 'w':
+			if (filename == fei::EmptyStr) {
+				filename = _openFile;
+				if (filename == fei::EmptyStr) break;
+			}
 			_fsm.dump(filename);
 			dumpPosition(filename + ".pos");
 			break;
 		case 'e':
+			_openFile = filename;
 			_fsm.load(filename);
 			loadPosition(filename + ".pos");
 			updateSignalList();
