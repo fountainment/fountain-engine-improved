@@ -208,12 +208,12 @@ void FSM::dump(const std::string& filename)
 	std::fclose(file);
 }
 
-void FSM::load(const std::string& filename)
+bool FSM::load(const std::string& filename)
 {
 	char a[50], b[50], s[50];
 	auto file = std::fopen(filename.c_str(), "rb");
 	if (!file) {
-		return;
+		return false;
 	}
 	clearAll();
 	std::fscanf(file, "%s", a);
@@ -221,6 +221,7 @@ void FSM::load(const std::string& filename)
 		registerLink(a, b, s);
 	}
 	std::fclose(file);
+	return true;
 }
 
 void FSM::outputSignal(int signal)

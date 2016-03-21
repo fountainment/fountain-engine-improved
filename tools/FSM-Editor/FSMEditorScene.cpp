@@ -398,8 +398,10 @@ bool FSMEditorScene::processCmd(const std::string& cmd)
 			dumpPosition(filename + ".pos");
 			break;
 		case 'e':
+			if (!_fsm.load(filename)) {
+				break;
+			}
 			_openFile = filename;
-			_fsm.load(filename);
 			loadPosition(filename + ".pos");
 			updateSignalList();
 			updateFSM();
