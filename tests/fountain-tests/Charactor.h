@@ -7,13 +7,14 @@
 
 class CharFSM : public fut::FSM
 {
+private:
 	virtual void outputSignal(int signal) override
 	{
 		std::printf("output: %d %s\n", signal, getStateName(getState()).c_str());
 	};
 };
 
-class Charactor : public fei::RenderObj, public fut::FSM
+class Charactor : public fei::RenderObj, public CharFSM
 {
 public:
 	Charactor();
@@ -39,24 +40,16 @@ private:
 	fei::FrameAnime standAnime[4];
 	fei::FrameAnime walkAnime[4];
 	fei::FrameAnime runAnime[4];
-	fut::CollisionFrameAnime atk1Anime;
-	fut::CollisionFrameAnime atk2Anime;
-	fut::CollisionFrameAnime atk3Anime;
+	fut::CollisionFrameAnime atk1Anime, atk2Anime, atk3Anime;
+	fut::CollisionFrameAnime atk1AnimeS, atk2AnimeS, atk3AnimeS;
 	//TODO: anime state control
 	static const std::vector<std::string> _walkSignal;
 	static const std::vector<std::string> _runSignal;
-	int walkW;
-	int walkA;
-	int walkS;
-	int walkD;
-	int runW;
-	int runA;
-	int runS;
-	int runD;
-	int standW;
-	int standA;
-	int standS;
-	int standD;
+	int walkW, walkA, walkS, walkD;
+	int runW, runA, runS, runD;
+	int standW, standA, standS, standD;
+	int CA1W, CA2W, CA3Wx1, CA3W;
+	int CA1S, CA2S, CA3Sx1, CA3S;
 };
 
 #endif

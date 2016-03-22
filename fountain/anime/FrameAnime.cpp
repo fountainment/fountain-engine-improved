@@ -82,7 +82,8 @@ void FrameAnime::updateFrameIndex()
 
 void FrameAnime::updateFrameContent(fei::RenderObj* rObj)
 {
-	rObj->setSubstitute(nullptr);
+	//not set null when stop
+	//rObj->setSubstitute(nullptr);
 	if (!isStop()) {
 		fei::Image *image = framePool.getImage((int)curFrameIndex);
 		rObj->setSubstitute(image);

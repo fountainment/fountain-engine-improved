@@ -3,8 +3,10 @@
 
 using namespace fei;
 
-const std::vector<std::string> Charactor::_walkSignal = { "walkW", "walkA", "walkS", "walkD" };
-const std::vector<std::string> Charactor::_runSignal = { "runW", "runA", "runS", "runD" };
+const std::vector<std::string> Charactor::_walkSignal = {"walkW", "walkA", "walkS", "walkD"};
+const std::vector<std::string> Charactor::_runSignal = {"runW", "runA", "runS", "runD"};
+
+#define FPS 20
 
 Charactor::Charactor()
 : curAnime(nullptr)
@@ -27,6 +29,14 @@ void Charactor::init()
 	standA = getStateId("standA");
 	standS = getStateId("standS");
 	standD = getStateId("standD");
+	CA1W = getStateId("CA1W");
+	CA2W = getStateId("CA2W");
+	CA3W = getStateId("CA3W");
+	CA3Wx1 = getStateId("CA3Wx1");
+	CA1S = getStateId("CA1S");
+	CA2S = getStateId("CA2S");
+	CA3Sx1 = getStateId("CA3Sx1");
+	CA3S = getStateId("CA3S");
 	walkAnime[0].loadImageFileAndIPI("res/image/Latte_N_walk_B");
 	walkAnime[1].loadImageFileAndIPI("res/image/Latte_N_walk_L");
 	walkAnime[2].loadImageFileAndIPI("res/image/Latte_N_walk_F");
@@ -41,11 +51,11 @@ void Charactor::init()
 	standAnime[3].loadImageFileAndIPI("res/image/Latte_N_breath_R");
 	for (int i = 0; i < 4; i++) {
 		walkAnime[i].setLoop(true);
-		walkAnime[i].setFps(15);
+		walkAnime[i].setFps(FPS);
 		runAnime[i].setLoop(true);
-		runAnime[i].setFps(15);
+		runAnime[i].setFps(FPS);
 		standAnime[i].setLoop(true);
-		standAnime[i].setFps(15);
+		standAnime[i].setFps(FPS);
 	}
 	curAnime = &standAnime[0];
 	charClock.init();
@@ -59,20 +69,27 @@ void Charactor::init()
 	b2bd->SetGravityScale(0.0f);
 	body->createFixture(&rect);
 
-	atk1Anime.setFps(15);
-	atk1Anime.load("res/image/CA_B01_B");
+	atk1Anime.setFps(FPS);
+	atk1Anime.loadImageFileAndIPI("res/image/Latte_longS_attack-1_B");
 	atk1Anime.setBody(body);
 	atk1Anime.loadCollisionFile("res/colli/CA01B.col");
 
-	atk2Anime.setFps(15);
-	atk2Anime.load("res/image/CA_B02_B");
+	atk2Anime.setFps(FPS);
+	atk2Anime.loadImageFileAndIPI("res/image/Latte_longS_attack-2_B");
 	atk2Anime.setBody(body);
 	atk2Anime.loadCollisionFile("res/colli/CA02B.col");
 
-	atk3Anime.setFps(15);
-	atk3Anime.load("res/image/CA_B03_B");
+	atk3Anime.setFps(FPS);
+	atk3Anime.loadImageFileAndIPI("res/image/Latte_longS_attack-3_B");
 	atk3Anime.setBody(body);
 	atk3Anime.loadCollisionFile("res/colli/CA03B.col");
+
+	atk1AnimeS.setFps(FPS);
+	atk1AnimeS.loadImageFileAndIPI("res/image/Latte_longS_attack-1_F");
+	atk2AnimeS.setFps(FPS);
+	atk2AnimeS.loadImageFileAndIPI("res/image/Latte_longS_attack-2_F");
+	atk3AnimeS.setFps(FPS);
+	atk3AnimeS.loadImageFileAndIPI("res/image/Latte_longS_attack-3_F");
 }
 
 void Charactor::destroy()
@@ -88,6 +105,9 @@ void Charactor::update()
 {
 	setPosition(body->getPosition());
 	setAnime(curAnime);
+	if (curAnime->isStop()) {
+		inputSignal("stopAnime");
+	}
 }
 
 void Charactor::setSpeed(const fei::Vec2& drct, float sp)
@@ -109,23 +129,11 @@ void Charactor::setSpeed(const fei::Vec2& drct, float sp)
 void Charactor::attack()
 {
 	inputSignal("attack");
-	if (curAnime == &atk1Anime) {
-		atk1Anime.destroyFixture();
-		curAnime = &atk2Anime;
-	} else if (curAnime == &atk2Anime) {
-		atk2Anime.destroyFixture();
-		curAnime = &atk3Anime;
-	} else if (curAnime == &atk3Anime) {
-		return;
-	} else {
-		curAnime = &atk1Anime;
-	}
-	curAnime->play();
-	curAnime->setCurFrameIndex(0);
 }
 
 void Charactor::outputSignal(int signal)
 {
+	std::printf("%s\n", getStateName().c_str());
 	if (signal == ChangeSig) {
 		int state = getState();
 		do {
@@ -175,6 +183,36 @@ void Charactor::outputSignal(int signal)
 			}
 			if (state == standD) {
 				curAnime = &standAnime[3];
+				break;
+			}
+			if (state == CA1W) {
+				atk1Anime.play();
+				curAnime = &atk1Anime;
+				break;
+			}
+			if (state == CA2W) {
+				atk2Anime.play();
+				curAnime = &atk2Anime;
+				break;
+			}
+			if (state == CA3Wx1) {
+				atk3Anime.play();
+				curAnime = &atk3Anime;
+				break;
+			}
+			if (state == CA1S) {
+				atk1AnimeS.play();
+				curAnime = &atk1AnimeS;
+				break;
+			}
+			if (state == CA2S) {
+				atk2AnimeS.play();
+				curAnime = &atk2AnimeS;
+				break;
+			}
+			if (state == CA3Sx1) {
+				atk3AnimeS.play();
+				curAnime = &atk3AnimeS;
 				break;
 			}
 		} while(0);

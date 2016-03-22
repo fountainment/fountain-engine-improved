@@ -82,19 +82,28 @@ void TestScene::update()
 		}
 	} else if (window) {
 		Vec2 speed(Vec2::ZERO);
+		bool move = false;
 		if (window->getKey(GLFW_KEY_UP)) {
-			speed.add(Vec2::UP);
+			speed.add( Vec2::UP);
+			move = true;
 		}
 		if (window->getKey(GLFW_KEY_LEFT)) {
 			speed.add(Vec2::LEFT);
+			move = true;
 		}
 		if (window->getKey(GLFW_KEY_DOWN)) {
 			speed.add(Vec2::DOWN);
+			move = true;
 		}
 		if (window->getKey(GLFW_KEY_RIGHT)) {
 			speed.add(Vec2::RIGHT);
+			move = true;
 		}
-		mainChar.setSpeed(speed, 100.0f);
+		if (move) {
+			mainChar.setSpeed(speed, 100.0f);
+		} else {
+			mainChar.setSpeed(speed, 0.0f);
+		}
 	}
 	mainCam.setPosition(mainChar.getPosition());
 
