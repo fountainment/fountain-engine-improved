@@ -17,14 +17,33 @@ public:
 		PS4 = 2
 	};
 
+	enum class Button {
+		A = 0,
+		B = 1,
+		X = 2,
+		Y = 3,
+		LB = 4,
+		RB = 5,
+		BACK = 6,
+		STRAT = 7,
+		ICON = 8,
+		L3 = 9,
+		R3 = 10
+	};
+
+	enum class ButtonState {
+		UP = 0,
+		PRESS = 1,
+		DOWN = 2,
+		RELEASE = 3
+	};
+
 	Joystick();
 
 	void setAccuracy(float acrc);
 
 	int getAxesCount();
 	int getButtonCount();
-
-	//int getKey(int key);
 
 	float getAxesX();
 	float getAxesY();
@@ -33,6 +52,9 @@ public:
 	float getDirectionX();
 	float getDirectionY();
 	Vec2 getDirection();
+
+	bool getButton(Joystick::Button button);
+	Joystick::ButtonState getButtonState(Joystick::Button button);
 
 	float getTouchX();
 	float getTouchY();
@@ -51,6 +73,7 @@ private:
 	float axesData[16];
 	int buttonCount;
 	unsigned char buttonData[16];
+	Joystick::ButtonState buttonState[16];
 	float accuracy;
 };
 

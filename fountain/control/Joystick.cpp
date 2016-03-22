@@ -10,7 +10,7 @@ Joystick::Joystick()
   type(Type::DEFAULT),
   axesCount(0),
   buttonCount(0),
-  accuracy(0.1f)
+  accuracy(0.3f)
 {
 	clearData();
 }
@@ -46,6 +46,19 @@ void Joystick::update()
 		count = buttonCount;
 		if (count > 16) count = 16;
 		for (int i = 0; i < count; i++) {
+			if (buttonData[i] == 0) {
+				if (button[i] == 0) {
+					buttonState[i] = Joystick::ButtonState::UP;
+				} else {
+					buttonState[i] = Joystick::ButtonState::PRESS;
+				}
+			} else {
+				if (button[i] == 0) {
+					buttonState[i] = Joystick::ButtonState::RELEASE;
+				} else {
+					buttonState[i] = Joystick::ButtonState::DOWN;
+				}
+			}
 			buttonData[i] = button[i];
 		};
 	}
@@ -56,6 +69,7 @@ void Joystick::clearData()
 	for (int i = 0; i < 16; i++) {
 		axesData[i] = 0.0f;
 		buttonData[i] = 0;
+		buttonState[i] = Joystick::ButtonState::UP;
 	}
 }
 
@@ -107,6 +121,16 @@ float Joystick::getDirectionY()
 fei::Vec2 Joystick::getDirection()
 {
 	return fei::Vec2(getDirectionX(), getDirectionY());
+}
+
+bool Joystick::getButton(Joystick::Button button)
+{
+	return buttonData[(int)button] != 0;
+}
+
+Joystick::ButtonState Joystick::getButtonState(Joystick::Button button)
+{
+	return buttonState[(int)button];
 }
 
 float Joystick::getTouchX()

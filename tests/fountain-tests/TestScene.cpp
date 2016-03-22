@@ -80,6 +80,9 @@ void TestScene::update()
 		} else {
 			mainChar.setSpeed(speed, 0.0f);
 		}
+		if (joystick->getButtonState(Joystick::Button::A) == Joystick::ButtonState::PRESS) {
+			mainChar.attack();
+		}
 	} else if (window) {
 		Vec2 speed(Vec2::ZERO);
 		bool move = false;
