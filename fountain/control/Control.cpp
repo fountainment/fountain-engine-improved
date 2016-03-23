@@ -5,14 +5,14 @@
 
 using fei::Control;
 
-Control *Control::instance = nullptr;
+Control *Control::instance_ = nullptr;
 
 Control* Control::getInstance()
 {
-	if (!instance) {
-		instance = new Control();
+	if (!instance_) {
+		instance_ = new Control();
 	}
-	return instance;
+	return instance_;
 }
 
 Control::Control()
@@ -32,7 +32,7 @@ bool Control::init()
 void Control::executeBeforeFrame()
 {
 	if (joystickCheck()) {
-		joystick.update();
+		_joystick.update();
 	}
 }
 
@@ -40,8 +40,8 @@ int Control::findJoystick()
 {
 	for (int i = GLFW_JOYSTICK_1; i <= GLFW_JOYSTICK_LAST; i++) {
 		if (glfwJoystickPresent(i)) {
-			joystick.id = i;
-			joystick.init();
+			_joystick.setId(i);
+			_joystick.init();
 			return i;
 		}
 	}
@@ -51,12 +51,12 @@ int Control::findJoystick()
 bool Control::joystickCheck()
 {
 	bool ans = false;
-	if (joystick.usable()) {
+	if (_joystick.usable()) {
 			ans = true;
 	} else {
 		/*
 		findJoystick();
-		if (joystick.usable()) {
+		if (_joystick.usable()) {
 			ans = true;
 		} */
 	}
@@ -65,8 +65,8 @@ bool Control::joystickCheck()
 
 fei::Joystick* Control::getJoystick()
 {
-	if (joystick.usable()) {
-		return &joystick;
+	if (_joystick.usable()) {
+		return &_joystick;
 	} else {
 		return nullptr;
 	}

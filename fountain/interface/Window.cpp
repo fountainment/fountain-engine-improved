@@ -4,44 +4,43 @@
 
 using fei::Window;
 
-std::queue<GLFWwindow*> Window::delWindows;
+std::queue<GLFWwindow*> Window::delWindows_;
 
 Window::Window()
-: sceneManager(nullptr),
-  window(nullptr),
-  contextRoot(nullptr),
-  width(500),
-  height(500),
-  title(fei::EngineName),
+: _window(nullptr),
+  _contextRoot(nullptr),
+  _width(500),
+  _height(500),
+  _title(fei::EngineName),
   _isFullscreen(false),
   _isResizable(false),
   _isHide(true),
   _samples(0)
 {
-	sceneManager = new fei::SceneManager();
+	_sceneManager = new fei::SceneManager();
 }
 
 Window::~Window()
 {
 	delWindow();
 	doDelWindows();
-	delete sceneManager;
+	delete _sceneManager;
 }
 
 void Window::setSize(int w, int h)
 {
-	width = w;
-	height = h;
-	if (window) {
-		glfwSetWindowSize(window, w, h);
+	_width = w;
+	_height = h;
+	if (_window) {
+		glfwSetWindowSize(_window, w, h);
 	}
 }
 
 void Window::setTitle(std::string tt)
 {
-	title = tt;
-	if (window) {
-		glfwSetWindowTitle(window, tt.c_str());
+	_title = tt;
+	if (_window) {
+		glfwSetWindowTitle(_window, tt.c_str());
 	}
 }
 
@@ -52,7 +51,7 @@ void Window::setResizable(bool resizable)
 
 void Window::setFullscreen(bool fullscreen)
 {
-	if (window) {
+	if (_window) {
 		if (fullscreen != _isFullscreen) {
 			hide();
 			delWindow();
@@ -85,17 +84,17 @@ void Window::setSamples(int samples)
 void Window::setContextRoot(Window* root)
 {
 	if (root) {
-		contextRoot = root->getWindow();
+		_contextRoot = root->getWindow();
 	}
 }
 
 GLFWwindow* Window::getWindow()
 {
-	if (!window) {
+	if (!_window) {
 		glfwDefaultWindowHints();
 		auto monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-		int w = width, h = height;
+		int w = _width, h = _height;
 
 		if (_samples > 0) {
 			glfwWindowHint(GLFW_SAMPLES, _samples);
@@ -117,27 +116,27 @@ GLFWwindow* Window::getWindow()
 		} else {
 			monitor = nullptr;
 		}
-		window = glfwCreateWindow(w, h, title.c_str(), monitor, contextRoot);
+		_window = glfwCreateWindow(w, h, _title.c_str(), monitor, _contextRoot);
 		setCallback();
 		glfwDefaultWindowHints();
 	}
-	return window;
+	return _window;
 }
 
 void Window::delWindow()
 {
-	if (window) {
+	if (_window) {
 		unsetCallback();
-		delWindows.push(window);
-		window = nullptr;
+		delWindows_.push(_window);
+		_window = nullptr;
 	}
 }
 
 void Window::doDelWindows()
 {
-	while (!delWindows.empty()) {
-		auto win = delWindows.front();
-		delWindows.pop();
+	while (!delWindows_.empty()) {
+		auto win = delWindows_.front();
+		delWindows_.pop();
 		if (win) {
 			glfwDestroyWindow(win);
 		}
@@ -146,30 +145,30 @@ void Window::doDelWindows()
 
 void Window::setCurrent()
 {
-	if (window) {
-		glfwMakeContextCurrent(window);
+	if (_window) {
+		glfwMakeContextCurrent(_window);
 		Interface::getInstance()->setCurrentWindow(this);
 	}
 }
 
 void Window::hide()
 {
-	if (window) {
-		glfwHideWindow(window);
+	if (_window) {
+		glfwHideWindow(_window);
 	}
 }
 
 void Window::show()
 {
-	if (window) {
-		glfwShowWindow(window);
+	if (_window) {
+		glfwShowWindow(_window);
 	}
 }
 
 int Window::shouldClose()
 {
-	if (window) {
-		return glfwWindowShouldClose(window);
+	if (_window) {
+		return glfwWindowShouldClose(_window);
 	} else {
 		return 0;
 	}
@@ -177,8 +176,8 @@ int Window::shouldClose()
 
 void Window::swapBuffers()
 {
-	if (window) {
-		glfwSwapBuffers(window);
+	if (_window) {
+		glfwSwapBuffers(_window);
 	}
 }
 
@@ -190,8 +189,8 @@ bool Window::isFullscreen()
 int Window::getKey(int key)
 {
 	int result = 0;
-	if (window) {
-		result = glfwGetKey(window, key);
+	if (_window) {
+		result = glfwGetKey(_window, key);
 	}
 	return result;
 }
@@ -199,8 +198,8 @@ int Window::getKey(int key)
 int Window::getMouseButton(int button)
 {
 	int result = 0;
-	if (window) {
-		result = glfwGetMouseButton(window, button);
+	if (_window) {
+		result = glfwGetMouseButton(_window, button);
 	}
 	return result;
 }
@@ -208,10 +207,10 @@ int Window::getMouseButton(int button)
 const fei::Vec2 Window::getCursorPos()
 {
 	fei::Vec2 result;
-	if (window) {
+	if (_window) {
 		double xpos, ypos;
-		glfwGetCursorPos(window, &xpos, &ypos);
-		result.set((float)xpos, (float)ypos);
+		glfwGetCursorPos(_window, &xpos, &ypos);
+		result.set(static_cast<float>(xpos), static_cast<float>(ypos));
 	}
 	return result;
 }
@@ -219,7 +218,7 @@ const fei::Vec2 Window::getCursorPos()
 const fei::Vec2 Window::getRHCursorPos()
 {
 	fei::Vec2 result;
-	if (window) {
+	if (_window) {
 		result = getCursorPos();
 		result.y = getWindowSize().y - 1 - result.y;
 	}
@@ -237,10 +236,10 @@ const fei::Vec2 Window::getRHCursorDeltaV()
 const fei::Vec2 Window::getWindowSize()
 {
 	fei::Vec2 result;
-	if (window) {
+	if (_window) {
 		int width, height;
-		glfwGetWindowSize(window, &width, &height);
-		result.set((float)width, (float)height);
+		glfwGetWindowSize(_window, &width, &height);
+		result.set(static_cast<float>(width), static_cast<float>(height));
 	}
 	return result;
 }
@@ -248,17 +247,17 @@ const fei::Vec2 Window::getWindowSize()
 const fei::Vec2 Window::getFrameSize()
 {
 	fei::Vec2 result;
-	if (window) {
+	if (_window) {
 		int width, height;
-		glfwGetFramebufferSize(window, &width, &height);
-		result.set((float)width, (float)height);
+		glfwGetFramebufferSize(_window, &width, &height);
+		result.set(static_cast<float>(width), static_cast<float>(height));
 	}
 	return result;
 }
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
 	if (scene) {
 		scene->keyCallback(key, scancode, action, mods);
 	}
@@ -266,7 +265,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 
 static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
-	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
 	if (scene) {
 		scene->mouseButtonCallback(button, action, mods);
 	}
@@ -274,7 +273,7 @@ static void mouse_button_callback(GLFWwindow* window, int button, int action, in
 
 static void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
 	if (scene) {
 		scene->cursorPosCallback(xpos, ypos);
 	}
@@ -282,7 +281,7 @@ static void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 
 static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
 	if (scene) {
 		scene->scrollCallback(xoffset, yoffset);
 	}
@@ -290,7 +289,7 @@ static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 static void character_callback(GLFWwindow* window, unsigned int codepoint)
 {
-	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
 	if (scene) {
 		scene->charactorCallback(codepoint);
 	}
@@ -298,7 +297,7 @@ static void character_callback(GLFWwindow* window, unsigned int codepoint)
 
 static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
 	if (scene) {
 		scene->framebufferSizeCallback(width, height);
 	}
@@ -306,7 +305,7 @@ static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 static void drop_callback(GLFWwindow* window, int count, const char** paths)
 {
-	auto scene = fei::Interface::getInstance()->getCurrentWindow()->sceneManager->getCurScene();
+	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
 	if (scene) {
 		scene->dropCallback(count, paths);
 	}
@@ -316,26 +315,26 @@ static void drop_callback(GLFWwindow* window, int count, const char** paths)
 
 void Window::setCallback()
 {
-	if (window) {
-		glfwSetKeyCallback(window, key_callback);
-		glfwSetMouseButtonCallback(window, mouse_button_callback);
-		glfwSetCursorPosCallback(window, cursor_pos_callback);
-		glfwSetScrollCallback(window, scroll_callback);
-		glfwSetCharCallback(window, character_callback);
-		glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
-		glfwSetDropCallback(window, drop_callback);
+	if (_window) {
+		glfwSetKeyCallback(_window, key_callback);
+		glfwSetMouseButtonCallback(_window, mouse_button_callback);
+		glfwSetCursorPosCallback(_window, cursor_pos_callback);
+		glfwSetScrollCallback(_window, scroll_callback);
+		glfwSetCharCallback(_window, character_callback);
+		glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback);
+		glfwSetDropCallback(_window, drop_callback);
 	}
 }
 
 void Window::unsetCallback()
 {
-	if (window) {
-		glfwSetKeyCallback(window, nullptr);
-		glfwSetMouseButtonCallback(window, nullptr);
-		glfwSetCursorPosCallback(window, nullptr);
-		glfwSetScrollCallback(window, nullptr);
-		glfwSetCharCallback(window, nullptr);
-		glfwSetFramebufferSizeCallback(window, nullptr);
-		glfwSetDropCallback(window, nullptr);
+	if (_window) {
+		glfwSetKeyCallback(_window, nullptr);
+		glfwSetMouseButtonCallback(_window, nullptr);
+		glfwSetCursorPosCallback(_window, nullptr);
+		glfwSetScrollCallback(_window, nullptr);
+		glfwSetCharCallback(_window, nullptr);
+		glfwSetFramebufferSizeCallback(_window, nullptr);
+		glfwSetDropCallback(_window, nullptr);
 	}
 }

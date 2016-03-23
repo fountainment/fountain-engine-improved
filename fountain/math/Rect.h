@@ -1,4 +1,4 @@
-#if !defined(_FEI_RECT_H_)
+#ifndef _FEI_RECT_H_
 #define _FEI_RECT_H_
 
 #include "math/Segment.h"

@@ -1,4 +1,4 @@
-#if !defined(_FEI_AUDIO_H_)
+#ifndef _FEI_AUDIO_H_
 #define _FEI_AUDIO_H_
 
 //TODO: add a non-conflict audio source class
@@ -36,10 +36,10 @@ public:
 private:
 	Audio();
 
-	ALCdevice *audioDevice;
-	ALCcontext *context;
+	ALCdevice *_audioDevice;
+	ALCcontext *_context;
 
-	static Audio *instance;
+	static Audio *instance_;
 };
 
 } // namespace fei

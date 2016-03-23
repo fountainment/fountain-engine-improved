@@ -27,7 +27,7 @@ void FSMEditor::engineSetting(Engine* e)
 	e->window->setSize(800, 600);
 	e->window->setSamples(8);
 	e->window->setTitle("FSM-Editor");
-	e->window->sceneManager->gotoScene(new FSMEditorScene());
+	e->window->getSceneManager()->gotoScene(new FSMEditorScene());
 }
 
 int main()

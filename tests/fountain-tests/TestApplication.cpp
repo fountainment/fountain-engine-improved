@@ -18,7 +18,7 @@ void TestApplication::engineSetting(Engine *eg)
 
 	font.loadFont("res/font/wqy.ttc");
 
-	eg->window->sceneManager->defaultCamera.setCameraSize(Vec2(800, 600));
-	eg->window->sceneManager->gotoScene(new TestScene());
+	eg->window->getSceneManager()->defaultCamera.setCameraSize(Vec2(800, 600));
+	eg->window->getSceneManager()->gotoScene(new TestScene());
 }
 

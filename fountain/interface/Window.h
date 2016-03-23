@@ -1,13 +1,14 @@
-#if !defined(_FEI_WINDOW_H_)
+#ifndef _FEI_WINDOW_H_
 #define _FEI_WINDOW_H_
 
 //TODO: save window's position
+
+#include <GLFW/glfw3.h>
 
 #include "base/basedef.h"
 #include "base/ModuleBase.h"
 #include "scene/SceneManager.h"
 #include "math/Vec2.h"
-#include <GLFW/glfw3.h>
 
 namespace fei {
 
@@ -48,25 +49,34 @@ public:
 	const Vec2 getWindowSize();
 	const Vec2 getFrameSize();
 
-	SceneManager *sceneManager;
+	SceneManager* getSceneManager() const;
 
 private:
 	void setCallback();
 	void unsetCallback();
-	static std::queue<GLFWwindow*> delWindows;
 
-	GLFWwindow *window;
-	GLFWwindow *contextRoot;
+	GLFWwindow *_window;
+	GLFWwindow *_contextRoot;
 
-	int width, height;
-	std::string title;
+	int _width;
+	int _height;
+	std::string _title;
 
 	bool _isFullscreen;
 	bool _isResizable;
 	bool _isHide;
 	int _samples;
+
+	SceneManager *_sceneManager;
+
+	static std::queue<GLFWwindow*> delWindows_;
 };
 
+} // namespace fei
+
+inline fei::SceneManager* fei::Window::getSceneManager() const
+{
+	return _sceneManager;
 }
 
-#endif
+#endif // _FEI_WINDOW_H_

@@ -1,4 +1,4 @@
-#if !defined(_FEI_ANIME_H_)
+#ifndef _FEI_ANIME_H_
 #define _FEI_ANIME_H_
 
 #include "base/basedef.h"

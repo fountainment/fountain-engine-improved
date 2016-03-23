@@ -29,7 +29,7 @@ void FontCache::loadFont(const std::string& fontFile, int fontSize)
 		return;
 	}
 	unloadFont();
-	FT_Library *library = &Font::getInstance()->library;
+	FT_Library *library = Font::getInstance()->getLibrary();
 	int error = FT_New_Face(*library, fontFile.c_str(), 0, &_face);
 	if (error) {
 		std::fprintf(stderr, "FontCache: \"%s\" loading error!\n", fontFile.c_str());

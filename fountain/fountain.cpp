@@ -36,7 +36,7 @@ void Engine::mainLoop()
 {
 	while (!shouldExit()) {
 		executeBeforeFrame();
-		window->sceneManager->renderCurScene();
+		window->getSceneManager()->renderCurScene();
 		executeAfterFrame();
 	}
 }

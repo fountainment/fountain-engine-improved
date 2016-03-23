@@ -1,4 +1,4 @@
-#if !defined(_FEI_POLYGON_H_)
+#ifndef _FEI_POLYGON_H_
 #define _FEI_POLYGON_H_
 
 #include "base/basedef.h"

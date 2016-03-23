@@ -120,8 +120,8 @@ using fei::Source;
 
 Source::Source()
 {
-	alGenSources(1, &id);
-	alGenBuffers(1, &buffer);
+	alGenSources(1, &_id);
+	alGenBuffers(1, &_buffer);
 	setPitch(1.0f);
 	setGain(1.0f);
 	setPosition(fei::Vec2::ZERO);
@@ -131,65 +131,65 @@ Source::Source()
 
 Source::~Source()
 {
-	alDeleteSources(1, &id);
-	alDeleteBuffers(1, &buffer);
+	alDeleteSources(1, &_id);
+	alDeleteBuffers(1, &_buffer);
 }
 
 void Source::setPitch(float pitch)
 {
 	if (pitch <= 0.0f || pitch > 10.0f) return;
-	alSourcef(id, AL_PITCH, pitch);
+	alSourcef(_id, AL_PITCH, pitch);
 }
 
 void Source::setGain(float gain)
 {
-	alSourcef(id, AL_GAIN, gain);
+	alSourcef(_id, AL_GAIN, gain);
 }
 
 void Source::setVelocity(const fei::Vec2& velocity)
 {
 	fei::Vec3 v3v(velocity, 0.0f);
-	alSourcefv(id, AL_VELOCITY, &v3v.x);
+	alSourcefv(_id, AL_VELOCITY, &v3v.x);
 }
 
 void Source::setPosition(const fei::Vec2& position)
 {
 	fei::Vec3 v3p(position, 0.0f);
-	alSourcefv(id, AL_POSITION, &v3p.x);
+	alSourcefv(_id, AL_POSITION, &v3p.x);
 }
 
 bool Source::loadWAV(const std::string& filename)
 {
 	ALsizei size, frequency;
 	ALenum format;
-	bool state = loadWavFile(filename.c_str(), &buffer, &size, &frequency, &format);
+	bool state = loadWavFile(filename.c_str(), &_buffer, &size, &frequency, &format);
 	if (!state) {
 		return false;
 	}
-	alSourcei(id, AL_BUFFER, buffer);
+	alSourcei(_id, AL_BUFFER, _buffer);
 	return true;
 }
 
 void Source::play()
 {
-	alSourcePlay(id);
+	alSourcePlay(_id);
 }
 
 void Source::pause()
 {
-	alSourcePause(id);
+	alSourcePause(_id);
 }
 
 void Source::stop()
 {
-	alSourceStop(id);
+	alSourceStop(_id);
 }
 
 void Source::setLoop(bool loop)
 {
 	if (loop) {
-		alSourcei(id, AL_LOOPING, AL_TRUE);
+		alSourcei(_id, AL_LOOPING, AL_TRUE);
 	} else {
-		alSourcei(id, AL_LOOPING, AL_FALSE);
+		alSourcei(_id, AL_LOOPING, AL_FALSE);
 	}
 }

@@ -34,7 +34,7 @@ void Camera::update()
 	} else if (cameraType == Type::PERSPECTIVE) {
 		//TODO: write it when you want to test it
 	}
-	glTranslatef(-pos.x, -pos.y, 0);
+	glTranslatef(-getPosition().x, -getPosition().y, 0);
 	glMatrixMode(GL_MODELVIEW);
 	fei::Render::getInstance()->setCurrentCamera(this);
 }
@@ -72,7 +72,7 @@ void Camera::zoomCameraScale(float zoom)
 
 void Camera::zoomCameraScaleAtCenter(const fei::Vec2& center, float zoom)
 {
-	move((center - pos) * (1.0f - 1.0f / zoom));
+	move((center - getPosition()) * (1.0f - 1.0f / zoom));
 	setCameraScale(cameraScale * zoom);
 }
 
@@ -93,7 +93,7 @@ const fei::Vec2 Camera::screenToWorld(const fei::Vec2& scrPos)
 	updateCameraData();
 	auto camSize = fei::Vec2(right - left, top - bottom);
 	auto vpSize = fei::Render::getInstance()->getViewport().getSize();
-	auto ans = camSize.zoomed(scrPos.zoomed(vpSize.reciprocal()) - fei::Vec2(0.5f)) + pos;
+	auto ans = camSize.zoomed(scrPos.zoomed(vpSize.reciprocal()) - fei::Vec2(0.5f)) + getPosition();
 	return ans;
 }
 
@@ -102,7 +102,7 @@ const fei::Vec2 Camera::worldToScreen(const fei::Vec2& wrdPos)
 	updateCameraData();
 	auto camSize = fei::Vec2(right - left, top - bottom);
 	auto vpSize = fei::Render::getInstance()->getViewport().getSize();
-	auto ans = ((wrdPos - pos).zoomed(camSize.reciprocal()) + fei::Vec2(0.5f)).zoomed(vpSize);
+	auto ans = ((wrdPos - getPosition()).zoomed(camSize.reciprocal()) + fei::Vec2(0.5f)).zoomed(vpSize);
 	return ans;
 }
 

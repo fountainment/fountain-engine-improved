@@ -1,16 +1,19 @@
-#if !defined(_FEI_BASEDEF_H_)
+#ifndef _FEI_BASEDEF_H_
 #define _FEI_BASEDEF_H_
 
 #include <algorithm>
 #include <cassert>
 #include <cstddef>
+#include <cstdint>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
 #include <stack>
 #include <list>
 #include <map>
+#include <mutex>
 #include <queue>
+#include <thread>
 #include <utility>
 #include <vector>
 

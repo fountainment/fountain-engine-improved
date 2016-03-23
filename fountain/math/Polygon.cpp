@@ -163,7 +163,7 @@ int Polygon::collideVertex(const fei::Vec2& p, float radius) const
 {
 	float rSq = radius * radius;
 	for (int i = 0; i < (int)data.size(); i++) {
-		if (((data[i] + pos) - p).getLengthSq() <= rSq) {
+		if (((data[i] + getPosition()) - p).getLengthSq() <= rSq) {
 			return i;
 		}
 	}

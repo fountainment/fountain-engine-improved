@@ -4,14 +4,14 @@
 
 using fei::Audio;
 
-Audio* Audio::instance = nullptr;
+Audio* Audio::instance_ = nullptr;
 
 Audio* Audio::getInstance()
 {
-	if (!instance) {
-		instance = new Audio();
+	if (!instance_) {
+		instance_ = new Audio();
 	}
-	return instance; 
+	return instance_;
 }
 
 Audio::Audio()
@@ -20,15 +20,15 @@ Audio::Audio()
 
 bool Audio::init()
 {
-	audioDevice = alcOpenDevice(nullptr);
-	if (!audioDevice) {
+	_audioDevice = alcOpenDevice(nullptr);
+	if (!_audioDevice) {
 		std::fprintf(stderr, "Oops! Sound device not found!\n");
 	}
-	context = alcCreateContext(audioDevice, nullptr);
-	if (!context) {
+	_context = alcCreateContext(_audioDevice, nullptr);
+	if (!_context) {
 		std::fprintf(stderr, "Oops! Sound device not found!\n");
 	}
-	alcMakeContextCurrent(context);
+	alcMakeContextCurrent(_context);
 	std::printf("OpenAL Version: %s\n", alGetString(AL_VERSION));
 	setListenerPosition(fei::Vec2::ZERO);
 	setListenerVelocity(fei::Vec2::ZERO);
@@ -40,8 +40,8 @@ bool Audio::init()
 void Audio::destroy()
 {
 	alcMakeContextCurrent(nullptr);
-	alcDestroyContext(context);
-	alcCloseDevice(audioDevice);
+	alcDestroyContext(_context);
+	alcCloseDevice(_audioDevice);
 }
 
 void Audio::setListenerPosition(const fei::Vec3& v)

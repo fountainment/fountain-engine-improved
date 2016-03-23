@@ -14,7 +14,7 @@ void TestApplication::engineSetting(Engine *eg)
 	Physics::getInstance()->setRatio(30.0f);
 	Physics::getInstance()->setGravity(Vec2::ZERO);
 
-	eg->window->sceneManager->defaultCamera.setCameraSize(Vec2(800, 600));
-	eg->window->sceneManager->gotoScene(new TestScene());
+	eg->window->getSceneManager()->defaultCamera.setCameraSize(Vec2(800, 600));
+	eg->window->getSceneManager()->gotoScene(new TestScene());
 }
 

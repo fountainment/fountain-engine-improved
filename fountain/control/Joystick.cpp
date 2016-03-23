@@ -6,11 +6,11 @@
 using fei::Joystick;
 
 Joystick::Joystick()
-: id(-1),
-  type(Type::DEFAULT),
-  axesCount(0),
-  buttonCount(0),
-  accuracy(0.3f)
+: _id(-1),
+  _type(Type::DEFAULT),
+  _axesCount(0),
+  _buttonCount(0),
+  _accuracy(0.3f)
 {
 	clearData();
 }
@@ -19,11 +19,11 @@ void Joystick::init()
 {
 	clearData();
 	if (usable()) {
-		const char* name = glfwGetJoystickName(id);
+		const char* name = glfwGetJoystickName(_id);
 		std::printf("Detect Joystick: \"%s\"\n", name);
 		update();
-		if (axesCount == 12) {
-			type = Type::PS4;
+		if (_axesCount == 12) {
+			_type = Type::PS4;
 		}
 	}
 }
@@ -32,34 +32,34 @@ void Joystick::update()
 {
 	if (usable()) {
 		int count;
-		const float *axes = glfwGetJoystickAxes(id, &axesCount);
-		count = axesCount;
+		const float *axes = glfwGetJoystickAxes(_id, &_axesCount);
+		count = _axesCount;
 		if (count > 16) count = 16;
 		for (int i = 0; i < count; i++) {
-			if (std::abs(axes[i]) > accuracy) {
-				axesData[i] = axes[i];
+			if (std::abs(axes[i]) > _accuracy) {
+				_axesData[i] = axes[i];
 			} else {
-				axesData[i] = 0.0f;
+				_axesData[i] = 0.0f;
 			}
 		}
-		const unsigned char *button = glfwGetJoystickButtons(id, &buttonCount);
-		count = buttonCount;
+		const unsigned char *button = glfwGetJoystickButtons(_id, &_buttonCount);
+		count = _buttonCount;
 		if (count > 16) count = 16;
 		for (int i = 0; i < count; i++) {
-			if (buttonData[i] == 0) {
+			if (_buttonData[i] == 0) {
 				if (button[i] == 0) {
-					buttonState[i] = Joystick::ButtonState::UP;
+					_buttonState[i] = Joystick::ButtonState::UP;
 				} else {
-					buttonState[i] = Joystick::ButtonState::PRESS;
+					_buttonState[i] = Joystick::ButtonState::PRESS;
 				}
 			} else {
 				if (button[i] == 0) {
-					buttonState[i] = Joystick::ButtonState::RELEASE;
+					_buttonState[i] = Joystick::ButtonState::RELEASE;
 				} else {
-					buttonState[i] = Joystick::ButtonState::DOWN;
+					_buttonState[i] = Joystick::ButtonState::DOWN;
 				}
 			}
-			buttonData[i] = button[i];
+			_buttonData[i] = button[i];
 		};
 	}
 }
@@ -67,40 +67,40 @@ void Joystick::update()
 void Joystick::clearData()
 {
 	for (int i = 0; i < 16; i++) {
-		axesData[i] = 0.0f;
-		buttonData[i] = 0;
-		buttonState[i] = Joystick::ButtonState::UP;
+		_axesData[i] = 0.0f;
+		_buttonData[i] = 0;
+		_buttonState[i] = Joystick::ButtonState::UP;
 	}
 }
 
 bool Joystick::usable()
 {
-	return id >= GLFW_JOYSTICK_1 && id <= GLFW_JOYSTICK_LAST && glfwJoystickPresent(id);
+	return _id >= GLFW_JOYSTICK_1 && _id <= GLFW_JOYSTICK_LAST && glfwJoystickPresent(_id);
 }
 
-void Joystick::setAccuracy(float acrc)
+void Joystick::setAccuracy(float accuracy)
 {
-	accuracy = acrc;
+	_accuracy = accuracy;
 }
 
 int Joystick::getAxesCount()
 {
-	return axesCount;
+	return _axesCount;
 }
 
 int Joystick::getButtonCount()
 {
-	return buttonCount;
+	return _buttonCount;
 }
 
 float Joystick::getAxesX()
 {
-	return axesData[0];
+	return _axesData[0];
 }
 
 float Joystick::getAxesY()
 {
-	return -axesData[1];
+	return -_axesData[1];
 }
 
 fei::Vec2 Joystick::getAxes()
@@ -110,12 +110,12 @@ fei::Vec2 Joystick::getAxes()
 
 float Joystick::getDirectionX()
 {
-	return axesData[6];
+	return _axesData[6];
 }
 
 float Joystick::getDirectionY()
 {
-	return -axesData[7];
+	return -_axesData[7];
 }
 
 fei::Vec2 Joystick::getDirection()
@@ -125,22 +125,22 @@ fei::Vec2 Joystick::getDirection()
 
 bool Joystick::getButton(Joystick::Button button)
 {
-	return buttonData[(int)button] != 0;
+	return _buttonData[(int)button] != 0;
 }
 
 Joystick::ButtonState Joystick::getButtonState(Joystick::Button button)
 {
-	return buttonState[(int)button];
+	return _buttonState[(int)button];
 }
 
 float Joystick::getTouchX()
 {
-	return -axesData[9];
+	return -_axesData[9];
 }
 
 float Joystick::getTouchY()
 {
-	return axesData[10];
+	return _axesData[10];
 }
 
 fei::Vec2 Joystick::getTouch()
@@ -150,5 +150,10 @@ fei::Vec2 Joystick::getTouch()
 
 float Joystick::getTouchId()
 {
-	return axesData[11];
+	return _axesData[11];
+}
+
+void Joystick::setId(int id)
+{
+	_id = id;
 }

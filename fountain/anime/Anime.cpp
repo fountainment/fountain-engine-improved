@@ -47,6 +47,6 @@ Anime* Anime::createFrameAnime(float fps, const std::string& textureName, const 
 
 Anime* Anime::createActionAnime()
 {
-	//TODO: add class ActionAnime and complete this function
+	//TODO: add class ActionAnime and complete Anime::createActionAnime
 	return nullptr;
 }

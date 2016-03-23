@@ -62,7 +62,7 @@ SceneManager* SceneManager::getCurrentSceneManager()
 	SceneManager *ans = nullptr;
 	auto window = Interface::getInstance()->getCurrentWindow();
 	if (window) {
-		ans = window->sceneManager;
+		ans = window->getSceneManager();
 	}
 	return ans;
 }

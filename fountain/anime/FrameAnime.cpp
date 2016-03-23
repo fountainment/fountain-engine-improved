@@ -3,21 +3,21 @@
 using fei::FrameAnime;
 
 FrameAnime::FrameAnime()
-: curFrameIndex(0),
-  fps(60.0f)
+: _curFrameIndex(0),
+  _fps(60.0f)
 {
 }
 
 void FrameAnime::load(const fei::ImagePool& imagePool)
 {
-	framePool = imagePool;
-	curFrameIndex = 0;
+	_framePool = imagePool;
+	_curFrameIndex = 0;
 }
 
 void FrameAnime::loadTextureAndSIP(const fei::Texture& texture, const std::string& sipName)
 {
-	framePool.loadTextureAndSIP(texture, sipName);
-	curFrameIndex = 0;
+	_framePool.loadTextureAndSIP(texture, sipName);
+	_curFrameIndex = 0;
 }
 
 void FrameAnime::load(const std::string& name)
@@ -56,8 +56,8 @@ void FrameAnime::loadImageFileAndIPI(const std::string& textureName, const std::
 
 void FrameAnime::loadTextureAndIPI(const fei::Texture& texture, const std::string& ipiName)
 {
-	framePool.loadTextureAndIPI(texture, ipiName);
-	curFrameIndex = 0;
+	_framePool.loadTextureAndIPI(texture, ipiName);
+	_curFrameIndex = 0;
 }
 
 void FrameAnime::feiObjectUpdate(fei::RenderObj* rObj)
@@ -70,9 +70,9 @@ void FrameAnime::feiObjectUpdate(fei::RenderObj* rObj)
 void FrameAnime::updateFrameIndex()
 {
 	if (isPlay()) {
-		curFrameIndex += getFps() * getDeltaTime();
-		if (curFrameIndex >= getFrameNum()) {
-			curFrameIndex = 0;
+		_curFrameIndex += getFps() * getDeltaTime();
+		if (_curFrameIndex >= getFrameNum()) {
+			_curFrameIndex = 0;
 			if (!isLoop()) {
 				stop();
 			}
@@ -85,37 +85,37 @@ void FrameAnime::updateFrameContent(fei::RenderObj* rObj)
 	//not set null when stop
 	//rObj->setSubstitute(nullptr);
 	if (!isStop()) {
-		fei::Image *image = framePool.getImage((int)curFrameIndex);
+		fei::Image *image = _framePool.getImage((int)_curFrameIndex);
 		rObj->setSubstitute(image);
 	}
 }
 
 float FrameAnime::getFps()
 {
-	return fps;
+	return _fps;
 }
 
 void FrameAnime::setFps(float f)
 {
-	fps = f;
+	_fps = f;
 }
 
 int FrameAnime::getFrameNum()
 {
-	return framePool.getImageNum();
+	return _framePool.getImageNum();
 }
 
 int FrameAnime::getCurFrameIndex()
 {
-	return (int)curFrameIndex;
+	return (int)_curFrameIndex;
 }
 
 void FrameAnime::setCurFrameIndex(int cfi)
 {
-	curFrameIndex = cfi;
+	_curFrameIndex = cfi;
 }
 
 fei::ImagePool* FrameAnime::getFramePool()
 {
-	return &framePool;
+	return &_framePool;
 }

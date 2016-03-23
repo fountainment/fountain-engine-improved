@@ -1,4 +1,4 @@
-#if !defined(_FEI_FONTCACHE_H_)
+#ifndef _FEI_FONTCACHE_H_
 #define _FEI_FONTCACHE_H_
 
 //TODO: add bold function

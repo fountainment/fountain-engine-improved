@@ -1,4 +1,4 @@
-#if !defined(_FEI_JOYSTICK_H_)
+#ifndef _FEI_JOYSTICK_H_
 #define _FEI_JOYSTICK_H_
 
 //TODO: test different joysticks and support them
@@ -40,7 +40,7 @@ public:
 
 	Joystick();
 
-	void setAccuracy(float acrc);
+	void setAccuracy(float accuracy);
 
 	int getAxesCount();
 	int getButtonCount();
@@ -67,14 +67,16 @@ private:
 	void update();
 	void clearData();
 
-	int id;
-	Type type;
-	int axesCount;
-	float axesData[16];
-	int buttonCount;
-	unsigned char buttonData[16];
-	Joystick::ButtonState buttonState[16];
-	float accuracy;
+	void setId(int id);
+
+	int _id;
+	Type _type;
+	int _axesCount;
+	float _axesData[16];
+	int _buttonCount;
+	unsigned char _buttonData[16];
+	Joystick::ButtonState _buttonState[16];
+	float _accuracy;
 };
 
 } // namespace fei

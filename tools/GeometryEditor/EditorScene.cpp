@@ -4,8 +4,7 @@ using namespace fei;
 
 void EShapeObj::drawIt()
 {
-	auto window = Interface::getInstance()->getCurrentWindow();
-	auto scene = window->sceneManager->getCurScene();
+	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
 	auto cam = scene->getCamera();
 
 	Render::drawShape(shape);

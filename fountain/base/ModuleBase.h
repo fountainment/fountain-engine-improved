@@ -1,4 +1,4 @@
-#if !defined(_FEI_MODULEBASE_H_)
+#ifndef _FEI_MODULEBASE_H_
 #define _FEI_MODULEBASE_H_
 
 namespace fei {

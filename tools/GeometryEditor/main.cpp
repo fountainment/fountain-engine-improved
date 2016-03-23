@@ -12,7 +12,7 @@ public:
 		engine->window->setSize(800, 600);
 		engine->window->setTitle("GeometryEditor v0.07");
 		engine->window->setSamples(8);
-		engine->window->sceneManager->gotoScene(new EditorScene);
+		engine->window->getSceneManager()->gotoScene(new EditorScene);
 	}
 };
 

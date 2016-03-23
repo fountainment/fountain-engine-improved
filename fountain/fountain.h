@@ -1,4 +1,4 @@
-#if !defined(_FEI_FOUNTAIN_H_)
+#ifndef _FEI_FOUNTAIN_H_
 #define _FEI_FOUNTAIN_H_
 
 #include "base/basedef.h"

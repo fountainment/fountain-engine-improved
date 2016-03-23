@@ -1,4 +1,4 @@
-#if !defined(_FEI_NONCOPYABLE_H_)
+#ifndef _FEI_NONCOPYABLE_H_
 #define _FEI_NONCOPYABLE_H_
 
 namespace fei {

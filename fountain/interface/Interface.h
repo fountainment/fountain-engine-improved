@@ -1,4 +1,4 @@
-#if !defined(_FEI_INTERFACE_H_)
+#ifndef _FEI_INTERFACE_H_
 #define _FEI_INTERFACE_H_
 
 #include "base/ModuleBase.h"
@@ -33,11 +33,12 @@ public:
 
 private:
 	Interface();
-	Window* rootWindow;
-	Window* currentWindow;
-	std::vector<fei::Window*> windowList;
 
-	static Interface* instance;
+	Window* _rootWindow;
+	Window* _currentWindow;
+	std::vector<fei::Window*> _windowList;
+
+	static Interface* instance_;
 };
 
 } // namespace fei

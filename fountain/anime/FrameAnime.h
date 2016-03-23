@@ -1,4 +1,4 @@
-#if !defined(_FEI_FRAMEANIME_H_)
+#ifndef _FEI_FRAMEANIME_H_
 #define _FEI_FRAMEANIME_H_
 
 #include "anime/Anime.h"
@@ -38,9 +38,9 @@ public:
 	ImagePool* getFramePool();
 
 private:
-	double curFrameIndex;
-	float fps;
-	ImagePool framePool;
+	double _curFrameIndex;
+	float _fps;
+	ImagePool _framePool;
 };
 
 } // namespace fei

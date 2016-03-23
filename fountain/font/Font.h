@@ -1,4 +1,4 @@
-#if !defined(_FEI_FONT_H_)
+#ifndef _FEI_FONT_H_
 #define _FEI_FONT_H_
 
 #include <ft2build.h>
@@ -17,12 +17,19 @@ public:
 	bool init() override;
 	void destroy() override;
 
-	FT_Library library;
+	FT_Library* getLibrary();
 
 private:
-	static Font* instance;
+	FT_Library _library;
+
+	static Font* instance_;
 };
 
 } // namespace fei
+
+inline FT_Library* fei::Font::getLibrary()
+{
+	return &_library;
+}
 
 #endif // _FEI_FONT_H_

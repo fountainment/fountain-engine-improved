@@ -1,9 +1,10 @@
-#if !defined(_FEI_SOURCE_H_)
+#ifndef _FEI_SOURCE_H_
 #define _FEI_SOURCE_H_
 
 #include <AL/al.h>
 #include <AL/alc.h>
 
+#include "base/basedef.h"
 #include "base/noncopyable.h"
 #include "math/Vec2.h"
 #include "math/Vec3.h"
@@ -29,8 +30,8 @@ public:
 	void setLoop(bool loop);
 
 private:
-	ALuint id;
-	ALuint buffer;
+	ALuint _id;
+	ALuint _buffer;
 };
 
 } // namespace fei

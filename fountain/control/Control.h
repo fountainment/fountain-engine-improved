@@ -1,4 +1,4 @@
-#if !defined(_FEI_CONTROL_H_)
+#ifndef _FEI_CONTROL_H_
 #define _FEI_CONTROL_H_
 
 #include "base/ModuleBase.h"
@@ -22,9 +22,9 @@ public:
 private:
 	Control();
 
-	Joystick joystick;
+	Joystick _joystick;
 
-	static Control *instance;
+	static Control *instance_;
 };
 
 } // namespace fei

@@ -5,19 +5,19 @@
 
 using fei::Interface;
 
-Interface* Interface::instance = nullptr;
+Interface* Interface::instance_ = nullptr;
 
 Interface* Interface::getInstance()
 {
-	if (!instance) {
-		instance = new Interface();
+	if (!instance_) {
+		instance_ = new Interface();
 	}
-	return instance;
+	return instance_;
 }
 
 Interface::Interface()
-: rootWindow(nullptr),
-  currentWindow(nullptr)
+: _rootWindow(nullptr),
+  _currentWindow(nullptr)
 {
 }
 
@@ -41,81 +41,81 @@ void Interface::destroy()
 fei::Window* Interface::applyNewWindow()
 {
 	auto ptr = new fei::Window();
-	windowList.push_back(ptr);
+	_windowList.push_back(ptr);
 	return ptr;
 }
 
 void Interface::destroyWindow(fei::Window* window)
 {
-	auto result = find(windowList.begin(), windowList.end(), window);
-	if (result != windowList.end()) {
-		windowList.erase(result);
+	auto result = find(_windowList.begin(), _windowList.end(), window);
+	if (result != _windowList.end()) {
+		_windowList.erase(result);
 		delete window;
 	}
 }
 
 void Interface::destroyAllWindows()
 {
-	for (auto it = windowList.rbegin(); it != windowList.rend(); ++it) {
+	for (auto it = _windowList.rbegin(); it != _windowList.rend(); ++it) {
 		delete *it;
 	}
-	delete rootWindow;
-	windowList.clear();
-	rootWindow = nullptr;
+	_windowList.clear();
+	delete _rootWindow;
+	_rootWindow = nullptr;
 }
 
 void Interface::createRootWindow()
 {
-	if (!rootWindow) {
-		rootWindow = new fei::Window();
-		rootWindow->setHide(true);
-		rootWindow->getWindow();
-		rootWindow->setCurrent();
+	if (!_rootWindow) {
+		_rootWindow = new fei::Window();
+		_rootWindow->setHide(true);
+		_rootWindow->getWindow();
+		_rootWindow->setCurrent();
 	}
 }
 
 fei::Window* Interface::getRootWindow()
 {
-	return rootWindow;
+	return _rootWindow;
 }
 
 void Interface::setCurrentWindow(fei::Window* window)
 {
-	currentWindow = window;
+	_currentWindow = window;
 }
 
 fei::Window* Interface::getCurrentWindow()
 {
-	return currentWindow;
+	return _currentWindow;
 }
 
 const fei::Vec2 Interface::getCursorPos()
 {
-	if (!currentWindow) {
+	if (!_currentWindow) {
 		return fei::Vec2::ZERO;
 	}
-	return currentWindow->getCursorPos();
+	return _currentWindow->getCursorPos();
 }
 
 const fei::Vec2 Interface::getRHCursorPos()
 {
-	if (!currentWindow) {
+	if (!_currentWindow) {
 		return fei::Vec2::ZERO;
 	}
-	return currentWindow->getRHCursorPos();
+	return _currentWindow->getRHCursorPos();
 }
 
 const fei::Vec2 Interface::getWindowSize()
 {
-	if (!currentWindow) {
+	if (!_currentWindow) {
 		return fei::Vec2::ZERO;
 	}
-	return currentWindow->getWindowSize();
+	return _currentWindow->getWindowSize();
 }
 
 void Interface::executeAfterFrame()
 {
-	currentWindow->swapBuffers();
+	_currentWindow->swapBuffers();
 	glfwPollEvents();
 	Window::doDelWindows();
 }
