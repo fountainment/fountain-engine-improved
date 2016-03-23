@@ -102,6 +102,12 @@ void EditorScene::update()
 		auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
 		body->createFixture(list);
 	}
+
+	if (poly[curEdit].collidePoint(mainCam.screenToWorld(mPos))) {
+		polyObj.setColor(Color::Yellow);
+	} else {
+		polyObj.setColor(Color::White);
+	}
 }
 
 void EditorScene::loadAnime(const std::string& path)

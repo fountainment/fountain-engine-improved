@@ -35,14 +35,16 @@ void Segment::swapAB()
 
 bool Segment::collide(const fei::Shape* shape) const
 {
-	//TODO: implement
 	bool result = false;
+	Vec2 tmp;
 	switch (shape->getType()) {
 	//TODO: implement cases
 	//case fei::Shape::Type::CIRCLE:
 	//case fei::Shape::Type::POLYGON:
 	//case fei::Shape::Type::RECT:
-	//case fei::Shape::Type::SEGMENT:
+	case fei::Shape::Type::SEGMENT:
+		result = collideSegment(tmp, *((Segment*)shape));
+		break;
 	}
 	return result;
 }

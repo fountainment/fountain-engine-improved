@@ -75,6 +75,21 @@ void TestScene::testMath()
 		std::printf("%d\n", vertex);
 	}
 	std::printf("%d\n", y.getBestCutVertexIndex(1));
+
+	auto p = fei::collideLine(Vec2(0.0, 1.0), Vec2(0.0, 2.0), Vec2(1.0, 0.0), Vec2(2.0, 0.0));
+	std::printf("(0.0, 0.0) == (%f, %f)\n", p.x, p.y);
+	if (p == Vec2::ZERO) {
+		std::printf("Yes\n");
+	} else {
+		std::printf("No\n");
+	}
+	p = fei::collideLine(Vec2(0.0, 1.0), Vec2(0.0, 2.0), Vec2(2.0, 0.0), Vec2(1.0, 0.0));
+	std::printf("(0.0, 0.0) == (%f, %f)\n", p.x, p.y);
+	if (p == Vec2::ZERO) {
+		std::printf("Yes\n");
+	} else {
+		std::printf("No\n");
+	}
 }
 
 void TestScene::keyCallback(int key, int scancode, int action, int mods)
