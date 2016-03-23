@@ -33,6 +33,25 @@ void Segment::swapAB()
 	b = tmp;
 }
 
+bool Segment::collide(const fei::Shape* shape) const
+{
+	//TODO: implement
+	bool result = false;
+	switch (shape->getType()) {
+	//TODO: implement cases
+	//case fei::Shape::Type::CIRCLE:
+	//case fei::Shape::Type::POLYGON:
+	//case fei::Shape::Type::RECT:
+	//case fei::Shape::Type::SEGMENT:
+	}
+	return result;
+}
+
+bool Segment::collidePoint(const fei::Vec2& p) const
+{
+	return std::abs((a - p).normalized().dot((b - p).normalized()) + 1.0f) < fei::epsf;
+}
+
 bool Segment::collideSegment(fei::Vec2& pt, const Segment& seg) const
 {
 	auto intersection = fei::collideLine(a, b, seg.a, seg.b);

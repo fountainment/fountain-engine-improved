@@ -2,7 +2,7 @@
 
 using fei::Circle;
 
-std::vector<fei::Vec2> Circle::data32 = {
+std::vector<fei::Vec2> Circle::_data32 = {
 fei::Vec2(1.000000f, 0.000000f),
 fei::Vec2(0.980785f, 0.195090f),
 fei::Vec2(0.923880f, 0.382683f),
@@ -37,26 +37,26 @@ fei::Vec2(0.923880f, -0.382683f),
 fei::Vec2(0.980785f, -0.195090f)};
 
 Circle::Circle()
-: radius(1.0f)
+: _radius(1.0f)
 {
 	shapeType = fei::Shape::Type::CIRCLE;
 }
 
 Circle::Circle(float r)
-: radius(r)
+: _radius(r)
 {
 	shapeType = fei::Shape::Type::CIRCLE;
 }
 
 int Circle::getDataSize() const
 {
-	return data32.size();
+	return _data32.size();
 }
 
 const float* Circle::getDataPtr() const
 {
-	if (!data32.empty()) {
-		return &data32[0].x;
+	if (!_data32.empty()) {
+		return &_data32[0].x;
 	} else {
 		return nullptr;
 	}
@@ -64,12 +64,12 @@ const float* Circle::getDataPtr() const
 
 float Circle::getRadius() const
 {
-	return radius;
+	return _radius;
 }
 
 void Circle::setRadius(float r)
 {
-	radius = r;
+	_radius = r;
 }
 
 bool Circle::collide(const fei::Shape* shape) const
@@ -86,10 +86,15 @@ bool Circle::collide(const fei::Shape* shape) const
 			}
 		}
 		break;
-	case fei::Shape::Type::POLYGON:
-	case fei::Shape::Type::RECT:
-	case fei::Shape::Type::SEGMENT:
-		break;
+	//TODO: implement cases
+	//case fei::Shape::Type::POLYGON:
+	//case fei::Shape::Type::RECT:
+	//case fei::Shape::Type::SEGMENT:
 	}
 	return result;
+}
+
+bool Circle::collidePoint(const fei::Vec2& p) const
+{
+	return (getPosition() - p).getLengthSq() <= (getRadius() * getRadius());
 }

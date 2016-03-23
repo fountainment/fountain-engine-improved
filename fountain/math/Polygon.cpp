@@ -175,10 +175,9 @@ static bool cmpLength(const fei::Vec2& a, const fei::Vec2& b)
 	return a.getLengthSq() < b.getLengthSq();
 }
 
-const std::vector<fei::Vec2> Polygon::collideRay(const fei::Vec2& src, const fei::Vec2& drct) const
+const std::vector<fei::Vec2> Polygon::rawCollideRay(const fei::Vec2& src, const fei::Vec2& drct) const
 {
 	std::vector<fei::Vec2> result;
-	std::vector<fei::Vec2> uniqueResult;
 	for (int i = 0; i < (int)data.size(); i++) {
 		auto seg = getSegment(i);
 		fei::Vec2 tmp;
@@ -186,6 +185,13 @@ const std::vector<fei::Vec2> Polygon::collideRay(const fei::Vec2& src, const fei
 			result.push_back(tmp - src);
 		}
 	}
+	return result;
+}
+
+const std::vector<fei::Vec2> Polygon::collideRay(const fei::Vec2& src, const fei::Vec2& drct) const
+{
+	std::vector<fei::Vec2> result = rawCollideRay(src, drct);
+	std::vector<fei::Vec2> uniqueResult;
 	std::sort(result.begin(), result.end(), cmpLength);
 	for (int i = 0; i < (int)result.size(); i++) {
 		if (result[i].getLengthSq() < 0.01f) continue;
@@ -405,6 +411,25 @@ const std::vector<Polygon> Polygon::box2dDecomposition() const
 		}
 	}
 	return result;
+}
+
+bool Polygon::collide(const fei::Shape* shape) const
+{
+	bool result = false;
+	switch (shape->getType()) {
+	//TODO: implement cases
+	//case fei::Shape::Type::CIRCLE:
+	//case fei::Shape::Type::POLYGON:
+	//case fei::Shape::Type::RECT:
+	//case fei::Shape::Type::SEGMENT:
+	}
+	return result;
+}
+
+bool Polygon::collidePoint(const Vec2& p) const
+{
+	auto points = rawCollideRay(p, fei::Vec2::RIGHT);
+	return (points.size() & 1) == 1;
 }
 
 const Polygon Polygon::makeRegularPolygon(int edgeNum, float radius, float offset)

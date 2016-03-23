@@ -20,8 +20,8 @@ public:
 	Shape();
 	virtual ~Shape();
 
-	virtual bool collidePoint(const Vec2& p) const;
-	virtual bool collide(const Shape* other) const;
+	virtual bool collidePoint(const Vec2& p) const = 0;
+	virtual bool collide(const Shape* other) const = 0;
 
 	virtual const float* getDataPtr() const = 0;
 	virtual int getDataSize() const = 0;

@@ -22,7 +22,8 @@ public:
 
 	void swapAB();
 
-	bool collidePoint(const Vec2& p) const;
+	virtual bool collide(const Shape* shape) const;
+	virtual bool collidePoint(const Vec2& p) const;
 	bool rectCollidePoint(const Vec2& p) const;
 	bool collideSegment(Vec2& pt, const Segment& seg) const;
 	bool collideRay(Vec2& pt, const Vec2& src, const Vec2& drct) const;
@@ -47,11 +48,6 @@ inline float fei::Segment::getLength() const
 inline float fei::Segment::getLengthSq() const
 {
 	return getVector().getLengthSq();
-}
-
-inline bool fei::Segment::collidePoint(const Vec2& p) const
-{
-	return std::abs((a - p).normalized().dot((b - p).normalized()) + 1.0f) < fei::epsf;
 }
 
 inline bool fei::Segment::rectCollidePoint(const fei::Vec2& p) const

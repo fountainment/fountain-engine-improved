@@ -39,6 +39,7 @@ public:
 	int closestWhichSegment(const Vec2& p) const;
 	int onWhichSegment(const Vec2& p) const;
 	int collideVertex(const Vec2& p, float radius) const;
+	const std::vector<Vec2> rawCollideRay(const Vec2& src, const Vec2& drct) const;
 	const std::vector<Vec2> collideRay(const Vec2& src, const Vec2& drct) const;
 
 	const std::vector<Vec2> getDataVector() const;
@@ -56,6 +57,9 @@ public:
 	
 	const std::vector<Polygon> convexDecomposition() const;
 	const std::vector<Polygon> box2dDecomposition() const;
+
+	virtual bool collide(const Shape* shape) const override;
+	virtual bool collidePoint(const Vec2& p) const override;
 
 	static const Polygon makeRegularPolygon(int edgeNum, float radius, float offset = 0.0f);
 

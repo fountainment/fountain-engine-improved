@@ -13,19 +13,19 @@ public:
 	Circle();
 	explicit Circle(float r);
 
-	int getDataSize() const override;
-	const float* getDataPtr() const override;
+	virtual int getDataSize() const override;
+	virtual const float* getDataPtr() const override;
 
 	float getRadius() const;
 	void setRadius(float r);
 
-	bool collide(const Shape* shape) const override;
+	virtual bool collide(const Shape* shape) const override;
+	virtual bool collidePoint(const Vec2& p) const override;
 
 private:
-	float radius;
+	float _radius;
 
-	static std::vector<Vec2> data32;
-	static std::vector<Vec2> data64;
+	static std::vector<Vec2> _data32;
 };
 
 } // namespace fei

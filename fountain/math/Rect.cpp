@@ -146,13 +146,14 @@ bool Rect::collide(const fei::Shape* other) const
 	switch(other->getType()) {
 	case fei::Shape::Type::RECT:
 		{
-			auto rct = dynamic_cast<const fei::Rect*>(other);
+			auto rct = static_cast<const fei::Rect*>(other);
 			result = collideRect(*rct);
 		}
 		break;
-	//TODO: add other collide process
-	default:
-		break;
+	//TODO: implement cases
+	//case fei::Shape::Type::CIRCLE:
+	//case fei::Shape::Type::POLYGON:
+	//case fei::Shape::Type::SEGMENT:
 	}
 	return result;
 }

@@ -36,9 +36,9 @@ public:
 	const Rect zoomed(const Vec2& v) const;
 	void normalize();
 
-	bool collide(const Shape* other) const override;
+	virtual bool collide(const Shape* other) const override;
 
-	bool collidePoint(const Vec2& pt) const override;
+	virtual bool collidePoint(const Vec2& pt) const override;
 
 	bool collideSegment(Vec2& pt, const Segment& seg) const;
 
