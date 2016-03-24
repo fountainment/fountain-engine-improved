@@ -1,4 +1,4 @@
-#if !defined(_FEI_RENDERLIST_H_)
+#ifndef _FEI_RENDERLIST_H_
 #define _FEI_RENDERLIST_H_
 
 #include "base/basedef.h"

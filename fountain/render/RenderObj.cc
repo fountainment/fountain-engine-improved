@@ -10,13 +10,13 @@ RenderObj::RenderObj()
 : _hasAlpha(false),
   _isVisible(true),
   _useColor(true),
-  angle(0.0f),
-  scale(1.0f),
-  zPos(0.0f),
-  anchor(fei::Vec2::ZERO),
-  shaderProg(nullptr),
-  substitute(nullptr),
-  anime(nullptr)
+  _angle(0.0f),
+  _scale(1.0f),
+  _zPos(0.0f),
+  _anchor(fei::Vec2::ZERO),
+  _shaderProg(nullptr),
+  _substitute(nullptr),
+  _anime(nullptr)
 {
 }
 
@@ -26,17 +26,17 @@ RenderObj::~RenderObj()
 
 void RenderObj::setShader(fei::ShaderProgram* sp)
 {
-	shaderProg = sp;
+	_shaderProg = sp;
 }
 
 void RenderObj::setSubstitute(RenderObj* sub)
 {
-	substitute = sub;
+	_substitute = sub;
 }
 
-void RenderObj::setAnime(fei::Anime* animePtr)
+void RenderObj::setAnime(fei::Anime* _animePtr)
 {
-	anime = animePtr;
+	_anime = _animePtr;
 }
 
 bool RenderObj::hasAlpha() const
@@ -76,76 +76,76 @@ void RenderObj::setUseColor(bool useColor)
 
 void RenderObj::setScale(float scl)
 {
-	scale = scl;
+	_scale = scl;
 }
 
 void RenderObj::setAngle(float agl)
 {
-	angle = agl;
+	_angle = agl;
 }
 
 void RenderObj::setAnchor(const fei::Vec2& acr)
 {
-	anchor = acr;
+	_anchor = acr;
 }
 
 void RenderObj::setZPos(float z)
 {
-	zPos = z;
+	_zPos = z;
 }
 
 float RenderObj::getScale() const
 {
-	return scale;
+	return _scale;
 }
 
 float RenderObj::getAngle() const
 {
-	return angle;
+	return _angle;
 }
 
 const fei::Vec2 RenderObj::getAnchor() const
 {
-	return anchor;
+	return _anchor;
 }
 
 float RenderObj::getZPos() const
 {
-	return zPos;
+	return _zPos;
 }
 
 void RenderObj::roundAnchor()
 {
-	anchor *= 2.0f;
-	anchor.round();
-	anchor *= 0.5f;
+	_anchor *= 2.0f;
+	_anchor.round();
+	_anchor *= 0.5f;
 }
 
 void RenderObj::moveAnchor(const fei::Vec2& v)
 {
-	anchor.add(v);
+	_anchor.add(v);
 }
 
 void RenderObj::rotate(float dltAgl)
 {
-	angle += dltAgl;
+	_angle += dltAgl;
 }
 
 void RenderObj::matrixTransformBegin()
 {
-	glTranslatef(getPosition().x, getPosition().y, zPos);
-	if (angle != 0.0f) {
-		glRotatef(angle, 0.0f, 0.0f, 1.0f);
+	glTranslatef(getPosition().x, getPosition().y, _zPos);
+	if (_angle != 0.0f) {
+		glRotatef(_angle, 0.0f, 0.0f, 1.0f);
 	}
 	glPushMatrix();
-	if (scale != 1.0f) {
-		glScalef(scale, scale, scale);
+	if (_scale != 1.0f) {
+		glScalef(_scale, _scale, _scale);
 	}
 }
 
 void RenderObj::anchorTransform()
 {
-	glTranslatef(-anchor.x, -anchor.y, 0.0f);
+	glTranslatef(-_anchor.x, -_anchor.y, 0.0f);
 }
 
 void RenderObj::matrixTransformEnd()
@@ -155,15 +155,15 @@ void RenderObj::matrixTransformEnd()
 
 void RenderObj::feiBasicUpdate()
 {
-	if (anime) {
-		anime->feiObjectUpdate(this);
+	if (_anime) {
+		_anime->feiObjectUpdate(this);
 	}
 }
 
 void RenderObj::draw()
 {
 	if (_useColor) {
-		color.use();
+		_color.use();
 	}
 	glDisable(GL_BLEND);
 	glEnable(GL_DEPTH_TEST);
@@ -176,16 +176,16 @@ void RenderObj::draw()
 	}
 
 	bool visible = isVisible();
-	if (shaderProg && visible) {
-		shaderProg->push();
+	if (_shaderProg && visible) {
+		_shaderProg->push();
 	}
 
 	matrixTransformBegin();
 
 	if (visible) {
-		if (substitute) {
-			substitute->anchorTransform();
-			substitute->drawIt();
+		if (_substitute) {
+			_substitute->anchorTransform();
+			_substitute->drawIt();
 		} else {
 			anchorTransform();
 			drawIt();
@@ -194,8 +194,8 @@ void RenderObj::draw()
 
 	matrixTransformEnd();
 
-	if (shaderProg && visible) {
-		shaderProg->pop();
+	if (_shaderProg && visible) {
+		_shaderProg->pop();
 	}
 
 	glDisable(GL_DEPTH_TEST);
@@ -210,10 +210,10 @@ void RenderObj::drawIt()
 
 void RenderObj::setColor(const fei::Color& c)
 {
-	color = c;
+	_color = c;
 }
 
 const fei::Color RenderObj::getColor() const
 {
-	return color;
+	return _color;
 }

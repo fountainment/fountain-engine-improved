@@ -5,9 +5,9 @@
 using fei::SceneManager;
 
 SceneManager::SceneManager()
-: curScene(nullptr),
-  nextScene(nullptr),
-  doDestroyCurScene(false)
+: _curScene(nullptr),
+  _nextScene(nullptr),
+  _doDestroyCurScene(false)
 {
 }
 
@@ -18,42 +18,42 @@ SceneManager::~SceneManager()
 
 void SceneManager::destroyCurScene()
 {
-	if (curScene) {
-		curScene->feiDestroy();
-		delete curScene;
-		curScene = nullptr;
+	if (_curScene) {
+		_curScene->feiDestroy();
+		delete _curScene;
+		_curScene = nullptr;
 	}
 }
 
 fei::Scene* SceneManager::getCurScene()
 {
-	return curScene;
+	return _curScene;
 }
 
 void SceneManager::gotoScene(fei::Scene* goScene, bool destroyCurrent)
 {
-	if (curScene) {
-		doDestroyCurScene = destroyCurrent;
+	if (_curScene) {
+		_doDestroyCurScene = destroyCurrent;
 	}
-	nextScene = goScene;
+	_nextScene = goScene;
 }
 
 void SceneManager::renderCurScene()
 {
 	defaultCamera.update();
-	if (curScene) {
-		curScene->feiUpdate();
-		curScene->draw();
+	if (_curScene) {
+		_curScene->feiUpdate();
+		_curScene->draw();
 	}
-	if (doDestroyCurScene) {
+	if (_doDestroyCurScene) {
 		destroyCurScene();
-		doDestroyCurScene = false;
+		_doDestroyCurScene = false;
 	}
-	if (nextScene) {
-		curScene = nextScene;
-		curScene->setClock(&defaultClock);
-		curScene->feiInit();
-		nextScene = nullptr;
+	if (_nextScene) {
+		_curScene = _nextScene;
+		_curScene->setClock(&defaultClock);
+		_curScene->feiInit();
+		_nextScene = nullptr;
 	}
 }
 

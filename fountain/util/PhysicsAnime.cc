@@ -88,7 +88,7 @@ void CollisionFrameAnime::print()
 {
 	for (auto& frame : _frameMap) {
 		std::printf("%d\n", frame.first);
-		std::printf("%d\n", (int)frame.second.size());
+		std::printf("%d\n", static_cast<int>(frame.second.size()));
 		for (auto& poly : frame.second) {
 			poly.print();
 		}
@@ -98,9 +98,9 @@ void CollisionFrameAnime::print()
 void CollisionFrameAnime::destroyFixture()
 {
 	if (_body) {
-		_body->destroyFixture(_fixture.fixtures);
+		_body->destroyFixture(_fixture._fixtures);
 	}
-	_fixture.fixtures.clear();
+	_fixture._fixtures.clear();
 }
 
 void CollisionFrameAnime::createFixture(const std::vector<fei::Polygon>& polyVec)

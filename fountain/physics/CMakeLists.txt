@@ -1,5 +1,5 @@
 set(FOUNTAIN_PHYSICS_SRC
-	physics/Physics.cpp
-	physics/Body.cpp
-	physics/FixtureGroup.cpp
+	physics/Physics.cc
+	physics/Body.cc
+	physics/FixtureGroup.cc
 )

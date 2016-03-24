@@ -1,4 +1,4 @@
-#if !defined(_FEI_LAYER_H_)
+#ifndef _FEI_LAYER_H_
 #define _FEI_LAYER_H_
 
 #include "render/Camera.h"
@@ -18,9 +18,9 @@ public:
 	//TODO: design control signal catch logic
 
 private:
-	bool didCameraPush;
-	Camera *oldCamera;
-	Camera *layerCamera;
+	bool _didCameraPush;
+	Camera *_oldCamera;
+	Camera *_layerCamera;
 
 	void cameraPush();
 	void cameraPop();

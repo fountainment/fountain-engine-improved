@@ -5,41 +5,41 @@
 using fei::RenderTree;
 
 RenderTree::RenderTree()
-: root(nullptr)
+: _root(nullptr)
 {
 }
 
 void RenderTree::treeInit()
 {
-	if (root) {
-		root->feiInit();
+	if (_root) {
+		_root->feiInit();
 	}
-	childList.feiInit();
+	_childList.feiInit();
 }
 
 void RenderTree::treeDestroy()
 {
-	childList.feiDestroy();
-	if (root) {
-		root->feiDestroy();
+	_childList.feiDestroy();
+	if (_root) {
+		_root->feiDestroy();
 	}
 }
 
 void RenderTree::treeUpdate()
 {
-	if (root) {
-		root->feiUpdate();
+	if (_root) {
+		_root->feiUpdate();
 	}
-	childList.feiUpdate();
+	_childList.feiUpdate();
 }
 
 void RenderTree::treeDraw()
 {
 	glPushMatrix();
-	if (root) {
-		root->draw();
+	if (_root) {
+		_root->draw();
 	}
-	childList.draw();
+	_childList.draw();
 	glPopMatrix();
 }
 
@@ -71,7 +71,7 @@ void RenderTree::drawIt()
 
 void RenderTree::setRoot(RenderObj* rObj)
 {
-	root = rObj;
+	_root = rObj;
 }
 
 void RenderTree::addChild(RenderObj* rObj)
@@ -79,15 +79,15 @@ void RenderTree::addChild(RenderObj* rObj)
 	if (_isLoaded) {
 		rObj->feiInit();
 	}
-	childList.add(rObj);
+	_childList.add(rObj);
 }
 
 void RenderTree::delChild(RenderObj* rObj)
 {
-	childList.del(rObj);
+	_childList.del(rObj);
 }
 
 void RenderTree::sort()
 {
-	childList.sort();
+	_childList.sort();
 }

@@ -5,14 +5,14 @@
 using fei::Clock;
 
 Clock::Clock()
-: totalTime(0.0),
-  deltaTime(0.0),
-  timeScale(1.0),
-  frameCount(0),
+: _totalTime(0.0),
+  _deltaTime(0.0),
+  _timeScale(1.0),
+  _frameCount(0),
   _isMaster(true),
   _isPlay(true),
   _isStop(false),
-  masterClock(nullptr)
+  _masterClock(nullptr)
 {
 	fei::Time::getInstance()->addClock(this);
 }
@@ -24,8 +24,8 @@ Clock::~Clock()
 
 void Clock::init()
 {
-	totalTime = 0.0;
-	frameCount = 0;
+	_totalTime = 0.0;
+	_frameCount = 0;
 	_isPlay = true;
 	_isStop = false;
 }
@@ -38,8 +38,8 @@ void Clock::init(Clock* mClock)
 
 void Clock::setMasterClock(Clock* mClock)
 {
-	masterClock = mClock;
-	if (!masterClock) {
+	_masterClock = mClock;
+	if (!_masterClock) {
 		_isMaster = true;
 	} else {
 		_isMaster = false;
@@ -48,41 +48,41 @@ void Clock::setMasterClock(Clock* mClock)
 
 void Clock::tick()
 {
-	deltaTime = calculateDeltaTime();
+	_deltaTime = calculateDeltaTime();
 	if (_isPlay) {
-		totalTime += deltaTime;
-		frameCount++;
+		_totalTime += _deltaTime;
+		_frameCount++;
 	}
 }
 
 double Clock::getTime()
 {
-	return totalTime;
+	return _totalTime;
 }
 
 double Clock::getDeltaTime()
 {
-	return deltaTime;
+	return _deltaTime;
 }
 
 long long Clock::getFrameCount()
 {
-	return frameCount;
+	return _frameCount;
 }
 
 void Clock::setTimeScale(double tScale)
 {
-	timeScale = tScale;
+	_timeScale = tScale;
 }
 
 double Clock::getTimeScale()
 {
-	return timeScale;
+	return _timeScale;
 }
 
 void Clock::zoomTimeScale(double zoom)
 {
-	timeScale *= zoom;
+	_timeScale *= zoom;
 }
 
 void Clock::play()
@@ -106,8 +106,8 @@ void Clock::stop()
 {
 	_isPlay = false;
 	_isStop = true;
-	totalTime = 0.0;
-	frameCount = 0;
+	_totalTime = 0.0;
+	_frameCount = 0;
 }
 
 bool Clock::isPlay()
@@ -141,10 +141,10 @@ double Clock::calculateDeltaTime()
 		if (_isMaster) {
 			result = Time::getInstance()->getDeltaTime();
 		} else {
-			result = masterClock->getDeltaTime();	
+			result = _masterClock->getDeltaTime();	
 		}
-		if (timeScale != 1.0) {
-			result *= timeScale;
+		if (_timeScale != 1.0) {
+			result *= _timeScale;
 		}
 	}
 	return result;

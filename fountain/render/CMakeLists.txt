@@ -1,13 +1,13 @@
 set(FOUNTAIN_RENDER_SRC
-	render/Render.cpp
-	render/RenderObj.cpp
-	render/RenderList.cpp
-	render/RenderTree.cpp
-	render/Camera.cpp
-	render/Color.cpp
-	render/Texture.cpp
-	render/Image.cpp
-	render/ImagePool.cpp
-	render/Shader.cpp
-	render/ShapeObj.cpp
+	render/Render.cc
+	render/RenderObj.cc
+	render/RenderList.cc
+	render/RenderTree.cc
+	render/Camera.cc
+	render/Color.cc
+	render/Texture.cc
+	render/Image.cc
+	render/ImagePool.cc
+	render/Shader.cc
+	render/ShapeObj.cc
 )

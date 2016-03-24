@@ -4,27 +4,12 @@ using fei::Shape;
 
 Shape::Shape()
 : _isSolid(true),
-  shapeType(Type::POLYGON)
+  _shapeType(Type::POLYGON)
 {
 }
 
 Shape::~Shape()
 {
-}
-
-void Shape::setSolid(bool solid)
-{
-	_isSolid = solid;
-}
-
-bool Shape::isSolid() const
-{
-	return _isSolid;
-}
-
-Shape::Type Shape::getType() const
-{
-	return shapeType;
 }
 
 void Shape::print()

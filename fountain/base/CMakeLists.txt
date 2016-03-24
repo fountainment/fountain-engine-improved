@@ -1,6 +1,6 @@
 set(FOUNTAIN_BASE_SRC
-	base/basedef.cpp
-	base/ModuleBase.cpp
-	base/NodeBase.cpp
-	base/fileUtil.cpp
+	base/basedef.cc
+	base/ModuleBase.cc
+	base/NodeBase.cc
+	base/fileUtil.cc
 )

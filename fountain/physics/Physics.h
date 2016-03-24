@@ -1,4 +1,4 @@
-#if !defined(_FEI_PHYSICS_H_)
+#ifndef _FEI_PHYSICS_H_
 #define _FEI_PHYSICS_H_
 
 #include <Box2D/Box2D.h>
@@ -44,35 +44,40 @@ public:
 private:
 	Physics();
 
-	b2World *world;
-	b2Draw *debugDraw;
-	Camera* ddCamera;
-	bool doDebugDraw;
-	float ratio;
+	b2World* _world;
+	b2Draw* _debugDraw;
+	Camera* _ddCamera;
+	bool _doDebugDraw;
+	float _ratio;
 
-	static Physics *instance;
+	static Physics *instance_;
 };
 
-inline const Vec2 Physics::renderToPhysics(const Vec2& v)
-{
-	return v / ratio;
-}
-
-inline const Vec2 Physics::physicsToRender(const Vec2& v)
-{
-	return v * ratio;
-}
-
-inline float Physics::renderToPhysics(float f)
-{
-	return f / ratio;
-}
-
-inline float Physics::physicsToRender(float f)
-{
-	return f * ratio;
-}
-
 } // namespace fei
+
+inline float fei::Physics::getRatio()
+{
+	return _ratio;
+}
+
+inline const fei::Vec2 fei::Physics::renderToPhysics(const fei::Vec2& v)
+{
+	return v / getRatio();
+}
+
+inline const fei::Vec2 fei::Physics::physicsToRender(const fei::Vec2& v)
+{
+	return v * getRatio();
+}
+
+inline float fei::Physics::renderToPhysics(float f)
+{
+	return f / getRatio();
+}
+
+inline float fei::Physics::physicsToRender(float f)
+{
+	return f * getRatio();
+}
 
 #endif // _FEI_PHYSICS_H_

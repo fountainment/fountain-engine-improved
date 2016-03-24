@@ -50,9 +50,19 @@ public:
 	int getDataSize() const override;
 
 private:
-	Vec2 size;
+	Vec2 _size;
 };
 
 } // namespace fei
+
+inline const fei::Vec2 fei::Rect::getSize() const
+{
+	return _size;
+}
+
+inline void fei::Rect::setSize(const fei::Vec2& sz)
+{
+	_size = sz;
+}
 
 #endif // _FEI_RECT_H_

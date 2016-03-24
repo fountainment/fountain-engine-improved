@@ -1,4 +1,4 @@
-#if !defined(_FUT_PHYSICSANIME_H_)
+#ifndef _FUT_PHYSICSANIME_H_
 #define _FUT_PHYSICSANIME_H_
 
 #include "anime/FrameAnime.h"

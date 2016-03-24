@@ -1,4 +1,4 @@
-#if !defined(_FEI_LABEL_H_)
+#ifndef _FEI_LABEL_H_
 #define _FEI_LABEL_H_
 
 #include "font/FontCache.h"
@@ -12,7 +12,7 @@ class Label : public RenderObj
 public:
 	Label();
 
-	void drawIt() override;
+	virtual void drawIt() override;
 
 	void clearString();
 	void setString(FontCache& fontCache, const std::vector<unsigned long>& str);
@@ -26,10 +26,10 @@ public:
 	void setCenter(const Vec2& center);
 
 private:
-	int length;
-	int height;
-	std::vector<Image> charList;
-	std::vector<int> advanceList;
+	int _length;
+	int _height;
+	std::vector<Image> _charList;
+	std::vector<int> _advanceList;
 
 	bool _centerAligned;
 };

@@ -1,4 +1,4 @@
-#if !defined(_FEI_TEXTURE_H_)
+#ifndef _FEI_TEXTURE_H_
 #define _FEI_TEXTURE_H_
 
 #include <GL/glew.h>
@@ -22,8 +22,6 @@ public:
 		LUM = 5,
 		LUMA = 6
 	};
-
-	friend class Render;
 
 	Texture();
 	Texture(const Texture& tex);
@@ -55,9 +53,9 @@ private:
 	void setId(GLuint _id);
 	void setSize(const Vec2& s);
 
-	GLuint id;
-	Vec2 size;
-	Vec2 size2;
+	GLuint _id;
+	Vec2 _size;
+	Vec2 _size2;
 };
 
 } // namespace fei

@@ -9,7 +9,8 @@ using fei::VertexShader;
 using fei::ShaderProgram;
 
 Shader::Shader()
-: id(0), shaderType(GL_VERTEX_SHADER)
+: _id(0),
+  _shaderType(GL_VERTEX_SHADER)
 {
 }
 
@@ -20,9 +21,9 @@ Shader::~Shader()
 
 void Shader::deleteShader()
 {
-	if (id) {
-		glDeleteShader(id);
-		id = 0;
+	if (_id) {
+		glDeleteShader(_id);
+		_id = 0;
 	}
 }
 
@@ -37,37 +38,38 @@ void Shader::loadFile(const std::string& filename)
 
 void Shader::loadString(const std::string& source)
 {
-	shaderSource = source;
+	_shaderSource = source;
 }
 
 void Shader::compile()
 {
-	if (!id) {
-		id = glCreateShader(shaderType);
+	if (!_id) {
+		_id = glCreateShader(_shaderType);
 	}
-	const GLchar* shaderStr = shaderSource.c_str();
-	glShaderSource(id, 1, &shaderStr, 0);
-	glCompileShader(id);
+	const GLchar* shaderStr = _shaderSource.c_str();
+	glShaderSource(_id, 1, &shaderStr, 0);
+	glCompileShader(_id);
 }
 
 bool Shader::compileCheck()
 {
 	GLint compiled;
-	glGetShaderiv(id, GL_COMPILE_STATUS, &compiled);
+	glGetShaderiv(_id, GL_COMPILE_STATUS, &compiled);
 	if (GL_FALSE == compiled) {
 		GLint length;
 		GLchar *log;
 		std::string output;
-		if (shaderType == GL_VERTEX_SHADER) {
+		if (_shaderType == GL_VERTEX_SHADER) {
 			output += "Vertex";
-		}
-		if (shaderType == GL_FRAGMENT_SHADER) {
-			output += "Fragment";
+		} else {
+			if (_shaderType == GL_FRAGMENT_SHADER) {
+				output += "Fragment";
+			}
 		}
 		output += " shader compile failed!\n";
-		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+		glGetShaderiv(_id, GL_INFO_LOG_LENGTH, &length);
 		log = new GLchar[length];
-		glGetShaderInfoLog(id, length, &length, log);
+		glGetShaderInfoLog(_id, length, &length, log);
 		output += std::string(log) + "\n\n";
 		std::fprintf(stderr, "%s", output.c_str());
 		delete [] log;
@@ -78,17 +80,17 @@ bool Shader::compileCheck()
 
 VertexShader::VertexShader()
 {
-	shaderType = GL_VERTEX_SHADER;
+	_shaderType = GL_VERTEX_SHADER;
 }
 
 FragmentShader::FragmentShader()
 {
-	shaderType = GL_FRAGMENT_SHADER;
+	_shaderType = GL_FRAGMENT_SHADER;
 }
 
 ShaderProgram::ShaderProgram()
 {
-	id = 0;
+	_id = 0;
 }
 
 ShaderProgram::~ShaderProgram()
@@ -98,16 +100,16 @@ ShaderProgram::~ShaderProgram()
 
 void ShaderProgram::deleteProgram()
 {
-	if (id) {
-		glDeleteProgram(id);
-		id = 0;
+	if (_id) {
+		glDeleteProgram(_id);
+		_id = 0;
 	}
 }
 
 void ShaderProgram::loadFile(const std::string& vs, const std::string& fs)
 {
-	if (!id) {
-		id = glCreateProgram();
+	if (!_id) {
+		_id = glCreateProgram();
 	}
 	auto vsStr = fei::readFileBuffer(vs);
 	auto fsStr = fei::readFileBuffer(fs);
@@ -126,8 +128,8 @@ void ShaderProgram::loadFile(const std::string& vs, const std::string& fs)
 
 void ShaderProgram::loadString(const std::string& vsStr, const std::string& fsStr)
 {
-	if (!id) {
-		id = glCreateProgram();
+	if (!_id) {
+		_id = glCreateProgram();
 	}
 	VertexShader vert;
 	FragmentShader frag;
@@ -143,13 +145,13 @@ void ShaderProgram::loadString(const std::string& vsStr, const std::string& fsSt
 
 void ShaderProgram::attach(Shader* shader)
 {
-	if (!shader->id) {
+	if (!shader->_id) {
 		shader->compile();
 		if (!shader->compileCheck()) {
 			return;
 		}
 	}
-	glAttachShader(id, shader->id);
+	glAttachShader(_id, shader->_id);
 	shader->deleteShader();
 }
 
@@ -161,12 +163,12 @@ void ShaderProgram::attach(Shader* vs, Shader* fs)
 
 void ShaderProgram::link()
 {
-	glLinkProgram(id);
+	glLinkProgram(_id);
 }
 
 void ShaderProgram::use()
 {
-	glUseProgram(id);
+	glUseProgram(_id);
 }
 
 void ShaderProgram::push()
@@ -182,7 +184,7 @@ void ShaderProgram::pop()
 void ShaderProgram::setUniform(const std::string& varName, int value)
 {
 	push();
-	GLint loc = glGetUniformLocation(id, varName.c_str());
+	GLint loc = glGetUniformLocation(_id, varName.c_str());
 	if (loc != -1) {
 		glUniform1i(loc, value);
 	}
@@ -192,7 +194,7 @@ void ShaderProgram::setUniform(const std::string& varName, int value)
 void ShaderProgram::setUniform(const std::string& varName, float value)
 {
 	push();
-	GLint loc = glGetUniformLocation(id, varName.c_str());
+	GLint loc = glGetUniformLocation(_id, varName.c_str());
 	if (loc != -1) {
 		glUniform1f(loc, value);
 	}
@@ -202,7 +204,7 @@ void ShaderProgram::setUniform(const std::string& varName, float value)
 void ShaderProgram::setUniform(const std::string& varName, const fei::Vec2& value)
 {
 	push();
-	GLint loc = glGetUniformLocation(id, varName.c_str());
+	GLint loc = glGetUniformLocation(_id, varName.c_str());
 	if (loc != -1) {
 		glUniform2fv(loc, 1, &(value.x));
 	}
@@ -212,7 +214,7 @@ void ShaderProgram::setUniform(const std::string& varName, const fei::Vec2& valu
 void ShaderProgram::setUniform(const std::string& varName, const fei::Vec3& value)
 {
 	push();
-	GLint loc = glGetUniformLocation(id, varName.c_str());
+	GLint loc = glGetUniformLocation(_id, varName.c_str());
 	if (loc != -1) {
 		glUniform3fv(loc, 1, &(value.x));
 	}
@@ -222,7 +224,7 @@ void ShaderProgram::setUniform(const std::string& varName, const fei::Vec3& valu
 void ShaderProgram::setUniform(const std::string& varName, const fei::Vec4& value)
 {
 	push();
-	GLint loc = glGetUniformLocation(id, varName.c_str());
+	GLint loc = glGetUniformLocation(_id, varName.c_str());
 	if (loc != -1) {
 		glUniform4fv(loc, 1, &(value.x));
 	}

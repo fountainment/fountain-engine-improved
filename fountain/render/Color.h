@@ -1,4 +1,4 @@
-#if !defined(_FEI_COLOR_H_)
+#ifndef _FEI_COLOR_H_
 #define _FEI_COLOR_H_
 
 #include "math/Vec4.h"

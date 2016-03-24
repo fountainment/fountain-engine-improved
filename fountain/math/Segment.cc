@@ -6,14 +6,14 @@ Segment::Segment()
 : a(fei::Vec2::ZERO),
   b(fei::Vec2::ZERO)
 {
-	shapeType = fei::Shape::Type::SEGMENT;
+	setType(fei::Shape::Type::SEGMENT);
 }
 
 Segment::Segment(fei::Vec2 aa, fei::Vec2 bb)
 : a(aa),
   b(bb)
 {
-	shapeType = fei::Shape::Type::SEGMENT;
+	setType(fei::Shape::Type::SEGMENT);
 }
 
 const float* Segment::getDataPtr() const
@@ -43,7 +43,7 @@ bool Segment::collide(const fei::Shape* shape) const
 	//case fei::Shape::Type::POLYGON:
 	//case fei::Shape::Type::RECT:
 	case fei::Shape::Type::SEGMENT:
-		result = collideSegment(tmp, *((Segment*)shape));
+		result = collideSegment(tmp, *(static_cast<const Segment*>(shape)));
 		break;
 	}
 	return result;

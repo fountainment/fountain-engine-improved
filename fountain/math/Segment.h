@@ -1,4 +1,4 @@
-#if !defined(_FEI_SEGMENT_H_)
+#ifndef _FEI_SEGMENT_H_
 #define _FEI_SEGMENT_H_
 
 #include "math/mathdef.h"
@@ -13,8 +13,8 @@ public:
 	Segment();
 	Segment(Vec2 aa, Vec2 bb);
 
-	const float* getDataPtr() const override;
-	int getDataSize() const override;
+	virtual const float* getDataPtr() const override;
+	virtual int getDataSize() const override;
 
 	const Vec2 getVector() const;
 	float getLength() const;
@@ -63,11 +63,7 @@ inline int fei::Segment::onLeftOrRight(const fei::Vec2& pt) const
 	if (std::abs(cp) < fei::epsf) {
 		return 0;
 	}
-	if (cp > 0.0f) {
-		return -1;
-	} else {
-		return 1;
-	}
+	return cp>0.0f?-1:1;
 }
 		  
 #endif // _FEI_SEGMENT_H_

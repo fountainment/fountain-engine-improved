@@ -1,4 +1,4 @@
-#if !defined(_FEI_VEC2_H_)
+#ifndef _FEI_VEC2_H_
 #define _FEI_VEC2_H_
 
 #include "math/mathdef.h"

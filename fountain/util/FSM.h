@@ -1,4 +1,4 @@
-#if !defined(_FUT_FSM_H_)
+#ifndef _FUT_FSM_H_
 #define _FUT_FSM_H_
 
 #include "base/basedef.h"

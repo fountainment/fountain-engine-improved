@@ -14,7 +14,7 @@ include(ui/CMakeLists.txt)
 include(network/CMakeLists.txt)
 include(util/CMakeLists.txt)
 
-set(FOUNTAIN_SRC fountain.cpp
+set(FOUNTAIN_SRC fountain.cc
 	${FOUNTAIN_BASE_SRC}
 	${FOUNTAIN_MATH_SRC}
 	${FOUNTAIN_INTERFACE_SRC}

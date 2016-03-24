@@ -1,4 +1,4 @@
-#if !defined(_FEI_IMAGEPOOL_H_)
+#ifndef _FEI_IMAGEPOOL_H_
 #define _FEI_IMAGEPOOL_H_
 
 #include <GL/glew.h>
@@ -30,9 +30,9 @@ public:
 	void dumpIPI(const std::string& name);
 
 private:
-	int imageNum;
-	std::map<int, int> nameHash2ImageIndex;
-	std::vector<Image> imageList;
+	int _imageNum;
+	std::map<int, int> _nameHash2ImageIndex;
+	std::vector<Image> _imageList;
 };
 
 } // namespace fei

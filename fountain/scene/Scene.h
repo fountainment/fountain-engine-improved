@@ -1,4 +1,4 @@
-#if !defined(_FEI_SCENE_H_)
+#ifndef _FEI_SCENE_H_
 #define _FEI_SCENE_H_
 
 #include "render/Camera.h"
@@ -10,6 +10,7 @@ namespace fei {
 class Scene : public Layer
 {
 public:
+	Scene();
 	virtual ~Scene();
 
 	void setClock(Clock* clock);
@@ -24,10 +25,10 @@ public:
 	virtual void dropCallback(int count, const char** paths);
 
 private:
-	Clock *sceneClock;
+	Clock *_sceneClock;
 };
 
-}
+} // namespace fei
 
-#endif
+#endif // _FEI_SCENE_H_
 

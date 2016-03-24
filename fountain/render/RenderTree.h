@@ -1,4 +1,4 @@
-#if !defined(_FEI_RENDERTREE_H_)
+#ifndef _FEI_RENDERTREE_H_
 #define _FEI_RENDERTREE_H_
 
 #include "render/RenderList.h"
@@ -28,8 +28,8 @@ public:
 	void sort();
 
 private:
-	RenderObj* root;
-	RenderList childList;
+	RenderObj* _root;
+	RenderList _childList;
 };
 
 } // namespace fei

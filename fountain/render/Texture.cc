@@ -55,14 +55,14 @@ static FIBITMAP* loadBitmap(const std::string& filename)
 }
 
 Texture::Texture()
-: id(0),
-  size(fei::Vec2::ZERO),
-  size2(fei::Vec2::ZERO)
+: _id(0),
+  _size(fei::Vec2::ZERO),
+  _size2(fei::Vec2::ZERO)
 {
 }
 
 Texture::Texture(const Texture& tex)
-: id(0)
+: _id(0)
 {
 	(*this) = tex;
 }
@@ -70,7 +70,7 @@ Texture::Texture(const Texture& tex)
 void Texture::operator=(const Texture& tex)
 {
 	fei::RenderObj::operator=(tex);
-	setId(tex.id);
+	setId(tex.getId());
 }
 
 Texture::~Texture()
@@ -95,7 +95,7 @@ void Texture::load(const std::string& filename)
 	int bpp = FreeImage_GetBPP(dib);
 	Format format = BPP2FIFormat(bpp);
 	load(bits, w, h, format);
-	fei::Render::getInstance()->registTexture(filename, id);
+	fei::Render::getInstance()->registTexture(filename, _id);
 	FreeImage_Unload(dib);
 }
 
@@ -109,9 +109,9 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 	if (isLoaded()) {
 		unload();
 	}
-	glGenTextures(1, &id);
-	fei::Render::getInstance()->addRefTexture(id);
-	glBindTexture(GL_TEXTURE_2D, id);
+	glGenTextures(1, &_id);
+	fei::Render::getInstance()->addRefTexture(_id);
+	glBindTexture(GL_TEXTURE_2D, _id);
 	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
@@ -120,18 +120,18 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, w, h,
 			0, format, GL_UNSIGNED_BYTE, bits);
 	setSize(fei::Vec2((float)w, (float)h));
-	fei::Render::getInstance()->registTexSize(id, size);
+	fei::Render::getInstance()->registTexSize(_id, _size);
 }
 
 void Texture::unload()
 {
-	fei::Render::getInstance()->releaseTexture(id);
-	id = 0;
+	fei::Render::getInstance()->releaseTexture(_id);
+	_id = 0;
 }
 
 bool Texture::isLoaded() const
 {
-	return id && GL_TRUE == glIsTexture(id);
+	return _id && GL_TRUE == glIsTexture(_id);
 }
 
 void Texture::subUpdate(const std::string& filename, int xoffset, int yoffset)
@@ -158,21 +158,21 @@ void Texture::subUpdate(const unsigned char* bits, int w, int h, Format dataForm
 		return;
 	}
 	GLenum format = Format2GLFormat(dataFormat);
-	glBindTexture(GL_TEXTURE_2D, id);
+	glBindTexture(GL_TEXTURE_2D, _id);
 	glTexSubImage2D(GL_TEXTURE_2D, 0, xoffset, yoffset, w, h,
 			format, GL_UNSIGNED_BYTE, bits);
 }
 
 void Texture::drawIt()
 {
-	fei::Render::getInstance()->bindTexture(id);
-	fei::Render::drawTexQuadDS(size2);
+	fei::Render::getInstance()->bindTexture(_id);
+	fei::Render::drawTexQuadDS(_size2);
 	fei::Render::getInstance()->disableTexture();
 }
 
 const fei::Image Texture::getImage(const fei::Rect& rect) const
 {
-	fei::Image result(id, size, rect);
+	fei::Image result(_id, _size, rect);
 	result.setHasAlpha(hasAlpha());
 	return result;
 }
@@ -184,14 +184,14 @@ const fei::Image Texture::getImage(const fei::Vec2& p, const fei::Vec2& s) const
 
 const fei::Image Texture::getImage() const
 {
-	return getImage(fei::Vec2::ZERO, size);
+	return getImage(fei::Vec2::ZERO, _size);
 }
 
 void Texture::setMagFilter(GLenum filter)
 {
 	GLint oldtex;
 	glGetIntegerv(GL_TEXTURE_BINDING_2D, &oldtex);
-	glBindTexture(GL_TEXTURE_2D, id);
+	glBindTexture(GL_TEXTURE_2D, _id);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filter);
 	glBindTexture(GL_TEXTURE_2D, oldtex);
 }
@@ -199,28 +199,28 @@ void Texture::setMagFilter(GLenum filter)
 void Texture::bindLocation(int loc) const
 {
 	glActiveTexture(GL_TEXTURE0 + loc);
-	glBindTexture(GL_TEXTURE_2D, id);
+	glBindTexture(GL_TEXTURE_2D, _id);
 	glActiveTexture(GL_TEXTURE0);
 }
 
 GLuint Texture::getId() const
 {
-	return id;
+	return _id;
 }
 
-void Texture::setId(GLuint _id)
+void Texture::setId(GLuint id)
 {
-	if (id == _id) return;
+	if (_id == id) return;
 	if (isLoaded()) {
 		unload();
 	}
-	setSize(fei::Render::getInstance()->queryTexSize(_id));
-	fei::Render::getInstance()->addRefTexture(_id);
-	id = _id;
+	setSize(fei::Render::getInstance()->queryTexSize(id));
+	fei::Render::getInstance()->addRefTexture(id);
+	_id = id;
 }
 
 void Texture::setSize(const fei::Vec2& sz)
 {
-	size = sz;
-	size2 = size * 0.5f;
+	_size = sz;
+	_size2 = sz * 0.5f;
 }

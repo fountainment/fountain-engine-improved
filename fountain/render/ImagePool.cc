@@ -24,15 +24,15 @@ const std::vector<ImageInfo> loadSipFile(const std::string& filename)
 {
 	std::vector<ImageInfo> result;
 	char name[100];
-	int x, y, imageNum, tmp;
+	int x, y, _imageNum, tmp;
 	float rx, ry, rw, rh;
 	std::FILE *sipF = std::fopen(filename.c_str(), "r");
 	if (!sipF) {
 		std::fprintf(stderr, "loadSipFile: \"%s\" file not exist!\n", filename.c_str());
 		return result;
 	}
-	tmp = std::fscanf(sipF, "%d%d%d", &x, &y, &imageNum);
-	for (int i = 0; i < imageNum; i++) {
+	tmp = std::fscanf(sipF, "%d%d%d", &x, &y, &_imageNum);
+	for (int i = 0; i < _imageNum; i++) {
 		tmp = std::fscanf(sipF, "%s%f%f%f%f", name, &rw, &rh, &rx, &ry);
 		if (EOF == tmp) break;
 		result.push_back(ImageInfo(name, fei::bkdrHash(name), \
@@ -46,15 +46,15 @@ const std::vector<ImageInfo> loadIpiFile(const std::string& filename)
 {
 	std::vector<ImageInfo> result;
 	char name[100];
-	int x, y, imageNum, tmp;
+	int x, y, _imageNum, tmp;
 	float rx, ry, rw, rh, ax, ay;
 	std::FILE *ipiF = std::fopen(filename.c_str(), "r");
 	if (!ipiF) {
 		std::fprintf(stderr, "loadIpiFile: \"%s\" file not exist!\n", filename.c_str());
 		return result;
 	}
-	tmp = std::fscanf(ipiF, "%d%d%d", &x, &y, &imageNum);
-	for (int i = 0; i < imageNum; i++) {
+	tmp = std::fscanf(ipiF, "%d%d%d", &x, &y, &_imageNum);
+	for (int i = 0; i < _imageNum; i++) {
 		tmp = std::fscanf(ipiF, "%s%f%f%f%f%f%f", name, &rw, &rh, &rx, &ry, &ax, &ay);
 		if (EOF == tmp) break;
 		result.push_back(ImageInfo(name, fei::bkdrHash(name), \
@@ -71,7 +71,7 @@ void writeIpiFile(const std::string& filename, const fei::Vec2& size, const std:
 		std::fprintf(stderr, "loadIpiFile: \"%s\" file not exist!\n", filename.c_str());
 		return;
 	}
-	std::fprintf(ipiF, "%.0f %.0f\n%d\n", size.x, size.y, (int)imageInfo.size());
+	std::fprintf(ipiF, "%.0f %.0f\n%d\n", size.x, size.y, static_cast<int>(imageInfo.size()));
 	for (auto im : imageInfo) {
 		auto pos = im._rect.getPosition();
 		auto imsize = im._rect.getSize();
@@ -85,7 +85,7 @@ void writeIpiFile(const std::string& filename, const fei::Vec2& size, const std:
 }
 
 ImagePool::ImagePool()
-: imageNum(0)
+: _imageNum(0)
 {
 }
 
@@ -108,60 +108,60 @@ void ImagePool::load(const std::string& texName, const std::string& sipName)
 
 void ImagePool::loadTextureAndSIP(const fei::Texture& texure, const std::string& sipName)
 {
-	imageList.clear();
+	_imageList.clear();
 	auto result = loadSipFile(sipName);
-	imageNum = result.size();
-	for (int i = 0; i < imageNum; i++) {
-		nameHash2ImageIndex[result[i]._hash] = i;
+	_imageNum = result.size();
+	for (int i = 0; i < _imageNum; i++) {
+		_nameHash2ImageIndex[result[i]._hash] = i;
 		auto image = texure.getImage(result[i]._rect);
 		image.setAnchor(result[i]._anchor);
-		imageList.push_back(image);
+		_imageList.push_back(image);
 	}
 }
 
 void ImagePool::loadTextureAndIPI(const fei::Texture& texure, const std::string& ipiName)
 {
-	imageList.clear();
+	_imageList.clear();
 	auto result = loadIpiFile(ipiName);
-	imageNum = result.size();
-	for (int i = 0; i < imageNum; i++) {
-		nameHash2ImageIndex[result[i]._hash] = i;
+	_imageNum = result.size();
+	for (int i = 0; i < _imageNum; i++) {
+		_nameHash2ImageIndex[result[i]._hash] = i;
 		auto image = texure.getImage(result[i]._rect);
 		image.setAnchor(result[i]._anchor);
-		imageList.push_back(image);
+		_imageList.push_back(image);
 	}
 }
 
 fei::Image* ImagePool::getImage(const std::string& imageName)
 {
-	int index = nameHash2ImageIndex[fei::bkdrHash(imageName)];
+	int index = _nameHash2ImageIndex[fei::bkdrHash(imageName)];
 	return getImage(index);
 }
 
 fei::Image* ImagePool::getImage(int index)
 {
 	fei::Image* image = nullptr;
-	if (index >= 0 && index < imageNum) {
-		image = &imageList[index];
+	if (index >= 0 && index < _imageNum) {
+		image = &_imageList[index];
 	}
 	return image;
 }
 
 int ImagePool::getImageNum()
 {
-	return imageNum;
+	return _imageNum;
 }
 
 void ImagePool::moveImageAnchor(const fei::Vec2& v)
 {
-	for (auto& image : imageList) {
+	for (auto& image : _imageList) {
 		image.moveAnchor(v);
 	}
 }
 
 void ImagePool::roundAnchor()
 {
-	for (auto& image : imageList) {
+	for (auto& image : _imageList) {
 		image.roundAnchor();
 	}
 }
@@ -170,10 +170,10 @@ void ImagePool::dumpIPI(const std::string& name)
 {
 	std::vector<ImageInfo> infoVec;
 	fei::Vec2 texSize;
-	if (!imageList.empty()) {
-		texSize = imageList[0].getTextureSize();
+	if (!_imageList.empty()) {
+		texSize = _imageList[0].getTextureSize();
 	}
-	for (auto image : imageList) {
+	for (auto image : _imageList) {
 		auto rect = image.getTexturePixelRect();
 		auto anchor = image.getAnchor();
 		infoVec.push_back(ImageInfo("image", 123, rect, anchor));

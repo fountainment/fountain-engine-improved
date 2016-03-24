@@ -1,4 +1,4 @@
-#if !defined(_FEI_CLOCK_H_)
+#ifndef _FEI_CLOCK_H_
 #define _FEI_CLOCK_H_
 
 namespace fei {
@@ -39,17 +39,17 @@ public:
 private:
 	double calculateDeltaTime();
 
-	double totalTime;
-	double deltaTime;
-	double timeScale;
+	double _totalTime;
+	double _deltaTime;
+	double _timeScale;
 
-	long long frameCount;
+	long long _frameCount;
 
 	bool _isMaster;
 	bool _isPlay;
 	bool _isStop;
 
-	Clock* masterClock;
+	Clock* _masterClock;
 };
 
 } // namespace fei

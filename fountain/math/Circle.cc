@@ -39,13 +39,13 @@ fei::Vec2(0.980785f, -0.195090f)};
 Circle::Circle()
 : _radius(1.0f)
 {
-	shapeType = fei::Shape::Type::CIRCLE;
+	setType(fei::Shape::Type::CIRCLE);
 }
 
 Circle::Circle(float r)
 : _radius(r)
 {
-	shapeType = fei::Shape::Type::CIRCLE;
+	setType(fei::Shape::Type::CIRCLE);
 }
 
 int Circle::getDataSize() const
@@ -78,7 +78,7 @@ bool Circle::collide(const fei::Shape* shape) const
 	switch(shape->getType()) {
 	case fei::Shape::Type::CIRCLE:
 		{
-			float sumSq = getRadius() + ((Circle*)shape)->getRadius();
+			float sumSq = getRadius() + (static_cast<const Circle*>(shape))->getRadius();
 			sumSq *= sumSq;
 			float disSq = (getPosition() - shape->getPosition()).getLengthSq();
 			if (disSq <= sumSq) {

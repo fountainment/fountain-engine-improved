@@ -1,4 +1,4 @@
-#if !defined(_FEI_VEC3_H_)
+#ifndef _FEI_VEC3_H_
 #define _FEI_VEC3_H_
 
 #include "math/Vec2.h"

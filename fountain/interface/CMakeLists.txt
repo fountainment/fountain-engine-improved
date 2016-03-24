@@ -1,4 +1,4 @@
 set(FOUNTAIN_INTERFACE_SRC
-	interface/Interface.cpp
-	interface/Window.cpp
+	interface/Interface.cc
+	interface/Window.cc
 )

@@ -2,18 +2,23 @@
 
 using fei::Scene;
 
+Scene::Scene()
+: _sceneClock(nullptr)
+{
+}
+
 Scene::~Scene()
 {
 }
 
 void Scene::setClock(fei::Clock* clock)
 {
-	sceneClock = clock;
+	_sceneClock = clock;
 }
 
 fei::Clock* Scene::getClock()
 {
-	return sceneClock;
+	return _sceneClock;
 }
 
 void Scene::keyCallback(int key, int scancode, int action, int mods)

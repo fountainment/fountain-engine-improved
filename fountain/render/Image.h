@@ -1,4 +1,4 @@
-#if !defined(_FEI_IMAGE_H_)
+#ifndef _FEI_IMAGE_H_
 #define _FEI_IMAGE_H_
 
 #include <GL/glew.h>
@@ -37,16 +37,43 @@ public:
 	const fei::Rect getTexturePixelRect();
 
 private:
-	GLuint id;
-	Vec2 size;
-	Vec2 size2;
-	GLfloat texCoord[8];
+	GLuint _id;
+	Vec2 _size;
+	Vec2 _size2;
+	GLfloat _texCoord[8];
 
+	GLuint getId() const;
+	void setId(GLuint id);
 	void setSize(const Vec2& s);
 
 	const fei::Vec2 getLB();
 };
 
 } // namespace fei
+
+inline const fei::Vec2 fei::Image::getSize() const
+{
+	return _size;
+}
+
+inline const GLfloat* fei::Image::getTextureCoord() const
+{
+	return _texCoord;
+}
+
+inline bool fei::Image::empty() const
+{
+	return (getId() == 0);
+}
+
+inline GLuint fei::Image::getId() const
+{
+	return _id;
+}
+
+inline void fei::Image::setId(GLuint id)
+{
+	_id = id;
+}
 
 #endif // _FEI_IMAGE_H_

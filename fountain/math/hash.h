@@ -1,4 +1,4 @@
-#if !defined(_FEI_HASH_H_)
+#ifndef _FEI_HASH_H_
 #define _FEI_HASH_H_
 
 #include <string>

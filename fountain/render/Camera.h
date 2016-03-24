@@ -1,4 +1,4 @@
-#if !defined(_FEI_CAMERA_H_)
+#ifndef _FEI_CAMERA_H_
 #define _FEI_CAMERA_H_
 
 #include "base/NodeBase.h"
@@ -31,11 +31,11 @@ public:
 	const Vec2 worldToScreen(const Vec2& wrdPos);
 
 private:
-	float width, height;
-	float left, right, bottom, top, near, far;
-	Type cameraType;
-	float cameraScale;
-	bool needDataUpdate;
+	float _width, _height;
+	float _left, _right, _bottom, _top, _near, _far;
+	Type _cameraType;
+	float _cameraScale;
+	bool _needDataUpdate;
 
 	void updateCameraData();
 };

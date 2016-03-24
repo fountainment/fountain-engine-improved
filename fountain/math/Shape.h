@@ -1,4 +1,4 @@
-#if !defined(_FEI_SHAPE_H_)
+#ifndef _FEI_SHAPE_H_
 #define _FEI_SHAPE_H_
 
 #include "base/basedef.h"
@@ -30,16 +30,35 @@ public:
 	bool isSolid() const;
 
 	Type getType() const;
+	void setType(Type shapeType);
 
 	void print();
 
 private:
 	bool _isSolid;
-
-protected:
-	Type shapeType;
+	Type _shapeType;
 };
 
 } // namespace fei
+
+inline void fei::Shape::setSolid(bool solid)
+{
+	_isSolid = solid;
+}
+
+inline bool fei::Shape::isSolid() const
+{
+	return _isSolid;
+}
+
+inline void fei::Shape::setType(fei::Shape::Type shapeType)
+{
+	_shapeType = shapeType;
+}
+
+inline fei::Shape::Type fei::Shape::getType() const
+{
+	return _shapeType;
+}
 
 #endif // _FEI_SHAPE_H_

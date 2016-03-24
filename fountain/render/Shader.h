@@ -1,4 +1,4 @@
-#if !defined(_FEI_SHADER_H_)
+#ifndef _FEI_SHADER_H_
 #define _FEI_SHADER_H_
 
 #include <GL/glew.h>
@@ -26,9 +26,9 @@ protected:
 	virtual ~Shader();
 	void deleteShader();
 
-	GLuint id;
-	GLenum shaderType;
-	std::string shaderSource;
+	GLuint _id;
+	GLenum _shaderType;
+	std::string _shaderSource;
 };
 
 class VertexShader : public Shader
@@ -46,8 +46,6 @@ public:
 class ShaderProgram
 {
 public:
-	friend class Render;
-
 	ShaderProgram();
 	~ShaderProgram();
 
@@ -72,7 +70,7 @@ public:
 	void setUniform(const std::string& varName, const Vec4& value);
 
 private:
-	GLuint id;
+	GLuint _id;
 };
 
 } // namespace fei

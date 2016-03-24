@@ -1,5 +1,5 @@
 set(FOUNTAIN_TIME_SRC
-	time/Time.cpp
-	time/Clock.cpp
-	time/PlayObj.cpp
+	time/Time.cc
+	time/Clock.cc
+	time/PlayObj.cc
 )

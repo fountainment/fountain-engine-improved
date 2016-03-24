@@ -1,4 +1,4 @@
-#if !defined(_FEI_BUTTON_H_)
+#ifndef _FEI_BUTTON_H_
 #define _FEI_BUTTON_H_
 
 //TODO: finish class Button

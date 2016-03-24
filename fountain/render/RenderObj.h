@@ -1,4 +1,4 @@
-#if !defined(_FEI_RENDEROBJ_H_)
+#ifndef _FEI_RENDEROBJ_H_
 #define _FEI_RENDEROBJ_H_
 
 #include "base/NodeBase.h"
@@ -63,15 +63,15 @@ protected:
 	bool _hasAlpha;
 	bool _isVisible;
 	bool _useColor;
-	//int alphaFunc;
-	float angle;
-	float scale;
-	float zPos;
-	Vec2 anchor;
-	Color color;
-	ShaderProgram* shaderProg;
-	RenderObj* substitute;
-	Anime* anime;
+	//int _alphaFunc;
+	float _angle;
+	float _scale;
+	float _zPos;
+	Vec2 _anchor;
+	Color _color;
+	ShaderProgram* _shaderProg;
+	RenderObj* _substitute;
+	Anime* _anime;
 };
 
 } // namespace fei

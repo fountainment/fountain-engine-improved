@@ -1,4 +1,4 @@
-#if !defined(_FEI_SCENEMANAGER_H_)
+#ifndef _FEI_SCENEMANAGER_H_
 #define _FEI_SCENEMANAGER_H_
 
 #include "render/Camera.h"
@@ -26,10 +26,10 @@ public:
 	Clock defaultClock;
 
 private:
-	Scene *curScene;
-	Scene *nextScene;
+	Scene *_curScene;
+	Scene *_nextScene;
 
-	bool doDestroyCurScene;
+	bool _doDestroyCurScene;
 };
 
 } // namespace fei

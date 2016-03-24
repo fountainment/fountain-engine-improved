@@ -4,50 +4,40 @@ using fei::Rect;
 
 Rect::Rect()
 {
-	shapeType = fei::Shape::Type::RECT;
-	size = fei::Vec2(1.0f);
+	setType(fei::Shape::Type::RECT);
+	setSize(fei::Vec2(1.0f));
 }
 
 Rect::Rect(const fei::Vec2& sz)
 {
-	shapeType = fei::Shape::Type::RECT;
-	size = sz;
+	setType(fei::Shape::Type::RECT);
+	setSize(sz);
 }
 
 Rect::Rect(float x, float y, float w, float h)
 {
-	shapeType = fei::Shape::Type::RECT;
+	setType(fei::Shape::Type::RECT);
 	setPosition(fei::Vec2(x, y));
-	size = fei::Vec2(w, h);
+	setSize(fei::Vec2(w, h));
 	normalize();
 }
 
 Rect::Rect(const fei::Vec2& ps, const fei::Vec2& sz)
 {
-	shapeType = fei::Shape::Type::RECT;
+	setType(fei::Shape::Type::RECT);
 	setPosition(ps);
-	size = sz;
+	setSize(sz);
 	normalize();
 }
 
 const fei::Vec2 Rect::getCenter() const
 {
-	return getPosition() + size / 2.0f;
+	return getPosition() + getSize() / 2.0f;
 }
 
 void Rect::setCenter(const fei::Vec2& p)
 {
-	setPosition(p - size / 2.0f);
-}
-
-const fei::Vec2 Rect::getSize() const
-{
-	return size;
-}
-
-void Rect::setSize(const fei::Vec2& sz)
-{
-	size = sz;
+	setPosition(p - getSize() / 2.0f);
 }
 
 float Rect::getLeft() const
@@ -57,12 +47,12 @@ float Rect::getLeft() const
 
 float Rect::getRight() const
 {
-	return getPosition().x + size.x;
+	return getPosition().x + getSize().x;
 }
 
 float Rect::getTop() const
 {
-	return getPosition().y + size.y;
+	return getPosition().y + getSize().y;
 }
 
 float Rect::getBottom() const
@@ -105,13 +95,13 @@ fei::Segment Rect::getBottomSegment() const
 void Rect::zoom(float scale)
 {
 	_pos.zoom(scale);
-	size.zoom(scale);
+	_size.zoom(scale);
 }
 
 void Rect::zoom(const fei::Vec2& v)
 {
 	_pos.zoom(v);
-	size.zoom(v);
+	_size.zoom(v);
 }
 
 const Rect Rect::zoomed(float scale) const
@@ -130,13 +120,13 @@ const Rect Rect::zoomed(const fei::Vec2& v) const
 
 void Rect::normalize()
 {
-	if (size.x < 0) {
-		_pos.x += size.x;
-		size.x *= -1.0f;
+	if (getSize().x < 0) {
+		_pos.x += _size.x;
+		_size.x *= -1.0f;
 	}
-	if (size.y < 0) {
-		_pos.y += size.y;
-		size.y *= -1.0f;
+	if (getSize().y < 0) {
+		_pos.y += _size.y;
+		_size.y *= -1.0f;
 	}
 }
 
@@ -161,6 +151,7 @@ bool Rect::collide(const fei::Shape* other) const
 bool Rect::collidePoint(const fei::Vec2& pt) const
 {
 	auto pos = getPosition();
+	auto size = getSize();
 	auto rt = pos + size;
 	return ((getPosition().x - pt.x) * (rt.x - pt.x) <= 0) && ((pos.y - pt.y) * (rt.y - pt.y) <= 0);
 }
@@ -202,6 +193,7 @@ bool Rect::collideRect(const Rect& rct) const
 void Rect::getStripCoord(float* coord) const
 {
 	auto pos = getPosition();
+	auto size = getSize();
 	auto rTop = pos + size;
 	coord[0] = pos.x;
 	coord[1] = rTop.y;
@@ -215,6 +207,7 @@ void Rect::getStripCoord(float* coord) const
 
 const float* Rect::getDataPtr() const
 {
+	auto size = getSize();
 	static float data[8] = {0.0f};
 	data[2] = size.x;
 	data[4] = size.x;

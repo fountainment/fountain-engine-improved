@@ -33,23 +33,23 @@ static const GLchar *basicFragmentShader = {
 	"}"
 };
 
-const GLfloat Render::stripTexCoord[8] = {0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
+const GLfloat Render::stripTexCoord_[8] = {0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
 
-const std::string Render::shaderTextureSwitchStr = "feiUseTex";
-const std::string Render::shaderTextureIdStr = "feiTex";
+const std::string Render::shaderTextureSwitchStr_ = "feiUseTex";
+const std::string Render::shaderTextureIdStr_ = "feiTex";
 
-Render* Render::instance = nullptr;
+Render* Render::instance_ = nullptr;
 
 Render* Render::getInstance()
 {
-	if (!instance) {
-		instance = new Render();
+	if (!instance_) {
+		instance_ = new Render();
 	}
-	return instance; 
+	return instance_;
 }
 
 Render::Render()
-: currentCamera(nullptr)
+: _currentCamera(nullptr)
 {
 }
 
@@ -67,8 +67,8 @@ bool Render::init()
 		std::printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
 		if (GLEW_VERSION_2_0) {
 			std::printf("GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-			basicShader.loadString(basicVertexShader, basicFragmentShader);
-			basicShader.push();
+			_basicShader.loadString(basicVertexShader, basicFragmentShader);
+			_basicShader.push();
 		} else {
 			std::printf("Shader unsupported!\n");
 		}
@@ -83,8 +83,8 @@ bool Render::init()
 
 void Render::destroy()
 {
-	while (!shaderStack.empty()) {
-		shaderStack.pop();
+	while (!_shaderStack.empty()) {
+		_shaderStack.pop();
 	}
 	deleteUnusedTexture();
 }
@@ -132,12 +132,12 @@ void fei::Render::initShader()
 
 void Render::setCurrentCamera(fei::Camera* camera)
 {
-	currentCamera = camera;
+	_currentCamera = camera;
 }
 
 fei::Camera* Render::getCurrentCamera()
 {
-	return currentCamera;
+	return _currentCamera;
 }
 
 void Render::setViewport(const fei::Rect& viewport)
@@ -164,28 +164,28 @@ int Render::getMaxTextureSize()
 
 void Render::pushShader(fei::ShaderProgram* shader)
 {
-	if (shaderStack.empty() || shaderStack.top() != shader) {
+	if (_shaderStack.empty() || _shaderStack.top() != shader) {
 		shader->use();
 	}
-	shaderStack.push(shader);
+	_shaderStack.push(shader);
 }
 
 void Render::popShader(fei::ShaderProgram* shader)
 {
-	if (!shaderStack.empty() && shaderStack.top() == shader) {
-		shaderStack.pop();
-		if (shaderStack.empty()) {
+	if (!_shaderStack.empty() && _shaderStack.top() == shader) {
+		_shaderStack.pop();
+		if (_shaderStack.empty()) {
 			glUseProgram(0);
-		} else if (shaderStack.top() != shader) {
-			shaderStack.top()->use();
+		} else if (_shaderStack.top() != shader) {
+			_shaderStack.top()->use();
 		}
 	}
 }
 
 fei::ShaderProgram* Render::getShaderProgram()
 {
-	if (!shaderStack.empty()) {
-		return shaderStack.top();
+	if (!_shaderStack.empty()) {
+		return _shaderStack.top();
 	} else {
 		return nullptr;
 	}
@@ -194,16 +194,16 @@ fei::ShaderProgram* Render::getShaderProgram()
 void Render::registTexture(const std::string& filename, GLuint id)
 {
 	int hash = fei::bkdrHash(filename);
-	fileTextureMap[hash] = id;
+	_fileTextureMap[hash] = id;
 }
 
 void Render::deleteTexture(GLuint id)
 {
 	glDeleteTextures(1, &id);
-	textureSizeMap.erase(textureSizeMap.find(id));
-	for (auto it = fileTextureMap.begin(); it != fileTextureMap.end(); ++it) {
+	_textureSizeMap.erase(_textureSizeMap.find(id));
+	for (auto it = _fileTextureMap.begin(); it != _fileTextureMap.end(); ++it) {
 		if (it->second == id) {
-			fileTextureMap.erase(it);
+			_fileTextureMap.erase(it);
 			break;
 		}
 	}
@@ -213,8 +213,8 @@ int Render::queryTexture(const std::string& filename)
 {
 	int hash = fei::bkdrHash(filename);
 	GLuint ans = 0;
-	auto it = fileTextureMap.find(hash);
-	if (it != fileTextureMap.end()) {
+	auto it = _fileTextureMap.find(hash);
+	if (it != _fileTextureMap.end()) {
 		ans = it->second;
 	}
 	return ans;
@@ -222,32 +222,32 @@ int Render::queryTexture(const std::string& filename)
 
 void Render::registTexSize(GLuint id, const fei::Vec2& size)
 {
-	textureSizeMap[id] = size;
+	_textureSizeMap[id] = size;
 }
 
 const fei::Vec2 Render::queryTexSize(GLuint id)
 {
-	return textureSizeMap[id];
+	return _textureSizeMap[id];
 }
 
 void Render::addRefTexture(GLuint id)
 {
 	if (!id) return;
-	textureRCMap[id]++;
+	_textureRCMap[id]++;
 }
 
 void Render::releaseTexture(GLuint id)
 {
 	if (!id) return;
-	textureRCMap[id]--;
+	_textureRCMap[id]--;
 }
 
 void Render::deleteUnusedTexture()
 {
-	for (auto it = textureRCMap.begin(); it != textureRCMap.end();) {
+	for (auto it = _textureRCMap.begin(); it != _textureRCMap.end();) {
 		if (it->second == 0) {
 			deleteTexture(it->first);
-			it = textureRCMap.erase(it);
+			it = _textureRCMap.erase(it);
 		} else {
 			++it;
 		}
@@ -261,8 +261,8 @@ void Render::bindTexture(GLuint tex)
 	glBindTexture(GL_TEXTURE_2D, tex);
 	auto shader = getShaderProgram();
 	if (shader) {
-		shader->setUniform(shaderTextureSwitchStr, 1.0f);
-		shader->setUniform(shaderTextureIdStr, 0);
+		shader->setUniform(shaderTextureSwitchStr_, 1.0f);
+		shader->setUniform(shaderTextureIdStr_, 0);
 	}
 }
 
@@ -270,7 +270,7 @@ void Render::disableTexture()
 {
 	auto shader = getShaderProgram();
 	if (shader) {
-		shader->setUniform(shaderTextureSwitchStr, 0.0f);
+		shader->setUniform(shaderTextureSwitchStr_, 0.0f);
 	}
 }
 

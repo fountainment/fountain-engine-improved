@@ -64,67 +64,67 @@ public:
 	static const Polygon makeRegularPolygon(int edgeNum, float radius, float offset = 0.0f);
 
 private:
-	std::vector<Vec2> data;
+	std::vector<Vec2> _data;
 };
 
 } // namespace fei
 
 inline void fei::Polygon::pushVertex(const fei::Vec2& p)
 {
-	data.push_back(p);
+	_data.push_back(p);
 }
 
 inline void fei::Polygon::clearVertex()
 {
-	data.clear();
+	_data.clear();
 }
 
 inline const std::vector<fei::Vec2> fei::Polygon::getDataVector() const
 {
-	return data;
+	return _data;
 }
 
 inline void fei::Polygon::setDataVector(const std::vector<fei::Vec2>& v)
 {
-	data = v;
+	_data = v;
 }
 
 inline bool fei::Polygon::isValid() const
 {
-	return data.size() >= 3;
+	return _data.size() >= 3;
 }
 
 inline int fei::Polygon::indexNormalize(int index) const
 {
-	if (data.empty()) {
+	if (_data.empty()) {
 		return 0;
 	}
-	int sz = (int)data.size();
+	int sz = static_cast<int>(_data.size());
 	return ((index % sz) + sz) % sz;
 }
 
 inline void fei::Polygon::setVertex(int index, const fei::Vec2& p)
 {
 	//TODO: assertion
-	data[index] = p;
+	_data[index] = p;
 }
 
 inline const fei::Vec2 fei::Polygon::getVertex(int index) const
 {
 	//TODO: assertion
-	return data[index];
+	return _data[index];
 }
 
 inline const fei::Vec2 fei::Polygon::getVector(int index) const
 {
 	//TODO: assertion
-	return data[indexNormalize(index + 1)] - data[index];
+	return _data[indexNormalize(index + 1)] - _data[index];
 }
 
 inline const fei::Segment fei::Polygon::getSegment(int index) const
 {
 	//TODO: assertion
-	return fei::Segment(data[index], data[indexNormalize(index + 1)]);
+	return fei::Segment(_data[index], _data[indexNormalize(index + 1)]);
 }
 
 #endif // _FEI_POLYGON_H_

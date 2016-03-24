@@ -43,8 +43,8 @@ private:
 	
 	void setBody(b2Body* b2bd);
 
-	b2Body* body;
-	Type type;
+	b2Body* _body;
+	Type _type;
 };
 
 } // namespace fei

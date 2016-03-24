@@ -1,4 +1,4 @@
-#if !defined(_FEI_SHAPEOBJ_H_)
+#ifndef _FEI_SHAPEOBJ_H_
 #define _FEI_SHAPEOBJ_H_
 
 #include "math/Shape.h"
@@ -12,7 +12,7 @@ public:
 	ShapeObj();
 
 	void setShape(Shape* sp);
-	void drawIt() override;
+	virtual void drawIt() override;
 
 protected:
 	Shape* shape;

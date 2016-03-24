@@ -1,5 +1,5 @@
 set(FOUNTAIN_SCENE_SRC
-	scene/Layer.cpp
-	scene/Scene.cpp
-	scene/SceneManager.cpp
+	scene/Layer.cc
+	scene/Scene.cc
+	scene/SceneManager.cc
 )

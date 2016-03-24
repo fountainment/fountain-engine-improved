@@ -35,25 +35,25 @@
 
 using fei::Time;
 
-Time *Time::instance = nullptr;
+Time *Time::instance_ = nullptr;
 
-const double defaultFps = 60.0;
-const double spf = 1.0 / defaultFps;
+static const double defaultFps = 60.0;
+static const double spf = 1.0 / defaultFps;
 
 Time* Time::getInstance()
 {
-	if (!instance) {
-		instance = new Time();
+	if (!instance_) {
+		instance_ = new Time();
 	}
-	return instance;
+	return instance_;
 }
 
 Time::Time()
-: initTime(0.0),
-  curTime(0.0),
-  lastTime(0.0),
-  deltaTime(0.0),
-  totalFrame(0)
+: _initTime(0.0),
+  _curTime(0.0),
+  _lastTime(0.0),
+  _deltaTime(0.0),
+  _totalFrame(0)
 {
 }
 
@@ -62,7 +62,7 @@ bool Time::init()
 	if (GL_FALSE == glfwInit()) {
 		return false;
 	} else {
-		initTime = glfwGetTime();
+		_initTime = glfwGetTime();
 	}
 	return true;
 }
@@ -74,17 +74,17 @@ void Time::destroy()
 
 void Time::executeBeforeFrame()
 {
-	lastTime = curTime;
-	curTime = calcCurTime();
-	deltaTime = curTime - lastTime;
+	_lastTime = _curTime;
+	_curTime = calcCurTime();
+	_deltaTime = _curTime - _lastTime;
 
-	while (deltaTime < spf - littleSleepTime * 0.7) {
+	while (_deltaTime < spf - littleSleepTime * 0.7) {
 		littleSleep();
-		curTime = calcCurTime();
-		deltaTime = curTime - lastTime;
+		_curTime = calcCurTime();
+		_deltaTime = _curTime - _lastTime;
 	}
-	if (deltaTime > spf * 10.0 || deltaTime < 0.0) {
-		deltaTime = 0.0;
+	if (_deltaTime > spf * 10.0 || _deltaTime < 0.0) {
+		_deltaTime = 0.0;
 	}
 
 	for (auto clock : _clockList) {
@@ -94,27 +94,27 @@ void Time::executeBeforeFrame()
 
 void Time::executeAfterFrame()
 {
-	auto &q = frameTimeQueue;
-	q.push(curTime);
+	auto &q = _frameTimeQueue;
+	q.push(_curTime);
 	while (q.back() - q.front() > 1.0) {
 		q.pop();
 	}
-	totalFrame++;
+	_totalFrame++;
 }
 
 double Time::getTime()
 {
-	return curTime;
+	return _curTime;
 }
 
 double Time::getDeltaTime()
 {
-	return deltaTime;
+	return _deltaTime;
 }
 
 long long Time::getFrame()
 {
-	return totalFrame;
+	return _totalFrame;
 }
 
 void Time::littleSleep()
@@ -124,12 +124,12 @@ void Time::littleSleep()
 
 double Time::calcCurTime()
 {
-	return glfwGetTime() - initTime;
+	return glfwGetTime() - _initTime;
 }
 
 double Time::getFps()
 {
-	auto &q = frameTimeQueue;
+	auto &q = _frameTimeQueue;
 	double frameNum = q.size() - 1;
 	if (frameNum <= 0) {
 		return 0.0;

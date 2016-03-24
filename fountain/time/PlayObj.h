@@ -1,4 +1,4 @@
-#if !defined(_FEI_PLAYOBJ_H_)
+#ifndef _FEI_PLAYOBJ_H_
 #define _FEI_PLAYOBJ_H_
 
 #include "time/Clock.h"

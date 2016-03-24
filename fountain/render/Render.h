@@ -1,4 +1,4 @@
-#if !defined(_FEI_RENDER_H_)
+#ifndef _FEI_RENDER_H_
 #define _FEI_RENDER_H_
 
 #include <GL/glew.h>
@@ -84,24 +84,24 @@ public:
 private:
 	Render();
 
-	Camera* currentCamera;
+	Camera* _currentCamera;
 
-	ShaderProgram basicShader;
-	std::stack<ShaderProgram*> shaderStack;
+	ShaderProgram _basicShader;
+	std::stack<ShaderProgram*> _shaderStack;
 
-	std::map<int, GLuint> fileTextureMap;
-	std::map<GLuint, Vec2> textureSizeMap;
-	std::map<GLuint, int> textureRCMap;
+	std::map<int, GLuint> _fileTextureMap;
+	std::map<GLuint, Vec2> _textureSizeMap;
+	std::map<GLuint, int> _textureRCMap;
 
 	Rect _viewport;
 	int _maxTexSize;
 
-	static const GLfloat stripTexCoord[8];
+	static const GLfloat stripTexCoord_[8];
 
-	static const std::string shaderTextureSwitchStr;
-	static const std::string shaderTextureIdStr;
+	static const std::string shaderTextureSwitchStr_;
+	static const std::string shaderTextureIdStr_;
 
-	static Render *instance;
+	static Render *instance_;
 };
 
 inline void Render::drawArray2f(const GLfloat* vertex, GLint first, GLsizei count, GLenum mode)
@@ -150,7 +150,7 @@ inline void Render::drawQuadDS(const fei::Vec2& size)
 inline void Render::drawTexRect(const fei::Vec2& size)
 {
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, stripTexCoord);
+	glTexCoordPointer(2, GL_FLOAT, 0, stripTexCoord_);
 	drawRect(size);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
@@ -158,7 +158,7 @@ inline void Render::drawTexRect(const fei::Vec2& size)
 inline void Render::drawTexRect(const fei::Rect& rect)
 {
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, stripTexCoord);
+	glTexCoordPointer(2, GL_FLOAT, 0, stripTexCoord_);
 	drawRect(rect);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
@@ -166,7 +166,7 @@ inline void Render::drawTexRect(const fei::Rect& rect)
 inline void Render::drawTexQuad(const fei::Vec2& size)
 {
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, stripTexCoord);
+	glTexCoordPointer(2, GL_FLOAT, 0, stripTexCoord_);
 	drawQuad(size);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }
@@ -174,7 +174,7 @@ inline void Render::drawTexQuad(const fei::Vec2& size)
 inline void Render::drawTexQuadDS(const fei::Vec2& size)
 {
 	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, stripTexCoord);
+	glTexCoordPointer(2, GL_FLOAT, 0, stripTexCoord_);
 	drawQuadDS(size);
 	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
 }

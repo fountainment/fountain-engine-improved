@@ -84,82 +84,77 @@ public:
 	}
 };
 
-Physics* Physics::instance = nullptr;
+Physics* Physics::instance_ = nullptr;
 
 Physics* Physics::getInstance()
 {
-	if (!instance) {
-		instance = new Physics();
+	if (!instance_) {
+		instance_ = new Physics();
 	}
-	return instance;
+	return instance_;
 }
 
 Physics::Physics()
-: world(nullptr),
-  debugDraw(nullptr),
-  ddCamera(nullptr),
-  doDebugDraw(false),
-  ratio(1.0f)
+: _world(nullptr),
+  _debugDraw(nullptr),
+  _ddCamera(nullptr),
+  _doDebugDraw(false),
+  _ratio(1.0f)
 {
 }
 
 bool Physics::init()
 {
 	b2Vec2 g(0.0f, -10.0f);
-	world = new b2World(g);
-	debugDraw = new DebugDraw;
+	_world = new b2World(g);
+	_debugDraw = new DebugDraw;
 	uint32 flags = 0;
 	flags += b2Draw::e_shapeBit;
 	flags += b2Draw::e_jointBit;
 	//flags += b2Draw::e_aabbBit;
 	flags += b2Draw::e_pairBit;
 	//flags += b2Draw::e_centerOfMassBit;
-	debugDraw->SetFlags(flags);
-	world->SetAllowSleeping(true);
-	world->SetDebugDraw(debugDraw);
+	_debugDraw->SetFlags(flags);
+	_world->SetAllowSleeping(true);
+	_world->SetDebugDraw(_debugDraw);
 	return true;
 }
 
 void Physics::destroy()
 {
-	delete world;
-	world = nullptr;
+	delete _world;
+	_world = nullptr;
 }
 
 void Physics::executeBeforeFrame()
 {
-	world->Step(0.0167f, 8, 3);
+	_world->Step(0.0167f, 8, 3);
 }
 
 void Physics::executeAfterFrame()
 {
-	if (doDebugDraw) {
-		if (ddCamera) {
-			ddCamera->update();
+	if (_doDebugDraw) {
+		if (_ddCamera) {
+			_ddCamera->update();
 		}
-		world->DrawDebugData();
+		_world->DrawDebugData();
 	}
 }
 
 void Physics::setGravity(const fei::Vec2& g)
 {
-	world->SetGravity(b2Vec2(g.x, g.y));
+	_world->SetGravity(b2Vec2(g.x, g.y));
 }
 
 const fei::Vec2 Physics::getGravity()
 {
-	auto g = world->GetGravity();
+	auto g = _world->GetGravity();
 	return fei::Vec2(g.x, g.y);
 }
 
 void Physics::setRatio(float rt)
 {
-	ratio = rt;
-}
-
-float Physics::getRatio()
-{
-	return ratio;
+	_ratio = rt;
 }
 
 fei::Body* Physics::createBody(const fei::Vec2& pos, fei::Body::Type type)
@@ -178,25 +173,25 @@ fei::Body* Physics::createBody(const fei::Vec2& pos, fei::Body::Type type)
 		bodyDef.type = b2_kinematicBody;
 		break;
 	}
-	auto b2bd = world->CreateBody(&bodyDef);
+	auto b2bd = _world->CreateBody(&bodyDef);
 	auto body = new Body(b2bd, type);
 	return body;
 }
 
 void Physics::destroyBody(fei::Body* body)
 {
-	world->DestroyBody(body->body);
+	_world->DestroyBody(body->getB2Body());
 	delete body;
 }
 
 void Physics::setDoDebugDraw(bool doDD)
 {
-	doDebugDraw = doDD;
+	_doDebugDraw = doDD;
 }
 
 void Physics::setDebugDrawCamera(fei::Camera* cam)
 {
-	ddCamera = cam;
+	_ddCamera = cam;
 }
 
 b2Shape* Physics::ShapeToB2Shape(const fei::Shape* shape)

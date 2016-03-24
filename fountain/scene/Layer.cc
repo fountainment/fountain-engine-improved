@@ -7,9 +7,9 @@
 using fei::Layer;
 
 Layer::Layer()
-: didCameraPush(false),
-  oldCamera(nullptr),
-  layerCamera(nullptr)
+: _didCameraPush(false),
+  _oldCamera(nullptr),
+  _layerCamera(nullptr)
 {
 }
 
@@ -22,36 +22,36 @@ void Layer::drawIt()
 
 void Layer::cameraPush()
 {
-	didCameraPush = false;
-	if (layerCamera) {
-		oldCamera = fei::Render::getInstance()->getCurrentCamera();
+	_didCameraPush = false;
+	if (_layerCamera) {
+		_oldCamera = fei::Render::getInstance()->getCurrentCamera();
 		glMatrixMode(GL_PROJECTION);
 		glPushMatrix();
 		glMatrixMode(GL_MODELVIEW);
-		didCameraPush = true;
-		layerCamera->update();
+		_didCameraPush = true;
+		_layerCamera->update();
 	}
 }
 
 void Layer::cameraPop()
 {
-	if (didCameraPush) {
+	if (_didCameraPush) {
 		glMatrixMode(GL_PROJECTION);
 		glPopMatrix();
 		glMatrixMode(GL_MODELVIEW);
-		if (oldCamera) {
-			oldCamera->update();
+		if (_oldCamera) {
+			_oldCamera->update();
 		}
-		didCameraPush = false;
+		_didCameraPush = false;
 	}
 }
 
 void Layer::setCamera(fei::Camera* camera)
 {
-	layerCamera = camera;
+	_layerCamera = camera;
 }
 
 fei::Camera* Layer::getCamera()
 {
-	return layerCamera;
+	return _layerCamera;
 }

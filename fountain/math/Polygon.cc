@@ -6,13 +6,13 @@ using fei::Polygon;
 
 int fei::Polygon::getDataSize() const
 {
-	return data.size();
+	return _data.size();
 }
 
 const float* Polygon::getDataPtr() const
 {
-	if (!data.empty()) {
-		return &data[0].x;
+	if (!_data.empty()) {
+		return &_data[0].x;
 	}
 	return nullptr;
 }
@@ -24,7 +24,7 @@ float Polygon::getArea() const
 		return area;
 	}
 	auto lastVec = getVertex(1) - getVertex(0);
-	for (int i = 2; i < (int)data.size(); i++) {
+	for (int i = 2; i < static_cast<int>(_data.size()); i++) {
 		auto curVec = getVertex(i) - getVertex(0);
 		area += lastVec.cross(curVec);
 		lastVec = curVec;
@@ -40,39 +40,39 @@ bool Polygon::isCCW() const
 
 void Polygon::setVertices(int vertexNumber, float* dataPtr)
 {
-	data.resize(vertexNumber);
+	_data.resize(vertexNumber);
 	for (int i = 0; i < vertexNumber; i++) {
-		data[i] = fei::Vec2(dataPtr[i << 1], dataPtr[i << 1 | 1]);
+		_data[i] = fei::Vec2(dataPtr[i << 1], dataPtr[i << 1 | 1]);
 	}
 }
 
 void Polygon::insertVertex(const fei::Vec2& p, int index)
 {
 	//TODO: assertion
-	data.insert(data.begin() + index, p);
+	_data.insert(_data.begin() + index, p);
 }
 
 void Polygon::deleteVertex(int index)
 {
 	//TODO: assertion
-	data.erase(data.begin() + index);
+	_data.erase(_data.begin() + index);
 }
 
 void Polygon::moveVertices(const fei::Vec2& v)
 {
-	for (auto& vertex : data) {
+	for (auto& vertex : _data) {
 		vertex.add(v);
 	}
 }
 
 void Polygon::reverseVertices()
 {
-	std::reverse(data.begin(), data.end());
+	std::reverse(_data.begin(), _data.end());
 }
 
 void Polygon::zoom(float f)
 {
-	for (auto& vertex : data) {
+	for (auto& vertex : _data) {
 		vertex.zoom(f);
 	}
 }
@@ -138,7 +138,7 @@ int Polygon::closestWhichSegment(const fei::Vec2& p) const
 {
 	int ans = -1;
 	float minR = 1e32f;
-	for (int i = 0; i < (int)data.size(); i++) {
+	for (int i = 0; i < static_cast<int>(_data.size()); i++) {
 		auto seg = getSegment(i);
 		float curRatio = std::abs(((p - seg.a).getLength() + (p - seg.b).getLength()) / seg.getLength() - 1.0f);
 		if (curRatio <= minR) {
@@ -151,7 +151,7 @@ int Polygon::closestWhichSegment(const fei::Vec2& p) const
 
 int Polygon::onWhichSegment(const fei::Vec2& p) const
 {
-	for (int i = 0; i < (int)data.size(); i++) {
+	for (int i = 0; i < static_cast<int>(_data.size()); i++) {
 		if (getSegment(i).collidePoint(p)) {
 			return i;
 		}
@@ -162,8 +162,8 @@ int Polygon::onWhichSegment(const fei::Vec2& p) const
 int Polygon::collideVertex(const fei::Vec2& p, float radius) const
 {
 	float rSq = radius * radius;
-	for (int i = 0; i < (int)data.size(); i++) {
-		if (((data[i] + getPosition()) - p).getLengthSq() <= rSq) {
+	for (int i = 0; i < static_cast<int>(_data.size()); i++) {
+		if (((_data[i] + getPosition()) - p).getLengthSq() <= rSq) {
 			return i;
 		}
 	}
@@ -178,7 +178,7 @@ static bool cmpLength(const fei::Vec2& a, const fei::Vec2& b)
 const std::vector<fei::Vec2> Polygon::rawCollideRay(const fei::Vec2& src, const fei::Vec2& drct) const
 {
 	std::vector<fei::Vec2> result;
-	for (int i = 0; i < (int)data.size(); i++) {
+	for (int i = 0; i < static_cast<int>(_data.size()); i++) {
 		auto seg = getSegment(i);
 		fei::Vec2 tmp;
 		if (seg.collideRay(tmp, src, drct)) {
@@ -193,7 +193,7 @@ const std::vector<fei::Vec2> Polygon::collideRay(const fei::Vec2& src, const fei
 	std::vector<fei::Vec2> result = rawCollideRay(src, drct);
 	std::vector<fei::Vec2> uniqueResult;
 	std::sort(result.begin(), result.end(), cmpLength);
-	for (int i = 0; i < (int)result.size(); i++) {
+	for (int i = 0; i < static_cast<int>(result.size()); i++) {
 		if (result[i].getLengthSq() < 0.01f) continue;
 		if (i == 0 || result[i] != result[i - 1]) {
 			uniqueResult.push_back(result[i] + src);
@@ -205,7 +205,7 @@ const std::vector<fei::Vec2> Polygon::collideRay(const fei::Vec2& src, const fei
 void Polygon::normalize()
 {
 	std::vector<fei::Vec2> nData;
-	int sz = data.size();
+	int sz = _data.size();
 	for (int i = 0; i < sz; i++) {
 		int prev = indexNormalize(i - 1);
 		if ((getVector(prev).getLengthSq() >= 0.01f)
@@ -238,7 +238,7 @@ bool Polygon::isConcaveVertex(int index) const
 
 int Polygon::getOneConcaveVertex() const
 {
-	int sz = (int)data.size();
+	int sz = static_cast<int>(_data.size());
 	for (int i = 0; i < sz; i++) {
 		if (isConcaveVertex(i)) {
 			return i;
@@ -334,7 +334,7 @@ std::vector<int> Polygon::getVisibleVerticesIndex(int index) const
 		leftSeg = rightSeg;
 		rightSeg = tmp;
 	}
-	for (int i = 0; i < (int)data.size(); i++) {
+	for (int i = 0; i < static_cast<int>(_data.size()); i++) {
 		auto p = getVertex(i);
 		if (i == index || i == left || i == right ||
 		   (leftSeg.onLeftOrRight(p) == 1 && rightSeg.onLeftOrRight(p) == -1) == isConcave) {
@@ -436,7 +436,7 @@ const Polygon Polygon::makeRegularPolygon(int edgeNum, float radius, float offse
 {
 	Polygon polygon;
 	for (int i = 0; i < edgeNum; i++) {
-		float angle = (float)(2.0 * fei::pi / edgeNum * i + fei::D2R(offset));
+		float angle = static_cast<float>(2.0 * fei::pi / edgeNum * i + fei::D2R(offset));
 		polygon.pushVertex(fei::Vec2(std::cos(angle), std::sin(angle)) * radius);
 	}
 	return polygon;

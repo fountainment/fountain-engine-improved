@@ -1,13 +1,13 @@
 set(FOUNTAIN_MATH_SRC
-	math/mathdef.cpp
-	math/Vec2.cpp
-	math/Vec3.cpp
-	math/Vec4.cpp
-	math/Shape.cpp
-	math/Polygon.cpp
-	math/Circle.cpp
-	math/Rect.cpp
-	math/Segment.cpp
-	math/hash.cpp
-	math/coding.cpp
+	math/mathdef.cc
+	math/Vec2.cc
+	math/Vec3.cc
+	math/Vec4.cc
+	math/Shape.cc
+	math/Polygon.cc
+	math/Circle.cc
+	math/Rect.cc
+	math/Segment.cc
+	math/hash.cc
+	math/coding.cc
 )

@@ -1,4 +1,4 @@
-#if !defined(_FEI_TIME_H_)
+#ifndef _FEI_TIME_H_
 #define _FEI_TIME_H_
 
 #include "base/basedef.h"
@@ -33,16 +33,16 @@ public:
 private:
 	Time();
 
-	double initTime;
-	double curTime;
-	double lastTime;
-	double deltaTime;
-	long long totalFrame;
+	double _initTime;
+	double _curTime;
+	double _lastTime;
+	double _deltaTime;
+	long long _totalFrame;
 
-	std::queue<double> frameTimeQueue;
+	std::queue<double> _frameTimeQueue;
 	std::list<Clock*> _clockList;
 
-	static Time *instance;
+	static Time *instance_;
 };
 
 } // namespace fei
