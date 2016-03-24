@@ -15,7 +15,13 @@ public:
 	NodeBase();
 
 	const fei::Vec2 getPosition() const;
+	float getPositionX() const;
+	float getPositionY() const;
+
 	void setPosition(const Vec2& v);
+	void setPositionX(float x);
+	void setPositionY(float y);
+
 	void move(const Vec2& v);
 
 	bool isLoaded() const;
@@ -46,9 +52,29 @@ inline const fei::Vec2 fei::NodeBase::getPosition() const
 	return _pos;
 }
 
+inline float fei::NodeBase::getPositionX() const
+{
+	return _pos.x;
+}
+
+inline float fei::NodeBase::getPositionY() const
+{
+	return _pos.y;
+}
+
 inline void fei::NodeBase::setPosition(const fei::Vec2& v)
 {
 	_pos = v;
+}
+
+inline void fei::NodeBase::setPositionX(float x)
+{
+	_pos.x = x;
+}
+
+inline void fei::NodeBase::setPositionY(float y)
+{
+	_pos.x = y;
 }
 
 inline void fei::NodeBase::move(const fei::Vec2& v)
