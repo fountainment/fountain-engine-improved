@@ -426,7 +426,7 @@ bool Polygon::collide(const fei::Shape* shape) const
 	return result;
 }
 
-bool Polygon::collidePoint(const Vec2& p) const
+bool Polygon::collidePoint(const fei::Vec2& p) const
 {
 	auto points = rawCollideRay(p, fei::Vec2(1.0f, 0.001f));
 	return (points.size() & 1) == 1;
