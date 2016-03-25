@@ -26,7 +26,7 @@ Optimization:
 External:
 	Tool:
 		O FSM Editor
-			! Hilight selected signal arrow
+			! Highlight selected signal arrow
 			! Signal Deletion
 			! State Deletion
 			! Self-directed signal rendering
