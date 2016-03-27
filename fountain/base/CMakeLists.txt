@@ -3,4 +3,5 @@ set(FOUNTAIN_BASE_SRC
 	base/ModuleBase.cc
 	base/NodeBase.cc
 	base/fileUtil.cc
+	base/stringUtil.cc
 )

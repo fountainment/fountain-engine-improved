@@ -3,6 +3,8 @@
 
 #include "fountain.h"
 
+#include "util/VimStyleCommandLabel.h"
+
 class MyButton : public fei::Button
 {
 public:
@@ -34,8 +36,9 @@ public:
 	void destroy() override;
 	void update() override;
 
-	void keyCallback(int key, int scancode, int action, int mods) override;
-	void scrollCallback(double xoffset, double yoffset) override;
+	virtual void keyCallback(int key, int scancode, int action, int mods) override;
+	virtual void scrollCallback(double xoffset, double yoffset) override;
+	virtual void charactorCallback(unsigned int codepoint) override;
 
 private:
 	void testMath();
@@ -43,6 +46,7 @@ private:
 	void testRender();
 	void testAudio();
 	void testFont();
+	void testUtil();
 
 	fei::Texture testTex;
 	fei::Source src;
@@ -51,6 +55,7 @@ private:
 	fei::Label label;
 	MyButton button;
 	fei::Image emptyImage;
+	fut::VimStyleCommandLabel comLabel;
 };
 
 #endif

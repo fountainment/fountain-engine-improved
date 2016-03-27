@@ -1,5 +1,7 @@
 #include "TestScene.h"
 
+#include "base/stringUtil.h"
+
 using namespace fei;
 
 void TestScene::init()
@@ -12,6 +14,7 @@ void TestScene::init()
 	testRender();
 	testAudio();
 	testFont();
+	testUtil();
 }
 
 void TestScene::destroy()
@@ -102,6 +105,12 @@ void TestScene::keyCallback(int key, int scancode, int action, int mods)
 		mainCam.setCameraSize(winSize);
 		testTex.setPosition(Vec2(2048) - winSize / 2.0f);
 	}
+	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
+		comLabel.executeCommand();
+	}
+	if (key == GLFW_KEY_BACKSPACE && (action == GLFW_PRESS || action == GLFW_REPEAT)) {
+		comLabel.deleteChar();
+	}
 }
 
 void TestScene::scrollCallback(double xoffset, double yoffset)
@@ -112,6 +121,11 @@ void TestScene::scrollCallback(double xoffset, double yoffset)
 	if (yoffset < 0.0) {
 		mainCam.zoomCameraScale(0.90909f);
 	}
+}
+
+void TestScene::charactorCallback(unsigned int codepoint)
+{
+	comLabel.inputChar(codepoint);
 }
 
 void TestScene::testPhysics()
@@ -158,4 +172,16 @@ void TestScene::testAudio()
 {
 	src.loadWAV("res/sound/test.wav");
 	src.play();
+}
+
+void TestScene::testUtil()
+{
+	auto result = fei::strSplit("This is  a   split test! ");
+	for (auto str : result) {
+		std::printf(">>%s<<\n", str.c_str());
+	}
+	comLabel.setPosition(fei::Vec2(0.0f, 100.0f));
+	comLabel.setFontCache(&fc);
+	comLabel.getInterpreter()->registerCommand({":print"}, [](std::vector<std::string> params){if (params.size() >= 1) {std::printf("%s\n", params[0].c_str());} return fut::CommandResult::Ok;});
+	add(&comLabel);
 }

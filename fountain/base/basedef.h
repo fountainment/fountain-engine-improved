@@ -8,6 +8,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
+#include <functional>
+#include <set>
+#include <sstream>
 #include <stack>
 #include <list>
 #include <map>
