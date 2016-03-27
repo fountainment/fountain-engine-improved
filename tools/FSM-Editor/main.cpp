@@ -23,11 +23,11 @@ void FSMEditor::engineSetting(Engine* e)
 	auto tex20 = font20.getCacheTexture();
 	tex20.setMagFilter(GL_LINEAR);
 
-	//e->window->setFullscreen(true);
-	e->window->setSize(800, 600);
-	e->window->setSamples(8);
-	e->window->setTitle("FSM-Editor");
-	e->window->getSceneManager()->gotoScene(new FSMEditorScene());
+	//e->getWindow()->setFullscreen(true);
+	e->getWindow()->setSize(800, 600);
+	e->getWindow()->setSamples(8);
+	e->getWindow()->setTitle("FSM-Editor");
+	e->getWindow()->getSceneManager()->gotoScene(new FSMEditorScene());
 }
 
 int main()

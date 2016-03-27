@@ -4,7 +4,7 @@ using fei::Application;
 using fei::Engine;
 
 Engine::Engine()
-: window(nullptr)
+: _window(nullptr)
 {
 }
 
@@ -22,10 +22,10 @@ void Engine::destroy()
 
 bool Engine::createWindow()
 {
-	window->setContextRoot(fei::Interface::getInstance()->getRootWindow());
-	if (window->getWindow()) {
-		window->setCurrent();
-		fei::Render::getInstance()->setViewport(fei::Rect(window->getFrameSize()));
+	getWindow()->setContextRoot(fei::Interface::getInstance()->getRootWindow());
+	if (getWindow()->getWindow()) {
+		getWindow()->setCurrent();
+		fei::Render::getInstance()->setViewport(fei::Rect(getWindow()->getFrameSize()));
 		return true;
 	} else {
 		return false;
@@ -36,7 +36,7 @@ void Engine::mainLoop()
 {
 	while (!shouldExit()) {
 		executeBeforeFrame();
-		window->getSceneManager()->renderCurScene();
+		getWindow()->getSceneManager()->renderCurScene();
 		executeAfterFrame();
 	}
 }
@@ -44,7 +44,7 @@ void Engine::mainLoop()
 void Engine::run()
 {
 	createWindow();
-	window->show();
+	getWindow()->show();
 	mainLoop();
 }
 
@@ -57,56 +57,56 @@ bool Engine::loadModule()
 {
 	bool loadSuccess = true;
 	
-	moduleList.push_back(Time::getInstance());
-	moduleList.push_back(Interface::getInstance());
-	moduleList.push_back(Control::getInstance());
-	moduleList.push_back(Render::getInstance());
-	moduleList.push_back(Audio::getInstance());
-	moduleList.push_back(Physics::getInstance());
-	moduleList.push_back(Font::getInstance());
+	_moduleList.push_back(Time::getInstance());
+	_moduleList.push_back(Interface::getInstance());
+	_moduleList.push_back(Control::getInstance());
+	_moduleList.push_back(Render::getInstance());
+	_moduleList.push_back(Audio::getInstance());
+	_moduleList.push_back(Physics::getInstance());
+	_moduleList.push_back(Font::getInstance());
 
-	for (auto module : moduleList) {
+	for (auto module : _moduleList) {
 		if (!module || !module->feiInit()) {
 			loadSuccess = false;
 			return loadSuccess;
 		}
 	}
 
-	window = Interface::getInstance()->applyNewWindow();
+	_window = Interface::getInstance()->applyNewWindow();
 
 	return loadSuccess;
 }
 
 void Engine::unloadModule()
 {
-	if (window) {
-		Interface::getInstance()->destroyWindow(window);
+	if (getWindow()) {
+		Interface::getInstance()->destroyWindow(getWindow());
 	}
-	for (auto it = moduleList.rbegin(); it != moduleList.rend(); ++it) {
+	for (auto it = _moduleList.rbegin(); it != _moduleList.rend(); ++it) {
 		if (*it) {
 			if ((*it)->isLoaded()) {
 				(*it)->feiDestroy();
 			}
 		}
 	}
-	moduleList.clear();
+	_moduleList.clear();
 }
 
 bool Engine::shouldExit()
 {
-	return _shouldExit || window->shouldClose();
+	return _shouldExit || getWindow()->shouldClose();
 }
 
 void Engine::executeBeforeFrame()
 {
-	for (auto module : moduleList) {
+	for (auto module : _moduleList) {
 		module->executeBeforeFrame();
 	}
 }
 
 void Engine::executeAfterFrame()
 {
-	for (auto it = moduleList.rbegin(); it != moduleList.rend(); ++it) {
+	for (auto it = _moduleList.rbegin(); it != _moduleList.rend(); ++it) {
 		(*it)->executeAfterFrame();
 	}
 }
@@ -114,7 +114,7 @@ void Engine::executeAfterFrame()
 
 Application::Application()
 {
-	engine = nullptr;
+	_engine = nullptr;
 }
 
 Application::~Application()
@@ -125,23 +125,23 @@ Application::~Application()
 bool Application::loadEngine()
 {
 	bool loadSuccess = false;
-	if (!engine) {
-		engine = new Engine();
-		if (engine) {
-			loadSuccess = engine->feiInit();
+	if (!_engine) {
+	_engine = new Engine();
+		if (_engine) {
+			loadSuccess = _engine->feiInit();
 		}
 	} else {
-		loadSuccess = engine->isLoaded();
+		loadSuccess = _engine->isLoaded();
 	}
 	return loadSuccess;
 }
 
 void Application::unloadEngine()
 {
-	if (engine) {
-		engine->feiDestroy();
-		delete engine;
-		engine = nullptr;
+	if (_engine) {
+		_engine->feiDestroy();
+		delete _engine;
+		_engine = nullptr;
 	}
 }
 
@@ -152,9 +152,9 @@ void Application::engineSetting(Engine *engine)
 void Application::run()
 {
 	bool loadSuccess = loadEngine();
-	if (loadSuccess && engine) {
-		engineSetting(engine);	
-		engine->run();
+	if (loadSuccess && _engine) {
+		engineSetting(_engine);
+		_engine->run();
 	} else {
 		//TODO: Debug output
 	}
@@ -163,8 +163,8 @@ void Application::run()
 
 Engine* Application::getEngine()
 {
-	return engine;
+	return _engine;
 }
 
-Engine *Application::engine = nullptr;
+Engine *Application::_engine = nullptr;
 

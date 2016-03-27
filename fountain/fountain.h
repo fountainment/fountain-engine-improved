@@ -86,19 +86,20 @@ public:
 	void run();
 	void exit();
 
-	Window *window;
+	Window* getWindow();
 
 private:
 	bool loadModule();
 	void unloadModule();
 
-	std::vector<ModuleBase*> moduleList;
-
 	bool shouldExit();
-	bool _shouldExit;
 
 	void executeBeforeFrame() override;
 	void executeAfterFrame() override;
+
+	Window *_window;
+	std::vector<ModuleBase*> _moduleList;
+	bool _shouldExit;
 };
 
 class Application
@@ -116,9 +117,14 @@ public:
 	static Engine* getEngine();
 
 private:
-	static Engine *engine;
+	static Engine *_engine;
 };
 
 } // namespace fei
+
+inline fei::Window* fei::Engine::getWindow()
+{
+	return _window;
+}
 
 #endif // _FEI_FOUNTAIN_H_
