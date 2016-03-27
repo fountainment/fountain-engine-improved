@@ -12,6 +12,7 @@ class Circle : public Shape
 public:
 	Circle();
 	explicit Circle(float r);
+	Circle(Vec2 origin, float radius);
 
 	virtual int getDataSize() const override;
 	virtual const float* getDataPtr() const override;

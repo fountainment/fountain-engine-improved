@@ -45,9 +45,33 @@ void EditorScene::init()
 			}
 			return fut::CommandResult::Ok;
 		};
+	auto newCircleFunc =
+		[](std::vector<std::string> params)
+		{
+			double data[3] = {0.0};
+			if (params.size() == 3) {
+				for (int i = 0; i < 3; i++) {
+					data[i] = std::atof(params[i].c_str());
+				}
+				auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
+				Circle circle(Vec2(data[0], data[1]), data[2]);
+				body->createFixture(&circle);
+			} else {
+				return fut::CommandResult(fut::CommandResult::Type::ERROR, "Param size must be 4!");
+			}
+			return fut::CommandResult::Ok;
+		};
+	auto newPolygonFunc =
+		[](std::vector<std::string> params)
+		{
+			//TODO
+			return fut::CommandResult::Ok;
+		};
 
 	_commandLabel.getInterpreter()->registerCommand({":set", "gravity"}, gravityFunc);
 	_commandLabel.getInterpreter()->registerCommand({":new", "rect"}, newRectFunc);
+	_commandLabel.getInterpreter()->registerCommand({":new", "circle"}, newCircleFunc);
+	_commandLabel.getInterpreter()->registerCommand({":new", "polygon"}, newPolygonFunc);
 
 	initUILayout();
 }

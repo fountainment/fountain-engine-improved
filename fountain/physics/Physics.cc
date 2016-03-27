@@ -129,6 +129,7 @@ void Physics::destroy()
 void Physics::executeBeforeFrame()
 {
 	_world->Step(0.0167f, 8, 3);
+	_world->ClearForces();
 }
 
 void Physics::executeAfterFrame()
@@ -144,6 +145,7 @@ void Physics::executeAfterFrame()
 void Physics::setGravity(const fei::Vec2& g)
 {
 	_world->SetGravity(b2Vec2(g.x, g.y));
+	wakeUpAllBodies();
 }
 
 const fei::Vec2 Physics::getGravity()
@@ -155,6 +157,13 @@ const fei::Vec2 Physics::getGravity()
 void Physics::setRatio(float rt)
 {
 	_ratio = rt;
+}
+
+void Physics::wakeUpAllBodies()
+{
+	for (auto b = _world->GetBodyList(); b; b = b->GetNext()) {
+		b->SetAwake(true);
+	}
 }
 
 fei::Body* Physics::createBody(const fei::Vec2& pos, fei::Body::Type type)

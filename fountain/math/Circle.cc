@@ -42,6 +42,13 @@ Circle::Circle()
 	setType(fei::Shape::Type::CIRCLE);
 }
 
+Circle::Circle(fei::Vec2 origin, float radius)
+: _radius(radius)
+{
+	setPosition(origin);
+	setType(fei::Shape::Type::CIRCLE);
+}
+
 Circle::Circle(float r)
 : _radius(r)
 {
