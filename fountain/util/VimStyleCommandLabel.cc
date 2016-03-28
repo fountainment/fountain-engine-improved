@@ -120,7 +120,8 @@ void VimStyleCommandLabel::executeCommand()
 		return;
 	}
 	auto result = _interpreter.interpretCommand(_command);
-	_history.push(_command);
+	_history.push_back(_command);
+	_historyIndex = _history.size();
 	_command = fei::EmptyStr;
 	if (result._type == CommandResult::Type::OK) {
 		setColor(fei::Color::White);
@@ -129,6 +130,26 @@ void VimStyleCommandLabel::executeCommand()
 	}
 	setString(result._result);
 	unfocus();
+}
+
+void VimStyleCommandLabel::prevCommand()
+{
+	if (isFocus() && !_history.empty() && static_cast<int>(_historyIndex) > 0) {
+		_historyIndex--;
+		_command = _history[_historyIndex];
+		setColor(fei::Color::White);
+		setString(_command);
+	}
+}
+
+void VimStyleCommandLabel::nextCommand()
+{
+	if (isFocus() && !_history.empty() && _historyIndex < static_cast<int>(_history.size()) - 1) {
+		_historyIndex++;
+		_command = _history[_historyIndex];
+		setColor(fei::Color::White);
+		setString(_command);
+	}
 }
 
 void VimStyleCommandLabel::focus()

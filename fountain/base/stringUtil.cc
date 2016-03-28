@@ -1,5 +1,7 @@
 #include "base/stringUtil.h"
 
+#include "math/Vec2.h"
+
 const std::vector<std::string> fei::strSplit(const std::string& str, char delim)
 {
 	std::vector<std::string> elems;
@@ -19,6 +21,19 @@ const std::vector<std::string> fei::strSplit(const std::string& str)
 		if (str != fei::EmptyStr) {
 			ret.push_back(str);
 		}
+	}
+	return ret;
+}
+
+const std::vector<fei::Vec2> fei::strVecToVec2Vec(const std::vector<std::string>& strVec)
+{
+	std::vector<fei::Vec2> ret;
+	int len = strVec.size();
+	for (int i = 0; i < len; i += 2) {
+		float x, y;
+		x = static_cast<float>(fei::strToFloat(strVec[i]));
+		y = i != len - 1 ? static_cast<float>(fei::strToFloat(strVec[i + 1])) : 0;
+		ret.push_back(fei::Vec2(x, y));
 	}
 	return ret;
 }

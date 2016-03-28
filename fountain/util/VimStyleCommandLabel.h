@@ -52,7 +52,10 @@ public:
 
 	void inputChar(char c);
 	void deleteChar();
+
 	void executeCommand();
+	void prevCommand();
+	void nextCommand();
 
 	void focus();
 	void unfocus();
@@ -64,7 +67,8 @@ public:
 
 private:
 	std::string _command;
-	std::queue<std::string> _history;
+	std::vector<std::string> _history;
+	int _historyIndex;
 	fei::FontCache* _fontCache;
 	CommandInterpreter _interpreter;
 

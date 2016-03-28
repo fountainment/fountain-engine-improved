@@ -11,6 +11,7 @@ void EditorScene::init()
 	setCamera(&_camera);
 
 	add(&_commandLabel);
+	add(&_texture);
 
 	_fontCache.loadFont("res/font/wqy.ttc", 20);
 	_commandLabel.setFontCache(&_fontCache);
@@ -64,16 +65,60 @@ void EditorScene::init()
 	auto newPolygonFunc =
 		[](std::vector<std::string> params)
 		{
-			//TODO
+			if (params.size() < 6) {
+				auto ret = fut::CommandResult::Error;
+				ret._result = "Vertices less than 3!";
+				return ret;
+			}
+			Polygon poly;
+			poly.setDataVector(fei::strVecToVec2Vec(params));
+			auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
+			body->createFixture(poly);
+			return fut::CommandResult::Ok;
+		};
+	auto debugdrawFunc =
+		[](std::vector<std::string> params)
+		{
+			if (params.size() == 1) {
+				if (params[0] == "on") {
+					Physics::getInstance()->setDoDebugDraw(true);
+					return fut::CommandResult::Ok;
+				} else if (params[0] == "off") {
+					Physics::getInstance()->setDoDebugDraw(false);
+					return fut::CommandResult::Ok;
+				}
+			}
+			return fut::CommandResult(fut::CommandResult::Type::ERROR, "Param must be 'on' or 'off'!");
+		};
+	auto quitFunc =
+		[](std::vector<std::string> params)
+		{
+			Application::getEngine()->exit();
+			return fut::CommandResult::Ok;
+		};
+	auto loadImageFunc =
+		[this](std::vector<std::string> params)
+		{
+			if (params.size() != 1) {
+				return fut::CommandResult(fut::CommandResult::Type::ERROR, "Param must be image filename!");
+			}
+			_texture.load(params[0]);
 			return fut::CommandResult::Ok;
 		};
 
 	_commandLabel.getInterpreter()->registerCommand({":set", "gravity"}, gravityFunc);
+	_commandLabel.getInterpreter()->registerCommand({":set", "debugdraw"}, debugdrawFunc);
 	_commandLabel.getInterpreter()->registerCommand({":new", "rect"}, newRectFunc);
 	_commandLabel.getInterpreter()->registerCommand({":new", "circle"}, newCircleFunc);
 	_commandLabel.getInterpreter()->registerCommand({":new", "polygon"}, newPolygonFunc);
+	_commandLabel.getInterpreter()->registerCommand({":q"}, quitFunc);
+	_commandLabel.getInterpreter()->registerCommand({":load", "img"}, loadImageFunc);
 
 	initUILayout();
+}
+
+void EditorScene::update()
+{
 }
 
 void EditorScene::initUILayout()
@@ -99,5 +144,16 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 		if (action == GLFW_PRESS) {
 			_commandLabel.executeCommand();
 		}
+		break;
+	case GLFW_KEY_UP:
+		if (action == GLFW_PRESS) {
+			_commandLabel.prevCommand();
+		}
+		break;
+	case GLFW_KEY_DOWN:
+		if (action == GLFW_PRESS) {
+			_commandLabel.nextCommand();
+		}
+		break;
 	}
 }

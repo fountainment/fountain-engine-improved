@@ -6,6 +6,7 @@
 #include "base/ModuleBase.h"
 #include "base/NodeBase.h"
 #include "base/noncopyable.h"
+#include "base/stringUtil.h"
 
 #include "math/mathdef.h"
 #include "math/Rect.h"

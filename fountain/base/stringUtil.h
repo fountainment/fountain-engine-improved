@@ -5,9 +5,20 @@
 
 namespace fei {
 
+class Vec2;
+
 const std::vector<std::string> strSplit(const std::string& str, char delim);
 const std::vector<std::string> strSplit(const std::string& str);
 
+double strToFloat(const std::string& str);
+
+const std::vector<fei::Vec2> strVecToVec2Vec(const std::vector<std::string>& strVec);
+
 } // namesapce fei
+
+inline double fei::strToFloat(const std::string& str)
+{
+	return std::atof(str.c_str());
+}
 
 #endif // _FEI_STRINGUTIL_H_
