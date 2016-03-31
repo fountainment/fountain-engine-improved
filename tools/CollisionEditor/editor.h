@@ -10,7 +10,8 @@ public:
 	enum class EditState {
 		NONE = 0,
 		RECT = 1,
-		CIRCLE = 2
+		CIRCLE = 2,
+		POLYGON = 3
 	};
 
 	virtual void init() override;
@@ -21,6 +22,7 @@ public:
 	void clearEditState();
 	void editRect();
 	void editCircle();
+	void editPolygon();
 
 	const fei::Vec2 getCursorWorldPos();
 
@@ -47,6 +49,7 @@ private:
 	fei::Vec2 _mouseDownPos;
 	std::list<fei::Rect> _rectList;
 	std::list<fei::Circle> _circleList;
+	std::list<fei::Polygon> _polygonList;
 	std::list<fei::Shape*> _shapeList;
 	std::map<fei::Shape*, fei::Body*> _shapeBodyMap;
 };

@@ -138,9 +138,7 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
 		if (!window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT)) {
-			int loc = poly[curEdit].closestWhichSegment(_vertexPos);
-			loc = poly[curEdit].indexNormalize(loc + 1);
-			poly[curEdit].insertVertex(_vertexPos, loc);
+			poly[curEdit].insertVertexOnClosestSegment(_vertexPos);
 		} else {
 			if (holdVertex != -1) {
 				poly[curEdit].deleteVertex(holdVertex);

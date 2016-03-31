@@ -8,6 +8,7 @@ void EditorScene::init()
 	_mouseDown = false;
 	_needInitUILayout = false;
 	_editCircle.setRadius(64.0f);
+	_editPolygon.setSolid(false);
 
 	_editShapeObj.setColorAlpha(0.5f);
 
@@ -129,6 +130,12 @@ void EditorScene::init()
 			editCircle();
 			return fut::CommandResult::Ok;
 		};
+	auto editPolygonFunc =
+		[this](std::vector<std::string> params)
+		{
+			editPolygon();
+			return fut::CommandResult::Ok;
+		};
 
 	_commandLabel.getInterpreter()->registerCommand({":set", "gravity"}, gravityFunc);
 	_commandLabel.getInterpreter()->registerCommand({":set", "debugdraw"}, debugdrawFunc);
@@ -139,6 +146,7 @@ void EditorScene::init()
 	_commandLabel.getInterpreter()->registerCommand({":load", "img"}, loadImageFunc);
 	_commandLabel.getInterpreter()->registerCommand({":edit", "rect"}, editRectFunc);
 	_commandLabel.getInterpreter()->registerCommand({":edit", "circle"}, editCircleFunc);
+	_commandLabel.getInterpreter()->registerCommand({":edit", "polygon"}, editPolygonFunc);
 
 	initUILayout();
 }
@@ -167,6 +175,8 @@ void EditorScene::update()
 			_editCircle.setRadius(_editCircle.getRadius() - 1.0f);
 		}
 		_editCircle.setPosition(cursorWPos);
+		break;
+	case EditState::POLYGON:
 		break;
 	}
 
@@ -201,6 +211,13 @@ void EditorScene::editCircle()
 	clearEditState();
 	_editState = EditState::CIRCLE;
 	_editShapeObj.setShape(&_editCircle);
+}
+
+void EditorScene::editPolygon()
+{
+	clearEditState();
+	_editState = EditState::POLYGON;
+	_editShapeObj.setShape(&_editPolygon);
 }
 
 const Vec2 EditorScene::getCursorWorldPos()
@@ -242,6 +259,11 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 	case GLFW_KEY_DOWN:
 		if (action == GLFW_PRESS) {
 			_commandLabel.nextCommand();
+		}
+		break;
+	case GLFW_KEY_V:
+		if (action == GLFW_PRESS && _editState == EditState::POLYGON && _mouseDown) {
+			_editPolygon.insertVertexOnClosestSegment(getCursorWorldPos() - _editPolygon.getPosition());
 		}
 		break;
 	}
@@ -289,6 +311,16 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 						_shapeBodyMap[&_circleList.back()] = body; 
 						break;
 					}
+				case EditState::POLYGON:
+					{
+						auto body = Physics::getInstance()->createBody(Vec2::ZERO, bodyType);
+						body->createFixture(_editPolygon);
+						_polygonList.push_back(_editPolygon);
+						_shapeList.push_back(&_polygonList.back());
+						_shapeBodyMap[&_polygonList.back()] = body; 
+						_editPolygon.clearVertex();
+					}
+					break;
 				}
 				_mouseDown = false;
 			}

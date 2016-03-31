@@ -27,6 +27,7 @@ public:
 
 	void setVertices(int vertexNumber, float* dataPtr);
 	void insertVertex(const Vec2& p, int index);
+	void insertVertexOnClosestSegment(const Vec2& p);
 	void deleteVertex(int index);
 	void moveVertices(const Vec2& v);
 	void reverseVertices();
