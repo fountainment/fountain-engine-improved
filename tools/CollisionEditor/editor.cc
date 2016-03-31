@@ -136,17 +136,27 @@ void EditorScene::init()
 			editPolygon();
 			return fut::CommandResult::Ok;
 		};
+	auto saveFunc =
+		[this](std::vector<std::string> params)
+		{
+			if (params.size() >= 1) {
+				_saveName = params[0];
+			}
+			return fut::CommandResult::Ok;
+		};
 
-	_commandLabel.getInterpreter()->registerCommand({":set", "gravity"}, gravityFunc);
-	_commandLabel.getInterpreter()->registerCommand({":set", "debugdraw"}, debugdrawFunc);
-	_commandLabel.getInterpreter()->registerCommand({":new", "rect"}, newRectFunc);
-	_commandLabel.getInterpreter()->registerCommand({":new", "circle"}, newCircleFunc);
-	_commandLabel.getInterpreter()->registerCommand({":new", "polygon"}, newPolygonFunc);
-	_commandLabel.getInterpreter()->registerCommand({":q"}, quitFunc);
-	_commandLabel.getInterpreter()->registerCommand({":load", "img"}, loadImageFunc);
-	_commandLabel.getInterpreter()->registerCommand({":edit", "rect"}, editRectFunc);
-	_commandLabel.getInterpreter()->registerCommand({":edit", "circle"}, editCircleFunc);
-	_commandLabel.getInterpreter()->registerCommand({":edit", "polygon"}, editPolygonFunc);
+	auto interpreter = _commandLabel.getInterpreter();
+	interpreter->registerCommand({":set", "gravity"}, gravityFunc);
+	interpreter->registerCommand({":set", "debugdraw"}, debugdrawFunc);
+	interpreter->registerCommand({":new", "rect"}, newRectFunc);
+	interpreter->registerCommand({":new", "circle"}, newCircleFunc);
+	interpreter->registerCommand({":new", "polygon"}, newPolygonFunc);
+	interpreter->registerCommand({":load", "img"}, loadImageFunc);
+	interpreter->registerCommand({":edit", "rect"}, editRectFunc);
+	interpreter->registerCommand({":edit", "circle"}, editCircleFunc);
+	interpreter->registerCommand({":edit", "polygon"}, editPolygonFunc);
+	interpreter->registerCommand({":w"}, saveFunc);
+	interpreter->registerCommand({":q"}, quitFunc);
 
 	initUILayout();
 }
@@ -261,9 +271,14 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 			_commandLabel.nextCommand();
 		}
 		break;
-	case GLFW_KEY_V:
+	case GLFW_KEY_I:
 		if (action == GLFW_PRESS && _editState == EditState::POLYGON && _mouseDown) {
 			_editPolygon.insertVertexOnClosestSegment(getCursorWorldPos() - _editPolygon.getPosition());
+		}
+		break;
+	case GLFW_KEY_V:
+		if (action == GLFW_PRESS && _editState == EditState::POLYGON && _mouseDown) {
+			_editPolygon.pushVertex(getCursorWorldPos() - _editPolygon.getPosition());
 		}
 		break;
 	}
@@ -313,6 +328,10 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 					}
 				case EditState::POLYGON:
 					{
+						if (!_editPolygon.isValid()) {
+							_editPolygon.clearVertex();
+							break;
+						}
 						auto body = Physics::getInstance()->createBody(Vec2::ZERO, bodyType);
 						body->createFixture(_editPolygon);
 						_polygonList.push_back(_editPolygon);

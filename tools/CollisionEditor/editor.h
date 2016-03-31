@@ -52,6 +52,7 @@ private:
 	std::list<fei::Polygon> _polygonList;
 	std::list<fei::Shape*> _shapeList;
 	std::map<fei::Shape*, fei::Body*> _shapeBodyMap;
+	std::string _saveName = "untitled";
 };
 
 #endif // _TOOLS_COLLISIONEDITOR_H_
