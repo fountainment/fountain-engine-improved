@@ -213,6 +213,14 @@ void RenderObj::setColor(const fei::Color& c)
 	_color = c;
 }
 
+void RenderObj::setColorAlpha(float alpha)
+{
+	_color.a = alpha;
+	if (alpha < 1.0f) {
+		setHasAlpha(true);
+	}
+}
+
 const fei::Color RenderObj::getColor() const
 {
 	return _color;

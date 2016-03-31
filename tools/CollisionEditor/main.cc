@@ -11,6 +11,7 @@ public:
 	{
 		engine->getWindow()->setTitle("CollisionEditor");
 		engine->getWindow()->setSize(800, 600);
+		engine->getWindow()->setSamples(8);
 		engine->getWindow()->getSceneManager()->gotoScene(new EditorScene);
 	}
 };

@@ -16,5 +16,7 @@ void ShapeObj::setShape(fei::Shape* sp)
 
 void ShapeObj::drawIt()
 {
-	fei::Render::drawShape(shape);
+	if (shape != nullptr) {
+		fei::Render::drawShape(shape);
+	}
 }

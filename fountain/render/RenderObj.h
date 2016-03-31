@@ -57,6 +57,7 @@ public:
 	void rotate(float dltAgl);
 
 	void setColor(const Color& c);
+	void setColorAlpha(float alpha);
 	const Color getColor() const;
 
 protected:

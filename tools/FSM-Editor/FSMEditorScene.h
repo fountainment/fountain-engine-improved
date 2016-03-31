@@ -105,6 +105,8 @@ private:
 
 	int _currentSignal;
 
+	bool _needUIRefresh;
+
 	std::string _openFile;
 
 	StateButton* _startStateButton;

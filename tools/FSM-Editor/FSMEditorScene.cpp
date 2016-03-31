@@ -134,6 +134,7 @@ void FSMEditorScene::init()
 {
 	scene = this;
 	fsm = &_fsm;
+	_needUIRefresh = false;
 
 	_currentSignal = -1;
 	_drawLine = false;
@@ -158,7 +159,6 @@ void FSMEditorScene::init()
 	_fixLayer.add(_addSignalButton);
 	_fixLayer.add(_addStateButton);
 	setCamera(&_mainCam);
-	_stateListLayer.setCamera(&_fsmCam);
 
 	_rect.setSize(Vec2(100.0f));
 	_rectObj.setShape(&_rect);
@@ -167,8 +167,9 @@ void FSMEditorScene::init()
 	_editingLineObj.setShape(&_editingLine);
 	_editingLineObj.setVisible(false);
 	_editingLineLayer.add(&_editingLineObj);
-	_editingLineLayer.setCamera(&_fsmCam);
 
+	_editingLineLayer.setCamera(&_fsmCam);
+	_stateListLayer.setCamera(&_fsmCam);
 	_lineLayer.setCamera(&_fsmCam);
 
 	add(&_tmpLabel);
@@ -204,6 +205,10 @@ void FSMEditorScene::beforeUpdate()
 			_editingLineObj.setVisible(false);
 		}
 	}
+	if (_needUIRefresh) {
+		refreshWindow();
+		_needUIRefresh = false;
+	}
 }
 
 void FSMEditorScene::updateSignalList()
@@ -214,7 +219,7 @@ void FSMEditorScene::updateSignalList()
 	_signalListLayer.garbageRecycle();
 
 	auto signalList =_fsm.getSignalVector();
-	Vec2 winSize = Interface::getInstance()->getWindowSize();
+	Vec2 winSize = Interface::getInstance()->getCurrentWindow()->getFrameSize();
 	Vec2 startPosition = winSize.zoomed(Vec2(-0.5f, 0.5f));
 	startPosition.add(Vec2(1.0f, -50.0f - 1.0f));
 	for (auto& signal : signalList) {
@@ -332,7 +337,7 @@ void FSMEditorScene::keyCallback(int key, int scancode, int action, int mods)
 	if (key == GLFW_KEY_F11 && action == GLFW_PRESS) {
 		auto window = Interface::getInstance()->getCurrentWindow();
 		window->setFullscreen(!window->isFullscreen());
-		refreshWindow();
+		_needUIRefresh = true;
 	}
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
 		if (!processCmd(unicodeToUtf8(_tmpName))) {

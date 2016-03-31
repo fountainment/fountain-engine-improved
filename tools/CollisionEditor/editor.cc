@@ -4,14 +4,26 @@ using namespace fei;
 
 void EditorScene::init()
 {
+	_editState = EditState::NONE;
+	_mouseDown = false;
+	_needInitUILayout = false;
+	_editCircle.setRadius(64.0f);
+
+	_editShapeObj.setColorAlpha(0.5f);
+
 	Physics::getInstance()->setDoDebugDraw(true);
 	Physics::getInstance()->setDebugDrawCamera(&_camera);
 	Physics::getInstance()->setRatio(64.0f);
 
 	setCamera(&_camera);
 
-	add(&_commandLabel);
+	_texture.setHasAlpha(true);
 	add(&_texture);
+	add(&_editShapeObj);
+	add(&_uiLayer);
+
+	_uiLayer.setCamera(&_uiCamera);
+	_uiLayer.add(&_commandLabel);
 
 	_fontCache.loadFont("res/font/wqy.ttc", 20);
 	_commandLabel.setFontCache(&_fontCache);
@@ -105,6 +117,18 @@ void EditorScene::init()
 			_texture.load(params[0]);
 			return fut::CommandResult::Ok;
 		};
+	auto editRectFunc =
+		[this](std::vector<std::string> params)
+		{
+			editRect();
+			return fut::CommandResult::Ok;
+		};
+	auto editCircleFunc =
+		[this](std::vector<std::string> params)
+		{
+			editCircle();
+			return fut::CommandResult::Ok;
+		};
 
 	_commandLabel.getInterpreter()->registerCommand({":set", "gravity"}, gravityFunc);
 	_commandLabel.getInterpreter()->registerCommand({":set", "debugdraw"}, debugdrawFunc);
@@ -113,18 +137,76 @@ void EditorScene::init()
 	_commandLabel.getInterpreter()->registerCommand({":new", "polygon"}, newPolygonFunc);
 	_commandLabel.getInterpreter()->registerCommand({":q"}, quitFunc);
 	_commandLabel.getInterpreter()->registerCommand({":load", "img"}, loadImageFunc);
+	_commandLabel.getInterpreter()->registerCommand({":edit", "rect"}, editRectFunc);
+	_commandLabel.getInterpreter()->registerCommand({":edit", "circle"}, editCircleFunc);
 
 	initUILayout();
 }
 
 void EditorScene::update()
 {
+	auto window = Application::getEngine()->getWindow();
+	auto deltaV = window->getRHCursorDeltaV() / _camera.getCameraScale();
+	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
+		_camera.move(-deltaV);
+	}
+
+	auto cursorWPos = getCursorWorldPos();
+	_editShapeObj.setVisible(_mouseDown && _editState != EditState::NONE);
+	switch (_editState) {
+	case EditState::NONE:
+		break;
+	case EditState::RECT:
+		_editRect = fei::Rect(_mouseDownPos, cursorWPos - _mouseDownPos);
+		break;
+	case EditState::CIRCLE:
+		if (window->getKey(GLFW_KEY_W)) {
+			_editCircle.setRadius(_editCircle.getRadius() + 1.0f);
+		}
+		if (window->getKey(GLFW_KEY_S)) {
+			_editCircle.setRadius(_editCircle.getRadius() - 1.0f);
+		}
+		_editCircle.setPosition(cursorWPos);
+		break;
+	}
+
+	if (_needInitUILayout) {
+		initUILayout();
+		_needInitUILayout = false;
+	}
 }
 
 void EditorScene::initUILayout()
 {
-	_camera.setCameraSize(Application::getEngine()->getWindow()->getWindowSize());
-	_commandLabel.setPosition(getCamera()->screenToWorld(Vec2(5.0f)));
+	auto window = Application::getEngine()->getWindow();
+	_camera.setCameraSize(window->getFrameSize());
+	_uiCamera.setCameraSize(window->getFrameSize());
+	_commandLabel.setPosition(_uiCamera.screenToWorld(Vec2(5.0f)));
+}
+
+void EditorScene::clearEditState()
+{
+	_mouseDown = false;
+}
+
+void EditorScene::editRect()
+{
+	clearEditState();
+	_editState = EditState::RECT;
+	_editShapeObj.setShape(&_editRect);
+}
+
+void EditorScene::editCircle()
+{
+	clearEditState();
+	_editState = EditState::CIRCLE;
+	_editShapeObj.setShape(&_editCircle);
+}
+
+const Vec2 EditorScene::getCursorWorldPos()
+{
+	auto window = Application::getEngine()->getWindow();
+	return _camera.screenToWorld(window->getRHCursorPos());
 }
 
 void EditorScene::charactorCallback(unsigned int codepoint)
@@ -134,10 +216,17 @@ void EditorScene::charactorCallback(unsigned int codepoint)
 
 void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 {
+	auto window = Application::getEngine()->getWindow();
 	switch (key) {
 	case GLFW_KEY_BACKSPACE:
 		if (action == GLFW_PRESS || action == GLFW_REPEAT) {
 			_commandLabel.deleteChar();
+		}
+		break;
+	case GLFW_KEY_F11:
+		if (action == GLFW_PRESS) {
+			window->setFullscreen(!window->isFullscreen());
+			_needInitUILayout = true;
 		}
 		break;
 	case GLFW_KEY_ENTER:
@@ -155,5 +244,66 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 			_commandLabel.nextCommand();
 		}
 		break;
+	}
+}
+
+void EditorScene::scrollCallback(double xoffset, double yoffset)
+{
+	if (yoffset > 0.0) {
+		_camera.zoomCameraScale(1.1f);
+	} else if (yoffset < 0.0) {
+		_camera.zoomCameraScale(0.9f);
+	}
+}
+
+void EditorScene::mouseButtonCallback(int button, int action, int mods)
+{
+	auto bodyType = Body::Type::STATIC; 
+	auto cursorWPos = getCursorWorldPos();
+	if (button == GLFW_MOUSE_BUTTON_LEFT) {
+		if (action == GLFW_PRESS) {
+			if (_editState != EditState::NONE) {
+				_mouseDown = true;
+				_mouseDownPos = getCursorWorldPos();
+			}
+		} else if (action == GLFW_RELEASE) {
+			if (_mouseDown) {
+				switch (_editState) {
+				case EditState::NONE:
+					break;
+				case EditState::RECT:
+					{
+						auto body = Physics::getInstance()->createBody(Vec2::ZERO, bodyType);
+						body->createFixture(&_editRect);
+						_rectList.push_back(_editRect);
+						_shapeList.push_back(&_rectList.back());
+						_shapeBodyMap[&_rectList.back()] = body; 
+						break;
+					}
+				case EditState::CIRCLE:
+					{
+						auto body = Physics::getInstance()->createBody(Vec2::ZERO, bodyType);
+						body->createFixture(&_editCircle);
+						_circleList.push_back(_editCircle);
+						_shapeList.push_back(&_circleList.back());
+						_shapeBodyMap[&_circleList.back()] = body; 
+						break;
+					}
+				}
+				_mouseDown = false;
+			}
+		}
+	}
+	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
+		for (auto shape = _shapeList.rbegin(); shape != _shapeList.rend(); ++shape) {
+			if ((*shape)->collidePoint(cursorWPos)) {
+				auto body = _shapeBodyMap[*shape];
+				if (body) {
+					Physics::getInstance()->destroyBody(body);
+				}
+				_shapeList.erase((++shape).base());
+				break;
+			}
+		}
 	}
 }
