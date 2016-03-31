@@ -52,7 +52,7 @@ void Polygon::insertVertex(const fei::Vec2& p, int index)
 	_data.insert(_data.begin() + index, p);
 }
 
-void Polygon::insertVertexOnClosestSegment(const Vec2& p)
+void Polygon::insertVertexOnClosestSegment(const fei::Vec2& p)
 {
 	int loc = closestWhichSegment(p);
 	loc = indexNormalize(loc + 1);
