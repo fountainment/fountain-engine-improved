@@ -12,8 +12,9 @@ void EShapeObj::drawIt()
 	Circle circle(7.0f / cam->getCameraScale());
 
 	const float *data = shape->getDataPtr();
+	auto pos = shape->getPosition();
 	for (int i = 0; i < shape->getDataSize(); i++) {
-		circle.setPosition(fei::Vec2(data[i << 1], data[i << 1 | 1]));
+		circle.setPosition(fei::Vec2(data[i << 1] + pos.x, data[i << 1 | 1] + pos.y));
 		Render::drawShape(&circle);
 	}
 }
@@ -77,7 +78,7 @@ void EditorScene::update()
 	auto window = Interface::getInstance()->getCurrentWindow();
 
 	if (holdVertex >= 0) {
-		poly[curEdit].setVertex(holdVertex, pos);
+		poly[curEdit].setVertex(holdVertex, _vertexPos);
 	}
 
 	mPos = window->getRHCursorPos();
@@ -89,7 +90,7 @@ void EditorScene::update()
 	}
 
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT) && window->getKey(GLFW_KEY_LEFT_CONTROL)) {
-		poly[curEdit].moveVertices(deltaV);
+		poly[curEdit].move(deltaV);
 	}
 
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT) && window->getKey(GLFW_KEY_LEFT_SHIFT)) {
@@ -102,7 +103,7 @@ void EditorScene::update()
 		body->createFixture(list);
 	}
 
-	if (poly[curEdit].collidePoint(mainCam.screenToWorld(mPos))) {
+	if (poly[curEdit].collidePoint(_vertexPos)) {
 		polyObj.setColor(Color::Yellow);
 	} else {
 		polyObj.setColor(Color::White);
@@ -128,7 +129,7 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 
 	if (button == GLFW_MOUSE_BUTTON_LEFT) {
 		if (action == GLFW_PRESS) {
-			holdVertex = poly[curEdit].collideVertex(pos, 10.0f / mainCam.getCameraScale());
+			holdVertex = poly[curEdit].collideVertex(_vertexPos, 10.0f / mainCam.getCameraScale());
 		}
 		if (action == GLFW_RELEASE) {
 			holdVertex = -1;
@@ -137,9 +138,9 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 
 	if (button == GLFW_MOUSE_BUTTON_RIGHT && action == GLFW_PRESS) {
 		if (!window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT)) {
-			int loc = poly[curEdit].closestWhichSegment(pos);
+			int loc = poly[curEdit].closestWhichSegment(_vertexPos);
 			loc = poly[curEdit].indexNormalize(loc + 1);
-			poly[curEdit].insertVertex(pos, loc);
+			poly[curEdit].insertVertex(_vertexPos, loc);
 		} else {
 			if (holdVertex != -1) {
 				poly[curEdit].deleteVertex(holdVertex);
@@ -152,7 +153,8 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 void EditorScene::cursorPosCallback(double xpos, double ypos)
 {
 	auto window = Interface::getInstance()->getCurrentWindow();
-	pos = mainCam.screenToWorld(window->getRHCursorPos());
+	_pos = mainCam.screenToWorld(window->getRHCursorPos());
+	_vertexPos = _pos - poly[curEdit].getPosition();
 }
 
 void EditorScene::scrollCallback(double xoffset, double yoffset)

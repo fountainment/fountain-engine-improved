@@ -111,7 +111,8 @@ const std::vector<Polygon> Polygon::cut(int a, int b) const
 {
 	int curVertex;
 	std::vector<Polygon> result;
-	Polygon tmpPoly;
+	Polygon tmpPoly = *this;
+	tmpPoly.clearVertex();
 
 	curVertex = b;
 	tmpPoly.pushVertex(getVertex(a));
@@ -163,7 +164,7 @@ int Polygon::collideVertex(const fei::Vec2& p, float radius) const
 {
 	float rSq = radius * radius;
 	for (int i = 0; i < static_cast<int>(_data.size()); i++) {
-		if (((_data[i] + getPosition()) - p).getLengthSq() <= rSq) {
+		if ((getVertex(i) - p).getLengthSq() <= rSq) {
 			return i;
 		}
 	}

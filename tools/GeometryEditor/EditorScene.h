@@ -53,7 +53,7 @@ private:
 	int curEdit;
 
 	int holdVertex;
-	fei::Vec2 pos;
+	fei::Vec2 _pos, _vertexPos;
 	fei::Vec2 mPos, oldPos, deltaV;
 };
 
