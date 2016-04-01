@@ -178,10 +178,10 @@ void EditorScene::update()
 		_editRect = fei::Rect(_mouseDownPos, cursorWPos - _mouseDownPos);
 		break;
 	case EditState::CIRCLE:
-		if (window->getKey(GLFW_KEY_W)) {
+		if (_mouseDown && window->getKey(GLFW_KEY_W)) {
 			_editCircle.setRadius(_editCircle.getRadius() + 1.0f);
 		}
-		if (window->getKey(GLFW_KEY_S)) {
+		if (_mouseDown && window->getKey(GLFW_KEY_S)) {
 			_editCircle.setRadius(_editCircle.getRadius() - 1.0f);
 		}
 		_editCircle.setPosition(cursorWPos);
