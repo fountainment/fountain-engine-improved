@@ -165,7 +165,7 @@ void EditorScene::update()
 {
 	auto window = Application::getEngine()->getWindow();
 	auto deltaV = window->getRHCursorDeltaV() / _camera.getCameraScale();
-	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS) {
+	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE) == GLFW_PRESS || window->getKey(GLFW_KEY_SPACE)) {
 		_camera.move(-deltaV);
 	}
 
