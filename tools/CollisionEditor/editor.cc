@@ -103,6 +103,20 @@ void EditorScene::init()
 			}
 			return fut::CommandResult(fut::CommandResult::Type::ERROR, "Param must be 'on' or 'off'!");
 		};
+	auto vsyncFunc =
+		[](std::vector<std::string> params)
+		{
+			if (params.size() == 1) {
+				if (params[0] == "on") {
+					Interface::getInstance()->getCurrentWindow()->setVsync(true);
+					return fut::CommandResult::Ok;
+				} else if (params[0] == "off") {
+					Interface::getInstance()->getCurrentWindow()->setVsync(false);
+					return fut::CommandResult::Ok;
+				}
+			}
+			return fut::CommandResult(fut::CommandResult::Type::ERROR, "Param must be 'on' or 'off'!");
+		};
 	auto quitFunc =
 		[](std::vector<std::string> params)
 		{
@@ -148,6 +162,7 @@ void EditorScene::init()
 	auto interpreter = _commandLabel.getInterpreter();
 	interpreter->registerCommand({":set", "gravity"}, gravityFunc);
 	interpreter->registerCommand({":set", "debugdraw"}, debugdrawFunc);
+	interpreter->registerCommand({":set", "vsync"}, vsyncFunc);
 	interpreter->registerCommand({":new", "rect"}, newRectFunc);
 	interpreter->registerCommand({":new", "circle"}, newCircleFunc);
 	interpreter->registerCommand({":new", "polygon"}, newPolygonFunc);

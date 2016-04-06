@@ -15,6 +15,7 @@ Window::Window()
   _isFullscreen(false),
   _isResizable(false),
   _isHide(true),
+  _isVsync(true),
   _samples(0)
 {
 	_sceneManager = new fei::SceneManager();
@@ -47,6 +48,23 @@ void Window::setTitle(std::string tt)
 void Window::setResizable(bool resizable)
 {
 	_isResizable = resizable;
+}
+
+void Window::updateVsync()
+{
+	if (isCurrent()) {
+		if (_isVsync) {
+			glfwSwapInterval(1);
+		} else {
+			glfwSwapInterval(0);
+		}
+	}
+}
+
+void Window::setVsync(bool vsync)
+{
+	_isVsync = vsync;
+	updateVsync();
 }
 
 void Window::setFullscreen(bool fullscreen)
@@ -148,7 +166,14 @@ void Window::setCurrent()
 	if (_window) {
 		glfwMakeContextCurrent(_window);
 		Interface::getInstance()->setCurrentWindow(this);
+		updateVsync();
 	}
+}
+
+bool Window::isCurrent()
+{
+	return _window != nullptr && \
+		Interface::getInstance()->getCurrentWindow() == this;
 }
 
 void Window::hide()

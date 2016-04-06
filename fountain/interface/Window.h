@@ -25,6 +25,9 @@ public:
 	void setHide(bool isHide);
 	void setSamples(int samples);
 
+	void updateVsync();
+	void setVsync(bool vsync);
+
 	void setContextRoot(Window* root);
 
 	GLFWwindow* getWindow(); 
@@ -32,6 +35,7 @@ public:
 	static void doDelWindows();
 
 	void setCurrent();
+	bool isCurrent();
 
 	void hide();
 	void show();
@@ -65,6 +69,7 @@ private:
 	bool _isFullscreen;
 	bool _isResizable;
 	bool _isHide;
+	bool _isVsync;
 	int _samples;
 
 	SceneManager *_sceneManager;
