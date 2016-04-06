@@ -60,10 +60,10 @@ bool Engine::loadModule()
 	_moduleList.push_back(Time::getInstance());
 	_moduleList.push_back(Interface::getInstance());
 	_moduleList.push_back(Control::getInstance());
-	_moduleList.push_back(Render::getInstance());
 	_moduleList.push_back(Audio::getInstance());
 	_moduleList.push_back(Physics::getInstance());
 	_moduleList.push_back(Font::getInstance());
+	_moduleList.push_back(Render::getInstance());
 
 	for (auto module : _moduleList) {
 		if (!module || !module->feiInit()) {
