@@ -1,6 +1,7 @@
 #ifndef _FEI_RECT_H_
 #define _FEI_RECT_H_
 
+#include "base/basedef.h"
 #include "math/Segment.h"
 #include "math/Shape.h"
 #include "math/Vec2.h"
@@ -29,6 +30,7 @@ public:
 	Segment getRightSegment() const;
 	Segment getTopSegment() const;
 	Segment getBottomSegment() const;
+	std::vector<Segment> getAllSegments() const;
 
 	void zoom(float scale);
 	void zoom(const Vec2& v);

@@ -12,6 +12,7 @@ Rect::Rect(const fei::Vec2& sz)
 {
 	setType(fei::Shape::Type::RECT);
 	setSize(sz);
+	normalize();
 }
 
 Rect::Rect(float x, float y, float w, float h)
@@ -92,6 +93,12 @@ fei::Segment Rect::getBottomSegment() const
 	return ret;
 }
 
+std::vector<fei::Segment> Rect::getAllSegments() const
+{
+	return {getTopSegment(), getBottomSegment(), \
+		getLeftSegment(), getRightSegment()};
+}
+
 void Rect::zoom(float scale)
 {
 	_pos.zoom(scale);
@@ -143,7 +150,12 @@ bool Rect::collide(const fei::Shape* other) const
 	//TODO: implement cases
 	//case fei::Shape::Type::CIRCLE:
 	//case fei::Shape::Type::POLYGON:
-	//case fei::Shape::Type::SEGMENT:
+	case fei::Shape::Type::SEGMENT:
+		{
+			auto seg = static_cast<const fei::Segment*>(other);
+			result = collidePoint(seg->a) || collidePoint(seg->b);
+		}
+		break;
 	}
 	return result;
 }
