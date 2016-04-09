@@ -2,6 +2,7 @@ set(FOUNTAIN_RENDER_SRC
 	render/Render.cc
 	render/RenderObj.cc
 	render/RenderList.cc
+	render/RenderTarget.cc
 	render/RenderTree.cc
 	render/Camera.cc
 	render/Color.cc

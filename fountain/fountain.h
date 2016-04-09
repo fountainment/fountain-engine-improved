@@ -32,6 +32,7 @@
 #include "render/Render.h"
 #include "render/RenderObj.h"
 #include "render/RenderList.h"
+#include "render/RenderTarget.h"
 #include "render/RenderTree.h"
 #include "render/Camera.h"
 #include "render/Color.h"
