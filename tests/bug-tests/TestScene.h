@@ -36,6 +36,9 @@ public:
 	void destroy() override;
 	void update() override;
 
+	void beforeDraw() override;
+	void afterDraw() override;
+
 	virtual void keyCallback(int key, int scancode, int action, int mods) override;
 	virtual void scrollCallback(double xoffset, double yoffset) override;
 	virtual void charactorCallback(unsigned int codepoint) override;
@@ -56,6 +59,8 @@ private:
 	MyButton button;
 	fei::Image emptyImage;
 	fut::VimStyleCommandLabel comLabel;
+
+	fei::RenderTarget _renderTarget;
 };
 
 #endif

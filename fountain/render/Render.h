@@ -120,7 +120,7 @@ inline void Render::drawLine(const fei::Vec2& pa, const fei::Vec2& pb)
 
 inline void Render::drawRect(const fei::Vec2& size)
 {
-	GLfloat vertex[] = {-size.x, size.y, 0.0f, 0.0f, size.x, size.y, size.x, -size.y};
+	GLfloat vertex[] = {0.0f, size.y, 0.0f, 0.0f, size.x, size.y, size.x, 0.0f};
 	drawArray2f(vertex, 0, 4, GL_TRIANGLE_STRIP);
 }
 

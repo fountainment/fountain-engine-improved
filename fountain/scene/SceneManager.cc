@@ -9,6 +9,8 @@ SceneManager::SceneManager()
   _nextScene(nullptr),
   _doDestroyCurScene(false)
 {
+	defaultCamera.setCameraSize(Vec2::ONE);
+	defaultCamera.setPosition(Vec2::ZERO);
 }
 
 SceneManager::~SceneManager()

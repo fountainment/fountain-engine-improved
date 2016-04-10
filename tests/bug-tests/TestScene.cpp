@@ -8,6 +8,9 @@ void TestScene::init()
 {
 	setCamera(&mainCam);
 	mainCam.setCameraSize(Vec2(800, 600));
+	_renderTarget.setSize(800, 600);
+	_renderTarget.getTexture()->setHasAlpha(true);
+	_renderTarget.getTexture()->setMagFilter(GL_NEAREST);
 
 	testMath();
 	testPhysics();
@@ -30,6 +33,21 @@ void TestScene::update()
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE)) {
 		mainCam.move(deltaV);
 	}
+}
+
+void TestScene::beforeDraw()
+{
+	_renderTarget.bind();
+	Render::getInstance()->clearBuffer();
+}
+
+void TestScene::afterDraw()
+{
+	_renderTarget.unbind();
+	auto image = _renderTarget.getTexture()->getImage();
+	auto camera = Render::getInstance()->getCurrentCamera();
+	auto rct = camera->getCameraRect();
+	image.drawRect(rct);
 }
 
 void TestScene::testMath()
@@ -103,6 +121,7 @@ void TestScene::keyCallback(int key, int scancode, int action, int mods)
 		auto winSize = window->getFrameSize();
 		std::printf("%f %f\n", winSize.x, winSize.y);
 		mainCam.setCameraSize(winSize);
+		_renderTarget.setSize(winSize.x, winSize.y);
 		testTex.setPosition(Vec2(2048) - winSize / 2.0f);
 	}
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {

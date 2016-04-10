@@ -22,6 +22,8 @@ public:
 	virtual void feiBasicUpdate() override;
 
 	void draw();
+	virtual void beforeDraw();
+	virtual void afterDraw();
 	virtual void drawIt();
 
 	void setShader(ShaderProgram* sp);

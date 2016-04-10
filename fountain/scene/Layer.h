@@ -15,6 +15,7 @@ public:
 
 	void setCamera(Camera* camera);
 	Camera* getCamera();
+
 	//TODO: design control signal catch logic
 
 private:

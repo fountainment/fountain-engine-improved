@@ -118,6 +118,8 @@ void fei::Render::initViewport()
 
 void fei::Render::initMatrix()
 {
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
 }

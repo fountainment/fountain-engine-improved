@@ -63,6 +63,7 @@ public:
 	const Vec2 getVerticalVec2() const;
 
 	static const Vec2 ZERO;
+	static const Vec2 ONE;
 	static const Vec2 UP;
 	static const Vec2 DOWN;
 	static const Vec2 LEFT;

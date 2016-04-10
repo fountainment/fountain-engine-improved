@@ -162,6 +162,7 @@ void RenderObj::feiBasicUpdate()
 
 void RenderObj::draw()
 {
+	beforeDraw();
 	if (_useColor) {
 		_color.use();
 	}
@@ -202,6 +203,15 @@ void RenderObj::draw()
 	if (_hasAlpha) {
 		glDisable(GL_BLEND);
 	}
+	afterDraw();
+}
+
+void RenderObj::beforeDraw()
+{
+}
+
+void RenderObj::afterDraw()
+{
 }
 
 void RenderObj::drawIt()
