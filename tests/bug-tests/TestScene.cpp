@@ -121,7 +121,7 @@ void TestScene::keyCallback(int key, int scancode, int action, int mods)
 		auto winSize = window->getFrameSize();
 		std::printf("%f %f\n", winSize.x, winSize.y);
 		mainCam.setCameraSize(winSize);
-		_renderTarget.setSize(winSize.x, winSize.y);
+		_renderTarget.setSize(winSize);
 		testTex.setPosition(Vec2(2048) - winSize / 2.0f);
 	}
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {

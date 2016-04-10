@@ -52,6 +52,7 @@ public:
 	const Vec2 getRHCursorDeltaV();
 	const Vec2 getWindowSize();
 	const Vec2 getFrameSize();
+	const Vec2 getWindowPos();
 
 	SceneManager* getSceneManager() const;
 

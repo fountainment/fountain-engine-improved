@@ -280,6 +280,17 @@ const fei::Vec2 Window::getFrameSize()
 	return result;
 }
 
+const fei::Vec2 Window::getWindowPos()
+{
+	fei::Vec2 result;
+	if (_window) {
+		int xpos, ypos;
+		glfwGetWindowPos(_window, &xpos, &ypos);
+		result.set(static_cast<float>(xpos), static_cast<float>(ypos));
+	}
+	return result;
+}
+
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
