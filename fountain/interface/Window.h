@@ -56,6 +56,8 @@ public:
 
 	SceneManager* getSceneManager() const;
 
+	static Window* getFeiWindow(GLFWwindow* window);
+
 private:
 	void setCallback();
 	void unsetCallback();

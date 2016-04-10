@@ -135,6 +135,7 @@ GLFWwindow* Window::getWindow()
 			monitor = nullptr;
 		}
 		_window = glfwCreateWindow(w, h, _title.c_str(), monitor, _contextRoot);
+		glfwSetWindowUserPointer(_window, this);
 		setCallback();
 		glfwDefaultWindowHints();
 	}
@@ -293,7 +294,7 @@ const fei::Vec2 Window::getWindowPos()
 
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
+	auto scene = Window::getFeiWindow(window)->getSceneManager()->getCurScene();
 	if (scene) {
 		scene->keyCallback(key, scancode, action, mods);
 	}
@@ -301,7 +302,7 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 
 static void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 {
-	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
+	auto scene = Window::getFeiWindow(window)->getSceneManager()->getCurScene();
 	if (scene) {
 		scene->mouseButtonCallback(button, action, mods);
 	}
@@ -309,7 +310,7 @@ static void mouse_button_callback(GLFWwindow* window, int button, int action, in
 
 static void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 {
-	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
+	auto scene = Window::getFeiWindow(window)->getSceneManager()->getCurScene();
 	if (scene) {
 		scene->cursorPosCallback(xpos, ypos);
 	}
@@ -317,7 +318,7 @@ static void cursor_pos_callback(GLFWwindow* window, double xpos, double ypos)
 
 static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
+	auto scene = Window::getFeiWindow(window)->getSceneManager()->getCurScene();
 	if (scene) {
 		scene->scrollCallback(xoffset, yoffset);
 	}
@@ -325,7 +326,7 @@ static void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 
 static void character_callback(GLFWwindow* window, unsigned int codepoint)
 {
-	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
+	auto scene = Window::getFeiWindow(window)->getSceneManager()->getCurScene();
 	if (scene) {
 		scene->charactorCallback(codepoint);
 	}
@@ -333,7 +334,7 @@ static void character_callback(GLFWwindow* window, unsigned int codepoint)
 
 static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 {
-	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
+	auto scene = Window::getFeiWindow(window)->getSceneManager()->getCurScene();
 	if (scene) {
 		scene->framebufferSizeCallback(width, height);
 	}
@@ -341,7 +342,7 @@ static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 
 static void drop_callback(GLFWwindow* window, int count, const char** paths)
 {
-	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
+	auto scene = Window::getFeiWindow(window)->getSceneManager()->getCurScene();
 	if (scene) {
 		scene->dropCallback(count, paths);
 	}
@@ -373,4 +374,9 @@ void Window::unsetCallback()
 		glfwSetFramebufferSizeCallback(_window, nullptr);
 		glfwSetDropCallback(_window, nullptr);
 	}
+}
+
+Window* Window::getFeiWindow(GLFWwindow* window)
+{
+	return static_cast<Window*>(glfwGetWindowUserPointer(window));
 }
