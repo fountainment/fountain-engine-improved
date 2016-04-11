@@ -10,7 +10,7 @@ using fei::Texture;
 
 static GLenum Format2GLFormat(Texture::Format format)
 {
-	static GLenum ToGLFormat[] = {0, GL_RGB, GL_RGBA, GL_BGR, GL_BGRA, GL_LUMINANCE, GL_LUMINANCE_ALPHA};
+	static GLenum ToGLFormat[] = {0, GL_RGB, GL_RGBA, GL_BGR, GL_BGRA, GL_LUMINANCE, GL_LUMINANCE_ALPHA, GL_RGB32F, GL_RGBA32F};
 	return ToGLFormat[(int)format];
 }
 
@@ -103,8 +103,25 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 {
 	GLenum internalFormat = GL_RGB;
 	GLenum format = Format2GLFormat(dataFormat);
-	if ((int)dataFormat % 2 == 0) {
+	switch (dataFormat) {
+	case Format::LUM:
+		internalFormat = GL_RED;
+		break;
+	case Format::RGB:
+	case Format::BGR:
+		internalFormat = GL_RGB;
+		break;
+	case Format::LUMA:
+	case Format::RGBA:
+	case Format::BGRA:
 		internalFormat = GL_RGBA;
+		break;
+	case Format::RGBF:
+		internalFormat = GL_RGB32F;
+		break;
+	case Format::RGBAF:
+		internalFormat = GL_RGBA32F;
+		break;
 	}
 	if (isLoaded()) {
 		unload();
@@ -117,8 +134,13 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, w, h,
+	if (dataFormat == Format::RGBAF) {
+		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, w, h,
+			0, format, GL_FLOAT, bits);
+	} else {
+		glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, w, h,
 			0, format, GL_UNSIGNED_BYTE, bits);
+	}
 	setSize(fei::Vec2((float)w, (float)h));
 	fei::Render::getInstance()->registTexSize(_id, _size);
 }

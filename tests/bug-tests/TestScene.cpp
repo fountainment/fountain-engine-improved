@@ -8,7 +8,7 @@ void TestScene::init()
 {
 	setCamera(&mainCam);
 	mainCam.setCameraSize(Vec2(800, 600));
-	_renderTarget.setSize(800, 600);
+	_renderTarget.setSize(Vec2(800, 600));
 	_renderTarget.getTexture()->setHasAlpha(true);
 	_renderTarget.getTexture()->setMagFilter(GL_NEAREST);
 
@@ -121,7 +121,7 @@ void TestScene::keyCallback(int key, int scancode, int action, int mods)
 		auto winSize = window->getFrameSize();
 		std::printf("%f %f\n", winSize.x, winSize.y);
 		mainCam.setCameraSize(winSize);
-		_renderTarget.setSize(winSize);
+		_renderTarget.setSize(winSize, Texture::Format::RGBAF);
 		testTex.setPosition(Vec2(2048) - winSize / 2.0f);
 	}
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {

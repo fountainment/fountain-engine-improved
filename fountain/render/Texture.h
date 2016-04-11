@@ -20,7 +20,9 @@ public:
 		BGR = 3,
 		BGRA = 4,
 		LUM = 5,
-		LUMA = 6
+		LUMA = 6,
+		RGBF = 7,
+		RGBAF = 8
 	};
 
 	Texture();
