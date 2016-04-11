@@ -19,11 +19,13 @@ RenderTarget::~RenderTarget()
 }
 
 RenderTarget::RenderTarget(const fei::Vec2& size)
+: RenderTarget()
 {
 	setSize(size);
 }
 
 RenderTarget::RenderTarget(GLsizei width, GLsizei height)
+: RenderTarget()
 {
 	setSize(width, height);
 }
