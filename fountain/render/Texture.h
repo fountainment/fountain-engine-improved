@@ -47,6 +47,7 @@ public:
 	void setMagFilter(GLenum filter);
 	void bindLocation(int loc) const;
 
+	const Vec2 getSize() const;
 	GLuint getId() const;
 
 	void drawIt() override;

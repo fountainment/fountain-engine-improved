@@ -210,6 +210,11 @@ void Texture::bindLocation(int loc) const
 	glActiveTexture(GL_TEXTURE0);
 }
 
+const fei::Vec2 Texture::getSize() const
+{
+	return _size;
+}
+
 GLuint Texture::getId() const
 {
 	return _id;
