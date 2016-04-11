@@ -125,7 +125,7 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 		type = GL_FLOAT;
 	}
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, w, h,
-		0, format, GL_UNSIGNED_BYTE, bits);
+		0, format, type, bits);
 	setSize(fei::Vec2((float)w, (float)h));
 	fei::Render::getInstance()->registTexSize(_id, _size);
 }
