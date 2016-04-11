@@ -33,7 +33,7 @@ fei::Texture* RenderTarget::getTexture()
 	return &_texture;
 }
 
-void RenderTarget::setSize(const fei::Vec2& size, Texture::Format format)
+void RenderTarget::setSize(const fei::Vec2& size, fei::Texture::Format format)
 {
 	setSize(static_cast<GLsizei>(size.x), static_cast<GLsizei>(size.y), format);
 }
