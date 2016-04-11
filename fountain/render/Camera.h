@@ -27,6 +27,7 @@ public:
 	void zoomCameraScaleAtCenter(const Vec2& center, float zoom);
 	void setCameraSize(const Vec2& v);
 	const Vec2 getCameraSize();
+	void setCameraRect(const Rect& r);
 	const Rect getCameraRect();
 
 	const Vec2 screenToWorld(const Vec2& scrPos);
