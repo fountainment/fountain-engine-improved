@@ -104,7 +104,7 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 	GLenum internalFormat = GL_RGB;
 	GLenum format = GL_RGBA;
 	if (bits != nullptr) {
-		Format2GLFormat(dataFormat);
+		format = Format2GLFormat(dataFormat);
 	}
 	switch (dataFormat) {
 	case Format::LUM:
