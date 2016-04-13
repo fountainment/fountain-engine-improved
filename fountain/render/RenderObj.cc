@@ -14,6 +14,7 @@ RenderObj::RenderObj()
   _scale(1.0f),
   _zPos(0.0f),
   _anchor(fei::Vec2::ZERO),
+  _color(fei::Color::White),
   _shaderProg(nullptr),
   _substitute(nullptr),
   _anime(nullptr)

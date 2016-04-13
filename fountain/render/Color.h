@@ -14,7 +14,7 @@ public:
 	float &b = z;
 	float &a = w;
 
-	Color();
+	Color() = default;
 	Color(float rgb);
 	Color(float rr, float gg, float bb, float aa = 1.0f);
 	Color(const std::string& colorStr, float aa = 1.0f);

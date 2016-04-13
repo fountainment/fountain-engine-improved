@@ -47,6 +47,7 @@ void TestScene::afterDraw()
 	auto image = _renderTarget.getTexture()->getImage();
 	auto camera = Render::getInstance()->getCurrentCamera();
 	auto rct = camera->getCameraRect();
+	Color::White.use();
 	image.drawRect(rct);
 }
 

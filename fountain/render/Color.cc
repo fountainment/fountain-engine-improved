@@ -61,11 +61,6 @@ static const fei::Vec3 strToRGB(const std::string& colorStr)
 	return result;
 }
 
-Color::Color()
-{
-	r = g = b = a = 1.0f;
-}
-
 Color::Color(float rgb)
 {
 	r = g = b = rgb;
