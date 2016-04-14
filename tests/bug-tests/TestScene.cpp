@@ -53,7 +53,7 @@ void TestScene::afterDraw()
 
 void TestScene::testMath()
 {
-	Vec2 a;
+	Vec2 a(0.0f);
 	if (a == Vec2::ZERO) {
 		std::printf("Vec2: 1ok!\n");
 	}
