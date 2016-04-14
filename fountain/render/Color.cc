@@ -63,44 +63,35 @@ static const fei::Vec3 strToRGB(const std::string& colorStr)
 
 Color::Color(float rgb)
 {
-	r = g = b = rgb;
-	a = 1.0f;
+	x = y = z = rgb;
+	w = 1.0f;
 }
 
 Color::Color(float rr, float gg, float bb, float aa)
 {
-	r = rr;
-	g = gg;
-	b = bb;
-	a = aa;
+	x = rr;
+	y = gg;
+	z = bb;
+	w = aa;
 }
 
 Color::Color(const fei::Vec3& rgb, float aa)
 {
 	setRGB(rgb);
-	a = aa;
+	w = aa;
 }
 
 Color::Color(const std::string& colorStr, float aa)
 {
 	setRGB(colorStr);
-	a = aa;
-}
-
-Color& Color::operator=(const Color& rhs)
-{
-	x = rhs.x;
-	y = rhs.y;
-	z = rhs.z;
-	w = rhs.w;
-	return *this;
+	w = aa;
 }
 
 void Color::setRGB(const fei::Vec3& rgb)
 {
-	r = rgb.x;
-	g = rgb.y;
-	b = rgb.z;
+	x = rgb.x;
+	y = rgb.y;
+	z = rgb.z;
 }
 
 void Color::setRGB(const std::string& colorStr)
@@ -110,14 +101,14 @@ void Color::setRGB(const std::string& colorStr)
 
 void Color::toGrayScale()
 {
-	r = g = b = r * .299f + g * .587f + b * .114f; 
+	x = y = z = x * .299f + y * .587f + z * .114f;
 }
 
 void Color::toInverse()
 {
-	r = 1.0f - r;
-	g = 1.0f - g;
-	b = 1.0f - b;
+	x = 1.0f - x;
+	y = 1.0f - y;
+	z = 1.0f - z;
 }
 
 const Color Color::grayScaled() const

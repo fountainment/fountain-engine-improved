@@ -9,18 +9,12 @@ namespace fei {
 class Color : public Vec4
 {
 public:
-	float &r = x;
-	float &g = y;
-	float &b = z;
-	float &a = w;
 
 	Color() = default;
 	Color(float rgb);
 	Color(float rr, float gg, float bb, float aa = 1.0f);
 	Color(const std::string& colorStr, float aa = 1.0f);
 	Color(const Vec3& rgb, float aa = 1.0f);
-
-	Color& operator=(const Color& rhs);
 
 	void setRGB(const Vec3& rgb);
 	void setRGB(const std::string& colorStr);
