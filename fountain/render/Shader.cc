@@ -181,52 +181,101 @@ void ShaderProgram::pop()
 	Render::getInstance()->popShader(this);
 }
 
+GLint ShaderProgram::getUniformLocation(const std::string& varName)
+{
+	return glGetUniformLocation(_id, varName.c_str());
+}
+
+void ShaderProgram::setUniform(GLint varLoc, bool value)
+{
+	if (varLoc != -1) {
+		push();
+		if (value) {
+			glUniform1i(varLoc, 1);
+		} else {
+			glUniform1i(varLoc, 0);
+		}
+		pop();
+	}
+}
+
+void ShaderProgram::setUniform(GLint varLoc, int value)
+{
+	if (varLoc != -1) {
+		push();
+		glUniform1i(varLoc, value);
+		pop();
+	}
+}
+
+void ShaderProgram::setUniform(GLint varLoc, float value)
+{
+	if (varLoc != -1) {
+		push();
+		glUniform1f(varLoc, value);
+		pop();
+	}
+}
+
+void ShaderProgram::setUniform(GLint varLoc, const Vec2& value)
+{
+	if (varLoc != -1) {
+		push();
+		glUniform2fv(varLoc, 1, &(value.x));
+		pop();
+	}
+}
+
+void ShaderProgram::setUniform(GLint varLoc, const Vec3& value)
+{
+	if (varLoc != -1) {
+		push();
+		glUniform3fv(varLoc, 1, &(value.x));
+		pop();
+	}
+}
+
+void ShaderProgram::setUniform(GLint varLoc, const Vec4& value)
+{
+	if (varLoc != -1) {
+		push();
+		glUniform4fv(varLoc, 1, &(value.x));
+		pop();
+	}
+}
+
+void ShaderProgram::setUniform(const std::string& varName, bool value)
+{
+	GLint loc = getUniformLocation(varName);
+	setUniform(loc, value);
+}
+
 void ShaderProgram::setUniform(const std::string& varName, int value)
 {
-	push();
-	GLint loc = glGetUniformLocation(_id, varName.c_str());
-	if (loc != -1) {
-		glUniform1i(loc, value);
-	}
-	pop();
+	GLint loc = getUniformLocation(varName);
+	setUniform(loc, value);
 }
 
 void ShaderProgram::setUniform(const std::string& varName, float value)
 {
-	push();
-	GLint loc = glGetUniformLocation(_id, varName.c_str());
-	if (loc != -1) {
-		glUniform1f(loc, value);
-	}
-	pop();
+	GLint loc = getUniformLocation(varName);
+	setUniform(loc, value);
 }
 
 void ShaderProgram::setUniform(const std::string& varName, const fei::Vec2& value)
 {
-	push();
-	GLint loc = glGetUniformLocation(_id, varName.c_str());
-	if (loc != -1) {
-		glUniform2fv(loc, 1, &(value.x));
-	}
-	pop();
+	GLint loc = getUniformLocation(varName);
+	setUniform(loc, value);
 }
 
 void ShaderProgram::setUniform(const std::string& varName, const fei::Vec3& value)
 {
-	push();
-	GLint loc = glGetUniformLocation(_id, varName.c_str());
-	if (loc != -1) {
-		glUniform3fv(loc, 1, &(value.x));
-	}
-	pop();
+	GLint loc = getUniformLocation(varName);
+	setUniform(loc, value);
 }
 
 void ShaderProgram::setUniform(const std::string& varName, const fei::Vec4& value)
 {
-	push();
-	GLint loc = glGetUniformLocation(_id, varName.c_str());
-	if (loc != -1) {
-		glUniform4fv(loc, 1, &(value.x));
-	}
-	pop();
+	GLint loc = getUniformLocation(varName);
+	setUniform(loc, value);
 }

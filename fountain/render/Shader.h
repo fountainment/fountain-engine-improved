@@ -63,6 +63,16 @@ public:
 	void push();
 	void pop();
 
+	GLint getUniformLocation(const std::string& varName);
+
+	void setUniform(GLint varLoc, bool value);
+	void setUniform(GLint varLoc, int value);
+	void setUniform(GLint varLoc, float value);
+	void setUniform(GLint varLoc, const Vec2& value);
+	void setUniform(GLint varLoc, const Vec3& value);
+	void setUniform(GLint varLoc, const Vec4& value);
+
+	void setUniform(const std::string& varName, bool value);
 	void setUniform(const std::string& varName, int value);
 	void setUniform(const std::string& varName, float value);
 	void setUniform(const std::string& varName, const Vec2& value);
