@@ -217,7 +217,7 @@ void ShaderProgram::setUniform(GLint varLoc, float value)
 	}
 }
 
-void ShaderProgram::setUniform(GLint varLoc, const Vec2& value)
+void ShaderProgram::setUniform(GLint varLoc, const fei::Vec2& value)
 {
 	if (varLoc != -1) {
 		push();
@@ -226,7 +226,7 @@ void ShaderProgram::setUniform(GLint varLoc, const Vec2& value)
 	}
 }
 
-void ShaderProgram::setUniform(GLint varLoc, const Vec3& value)
+void ShaderProgram::setUniform(GLint varLoc, const fei::Vec3& value)
 {
 	if (varLoc != -1) {
 		push();
@@ -235,7 +235,7 @@ void ShaderProgram::setUniform(GLint varLoc, const Vec3& value)
 	}
 }
 
-void ShaderProgram::setUniform(GLint varLoc, const Vec4& value)
+void ShaderProgram::setUniform(GLint varLoc, const fei::Vec4& value)
 {
 	if (varLoc != -1) {
 		push();
