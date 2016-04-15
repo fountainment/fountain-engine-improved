@@ -194,6 +194,15 @@ const fei::Image Texture::getImage() const
 	return getImage(fei::Vec2::ZERO, _size);
 }
 
+void Texture::setMinFilter(GLenum filter)
+{
+	GLint oldtex;
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &oldtex);
+	glBindTexture(GL_TEXTURE_2D, _id);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filter);
+	glBindTexture(GL_TEXTURE_2D, oldtex);
+}
+
 void Texture::setMagFilter(GLenum filter)
 {
 	GLint oldtex;

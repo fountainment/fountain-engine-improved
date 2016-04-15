@@ -44,6 +44,7 @@ public:
 	const Image getImage(const Vec2& p, const Vec2& s) const;
 	const Image getImage() const;
 
+	void setMinFilter(GLenum filter);
 	void setMagFilter(GLenum filter);
 	void bindLocation(int loc) const;
 
