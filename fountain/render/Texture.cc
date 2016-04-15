@@ -219,6 +219,15 @@ void Texture::bindLocation(int loc) const
 	glActiveTexture(GL_TEXTURE0);
 }
 
+void Texture::generateMipmap()
+{
+	GLint oldtex;
+	glGetIntegerv(GL_TEXTURE_BINDING_2D, &oldtex);
+	glBindTexture(GL_TEXTURE_2D, _id);
+	glGenerateMipmap(GL_TEXTURE_2D);
+	glBindTexture(GL_TEXTURE_2D, oldtex);
+}
+
 const fei::Vec2 Texture::getSize() const
 {
 	return _size;

@@ -48,6 +48,8 @@ public:
 	void setMagFilter(GLenum filter);
 	void bindLocation(int loc) const;
 
+	void generateMipmap();
+
 	const Vec2 getSize() const;
 	GLuint getId() const;
 
