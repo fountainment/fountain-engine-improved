@@ -28,6 +28,8 @@ public:
 
 	bool isBind();
 
+	float getHDRLw();
+
 private:
 	void genBuffers();
 	void deleteBuffers();

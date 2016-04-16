@@ -2,6 +2,9 @@
 
 #include  <GL/glew.h>
 
+#include "base/basedef.h"
+#include "math/mathdef.h"
+
 using fei::RenderTarget;
 
 RenderTarget::RenderTarget()
@@ -93,6 +96,32 @@ void RenderTarget::unbind()
 bool RenderTarget::isBind()
 {
 	return _isBind;
+}
+
+float RenderTarget::getHDRLw()
+{
+	float ret = 0.0f;
+	bool needUnbind = false;
+	if (!isBind()) {
+		bind();
+		needUnbind = true;
+	}
+	auto size = _texture.getSize();
+	GLuint w = size.x;
+	GLuint h = size.y;
+	GLfloat* buffer = new GLfloat[w * h * 4];
+	glReadPixels(0, 0, w, h, GL_RGBA, GL_FLOAT, buffer);
+	if (needUnbind) {
+		unbind();
+	}
+	float sum = 0.0f;
+	for (int i = 0; i < int(w * h * 4); i += 4) {
+		float l = buffer[i] * 0.2126f + buffer[i + 1] * 0.7152f + buffer[i + 2] * 0.0722f;
+		sum += std::log(fei::epsf + l);
+	}
+	ret = std::exp(sum / (size.x * size.y));
+	delete [] buffer;
+	return ret;
 }
 
 void RenderTarget::genBuffers()
