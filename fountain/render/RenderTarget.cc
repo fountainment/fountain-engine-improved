@@ -52,7 +52,6 @@ void RenderTarget::setSize(GLsizei width, GLsizei height, fei::Texture::Format f
 		_width = width;
 		_height = height;
 		_texture.load(nullptr, width, height, format);
-
 		genBuffers();
 
 		glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
@@ -101,19 +100,13 @@ bool RenderTarget::isBind()
 float RenderTarget::getHDRLw()
 {
 	float ret = 0.0f;
-	bool needUnbind = false;
-	if (!isBind()) {
-		bind();
-		needUnbind = true;
-	}
 	auto size = _texture.getSize();
 	GLuint w = size.x;
 	GLuint h = size.y;
 	GLfloat* buffer = new GLfloat[w * h * 4];
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, _framebuffer);
 	glReadPixels(0, 0, w, h, GL_RGBA, GL_FLOAT, buffer);
-	if (needUnbind) {
-		unbind();
-	}
+	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
 	float sum = 0.0f;
 	for (int i = 0; i < int(w * h * 4); i += 4) {
 		float l = buffer[i] * 0.2126f + buffer[i + 1] * 0.7152f + buffer[i + 2] * 0.0722f;
