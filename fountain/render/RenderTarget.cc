@@ -109,7 +109,7 @@ float RenderTarget::getHDRLw()
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
 	float sum = 0.0f;
 	for (int i = 0; i < int(w * h * 4); i += 4) {
-		float l = buffer[i] * 0.2126f + buffer[i + 1] * 0.7152f + buffer[i + 2] * 0.0722f;
+		float l = buffer[i + 3] * 0.2126f + buffer[i + 2] * 0.7152f + buffer[i + 1] * 0.0722f;
 		sum += std::log(fei::epsf + l);
 	}
 	ret = std::exp(sum / (size.x * size.y));
