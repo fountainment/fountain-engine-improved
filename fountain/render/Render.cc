@@ -49,7 +49,8 @@ Render* Render::getInstance()
 }
 
 Render::Render()
-: _currentCamera(nullptr)
+: _currentCamera(nullptr),
+  _currentRenderTarget(nullptr)
 {
 }
 
@@ -140,6 +141,16 @@ void Render::setCurrentCamera(fei::Camera* camera)
 fei::Camera* Render::getCurrentCamera()
 {
 	return _currentCamera;
+}
+
+void Render::setCurrentRenderTarget(fei::RenderTarget* renderTarget)
+{
+	_currentRenderTarget = renderTarget;
+}
+
+fei::RenderTarget* Render::getCurrentRenderTarget()
+{
+	return _currentRenderTarget;
 }
 
 void Render::setViewport(const fei::Rect& viewport)

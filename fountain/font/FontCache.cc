@@ -2,6 +2,7 @@
 
 #include "math/coding.h"
 #include "render/Image.h"
+#include "render/Render.h"
 
 using fei::FontCache;
 
@@ -109,7 +110,7 @@ void FontCache::updateCache(unsigned long* str, int strSize)
 
 void FontCache::initCacheTexture()
 {
-	int maxTextureSize = Render::getInstance()->getMaxTextureSize();
+	int maxTextureSize = fei::Render::getInstance()->getMaxTextureSize();
 	int texSize = std::min(4096, maxTextureSize);
 	_gridNum = texSize / _gridSize;
 	_curRow = 0;

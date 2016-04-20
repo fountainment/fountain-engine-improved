@@ -12,6 +12,7 @@
 #include "render/Camera.h"
 #include "render/Color.h"
 #include "render/RenderObj.h"
+#include "render/RenderTarget.h"
 #include "render/Shader.h"
 
 namespace fei {
@@ -49,6 +50,9 @@ public:
 	void setCurrentCamera(Camera* camera);
 	Camera* getCurrentCamera();
 
+	void setCurrentRenderTarget(RenderTarget* renderTarget);
+	RenderTarget* getCurrentRenderTarget();
+
 	void setViewport(const Rect& viewport);
 	const Rect getViewport();
 	void setClearColor(const Vec4* color);
@@ -85,6 +89,7 @@ private:
 	Render();
 
 	Camera* _currentCamera;
+	RenderTarget* _currentRenderTarget;
 
 	ShaderProgram _basicShader;
 	std::stack<ShaderProgram*> _shaderStack;

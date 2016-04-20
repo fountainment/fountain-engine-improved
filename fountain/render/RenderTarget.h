@@ -3,6 +3,7 @@
 
 #include <GL/glew.h>
 
+#include "base/basedef.h"
 #include "math/Vec2.h"
 #include "render/Texture.h"
 
@@ -22,6 +23,7 @@ public:
 	void setSize(GLsizei width, GLsizei height, Texture::Format format = Texture::Format::RGBA);
 
 	void bindColorAttachment(Texture* texture, int attachIndex);
+	void setDrawBuffers(const std::vector<GLenum>& buffers);
 
 	void bind();
 	void unbind();
@@ -33,10 +35,12 @@ public:
 private:
 	void genBuffers();
 	void deleteBuffers();
+	void tmpBind();
+	void tmpUnbind();
 
 	GLuint _renderbuffer, _framebuffer;
 	GLsizei _width, _height;
-	bool _isBind;
+	bool _tmpBind;
 	Texture _texture;
 };
 

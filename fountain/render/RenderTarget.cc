@@ -4,6 +4,7 @@
 
 #include "base/basedef.h"
 #include "math/mathdef.h"
+#include "render/Render.h"
 
 using fei::RenderTarget;
 
@@ -12,7 +13,7 @@ RenderTarget::RenderTarget()
   _framebuffer(0),
   _width(0),
   _height(0),
-  _isBind(false)
+  _tmpBind(false)
 {
 }
 
@@ -55,12 +56,12 @@ void RenderTarget::setSize(GLsizei width, GLsizei height, fei::Texture::Format f
 		genBuffers();
 
 		glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
-		bind();
+		tmpBind();
 		bindColorAttachment(getTexture(), 0);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
 
 		glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _renderbuffer);
-		unbind();
+		tmpUnbind();
 		glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	}
 }
@@ -71,30 +72,37 @@ void RenderTarget::bindColorAttachment(fei::Texture* texture, int attachIndex)
 	if (texture != nullptr) {
 		texId = texture->getId();
 	}
-	if (isBind()) {
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + attachIndex, GL_TEXTURE_2D, texId, 0);
-	} else {
-		bind();
-		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + attachIndex, GL_TEXTURE_2D, texId, 0);
-		unbind();
-	}
+	tmpBind();
+	glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + attachIndex, GL_TEXTURE_2D, texId, 0);
+	tmpUnbind();
+}
+
+void RenderTarget::setDrawBuffers(const std::vector<GLenum>& buffers)
+{
+	tmpBind();
+	glDrawBuffers(static_cast<GLsizei>(buffers.size()), &(buffers[0]));
+	tmpUnbind();
 }
 
 void RenderTarget::bind()
 {
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _framebuffer);
-	_isBind = true;
+	if (!isBind()) {
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _framebuffer);
+		fei::Render::getInstance()->setCurrentRenderTarget(this);
+	}
 }
 
 void RenderTarget::unbind()
 {
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
-	_isBind = false;
+	if (isBind()) {
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0);
+		fei::Render::getInstance()->setCurrentRenderTarget(nullptr);
+	}
 }
 
 bool RenderTarget::isBind()
 {
-	return _isBind;
+	return fei::Render::getInstance()->getCurrentRenderTarget() == this;
 }
 
 float RenderTarget::getHDRLw()
@@ -139,5 +147,21 @@ void RenderTarget::deleteBuffers()
 	if (_renderbuffer != 0) {
 		glDeleteRenderbuffers(1, &_renderbuffer);
 		_renderbuffer = 0;
+	}
+}
+
+void RenderTarget::tmpBind()
+{
+	if (!isBind()) {
+		bind();
+		_tmpBind = true;
+	}
+}
+
+void RenderTarget::tmpUnbind()
+{
+	if (_tmpBind) {
+		unbind();
+		_tmpBind = false;
 	}
 }

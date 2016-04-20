@@ -4,7 +4,6 @@
 #include <GL/glew.h>
 
 #include "render/Image.h"
-#include "render/Render.h"
 #include "render/RenderObj.h"
 #include "math/Rect.h"
 #include "math/Vec2.h"
