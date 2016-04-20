@@ -171,6 +171,16 @@ void ShaderProgram::use()
 	glUseProgram(_id);
 }
 
+void ShaderProgram::bindAttribLocation(int location, const std::string& shaderVariableName)
+{
+	glBindAttribLocation(_id, location, shaderVariableName.c_str());
+}
+
+void ShaderProgram::bindFragDataLocation(int location, const std::string& shaderVariableName)
+{
+	glBindFragDataLocation(_id, location, shaderVariableName.c_str());
+}
+
 void ShaderProgram::push()
 {
 	Render::getInstance()->pushShader(this);

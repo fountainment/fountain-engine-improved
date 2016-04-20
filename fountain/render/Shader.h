@@ -60,6 +60,9 @@ public:
 	void link();
 	void use();
 
+	void bindAttribLocation(int location, const std::string& shaderVariableName);
+	void bindFragDataLocation(int location, const std::string& shaderVariableName);
+
 	void push();
 	void pop();
 
