@@ -66,7 +66,7 @@ bool Shader::compileCheck()
 				output += "Fragment";
 			}
 		}
-		output += " shader compile failed!\n";
+		output += " shader compile error!\n";
 		glGetShaderiv(_id, GL_INFO_LOG_LENGTH, &length);
 		log = new GLchar[length];
 		glGetShaderInfoLog(_id, length, &length, log);
@@ -161,9 +161,39 @@ void ShaderProgram::attach(Shader* vs, Shader* fs)
 	attach(fs);
 }
 
+void ShaderProgram::beforeLink()
+{
+}
+
+void ShaderProgram::afterLink()
+{
+}
+
 void ShaderProgram::link()
 {
+	beforeLink();
 	glLinkProgram(_id);
+	linkCheck();
+	afterLink();
+}
+
+bool ShaderProgram::linkCheck()
+{
+	GLint linked;
+	glGetProgramiv(_id, GL_LINK_STATUS, &linked);
+	if (GL_FALSE == linked) {
+		GLint length;
+		GLchar *log;
+		std::string output = "Program link error!\n";
+		glGetProgramiv(_id, GL_INFO_LOG_LENGTH, &length);
+		log = new GLchar[length];
+		glGetProgramInfoLog(_id, length, &length, log);
+		output += std::string(log) + "\n\n";
+		std::fprintf(stderr, "%s", output.c_str());
+		delete [] log;
+		return false;
+	}
+	return true;
 }
 
 void ShaderProgram::use()
@@ -171,12 +201,12 @@ void ShaderProgram::use()
 	glUseProgram(_id);
 }
 
-void ShaderProgram::bindAttribLocation(int location, const std::string& shaderVariableName)
+void ShaderProgram::bindAttribLocation(GLuint location, const std::string& shaderVariableName)
 {
 	glBindAttribLocation(_id, location, shaderVariableName.c_str());
 }
 
-void ShaderProgram::bindFragDataLocation(int location, const std::string& shaderVariableName)
+void ShaderProgram::bindFragDataLocation(GLuint location, const std::string& shaderVariableName)
 {
 	glBindFragDataLocation(_id, location, shaderVariableName.c_str());
 }

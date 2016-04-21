@@ -57,11 +57,15 @@ public:
 	void attach(Shader* shader);
 	void attach(Shader* vs, Shader* fs);
 
+	virtual void beforeLink();
+	virtual void afterLink();
+
 	void link();
+	bool linkCheck();
 	void use();
 
-	void bindAttribLocation(int location, const std::string& shaderVariableName);
-	void bindFragDataLocation(int location, const std::string& shaderVariableName);
+	void bindAttribLocation(GLuint location, const std::string& shaderVariableName);
+	void bindFragDataLocation(GLuint location, const std::string& shaderVariableName);
 
 	void push();
 	void pop();
