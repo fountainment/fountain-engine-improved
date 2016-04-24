@@ -111,7 +111,7 @@ void FountainShader::cacheAllUniformLocation()
 	_useNormalTex = getUniformLocation("feiUseNormalTex");
 	_useCullTex = getUniformLocation("feiUseCullTex");
 	_useLight = getUniformLocation("feiUseLight");
-	
+
 	_kd = getUniformLocation("feiKd");
 	_ks = getUniformLocation("feiKs");
 	_smoothness = getUniformLocation("feiSmoothness");

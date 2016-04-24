@@ -78,7 +78,7 @@ public:
 	void setMouse(const Vec2& v);
 	void setTime(float t);
 	void setViewCoord(const Vec3& v);
-	
+
 	void setUseEmitTex(bool useEmitTex);
 	void setUseNormalTex(bool useNormalTex);
 	void setUseCullTex(bool useCullTex);

@@ -56,13 +56,12 @@ void RenderTarget::setSize(GLsizei width, GLsizei height, fei::Texture::Format f
 		genBuffers();
 
 		glBindRenderbuffer(GL_RENDERBUFFER, _renderbuffer);
-		tmpBind();
-		bindColorAttachment(getTexture(), 0);
 		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT24, width, height);
-
+		glBindRenderbuffer(GL_RENDERBUFFER, 0);
+		tmpBind();
+		glFramebufferTexture2D(GL_DRAW_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, getTexture()->getId(), 0);
 		glFramebufferRenderbuffer(GL_DRAW_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, _renderbuffer);
 		tmpUnbind();
-		glBindRenderbuffer(GL_RENDERBUFFER, 0);
 	}
 }
 
