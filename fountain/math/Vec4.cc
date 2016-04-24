@@ -22,3 +22,6 @@ Vec4::Vec4(const fei::Vec3& xyz, float ww)
 	z = xyz.z;
 	w = ww;
 }
+
+const Vec4 Vec4::BLACK = Vec4(0.0f, 0.0f, 0.0f, 1.0f);
+const Vec4 Vec4::WHITE = Vec4(1.0f);

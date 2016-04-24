@@ -35,6 +35,13 @@ public:
 	float z;
 
 	static const Vec3 ZERO;
+	static const Vec3 ONE;
+	static const Vec3 XUP;
+	static const Vec3 XDOWN;
+	static const Vec3 YUP;
+	static const Vec3 YDOWN;
+	static const Vec3 ZUP;
+	static const Vec3 ZDOWN;
 };
 
 } // namespace fei

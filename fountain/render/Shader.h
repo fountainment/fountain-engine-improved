@@ -53,6 +53,7 @@ public:
 
 	void loadFile(const std::string& vs, const std::string& fs);
 	void loadString(const std::string& vsStr, const std::string& fsStr);
+	void loadBasicShader();
 
 	void attach(Shader* shader);
 	void attach(Shader* vs, Shader* fs);
@@ -79,6 +80,12 @@ public:
 	void setUniform(GLint varLoc, const Vec3& value);
 	void setUniform(GLint varLoc, const Vec4& value);
 
+	void setUniform(GLint varLoc, const int* value, int num);
+	void setUniform(GLint varLoc, const float* value, int num);
+	void setUniform(GLint varLoc, const Vec2* value, int num);
+	void setUniform(GLint varLoc, const Vec3* value, int num);
+	void setUniform(GLint varLoc, const Vec4* value, int num);
+
 	void setUniform(const std::string& varName, bool value);
 	void setUniform(const std::string& varName, int value);
 	void setUniform(const std::string& varName, float value);
@@ -86,8 +93,13 @@ public:
 	void setUniform(const std::string& varName, const Vec3& value);
 	void setUniform(const std::string& varName, const Vec4& value);
 
+	virtual void setUseTex(bool useTex);
+
 private:
+	void basicSetting();
+
 	GLuint _id;
+	GLint _useTexUniformLoc;
 };
 
 } // namespace fei

@@ -9,34 +9,7 @@
 
 using fei::Render;
 
-static const GLchar *basicVertexShader = {
-	"void main()"
-	"{"
-	"	gl_TexCoord[0] = gl_MultiTexCoord0;"
-	"	gl_FrontColor = gl_Color;"
-	"	gl_Position = ftransform();"
-	"}"
-};
-
-static const GLchar *basicFragmentShader = {
-	"uniform sampler2D feiTex;"
-	"uniform float feiUseTex;"
-	"void main()"
-	"{"
-	"	vec4 color = gl_Color;"
-	"	if (feiUseTex == 1.0) {"
-	"		vec4 texColor = texture2D(feiTex, gl_TexCoord[0].st);"
-	"		if (texColor.a == 0.0 || color.a == 0.0) discard;"
-	"		color *= texColor;"
-	"	}"
-	"	gl_FragColor = color;"
-	"}"
-};
-
 const GLfloat Render::stripTexCoord_[8] = {0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 0.0f};
-
-const std::string Render::shaderTextureSwitchStr_ = "feiUseTex";
-const std::string Render::shaderTextureIdStr_ = "feiTex";
 
 Render* Render::instance_ = nullptr;
 
@@ -68,7 +41,7 @@ bool Render::init()
 		std::printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
 		if (GLEW_VERSION_2_0) {
 			std::printf("GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-			_basicShader.loadString(basicVertexShader, basicFragmentShader);
+			_basicShader.loadBasicShader();
 			_basicShader.push();
 		} else {
 			std::printf("Shader unsupported!\n");
@@ -274,8 +247,7 @@ void Render::bindTexture(GLuint tex)
 	glBindTexture(GL_TEXTURE_2D, tex);
 	auto shader = getShaderProgram();
 	if (shader) {
-		shader->setUniform(shaderTextureSwitchStr_, 1.0f);
-		shader->setUniform(shaderTextureIdStr_, 0);
+		shader->setUseTex(true);
 	}
 }
 
@@ -283,7 +255,7 @@ void Render::disableTexture()
 {
 	auto shader = getShaderProgram();
 	if (shader) {
-		shader->setUniform(shaderTextureSwitchStr_, 0.0f);
+		shader->setUseTex(false);
 	}
 }
 

@@ -103,9 +103,6 @@ private:
 
 	static const GLfloat stripTexCoord_[8];
 
-	static const std::string shaderTextureSwitchStr_;
-	static const std::string shaderTextureIdStr_;
-
 	static Render *instance_;
 };
 

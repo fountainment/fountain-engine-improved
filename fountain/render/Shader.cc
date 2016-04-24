@@ -8,6 +8,33 @@ using fei::FragmentShader;
 using fei::VertexShader;
 using fei::ShaderProgram;
 
+static const GLchar *BasicVertexShader = {
+        "void main()"
+        "{"
+        "       gl_TexCoord[0] = gl_MultiTexCoord0;"
+        "       gl_FrontColor = gl_Color;"
+        "       gl_Position = ftransform();"
+        "}"
+};
+
+static const GLchar *BasicFragmentShader = {
+	"uniform sampler2D feiTex;"
+	"uniform bool feiUseTex;"
+	"void main()"
+	"{"
+	"       vec4 color = gl_Color;"
+	"       if (feiUseTex) {"
+	"               vec4 texColor = texture2D(feiTex, gl_TexCoord[0].st);"
+	"               if (texColor.a == 0.0 || color.a == 0.0) discard;"
+	"               color *= texColor;"
+	"       }"
+	"       gl_FragColor = color;"
+	"}"
+};
+
+static const char *ShaderTextureSwitchUniform = "feiUseTex";
+static const char *ShaderTextureIdUniform = "feiTex";
+
 Shader::Shader()
 : _id(0),
   _shaderType(GL_VERTEX_SHADER)
@@ -89,8 +116,9 @@ FragmentShader::FragmentShader()
 }
 
 ShaderProgram::ShaderProgram()
+: _id(0),
+  _useTexUniformLoc(-1)
 {
-	_id = 0;
 }
 
 ShaderProgram::~ShaderProgram()
@@ -143,6 +171,11 @@ void ShaderProgram::loadString(const std::string& vsStr, const std::string& fsSt
 	link();
 }
 
+void ShaderProgram::loadBasicShader()
+{
+	loadString(BasicVertexShader, BasicFragmentShader);
+}
+
 void ShaderProgram::attach(Shader* shader)
 {
 	if (!shader->_id) {
@@ -174,6 +207,7 @@ void ShaderProgram::link()
 	beforeLink();
 	glLinkProgram(_id);
 	linkCheck();
+	basicSetting();
 	afterLink();
 }
 
@@ -284,6 +318,51 @@ void ShaderProgram::setUniform(GLint varLoc, const fei::Vec4& value)
 	}
 }
 
+void ShaderProgram::setUniform(GLint varLoc, const int* value, int num)
+{
+	if (varLoc != -1) {
+		push();
+		glUniform1iv(varLoc, num, value);
+		pop();
+	}
+}
+
+void ShaderProgram::setUniform(GLint varLoc, const float* value, int num)
+{
+	if (varLoc != -1) {
+		push();
+		glUniform1fv(varLoc, num, value);
+		pop();
+	}
+}
+
+void ShaderProgram::setUniform(GLint varLoc, const Vec2* value, int num)
+{
+	if (varLoc != -1) {
+		push();
+		glUniform2fv(varLoc, num, &(value->x));
+		pop();
+	}
+}
+
+void ShaderProgram::setUniform(GLint varLoc, const Vec3* value, int num)
+{
+	if (varLoc != -1) {
+		push();
+		glUniform3fv(varLoc, num, &(value->x));
+		pop();
+	}
+}
+
+void ShaderProgram::setUniform(GLint varLoc, const Vec4* value, int num)
+{
+	if (varLoc != -1) {
+		push();
+		glUniform4fv(varLoc, num, &(value->x));
+		pop();
+	}
+}
+
 void ShaderProgram::setUniform(const std::string& varName, bool value)
 {
 	GLint loc = getUniformLocation(varName);
@@ -318,4 +397,15 @@ void ShaderProgram::setUniform(const std::string& varName, const fei::Vec4& valu
 {
 	GLint loc = getUniformLocation(varName);
 	setUniform(loc, value);
+}
+
+void ShaderProgram::setUseTex(bool useTex)
+{
+	setUniform(_useTexUniformLoc, useTex);
+}
+
+void ShaderProgram::basicSetting()
+{
+	_useTexUniformLoc = getUniformLocation(ShaderTextureSwitchUniform);
+	setUniform(ShaderTextureIdUniform, 0);
 }

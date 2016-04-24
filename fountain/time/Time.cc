@@ -37,8 +37,8 @@ using fei::Time;
 
 Time *Time::instance_ = nullptr;
 
-static const double defaultFps = 60.0;
-static const double spf = 1.0 / defaultFps;
+static constexpr double defaultFps = 60.0;
+static constexpr double spf = 1.0 / defaultFps;
 
 Time* Time::getInstance()
 {

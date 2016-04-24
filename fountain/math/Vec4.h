@@ -19,6 +19,9 @@ public:
 	float y;
 	float z;
 	float w;
+
+	static const Vec4 BLACK;
+	static const Vec4 WHITE;
 };
 
 } // namespace fei

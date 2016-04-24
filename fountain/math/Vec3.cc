@@ -24,3 +24,10 @@ Vec3::Vec3(const fei::Vec2& v, float zz)
 }
 
 const Vec3 Vec3::ZERO = Vec3(0.0f);
+const Vec3 Vec3::ONE = Vec3(1.0f);
+const Vec3 Vec3::XUP = Vec3(1.0f, 0.0f, 0.0f);
+const Vec3 Vec3::XDOWN = Vec3(-1.0f, 0.0f, 0.0f);
+const Vec3 Vec3::YUP = Vec3(0.0f, 1.0f, 0.0f);
+const Vec3 Vec3::YDOWN = Vec3(0.0f, -1.0f, 0.0f);
+const Vec3 Vec3::ZUP = Vec3(0.0f, 0.0f, 1.0f);
+const Vec3 Vec3::ZDOWN = Vec3(0.0f, 0.0f, -1.0f);
