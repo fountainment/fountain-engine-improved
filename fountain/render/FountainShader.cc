@@ -67,6 +67,14 @@ LightManager::LightManager()
 		_light[i]._color = _lightColor + i;
 		_light[i]._radius = _lightRadius + i;
 	}
+	for (int i = 0; i < MAX_LIGHT_NUM; i++) {
+		_light[i].setType(Light::POINT_LIGHT);
+		_light[i].setPosition(Vec3(0.0f, 0.0f, 50.0f));
+		_light[i].setDirection(Vec3::YUP);
+		_light[i].setColor(Vec3::ONE);
+		_light[i].setIntensity(0.0f);
+		_light[i].setRadius(100.0f);
+	}
 }
 
 Light* LightManager::getLight(int index)
