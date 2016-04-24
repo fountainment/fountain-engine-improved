@@ -41,6 +41,7 @@
 #include "render/Texture.h"
 #include "render/Shader.h"
 #include "render/ShapeObj.h"
+#include "render/FountainShader.h"
 
 #include "anime/Anime.h"
 #include "anime/FrameAnime.h"
