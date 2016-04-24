@@ -1,6 +1,6 @@
 #include "render/RenderTarget.h"
 
-#include  <GL/glew.h>
+#include <glad/glad.h>
 
 #include "base/basedef.h"
 #include "math/mathdef.h"

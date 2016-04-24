@@ -1,7 +1,7 @@
 #ifndef _FEI_TEXTURE_H_
 #define _FEI_TEXTURE_H_
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 #include "render/Image.h"
 #include "render/RenderObj.h"

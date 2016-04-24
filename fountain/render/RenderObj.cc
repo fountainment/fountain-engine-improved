@@ -1,6 +1,6 @@
 #include "render/RenderObj.h"
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 #include "anime/Anime.h"
 

@@ -1,6 +1,6 @@
 #include "interface/Interface.h"
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 using fei::Interface;
@@ -71,6 +71,7 @@ void Interface::createRootWindow()
 		_rootWindow->setHide(true);
 		_rootWindow->getWindow();
 		_rootWindow->setCurrent();
+		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 	}
 }
 

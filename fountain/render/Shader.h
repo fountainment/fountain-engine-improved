@@ -1,7 +1,7 @@
 #ifndef _FEI_SHADER_H_
 #define _FEI_SHADER_H_
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 #include "base/basedef.h"
 #include "math/Vec2.h"

@@ -1,7 +1,7 @@
 #ifndef _FEI_IMAGEPOOL_H_
 #define _FEI_IMAGEPOOL_H_
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 #include "base/basedef.h"
 #include "render/Image.h"

@@ -1,6 +1,6 @@
 #include "scene/Layer.h"
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 #include "render/Render.h"
 

@@ -1,6 +1,6 @@
 #include "render/RenderTree.h"
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 using fei::RenderTree;
 

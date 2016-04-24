@@ -36,13 +36,13 @@ if(LINUX)
   set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_DEBUG} -O2")
 endif()
 
+add_subdirectory(deps/proj/glad)
 add_subdirectory(deps/proj/glfw)
 add_subdirectory(deps/proj/Box2D)
 
-add_definitions(-DGLFW_INCLUDE_NONE -DGLFW_STATIC -DGLEW_STATIC)
+add_definitions(-DGLFW_INCLUDE_NONE -DGLFW_STATIC)
 include_directories(fountain)
-include_directories(deps/proj/glfw/include deps/proj/Box2D)
-link_directories(${PROJECT_BINARY_DIR}/lib)
+include_directories(deps/proj/glad/include deps/proj/glfw/include deps/proj/Box2D)
 
 set(FOUNTAIN_LINK_LIBRARY fountain)
 
@@ -51,7 +51,7 @@ if(LINUX)
   add_definitions(-I/usr/include/freetype2)
 
   set(GLFW_DEPS_LIBRARY X11 Xrandr Xinerama Xi Xxf86vm Xcursor pthread rt m dl)
-  set(PLATFORM_LINK_LIBRARY glfw ${GLFW_DEPS_LIBRARY} GLEW GL freeimage openal Box2D freetype)
+  set(PLATFORM_LINK_LIBRARY glfw ${GLFW_DEPS_LIBRARY} glad GL freeimage openal Box2D freetype)
 
   file(COPY ${PROJECT_SOURCE_DIR}/res DESTINATION ${EXECUTABLE_OUTPUT_PATH})
 endif()
@@ -59,10 +59,10 @@ endif()
 if(WINDOWS)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 
-  include_directories(${PROJECT_SOURCE_DIR}/deps/include)
-  link_directories(${PROJECT_SOURCE_DIR}/deps/lib)
+  include_directories(deps/include)
+  link_directories(deps/lib)
 
-  set(PLATFORM_LINK_LIBRARY glfw glew32s opengl32 FreeImage OpenAL32 Box2D freetype winmm)
+  set(PLATFORM_LINK_LIBRARY glfw glad opengl32 FreeImage OpenAL32 Box2D freetype winmm)
 
   file(COPY ${PROJECT_SOURCE_DIR}/deps/bin/ DESTINATION ${EXECUTABLE_OUTPUT_PATH}/Debug)
   file(COPY ${PROJECT_SOURCE_DIR}/deps/bin/ DESTINATION ${EXECUTABLE_OUTPUT_PATH}/Release)

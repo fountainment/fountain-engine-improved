@@ -1,7 +1,7 @@
 #ifndef _RENDER_FOUNTAIN_SHADER_H_
 #define _RENDER_FOUNTAIN_SHADER_H_
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 #include "math/Vec2.h"
 #include "math/Vec3.h"

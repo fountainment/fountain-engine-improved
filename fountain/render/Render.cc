@@ -1,6 +1,6 @@
 #include "render/Render.h"
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 #include "base/basedef.h"
 #include "interface/Interface.h"
@@ -32,26 +32,19 @@ bool Render::init()
 	if (!fei::Interface::getInstance()->feiInit()) {
 		return false;
 	}
-	GLenum err = glewInit();
-	if (GLEW_OK != err) {
-		std::fprintf(stderr, "GLEW Error: %s\n", glewGetErrorString(err));
-		return false;
+	std::printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
+	if (GL_VERSION_2_0) {
+		std::printf("GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
+		_basicShader.loadBasicShader();
+		_basicShader.push();
 	} else {
-		std::printf("GLEW Version: %s\n", glewGetString(GLEW_VERSION));
-		std::printf("OpenGL Version: %s\n", glGetString(GL_VERSION));
-		if (GLEW_VERSION_2_0) {
-			std::printf("GLSL Version: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-			_basicShader.loadBasicShader();
-			_basicShader.push();
-		} else {
-			std::printf("Shader unsupported!\n");
-		}
-		glEnable(GL_CULL_FACE);
-		glCullFace(GL_FRONT);
-		GLint maxTexSize;
-		glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
-		_maxTexSize = maxTexSize;
+		std::printf("Shader unsupported!\n");
 	}
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_FRONT);
+	GLint maxTexSize;
+	glGetIntegerv(GL_MAX_TEXTURE_SIZE, &maxTexSize);
+	_maxTexSize = maxTexSize;
 	return true;
 }
 

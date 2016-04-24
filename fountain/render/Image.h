@@ -1,7 +1,7 @@
 #ifndef _FEI_IMAGE_H_
 #define _FEI_IMAGE_H_
 
-#include <GL/glew.h>
+#include <glad/glad.h>
 
 #include "math/Rect.h"
 #include "math/Vec2.h"
