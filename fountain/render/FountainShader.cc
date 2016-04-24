@@ -140,7 +140,7 @@ void FountainShader::cacheAllUniformLocation()
 
 	_lightNum = getUniformLocation("feiLightNum");
 	_lightType = getUniformLocation("feiLightType");
-	_lightPosition = getUniformLocation("feiLightPosition");
+	_lightPosition = getUniformLocation("feiLightPos");
 	_lightDirection = getUniformLocation("feiLightDirection");
 	_lightColor = getUniformLocation("feiLightColor");
 	_lightRadius = getUniformLocation("feiLightRadius");
