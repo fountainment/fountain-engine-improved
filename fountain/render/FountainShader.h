@@ -49,6 +49,7 @@ public:
 	friend class FountainShader;
 
 	Light* getLight(int index);
+	void setLightNum(int num);
 
 	static const int MAX_LIGHT_NUM = 64;
 

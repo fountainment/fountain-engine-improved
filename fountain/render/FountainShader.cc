@@ -59,7 +59,7 @@ void Light::move(const fei::Vec3& v)
 
 LightManager::LightManager()
 {
-	_lightNum = MAX_LIGHT_NUM;
+	_lightNum = 0;
 	for (int i = 0; i < MAX_LIGHT_NUM; i++) {
 		_light[i]._type = _lightType + i;
 		_light[i]._position = _lightPosition + i;
@@ -73,6 +73,11 @@ Light* LightManager::getLight(int index)
 {
 	//TODO: assert index < MAX_LIGHT_NUM
 	return _light + index;
+}
+
+void LightManager::setLightNum(int num)
+{
+	_lightNum = num;
 }
 
 FountainShader::FountainShader()
