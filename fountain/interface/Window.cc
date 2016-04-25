@@ -230,6 +230,25 @@ int Window::getMouseButton(int button)
 	return result;
 }
 
+const fei::Vec2 Window::getKeyAxis()
+{
+	fei::Vec2 ret = fei::Vec2::ZERO;
+	if (getKey(GLFW_KEY_UP)) {
+		ret += fei::Vec2::UP;
+	}
+	if (getKey(GLFW_KEY_DOWN)) {
+		ret += fei::Vec2::DOWN;
+	}
+	if (getKey(GLFW_KEY_LEFT)) {
+		ret += fei::Vec2::LEFT;
+	}
+	if (getKey(GLFW_KEY_RIGHT)) {
+		ret += fei::Vec2::RIGHT;
+	}
+	ret.normalize();
+	return ret;
+}
+
 const fei::Vec2 Window::getCursorPos()
 {
 	fei::Vec2 result;
