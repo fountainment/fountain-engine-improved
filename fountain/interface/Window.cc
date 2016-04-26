@@ -191,6 +191,27 @@ void Window::show()
 	}
 }
 
+void Window::hideCursor()
+{
+	if (_window) {
+		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_HIDDEN);
+	}
+}
+
+void Window::blockCursor()
+{
+	if (_window) {
+		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	}
+}
+
+void Window::showCursor()
+{
+	if (_window) {
+		glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+	}
+}
+
 int Window::shouldClose()
 {
 	if (_window) {

@@ -17,7 +17,10 @@ void TestScene::init()
 
 	map.load("res/image/map.png");
 
-	auto winsize = fei::Interface::getInstance()->getCurrentWindow()->getWindowSize();
+	auto win = fei::Interface::getInstance()->getCurrentWindow();
+	auto winsize = win->getWindowSize();
+	win->hideCursor();
+
 	UI.load("res/image/UI43.png");
 	UI.setHasAlpha(true);
 	UI.setScale(0.43f);

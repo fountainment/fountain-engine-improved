@@ -40,6 +40,10 @@ public:
 	void hide();
 	void show();
 
+	void hideCursor();
+	void blockCursor();
+	void showCursor();
+
 	int shouldClose();
 	void swapBuffers();
 
