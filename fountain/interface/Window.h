@@ -23,6 +23,8 @@ public:
 	void setResizable(bool resizable);
 	void setFullscreen(bool fullscreen);
 	void setHide(bool isHide);
+	void setHideCursor(bool isHide);
+	void setBlockCursor(bool isBlock);
 	void setSamples(int samples);
 
 	void updateVsync();
@@ -78,6 +80,8 @@ private:
 	bool _isFullscreen;
 	bool _isResizable;
 	bool _isHide;
+	bool _isHideCursor;
+	bool _isBlockCursor;
 	bool _isVsync;
 	int _samples;
 

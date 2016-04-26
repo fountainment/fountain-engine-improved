@@ -15,6 +15,8 @@ Window::Window()
   _isFullscreen(false),
   _isResizable(false),
   _isHide(true),
+  _isHideCursor(true),
+  _isBlockCursor(true),
   _isVsync(true),
   _samples(0)
 {
@@ -94,6 +96,26 @@ void Window::setHide(bool isHide)
 	}
 }
 
+void Window::setHideCursor(bool isHide)
+{
+	_isHideCursor = isHide;
+	if (_isHideCursor) {
+		hideCursor();
+	} else {
+		showCursor();
+	}
+}
+
+void Window::setBlockCursor(bool isBlock)
+{
+	_isBlockCursor = isBlock;
+	if (_isBlockCursor) {
+		blockCursor();
+	} else {
+		showCursor();
+	}
+}
+
 void Window::setSamples(int samples)
 {
 	_samples = samples;
@@ -135,6 +157,11 @@ GLFWwindow* Window::getWindow()
 			monitor = nullptr;
 		}
 		_window = glfwCreateWindow(w, h, _title.c_str(), monitor, _contextRoot);
+		if (_isBlockCursor) {
+			blockCursor();
+		} else if (_isHideCursor) {
+			hideCursor();
+		}
 		glfwSetWindowUserPointer(_window, this);
 		setCallback();
 		glfwDefaultWindowHints();
