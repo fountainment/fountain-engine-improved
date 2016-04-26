@@ -15,8 +15,8 @@ Window::Window()
   _isFullscreen(false),
   _isResizable(false),
   _isHide(true),
-  _isHideCursor(true),
-  _isBlockCursor(true),
+  _isHideCursor(false),
+  _isBlockCursor(false),
   _isVsync(true),
   _samples(0)
 {
