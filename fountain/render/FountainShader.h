@@ -17,6 +17,13 @@ class Light
 public:
 	friend class LightManager;
 
+	int getType();
+	const Vec3 getPosition();
+	const Vec3 getDirection();
+	const Vec4 getColor();
+	float getIntensity();
+	float getRadius();
+
 	void setType(int type);
 	void setPosition(const Vec3& v);
 	void setDirection(const Vec3& v);

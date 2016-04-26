@@ -13,6 +13,36 @@ Light::Light(int* type, fei::Vec3* position, fei::Vec3* direction, fei::Vec4* co
 {
 }
 
+int Light::getType()
+{
+	return *_type;
+}
+
+const fei::Vec3 Light::getPosition()
+{
+	return *_position;
+}
+
+const fei::Vec3 Light::getDirection()
+{
+	return *_direction;
+}
+
+const fei::Vec4 Light::getColor()
+{
+	return *_color;
+}
+
+float Light::getIntensity()
+{
+	return _color->w;
+}
+
+float Light::getRadius()
+{
+	return *_radius;
+}
+
 void Light::setType(int type)
 {
 	*_type = type;
