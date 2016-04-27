@@ -19,6 +19,7 @@
 #include "math/Vec4.h"
 #include "math/hash.h"
 #include "math/coding.h"
+#include "math/random.h"
 
 #include "time/Time.h"
 #include "time/Clock.h"

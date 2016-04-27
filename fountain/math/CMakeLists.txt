@@ -10,4 +10,5 @@ set(FOUNTAIN_MATH_SRC
 	math/Segment.cc
 	math/hash.cc
 	math/coding.cc
+	math/random.cc
 )
