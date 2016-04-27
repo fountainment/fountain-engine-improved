@@ -1,8 +1,13 @@
 #include "font/FontCache.h"
 
+#include "base/basedef.h"
 #include "math/coding.h"
 #include "render/Image.h"
 #include "render/Render.h"
+
+#ifdef min
+#undef min
+#endif
 
 using fei::FontCache;
 

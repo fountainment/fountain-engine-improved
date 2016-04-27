@@ -108,8 +108,8 @@ float RenderTarget::getHDRLw()
 {
 	float ret = 0.0f;
 	auto size = _texture.getSize();
-	GLuint w = size.x;
-	GLuint h = size.y;
+	GLuint w = static_cast<GLuint>(size.x);
+	GLuint h = static_cast<GLuint>(size.y);
 	GLfloat* buffer = new GLfloat[w * h * 4];
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, _framebuffer);
 	glReadPixels(0, 0, w, h, GL_RGBA, GL_FLOAT, buffer);

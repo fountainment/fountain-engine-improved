@@ -1,10 +1,5 @@
 #include "time/Time.h"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include "time/Clock.h"
-
 #if defined(__linux) // Linux
 	#if !defined(_BSD_SOURCE)
 		#define _BSD_SOURCE
@@ -33,6 +28,10 @@
 	}
 #endif // Win32 end
 
+#include <GLFW/glfw3.h>
+
+#include "time/Clock.h"
+
 using fei::Time;
 
 Time *Time::instance_ = nullptr;
@@ -59,7 +58,7 @@ Time::Time()
 
 bool Time::init()
 {
-	if (GL_FALSE == glfwInit()) {
+	if (GLFW_FALSE == glfwInit()) {
 		return false;
 	} else {
 		_initTime = glfwGetTime();

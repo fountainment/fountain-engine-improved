@@ -60,7 +60,7 @@ if(WINDOWS)
   add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 
   include_directories(deps/include)
-  link_directories(deps/lib)
+  link_directories(${PROJECT_SOURCE_DIR}/deps/lib)
 
   set(PLATFORM_LINK_LIBRARY glfw glad opengl32 FreeImage OpenAL32 Box2D freetype winmm)
 

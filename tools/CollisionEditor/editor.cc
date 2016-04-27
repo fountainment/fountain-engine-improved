@@ -32,11 +32,11 @@ void EditorScene::init()
 	auto gravityFunc =
 		[](std::vector<std::string> params)
 		{
-			double a = 0.0;
-			double b = 0.0;
+			float a = 0.0f;
+			float b = 0.0f;
 			if (params.size() == 2) {
-				a = std::atof(params[0].c_str());
-				b = std::atof(params[1].c_str());
+				a = static_cast<float>(std::atof(params[0].c_str()));
+				b = static_cast<float>(std::atof(params[1].c_str()));
 				Physics::getInstance()->setGravity(Vec2(a, b));
 			} else {
 				return fut::CommandResult(fut::CommandResult::Type::ERROR, "Param size must be 2!");
@@ -46,10 +46,10 @@ void EditorScene::init()
 	auto newRectFunc =
 		[](std::vector<std::string> params)
 		{
-			double data[4] = {0.0};
+			float data[4] = {0.0f};
 			if (params.size() == 4) {
 				for (int i = 0; i < 4; i++) {
-					data[i] = std::atof(params[i].c_str());
+					data[i] = static_cast<float>(std::atof(params[i].c_str()));
 				}
 				auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
 				Rect rect(data[0], data[1], data[2], data[3]);
@@ -62,10 +62,10 @@ void EditorScene::init()
 	auto newCircleFunc =
 		[](std::vector<std::string> params)
 		{
-			double data[3] = {0.0};
+			float data[3] = {0.0f};
 			if (params.size() == 3) {
 				for (int i = 0; i < 3; i++) {
-					data[i] = std::atof(params[i].c_str());
+					data[i] = static_cast<float>(std::atof(params[i].c_str()));
 				}
 				auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::DYNAMIC);
 				Circle circle(Vec2(data[0], data[1]), data[2]);

@@ -4,6 +4,10 @@
 #include "base/basedef.h"
 #include "ui/Label.h"
 
+#ifdef ERROR
+#undef ERROR
+#endif
+
 namespace fut {
 
 class CommandResult
