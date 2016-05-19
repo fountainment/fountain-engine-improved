@@ -1,5 +1,7 @@
 #include "interface/Window.h"
 
+#include <glad/glad.h>
+
 #include "interface/Interface.h"
 
 using fei::Window;
@@ -145,10 +147,10 @@ GLFWwindow* Window::getWindow()
 		glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
 		glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
 		if (_isHide) {
-			glfwWindowHint(GLFW_VISIBLE, GL_FALSE);
+			glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE);
 		}
 		if (!_isResizable) {
-			glfwWindowHint(GLFW_RESIZABLE, GL_FALSE);
+			glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
 		}
 		if (_isFullscreen) {
 			w = mode->width;
@@ -193,6 +195,7 @@ void Window::setCurrent()
 {
 	if (_window) {
 		glfwMakeContextCurrent(_window);
+		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		Interface::getInstance()->setCurrentWindow(this);
 		updateVsync();
 	}

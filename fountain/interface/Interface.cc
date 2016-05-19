@@ -1,6 +1,5 @@
 #include "interface/Interface.h"
 
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 using fei::Interface;
@@ -23,7 +22,7 @@ Interface::Interface()
 
 bool Interface::init()
 {
-	if (GL_FALSE == glfwInit()) {
+	if (GLFW_FALSE == glfwInit()) {
 		return false;
 	} else {
 		std::printf("GLFW Version: %s\n", glfwGetVersionString());
@@ -71,7 +70,6 @@ void Interface::createRootWindow()
 		_rootWindow->setHide(true);
 		_rootWindow->getWindow();
 		_rootWindow->setCurrent();
-		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 	}
 }
 
