@@ -6,11 +6,12 @@ C Current
 ? Uncertain
 
 Function:
+	O Render to Texture
+		! RenderBuffer create
 	C FSM test
 	C InputBox Class
 	C UI Widget border
 	! Physics Collision Logic
-	! Render to Texture
 	! File Utility Class
 	* Resource Manager
 	* VBO
@@ -19,6 +20,8 @@ Function:
 
 Optimization:
 	! Framerate Control
+	! Avoid glGet* and glActiveTexture in render loop
+	! Make GL calls compatible with Nsight
 	* Standardize function name (e.g. razor meanning-unclear load())
 	* Reduce texture switch
 
