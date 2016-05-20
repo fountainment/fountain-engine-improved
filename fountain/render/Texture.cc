@@ -116,9 +116,8 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 	glGenTextures(1, &_id);
 	fei::Render::getInstance()->addRefTexture(_id);
 	glBindTexture(GL_TEXTURE_2D, _id);
-	glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	if (dataFormat == Format::RGBF || dataFormat == Format::RGBAF) {
@@ -126,6 +125,7 @@ void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 	}
 	glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, w, h,
 		0, format, type, bits);
+	glGenerateMipmap(GL_TEXTURE_2D);
 	setSize(fei::Vec2((float)w, (float)h));
 	fei::Render::getInstance()->registTexSize(_id, _size);
 }
@@ -168,6 +168,7 @@ void Texture::subUpdate(const unsigned char* bits, int w, int h, Format dataForm
 	glBindTexture(GL_TEXTURE_2D, _id);
 	glTexSubImage2D(GL_TEXTURE_2D, 0, xoffset, yoffset, w, h,
 			format, GL_UNSIGNED_BYTE, bits);
+	glGenerateMipmap(GL_TEXTURE_2D);
 }
 
 void Texture::drawIt()
