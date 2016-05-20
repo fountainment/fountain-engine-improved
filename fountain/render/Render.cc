@@ -67,7 +67,6 @@ void Render::executeBeforeFrame()
 void Render::executeAfterFrame()
 {
 	deleteUnusedTexture();
-	glFlush();
 }
 
 void fei::Render::clearBuffer()
