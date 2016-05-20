@@ -19,8 +19,8 @@ Function:
 
 
 Optimization:
+	C Avoid glGet* and glActiveTexture in render loop
 	! Framerate Control
-	! Avoid glGet* and glActiveTexture in render loop
 	! Make GL calls compatible with Nsight
 	* Standardize function name (e.g. razor meanning-unclear load())
 	* Reduce texture switch

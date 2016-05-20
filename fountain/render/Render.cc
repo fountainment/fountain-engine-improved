@@ -236,7 +236,6 @@ void Render::deleteUnusedTexture()
 void Render::bindTexture(GLuint tex)
 {
 	if (!tex) return;
-	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, tex);
 	auto shader = getShaderProgram();
 	if (shader) {

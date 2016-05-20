@@ -214,9 +214,13 @@ void Texture::setMagFilter(GLenum filter)
 
 void Texture::bindLocation(int loc) const
 {
-	glActiveTexture(GL_TEXTURE0 + loc);
+	if (loc != 0) {
+		glActiveTexture(GL_TEXTURE0 + loc);
+	}
 	glBindTexture(GL_TEXTURE_2D, _id);
-	glActiveTexture(GL_TEXTURE0);
+	if (loc != 0) {
+		glActiveTexture(GL_TEXTURE0);
+	}
 }
 
 void Texture::generateMipmap()
