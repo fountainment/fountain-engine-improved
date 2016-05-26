@@ -259,11 +259,18 @@ void Render::drawShape(const fei::Shape* shape)
 	auto pos = shape->getPosition();
 	glPushMatrix();
 	glTranslatef(pos.x, pos.y, 0.0f);
-	if (fei::Shape::Type::CIRCLE == shape->getType()) {
-		float r = ((fei::Circle*)shape)->getRadius();
-		glScalef(r, r, r);
-	} else if (fei::Shape::Type::SEGMENT == shape->getType()) {
+	switch (shape->getType()) {
+	case fei::Shape::Type::CIRCLE:
+		{
+			float r = ((fei::Circle*)shape)->getRadius();
+			glScalef(r, r, r);
+		}
+		break;
+	case fei::Shape::Type::SEGMENT:
 		type = GL_LINES;
+		break;
+	default:
+		break;
 	}
 	drawArray2f(shape->getDataPtr(), 0, shape->getDataSize(), type);
 	glPopMatrix();
@@ -273,4 +280,3 @@ void Render::useColor(const fei::Vec4* color)
 {
 	glColor4fv(&color->x);
 }
-
