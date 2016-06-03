@@ -73,8 +73,10 @@ private:
 	GLFWwindow *_window;
 	GLFWwindow *_contextRoot;
 
-	int _width;
-	int _height;
+	int _windowedWidth;
+	int _windowedHeight;
+	int _windowedXPos;
+	int _windowedYPos;
 	std::string _title;
 
 	bool _isFullscreen;

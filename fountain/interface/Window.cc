@@ -11,8 +11,10 @@ std::queue<GLFWwindow*> Window::delWindows_;
 Window::Window()
 : _window(nullptr),
   _contextRoot(nullptr),
-  _width(500),
-  _height(500),
+  _windowedWidth(500),
+  _windowedHeight(500),
+  _windowedXPos(100),
+  _windowedYPos(100),
   _title(fei::EngineName),
   _isFullscreen(false),
   _isResizable(false),
@@ -34,8 +36,8 @@ Window::~Window()
 
 void Window::setSize(int w, int h)
 {
-	_width = w;
-	_height = h;
+	_windowedWidth = w;
+	_windowedHeight = h;
 	if (_window) {
 		glfwSetWindowSize(_window, w, h);
 	}
@@ -73,19 +75,20 @@ void Window::setVsync(bool vsync)
 
 void Window::setFullscreen(bool fullscreen)
 {
-	if (_window) {
-		if (fullscreen != _isFullscreen) {
-			hide();
-			delWindow();
-			_isFullscreen = fullscreen;
-			getWindow();
-			setCurrent();
-			show();
-			return;
+	if (_window && fullscreen != _isFullscreen) {
+		if (fullscreen) {
+			GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+			if (monitor) {
+				const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+				glfwGetWindowPos(_window, &_windowedXPos, &_windowedYPos);
+				glfwGetWindowSize(_window, &_windowedWidth, &_windowedHeight);
+				glfwSetWindowMonitor(_window, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+			}
+		} else {
+			glfwSetWindowMonitor(_window, NULL, _windowedXPos, _windowedYPos, _windowedWidth, _windowedHeight, 0);
 		}
-	} else {
-		_isFullscreen = fullscreen;
 	}
+	_isFullscreen = fullscreen;
 }
 
 void Window::setHide(bool isHide)
@@ -136,7 +139,7 @@ GLFWwindow* Window::getWindow()
 		glfwDefaultWindowHints();
 		auto monitor = glfwGetPrimaryMonitor();
 		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
-		int w = _width, h = _height;
+		int w = _windowedWidth, h = _windowedHeight;
 
 		if (_samples > 0) {
 			glfwWindowHint(GLFW_SAMPLES, _samples);
