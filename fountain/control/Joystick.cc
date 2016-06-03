@@ -100,7 +100,7 @@ float Joystick::getAxesX()
 
 float Joystick::getAxesY()
 {
-	return -_axesData[1];
+	return _axesData[1];
 }
 
 fei::Vec2 Joystick::getAxes()

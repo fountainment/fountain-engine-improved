@@ -23,6 +23,7 @@ public:
 	virtual void charactorCallback(unsigned int codepoint);
 	virtual void framebufferSizeCallback(int width, int height);
 	virtual void dropCallback(int count, const char** paths);
+	virtual void joystickCallback(int joy, int event);
 
 private:
 	Clock *_sceneClock;

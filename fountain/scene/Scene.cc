@@ -49,3 +49,7 @@ void Scene::dropCallback(int count, const char** paths)
 {
 }
 
+void Scene::joystickCallback(int joy, int event)
+{
+	std::printf("%d %d\n", joy, event);
+}

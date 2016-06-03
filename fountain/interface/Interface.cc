@@ -2,7 +2,17 @@
 
 #include <GLFW/glfw3.h>
 
+#include "scene/SceneManager.h"
+
 using fei::Interface;
+
+static void joystick_callback(int joy, int event)
+{
+	auto scene = fei::SceneManager::getCurrentSceneManager()->getCurScene();
+	if (scene) {
+		scene->joystickCallback(joy, event);
+	}
+}
 
 Interface* Interface::instance_ = nullptr;
 
@@ -27,12 +37,14 @@ bool Interface::init()
 	} else {
 		std::printf("GLFW Version: %s\n", glfwGetVersionString());
 		createRootWindow();
+		glfwSetJoystickCallback(joystick_callback);
 	}
 	return true;
 }
 
 void Interface::destroy()
 {
+	glfwSetJoystickCallback(nullptr);
 	destroyAllWindows();
 	glfwTerminate();
 }
