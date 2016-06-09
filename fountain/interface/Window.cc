@@ -21,7 +21,7 @@ Window::Window()
   _isHide(true),
   _isHideCursor(false),
   _isBlockCursor(false),
-  _isVsync(true),
+  _isVsync(false),
   _samples(0)
 {
 	_sceneManager = new fei::SceneManager();
@@ -87,6 +87,7 @@ void Window::setFullscreen(bool fullscreen)
 		} else {
 			glfwSetWindowMonitor(_window, NULL, _windowedXPos, _windowedYPos, _windowedWidth, _windowedHeight, 0);
 		}
+		updateVsync();
 	}
 	_isFullscreen = fullscreen;
 }
