@@ -7,10 +7,9 @@ using namespace fei;
 void TestScene::init()
 {
 	setCamera(&mainCam);
-	mainCam.setCameraSize(Vec2(800, 600));
-	_renderTarget.setSize(Vec2(800, 600));
-	_renderTarget.getTexture()->setHasAlpha(true);
-	_renderTarget.getTexture()->setMagFilter(GL_NEAREST);
+	_needInitUILayout = false;
+
+	initUILayout();
 
 	testMath();
 	testPhysics();
@@ -32,6 +31,10 @@ void TestScene::update()
 	oldPos = window->getRHCursorPos();
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_MIDDLE)) {
 		mainCam.move(deltaV);
+	}
+        if (_needInitUILayout) {
+		initUILayout();
+		_needInitUILayout = false;
 	}
 }
 
@@ -119,11 +122,7 @@ void TestScene::keyCallback(int key, int scancode, int action, int mods)
 	if (key == GLFW_KEY_F11 && action == GLFW_PRESS) {
 		auto window = fei::Interface::getInstance()->getCurrentWindow();
 		window->setFullscreen(!window->isFullscreen());
-		auto winSize = window->getFrameSize();
-		std::printf("%f %f\n", winSize.x, winSize.y);
-		mainCam.setCameraSize(winSize);
-		_renderTarget.setSize(winSize, Texture::Format::RGBAF);
-		testTex.setPosition(Vec2(2048) - winSize / 2.0f);
+		_needInitUILayout = true;
 	}
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
 		comLabel.executeCommand();
@@ -175,7 +174,7 @@ void TestScene::testFont()
 	auto window = fei::Interface::getInstance()->getCurrentWindow();
 	auto winSize = window->getWindowSize();
 	testTex = fc.getCacheTexture();
-	testTex.setPosition(Vec2(2048) - winSize / 2.0f);
+	testTex.setPosition((testTex.getSize() - winSize) * 0.5f);
 	testTex.setColor(Color("#3f0"));
 	testTex.setMagFilter(GL_LINEAR);
 	add(&testTex);
@@ -204,4 +203,16 @@ void TestScene::testUtil()
 	comLabel.setFontCache(&fc);
 	comLabel.getInterpreter()->registerCommand({":print"}, [](std::vector<std::string> params){if (params.size() >= 1) {std::printf("%s\n", params[0].c_str());} return fut::CommandResult::Ok;});
 	add(&comLabel);
+}
+
+void TestScene::initUILayout()
+{
+	auto window = fei::Interface::getInstance()->getCurrentWindow();
+	auto winSize = window->getFrameSize();
+	std::printf("%f %f\n", winSize.x, winSize.y);
+	mainCam.setCameraSize(winSize);
+	_renderTarget.setSize(winSize, Texture::Format::RGBAF);
+	_renderTarget.getTexture()->setHasAlpha(true);
+	_renderTarget.getTexture()->setMagFilter(GL_NEAREST);
+	testTex.setPosition((testTex.getSize() - winSize) * 0.5f);
 }

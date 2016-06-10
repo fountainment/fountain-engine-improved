@@ -51,6 +51,8 @@ private:
 	void testFont();
 	void testUtil();
 
+	void initUILayout();
+
 	fei::Texture testTex;
 	fei::Source src;
 	fei::Camera mainCam;
@@ -61,6 +63,7 @@ private:
 	fut::VimStyleCommandLabel comLabel;
 
 	fei::RenderTarget _renderTarget;
+	bool _needInitUILayout;
 };
 
 #endif
