@@ -88,13 +88,55 @@ public:
 		DrawSegment(p1, p2, b2Color(0.0f, 1.0f, 0.0f));
 	}
 
-	void DrawParticles(const b2Vec2 *, float32, const b2ParticleColor *, int32)
+	void DrawParticles(const b2Vec2* centers, float32 radius, const b2ParticleColor* colors, int32 count)
 	{
 		//TODO implement DebugDraw::DrawParticles
 	}
 
 private:
 	fei::ShapeObj _shapeObj;
+};
+
+class ContactListener : public b2ContactListener
+{
+public:
+	virtual void BeginContact(b2Contact* contact) override
+	{
+		auto fixtureA = contact->GetFixtureA();
+		auto fixtureB = contact->GetFixtureB();
+		auto feiBodyA = Physics::getBodyByB2Fixture(fixtureA);
+		auto feiBodyB = Physics::getBodyByB2Fixture(fixtureB);
+		feiBodyA->beginContact(feiBodyB);
+		feiBodyB->beginContact(feiBodyA);
+	}
+
+	virtual void EndContact(b2Contact* contact) override
+	{
+		auto fixtureA = contact->GetFixtureA();
+		auto fixtureB = contact->GetFixtureB();
+		auto feiBodyA = Physics::getBodyByB2Fixture(fixtureA);
+		auto feiBodyB = Physics::getBodyByB2Fixture(fixtureB);
+		feiBodyA->endContact(feiBodyB);
+		feiBodyB->endContact(feiBodyA);
+	}
+
+	virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold) override
+	{
+		auto fixtureA = contact->GetFixtureA();
+		auto fixtureB = contact->GetFixtureB();
+		auto feiBodyA = Physics::getBodyByB2Fixture(fixtureA);
+		auto feiBodyB = Physics::getBodyByB2Fixture(fixtureB);
+		bool isContactABEnabled = feiBodyA->frameContact(feiBodyB);
+		bool isContactBAEnabled = feiBodyB->frameContact(feiBodyA);
+		if (!isContactABEnabled || !isContactBAEnabled) {
+			contact->SetEnabled(false);
+		}
+	}
+
+	virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) override
+	{
+		//TODO: implement ContactListener::PostSolve
+	}
 };
 
 Physics* Physics::instance_ = nullptr;
@@ -110,6 +152,7 @@ Physics* Physics::getInstance()
 Physics::Physics()
 : _world(nullptr),
   _debugDraw(nullptr),
+  _contactListener(nullptr),
   _ddCamera(nullptr),
   _doDebugDraw(false),
   _ratio(1.0f)
@@ -121,6 +164,7 @@ bool Physics::init()
 	b2Vec2 g(0.0f, -10.0f);
 	_world = new b2World(g);
 	_debugDraw = new DebugDraw;
+	_contactListener = new ContactListener;
 	uint32 flags = 0;
 	flags += b2Draw::e_shapeBit;
 	flags += b2Draw::e_jointBit;
@@ -130,13 +174,18 @@ bool Physics::init()
 	_debugDraw->SetFlags(flags);
 	_world->SetAllowSleeping(true);
 	_world->SetDebugDraw(_debugDraw);
+	_world->SetContactListener(_contactListener);
 	return true;
 }
 
 void Physics::destroy()
 {
 	delete _world;
+	delete _contactListener;
+	delete _debugDraw;
 	_world = nullptr;
+	_contactListener = nullptr;
+	_debugDraw = nullptr;
 }
 
 void Physics::executeBeforeFrame()

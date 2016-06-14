@@ -40,6 +40,7 @@ public:
 	void setDebugDrawCamera(Camera* cam);
 
 	static b2Shape* ShapeToB2Shape(const Shape* shape);
+	static Body* getBodyByB2Fixture(const b2Fixture* fixture);
 
 	static Physics* getInstance();
 
@@ -48,6 +49,7 @@ private:
 
 	b2World* _world;
 	b2Draw* _debugDraw;
+	b2ContactListener* _contactListener;
 	Camera* _ddCamera;
 	bool _doDebugDraw;
 	float _ratio;
@@ -82,4 +84,8 @@ inline float fei::Physics::physicsToRender(float f)
 	return f * getRatio();
 }
 
+inline fei::Body* fei::Physics::getBodyByB2Fixture(const b2Fixture* fixture)
+{
+	return static_cast<fei::Body*>(fixture->GetBody()->GetUserData());
+}
 #endif // _FEI_PHYSICS_H_

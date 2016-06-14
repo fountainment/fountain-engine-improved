@@ -17,6 +17,10 @@ Body::Body(b2Body* b2bd, Type tp)
 	_body->SetUserData(this);
 }
 
+Body::~Body()
+{
+}
+
 void Body::setBody(b2Body* b2bd)
 {
 	_body = b2bd;
@@ -98,4 +102,17 @@ void Body::destroyFixture(const std::vector<b2Fixture*>& fixtures)
 	for (auto fixture : fixtures) {
 		destroyFixture(fixture);
 	}
+}
+
+void Body::beginContact(Body* otherBody)
+{
+}
+
+bool Body::frameContact(Body* otherBody)
+{
+	return true;
+}
+
+void Body::endContact(Body* otherBody)
+{
 }

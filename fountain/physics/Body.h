@@ -37,9 +37,14 @@ public:
 	void destroyFixture(b2Fixture* fixture);
 	void destroyFixture(const std::vector<b2Fixture*>& fixtures);
 
+	virtual void beginContact(Body* otherBody);
+	virtual bool frameContact(Body* otherBody);
+	virtual void endContact(Body* otherBody);
+
 private:
 	Body();
 	Body(b2Body* b2bd, Type tp);
+	virtual ~Body();
 	
 	void setBody(b2Body* b2bd);
 
