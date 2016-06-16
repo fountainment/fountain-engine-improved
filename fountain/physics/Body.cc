@@ -6,13 +6,15 @@ using fei::Body;
 
 Body::Body()
 : _body(nullptr),
-  _type(Type::DYNAMIC)
+  _type(Type::DYNAMIC),
+  _destroyed(false)
 {
 }
 
 Body::Body(b2Body* b2bd, Type tp)
 : _body(b2bd),
-  _type(tp)
+  _type(tp),
+  _destroyed(false)
 {
 	_body->SetUserData(this);
 }

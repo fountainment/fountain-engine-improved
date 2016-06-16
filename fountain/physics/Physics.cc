@@ -240,8 +240,12 @@ void Physics::wakeUpAllBodies()
 
 void Physics::destroyBody(fei::Body* body)
 {
+	if (body->_destroyed) {
+		return;
+	}
 	if (isInStep()) {
 		_zombieBodyList.push(body);
+		body->_destroyed = true;
 		return;
 	}
 	_world->DestroyBody(body->getB2Body());

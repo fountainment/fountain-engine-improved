@@ -50,6 +50,7 @@ protected:
 
 	b2Body* _body;
 	Type _type;
+	bool _destroyed;
 };
 
 } // namespace fei
