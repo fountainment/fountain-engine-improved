@@ -241,7 +241,6 @@ void Physics::wakeUpAllBodies()
 void Physics::destroyBody(fei::Body* body)
 {
 	if (isInStep()) {
-		body->getB2Body()->SetActive(false);
 		_zombieBodyList.push(body);
 		return;
 	}
