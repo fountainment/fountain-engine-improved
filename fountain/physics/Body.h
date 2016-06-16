@@ -27,6 +27,7 @@ public:
 	b2Body* getB2Body() const;
 
 	void setSpeed(const Vec2& sp);
+	const Vec2 getSpeed();
 
 	b2Fixture* createFixture(const Shape* shape);
 	const std::vector<b2Fixture*> createFixture(const std::vector<Shape*>& shapeList);

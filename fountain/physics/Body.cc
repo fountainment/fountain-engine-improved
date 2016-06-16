@@ -47,6 +47,13 @@ void Body::setSpeed(const fei::Vec2& sp)
 	_body->SetLinearVelocity(b2Vec2(vec.x, vec.y));
 }
 
+const fei::Vec2 Body::getSpeed()
+{
+	auto vec = _body->GetLinearVelocity();
+	auto ret = Physics::getInstance()->physicsToRender(fei::Vec2(vec.x, vec.y));
+	return ret;
+}
+
 b2Body* Body::getB2Body() const
 {
 	return _body;
