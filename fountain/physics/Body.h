@@ -41,7 +41,7 @@ public:
 	virtual bool frameContact(Body* otherBody);
 	virtual void endContact(Body* otherBody);
 
-private:
+protected:
 	Body();
 	Body(b2Body* b2bd, Type tp);
 	virtual ~Body();
