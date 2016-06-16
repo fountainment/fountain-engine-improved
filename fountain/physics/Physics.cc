@@ -155,6 +155,7 @@ Physics::Physics()
   _contactListener(nullptr),
   _ddCamera(nullptr),
   _doDebugDraw(false),
+  _inStep(false),
   _ratio(1.0f)
 {
 }
@@ -190,8 +191,17 @@ void Physics::destroy()
 
 void Physics::executeBeforeFrame()
 {
+	_inStep = true;
 	_world->Step(0.0167f, 8, 3);
+	_inStep = false;
 	_world->ClearForces();
+
+	while (!_zombieBodyList.empty()) {
+		auto body = _zombieBodyList.front();
+		_world->DestroyBody(body->getB2Body());
+		delete body;
+		_zombieBodyList.pop();
+	}
 }
 
 void Physics::executeAfterFrame()
@@ -230,6 +240,11 @@ void Physics::wakeUpAllBodies()
 
 void Physics::destroyBody(fei::Body* body)
 {
+	if (isInStep()) {
+		body->getB2Body()->SetActive(false);
+		_zombieBodyList.push(body);
+		return;
+	}
 	_world->DestroyBody(body->getB2Body());
 	delete body;
 }
@@ -242,6 +257,11 @@ void Physics::setDoDebugDraw(bool doDD)
 void Physics::setDebugDrawCamera(fei::Camera* cam)
 {
 	_ddCamera = cam;
+}
+
+bool Physics::isInStep()
+{
+	return _inStep;
 }
 
 b2Shape* Physics::ShapeToB2Shape(const fei::Shape* shape)

@@ -40,6 +40,8 @@ public:
 	void setDoDebugDraw(bool doDD);
 	void setDebugDrawCamera(Camera* cam);
 
+	bool isInStep();
+
 	static b2Shape* ShapeToB2Shape(const Shape* shape);
 	static Body* getBodyByB2Fixture(const b2Fixture* fixture);
 
@@ -51,8 +53,10 @@ private:
 	b2World* _world;
 	b2Draw* _debugDraw;
 	b2ContactListener* _contactListener;
+	std::queue<Body*> _zombieBodyList;
 	Camera* _ddCamera;
 	bool _doDebugDraw;
+	bool _inStep;
 	float _ratio;
 
 	static Physics *instance_;
