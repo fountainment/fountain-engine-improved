@@ -7,6 +7,7 @@ using fei::Body;
 Body::Body()
 : _body(nullptr),
   _type(Type::DYNAMIC),
+  _tag(0),
   _destroyed(false)
 {
 }
@@ -14,6 +15,7 @@ Body::Body()
 Body::Body(b2Body* b2bd, Type tp)
 : _body(b2bd),
   _type(tp),
+  _tag(0),
   _destroyed(false)
 {
 	_body->SetUserData(this);
@@ -52,6 +54,16 @@ const fei::Vec2 Body::getSpeed()
 	auto vec = _body->GetLinearVelocity();
 	auto ret = Physics::getInstance()->physicsToRender(fei::Vec2(vec.x, vec.y));
 	return ret;
+}
+
+void Body::setSpeed(int tag)
+{
+	_tag = tag;
+}
+
+int Body::getSpeed()
+{
+	return _tag;
 }
 
 b2Body* Body::getB2Body() const

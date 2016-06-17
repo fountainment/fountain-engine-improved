@@ -29,6 +29,9 @@ public:
 	void setSpeed(const Vec2& sp);
 	const Vec2 getSpeed();
 
+	void setTag(int tag);
+	int getTag();
+
 	b2Fixture* createFixture(const Shape* shape);
 	const std::vector<b2Fixture*> createFixture(const std::vector<Shape*>& shapeList);
 	const std::vector<b2Fixture*> createFixture(const Polygon& poly);
@@ -51,6 +54,7 @@ protected:
 
 	b2Body* _body;
 	Type _type;
+	int _tag;
 	bool _destroyed;
 };
 
