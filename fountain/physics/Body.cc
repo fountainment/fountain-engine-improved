@@ -56,12 +56,12 @@ const fei::Vec2 Body::getSpeed()
 	return ret;
 }
 
-void Body::setSpeed(int tag)
+void Body::setTag(int tag)
 {
 	_tag = tag;
 }
 
-int Body::getSpeed()
+int Body::getTag()
 {
 	return _tag;
 }

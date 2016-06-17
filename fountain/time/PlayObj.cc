@@ -49,8 +49,12 @@ double PlayObj::getDeltaTime()
 	return _playClock.getDeltaTime();
 }
 
+fei::Clock* PlayObj::getClock()
+{
+	return &_playClock;
+}
+
 void PlayObj::setMasterClock(fei::Clock* clock)
 {
 	_playClock.setMasterClock(clock);
 }
-

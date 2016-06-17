@@ -22,6 +22,7 @@ public:
 
 	double getDeltaTime();
 
+	Clock* getClock();
 	void setMasterClock(Clock* clock);
 
 private:
