@@ -107,7 +107,7 @@ int FrameAnime::getFrameNum()
 
 int FrameAnime::getCurFrameIndex()
 {
-	return (int)_curFrameIndex;
+	return static_cast<int>(_curFrameIndex);
 }
 
 void FrameAnime::setCurFrameIndex(int cfi)

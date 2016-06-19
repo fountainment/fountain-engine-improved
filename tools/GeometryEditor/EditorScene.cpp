@@ -217,6 +217,22 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 		anime[curEdit].pause();
 	}
 
+	if (key == GLFW_KEY_COMMA && action != GLFW_RELEASE) {
+		int t = anime[curEdit].getCurFrameIndex();
+		if (t > 0) {
+			anime[curEdit].setCurFrameIndex(t - 1);
+			anime[curEdit].pause();
+		}
+	}
+
+	if (key == GLFW_KEY_PERIOD && action != GLFW_RELEASE) {
+		int t = anime[curEdit].getCurFrameIndex();
+		if (t < anime[curEdit].getFrameNum() - 1) {
+			anime[curEdit].setCurFrameIndex(t + 1);
+			anime[curEdit].pause();
+		}
+	}
+
 	if (key == GLFW_KEY_I && action == GLFW_PRESS) {
 		anime[curEdit].insertFrame(anime[curEdit].getCurFrameIndex(), poly[curEdit]);
 	}
