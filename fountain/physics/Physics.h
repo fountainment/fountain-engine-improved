@@ -11,6 +11,36 @@
 
 namespace fei {
 
+struct ContactInfo
+{
+	inline void setFixture(b2Fixture* a, b2Fixture* b)
+	{
+		fixtureA = a;
+		fixtureB = b;
+	}
+
+	b2Fixture* fixtureA;
+	b2Fixture* fixtureB;
+	bool valid;
+	fei::Vec2 normal;
+	fei::Vec2 collidePoint;
+};
+
+class ContactListener : public b2ContactListener
+{
+public:
+	virtual void BeginContact(b2Contact* contact) override;
+	virtual void EndContact(b2Contact* contact) override;
+	virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold) override;
+	virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) override;
+
+private:
+	static void updateContactInfo(b2Contact* contact);
+	static ContactInfo* getContactInfo();
+
+	static ContactInfo contactInfo_;
+};
+
 class Physics : public ModuleBase
 {
 public:

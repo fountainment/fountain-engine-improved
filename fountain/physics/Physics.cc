@@ -8,6 +8,8 @@
 #include "render/ShapeObj.h"
 
 using fei::Physics;
+using fei::ContactInfo;
+using fei::ContactListener;
 
 class DebugDraw : public b2Draw
 {
@@ -97,47 +99,76 @@ private:
 	fei::ShapeObj _shapeObj;
 };
 
-class ContactListener : public b2ContactListener
+
+ContactInfo ContactListener::contactInfo_;
+
+void ContactListener::BeginContact(b2Contact* contact)
 {
-public:
-	virtual void BeginContact(b2Contact* contact) override
-	{
-		auto fixtureA = contact->GetFixtureA();
-		auto fixtureB = contact->GetFixtureB();
-		auto feiBodyA = Physics::getBodyByB2Fixture(fixtureA);
-		auto feiBodyB = Physics::getBodyByB2Fixture(fixtureB);
-		feiBodyA->beginContact(feiBodyB);
-		feiBodyB->beginContact(feiBodyA);
-	}
+	updateContactInfo(contact);
+	auto fixtureA = contact->GetFixtureA();
+	auto fixtureB = contact->GetFixtureB();
+	auto feiBodyA = Physics::getBodyByB2Fixture(fixtureA);
+	auto feiBodyB = Physics::getBodyByB2Fixture(fixtureB);
 
-	virtual void EndContact(b2Contact* contact) override
-	{
-		auto fixtureA = contact->GetFixtureA();
-		auto fixtureB = contact->GetFixtureB();
-		auto feiBodyA = Physics::getBodyByB2Fixture(fixtureA);
-		auto feiBodyB = Physics::getBodyByB2Fixture(fixtureB);
-		feiBodyA->endContact(feiBodyB);
-		feiBodyB->endContact(feiBodyA);
-	}
+	contactInfo_.valid = !fixtureA->IsSensor() && !fixtureB->IsSensor();
+	contactInfo_.setFixture(fixtureA, fixtureB);
+	feiBodyA->beginContact(feiBodyB);
 
-	virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold) override
-	{
-		auto fixtureA = contact->GetFixtureA();
-		auto fixtureB = contact->GetFixtureB();
-		auto feiBodyA = Physics::getBodyByB2Fixture(fixtureA);
-		auto feiBodyB = Physics::getBodyByB2Fixture(fixtureB);
-		bool isContactABEnabled = feiBodyA->frameContact(feiBodyB);
-		bool isContactBAEnabled = feiBodyB->frameContact(feiBodyA);
-		if (!isContactABEnabled || !isContactBAEnabled) {
-			contact->SetEnabled(false);
-		}
-	}
+	contactInfo_.setFixture(fixtureB, fixtureA);
+	contactInfo_.normal *= -1.0f;
+	feiBodyB->beginContact(feiBodyA);
+}
 
-	virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) override
-	{
-		//TODO: implement ContactListener::PostSolve
+void ContactListener::EndContact(b2Contact* contact)
+{
+	auto fixtureA = contact->GetFixtureA();
+	auto fixtureB = contact->GetFixtureB();
+	auto feiBodyA = Physics::getBodyByB2Fixture(fixtureA);
+	auto feiBodyB = Physics::getBodyByB2Fixture(fixtureB);
+	feiBodyA->endContact(feiBodyB);
+	feiBodyB->endContact(feiBodyA);
+}
+
+void ContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
+{
+	updateContactInfo(contact);
+	auto fixtureA = contact->GetFixtureA();
+	auto fixtureB = contact->GetFixtureB();
+	auto feiBodyA = Physics::getBodyByB2Fixture(fixtureA);
+	auto feiBodyB = Physics::getBodyByB2Fixture(fixtureB);
+
+	contactInfo_.valid = true;
+	contactInfo_.setFixture(fixtureA, fixtureB);
+	bool isContactABEnabled = feiBodyA->frameContact(feiBodyB);
+
+	contactInfo_.setFixture(fixtureB, fixtureA);
+	contactInfo_.normal *= -1.0f;
+	bool isContactBAEnabled = feiBodyB->frameContact(feiBodyA);
+	if (!isContactABEnabled || !isContactBAEnabled) {
+		contact->SetEnabled(false);
 	}
-};
+}
+
+void ContactListener::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
+{
+	//TODO: implement ContactListener::PostSolve
+}
+
+void ContactListener::updateContactInfo(b2Contact* contact)
+{
+	b2WorldManifold worldManifold;
+	contact->GetWorldManifold(&worldManifold);
+	b2Vec2 normal = (worldManifold.normal);
+	b2Vec2 point = worldManifold.points[0];
+	contactInfo_.normal = fei::Vec2(normal.x, normal.y);
+	contactInfo_.collidePoint = fei::Vec2(point.x, point.y);
+}
+
+ContactInfo* ContactListener::getContactInfo()
+{
+	return &contactInfo_;
+}
+
 
 Physics* Physics::instance_ = nullptr;
 
