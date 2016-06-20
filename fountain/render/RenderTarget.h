@@ -42,6 +42,8 @@ private:
 	GLsizei _width, _height;
 	bool _tmpBind;
 	Texture _texture;
+
+	static std::vector<GLfloat> computeBuffer_;
 };
 
 } // namespace fei

@@ -8,6 +8,8 @@
 
 using fei::RenderTarget;
 
+std::vector<GLfloat> RenderTarget::computeBuffer_;
+
 RenderTarget::RenderTarget()
 : _renderbuffer(0),
   _framebuffer(0),
@@ -110,7 +112,8 @@ float RenderTarget::getHDRLw()
 	auto size = _texture.getSize();
 	GLuint w = static_cast<GLuint>(size.x);
 	GLuint h = static_cast<GLuint>(size.y);
-	GLfloat* buffer = new GLfloat[w * h * 4];
+	computeBuffer_.reserve(w * h * 4);
+	auto buffer = computeBuffer_.data();
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, _framebuffer);
 	glReadPixels(0, 0, w, h, GL_RGBA, GL_FLOAT, buffer);
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
@@ -120,7 +123,6 @@ float RenderTarget::getHDRLw()
 		sum += std::log(fei::epsf + l);
 	}
 	ret = std::exp(sum / (size.x * size.y));
-	delete [] buffer;
 	return ret;
 }
 
