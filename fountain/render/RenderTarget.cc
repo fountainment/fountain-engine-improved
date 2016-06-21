@@ -108,7 +108,6 @@ bool RenderTarget::isBind()
 
 float RenderTarget::getHDRLw()
 {
-	float ret = 0.0f;
 	auto size = _texture.getSize();
 	GLuint w = static_cast<GLuint>(size.x);
 	GLuint h = static_cast<GLuint>(size.y);
@@ -118,12 +117,15 @@ float RenderTarget::getHDRLw()
 	glReadPixels(0, 0, w, h, GL_RGBA, GL_FLOAT, buffer);
 	glBindFramebuffer(GL_READ_FRAMEBUFFER, 0);
 	float sum = 0.0f;
+	int num = 0;
 	for (int i = 0; i < int(w * h * 4); i += 4) {
+		if (buffer[i] == 0.0f) continue;
 		float l = buffer[i + 3] * 0.2126f + buffer[i + 2] * 0.7152f + buffer[i + 1] * 0.0722f;
 		sum += std::log(fei::epsf + l);
+		num++;
 	}
-	ret = std::exp(sum / (size.x * size.y));
-	return ret;
+	if (num == 0) return 0.0f;
+	return std::exp(sum / num);
 }
 
 void RenderTarget::genBuffers()
