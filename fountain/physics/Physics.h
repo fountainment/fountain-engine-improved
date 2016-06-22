@@ -34,9 +34,10 @@ public:
 	virtual void PreSolve(b2Contact* contact, const b2Manifold* oldManifold) override;
 	virtual void PostSolve(b2Contact* contact, const b2ContactImpulse* impulse) override;
 
+	static ContactInfo* getContactInfo();
+
 private:
 	static void updateContactInfo(b2Contact* contact);
-	static ContactInfo* getContactInfo();
 
 	static ContactInfo contactInfo_;
 };
