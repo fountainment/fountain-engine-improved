@@ -18,6 +18,17 @@ void CollisionFrameAnime::setBody(fei::Body* body)
 	_body = body;
 }
 
+int CollisionFrameAnime::getCurKeyFrameIndex()
+{
+	int ret = -1;
+	for (auto& frame : _frameMap) {
+		if (frame.first <= getCurFrameIndex() && frame.first > ret) {
+			ret = frame.first;
+		}
+	}
+	return ret;
+}
+
 void CollisionFrameAnime::insertFrame(int frameIndex, const fei::Polygon& poly)
 {
 	_frameMap[frameIndex] = poly.box2dDecomposition();
@@ -25,7 +36,7 @@ void CollisionFrameAnime::insertFrame(int frameIndex, const fei::Polygon& poly)
 
 void CollisionFrameAnime::insertFrame(const std::map<int, const fei::Polygon>& frames)
 {
-	for (auto frame : frames) {
+	for (auto& frame : frames) {
 		insertFrame(frame.first, frame.second);
 	}
 }
@@ -49,7 +60,7 @@ void CollisionFrameAnime::update(fei::RenderObj* rObj)
 	if (_oldFrameIndex != cfi) {
 		auto frame = _frameMap.find(cfi);
 		if (cfi < _oldFrameIndex) {
-			destroyFixture();
+			correctFrame();
 		}
 		if (frame != _frameMap.end()) {
 			destroyFixture();
@@ -84,6 +95,29 @@ void CollisionFrameAnime::loadCollisionFile(const std::string& filename)
 	std::fclose(colF);
 }
 
+void CollisionFrameAnime::updateCollisionPolygon(std::function<void(fei::Polygon&)> func)
+{
+	for (auto& frame : _frameMap) {
+		for (auto& polygon : frame.second) {
+			func(polygon);
+		}
+	}
+}
+
+void CollisionFrameAnime::clearFrame()
+{
+	_frameMap.clear();
+}
+
+void CollisionFrameAnime::correctFrame()
+{
+	destroyFixture();
+	int curKeyFrame = getCurKeyFrameIndex();
+	if (curKeyFrame != -1) {
+		createFixture(_frameMap[curKeyFrame]);
+	}
+}
+
 void CollisionFrameAnime::print()
 {
 	for (auto& frame : _frameMap) {
@@ -110,3 +144,4 @@ void CollisionFrameAnime::createFixture(const std::vector<fei::Polygon>& polyVec
 		_fixture.setSensor(true);
 	}
 }
+

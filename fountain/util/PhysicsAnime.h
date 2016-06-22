@@ -19,6 +19,8 @@ public:
 
 	void setBody(fei::Body* body);
 
+	int getCurKeyFrameIndex();
+
 	void insertFrame(int frameIndex, const fei::Polygon& poly);
 	void insertFrame(const std::map<int, const fei::Polygon>& frames);
 	void setFrameMap(const std::map<int, std::vector<fei::Polygon>> frameMap);
@@ -28,6 +30,9 @@ public:
 	virtual void update(fei::RenderObj* rObj) override;
 
 	void loadCollisionFile(const std::string& filename);
+	void updateCollisionPolygon(std::function<void(fei::Polygon&)> func);
+	void clearFrame();
+	void correctFrame();
 
 	void print();
 

@@ -39,6 +39,8 @@ void EditorScene::init()
 	Physics::getInstance()->setDebugDrawCamera(&mainCam);
 	Physics::getInstance()->setRatio(64.0f);
 
+	add(&animeObj);
+
 	for (int i = 0; i < 10; i++) {
 		poly[i] = Polygon::makeRegularPolygon(4, 100.0f, 45.0f);
 		poly[i].setSolid(false);
@@ -70,7 +72,6 @@ void EditorScene::init()
 
 	animeBody = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::STATIC);
 	animeBody->getB2Body()->SetGravityScale(0.0f);
-	add(&animeObj);
 }
 
 void EditorScene::update()
@@ -254,6 +255,43 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 			ipiName = "new.ipi";
 		}
 		anime[curEdit].getFramePool()->dumpIPI(ipiName);
+	}
+	if (key == GLFW_KEY_Z && action == GLFW_PRESS) {
+		poly[curEdit].clearVertex();
+	}
+	auto revertX = [](Polygon& poly) {
+		auto data = poly.getDataVector();
+		auto pos = poly.getPosition();
+		pos.x *= -1.0f;
+		poly.setPosition(pos);
+		for (auto& vec : data) {
+			vec.x *= -1.0f;
+		}
+		poly.setDataVector(data);
+	};
+	auto revertY = [](Polygon& poly) {
+		auto data = poly.getDataVector();
+		auto pos = poly.getPosition();
+		pos.y *= -1.0f;
+		poly.setPosition(pos);
+		for (auto& vec : data) {
+			vec.y *= -1.0f;
+		}
+		poly.setDataVector(data);
+	};
+	if (key == GLFW_KEY_X && action == GLFW_PRESS) {
+		anime[curEdit].updateCollisionPolygon(revertX);
+	}
+	if (key == GLFW_KEY_Y && action == GLFW_PRESS) {
+		anime[curEdit].updateCollisionPolygon(revertY);
+	}
+	if (key == GLFW_KEY_J && action == GLFW_PRESS) {
+		if (mods == GLFW_MOD_CONTROL) {
+			anime[curEdit].clearFrame();
+		} else {
+			anime[curEdit].deleteFrame(anime[curEdit].getCurFrameIndex());
+		}
+		anime[curEdit].correctFrame();
 	}
 }
 
