@@ -10,6 +10,7 @@ class NodeBase
 protected:
 	fei::Vec2 _pos;
 	bool _isLoaded;
+	bool _isActive;
 
 public:
 	NodeBase();
@@ -25,6 +26,9 @@ public:
 	void move(const Vec2& v);
 
 	bool isLoaded() const;
+
+	bool isActive() const;
+	void setActive(bool active);
 
 	virtual void init();
 	virtual void destroy();
@@ -43,7 +47,8 @@ public:
 
 inline fei::NodeBase::NodeBase()
 : _pos(fei::Vec2::ZERO),
-  _isLoaded(false)
+  _isLoaded(false),
+  _isActive(true)
 {
 }
 
@@ -87,4 +92,13 @@ inline bool fei::NodeBase::isLoaded() const
 	return _isLoaded;
 }
 
+inline bool fei::NodeBase::isActive() const
+{
+	return _isActive;
+}
+
+inline void fei::NodeBase::setActive(bool active)
+{
+	_isActive = active;
+}
 #endif // _FEI_NODEBASE_H_

@@ -163,6 +163,9 @@ void RenderObj::feiBasicUpdate()
 
 void RenderObj::draw()
 {
+	if (!isActive()) {
+		return;
+	}
 	beforeDraw();
 	if (_useColor) {
 		_color.use();

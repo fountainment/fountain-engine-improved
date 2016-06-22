@@ -44,6 +44,9 @@ void NodeBase::feiReinit()
 
 void NodeBase::feiUpdate()
 {
+	if (!isActive()) {
+		return;
+	}
 	beforeUpdate();
 	feiBasicUpdate();
 	update();
