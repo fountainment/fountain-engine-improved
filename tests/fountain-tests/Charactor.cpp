@@ -107,6 +107,8 @@ void Charactor::update()
 	setAnime(curAnime);
 	if (curAnime->isStop()) {
 		inputSignal("stopAnime");
+		setAnime(curAnime);
+		curAnime->updateFrameContent(this);
 	}
 }
 
