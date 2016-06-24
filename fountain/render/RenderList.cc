@@ -73,6 +73,11 @@ void RenderList::drawIt()
 
 void RenderList::add(fei::RenderObj* rObj)
 {
+	auto parent = rObj->getParent();
+	if (parent) {
+		static_cast<RenderList*>(parent)->del(rObj);
+	}
+	rObj->setParent(this);
 	if (_isLoaded) {
 		rObj->feiInit();
 	}
@@ -81,6 +86,7 @@ void RenderList::add(fei::RenderObj* rObj)
 
 void RenderList::del(fei::RenderObj* rObj)
 {
+	rObj->setParent(nullptr);
 	_objList.remove(rObj);
 }
 

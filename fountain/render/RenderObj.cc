@@ -1,4 +1,5 @@
 #include "render/RenderObj.h"
+#include "render/RenderList.h"
 
 #include <glad/glad.h>
 
@@ -16,6 +17,7 @@ RenderObj::RenderObj()
   _anchor(fei::Vec2::ZERO),
   _color(fei::Color::White),
   _shaderProg(nullptr),
+  _parent(nullptr),
   _substitute(nullptr),
   _anime(nullptr)
 {
@@ -28,6 +30,16 @@ RenderObj::~RenderObj()
 void RenderObj::setShader(fei::ShaderProgram* sp)
 {
 	_shaderProg = sp;
+}
+
+fei::RenderList* RenderObj::getParent()
+{
+	return _parent;
+}
+
+void RenderObj::setParent(fei::RenderList* parent)
+{
+	_parent = parent;
 }
 
 void RenderObj::setSubstitute(RenderObj* sub)

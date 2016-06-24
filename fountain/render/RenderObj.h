@@ -8,10 +8,13 @@
 namespace fei {
 
 class Anime;
+class RenderList;
 
 class RenderObj : public fei::NodeBase
 {
 public:
+	friend class RenderList;
+
 	RenderObj();
 	virtual ~RenderObj();
 
@@ -27,6 +30,8 @@ public:
 	virtual void drawIt();
 
 	void setShader(ShaderProgram* sp);
+
+	RenderList* getParent();
 
 	void setSubstitute(RenderObj* sub);
 
@@ -62,7 +67,9 @@ public:
 	void setColorAlpha(float alpha);
 	const Color getColor() const;
 
-protected:
+private:
+	void setParent(RenderList* parent);
+
 	bool _hasAlpha;
 	bool _isVisible;
 	bool _useColor;
@@ -72,7 +79,9 @@ protected:
 	float _zPos;
 	Vec2 _anchor;
 	Color _color;
+
 	ShaderProgram* _shaderProg;
+	RenderList* _parent;
 	RenderObj* _substitute;
 	Anime* _anime;
 };
