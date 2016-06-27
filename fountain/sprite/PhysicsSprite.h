@@ -11,6 +11,10 @@ class PhysicsSprite : public Sprite
 {
 public:
 	PhysicsSprite();
+	virtual ~PhysicsSprite();
+
+	void initBody(Body::Type type);
+	void destroyBody();
 
 	Body* getBody();
 
