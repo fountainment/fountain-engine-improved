@@ -444,7 +444,7 @@ const Polygon Polygon::makeRegularPolygon(int edgeNum, float radius, float offse
 {
 	Polygon polygon;
 	for (int i = 0; i < edgeNum; i++) {
-		float angle = static_cast<float>(2.0 * fei::pi / edgeNum * i + fei::D2R(offset));
+		float angle = static_cast<float>(2.0 * fei::pi / edgeNum * i + offset);
 		polygon.pushVertex(fei::Vec2(std::cos(angle), std::sin(angle)) * radius);
 	}
 	return polygon;

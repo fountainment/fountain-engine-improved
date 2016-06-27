@@ -124,11 +124,10 @@ inline void fei::Vec2::zoom(const Vec2& v)
 	y *= v.y;
 }
 
-inline void fei::Vec2::rotate(float degree)
+inline void fei::Vec2::rotate(float angle)
 {
-	double rad = fei::D2R(degree);
-	double s = std::sin(rad);
-	double c = std::cos(rad);
+	double s = std::sin(angle);
+	double c = std::cos(angle);
 	set((float)(x * c - y * s), (float)(x * s + y * c));
 }
 
@@ -174,10 +173,10 @@ inline const fei::Vec2 fei::Vec2::reciprocal() const
 	return fei::Vec2(1.0f / x, 1.0f / y);
 }
 
-inline const fei::Vec2 fei::Vec2::rotated(float degree) const
+inline const fei::Vec2 fei::Vec2::rotated(float angle) const
 {
 	auto vec = *this;
-	vec.rotate(degree);
+	vec.rotate(angle);
 	return vec;
 }
 
