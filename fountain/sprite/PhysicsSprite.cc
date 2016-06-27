@@ -14,7 +14,7 @@ PhysicsSprite::~PhysicsSprite()
 	destroyBody();
 }
 
-void PhysicsSprite::initBody(Body::Type type)
+void PhysicsSprite::initBody(fei::Body::Type type)
 {
 	_body = fei::Physics::getInstance()->createBody(getPosition(), type);
 }

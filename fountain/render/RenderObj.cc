@@ -155,7 +155,7 @@ void RenderObj::matrixTransformBegin()
 {
 	glTranslatef(getPosition().x, getPosition().y, _zPos);
 	if (_angle != 0.0f) {
-		glRotatef(fei::R2D(_angle), 0.0f, 0.0f, 1.0f);
+		glRotatef(fei::R2Df(_angle), 0.0f, 0.0f, 1.0f);
 	}
 	glPushMatrix();
 	if (_scale != 1.0f) {
