@@ -42,7 +42,7 @@ void EditorScene::init()
 	add(&animeObj);
 
 	for (int i = 0; i < 10; i++) {
-		poly[i] = Polygon::makeRegularPolygon(4, 100.0f, 45.0f);
+		poly[i] = Polygon::makeRegularPolygon(4, 100.0f, fei::pif / 4.0f);
 		poly[i].setSolid(false);
 	}
 
