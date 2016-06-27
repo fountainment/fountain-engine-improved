@@ -269,6 +269,26 @@ void Physics::wakeUpAllBodies()
 	}
 }
 
+fei::Body* fei::Physics::createBody(const fei::Vec2& pos, fei::Body::Type type)
+{
+	b2BodyDef bodyDef;
+	auto physicsPos = renderToPhysics(pos);
+	bodyDef.position.Set(physicsPos.x, physicsPos.y);
+	switch(type) {
+	case fei::Body::Type::STATIC:
+		bodyDef.type = b2_staticBody;
+		break;
+	case fei::Body::Type::DYNAMIC:
+		bodyDef.type = b2_dynamicBody;
+		break;
+	case fei::Body::Type::KINEMATIC:
+		bodyDef.type = b2_kinematicBody;
+		break;
+	}
+	auto b2bd = _world->CreateBody(&bodyDef);
+	return new Body(b2bd, type);
+}
+
 void Physics::destroyBody(fei::Body* body)
 {
 	if (body->_destroyed) {

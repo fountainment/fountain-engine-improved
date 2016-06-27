@@ -64,8 +64,7 @@ public:
 
 	void wakeUpAllBodies();
 
-	template<class T = Body>
-	T* createBody(const Vec2& pos, Body::Type type = Body::Type::DYNAMIC);
+	Body* createBody(const Vec2& pos, Body::Type type = Body::Type::DYNAMIC);
 	void destroyBody(Body* body);
 
 	void setDoDebugDraw(bool doDD);
@@ -123,28 +122,6 @@ inline float fei::Physics::physicsToRender(float f)
 inline fei::Body* fei::Physics::getBodyByB2Fixture(const b2Fixture* fixture)
 {
 	return static_cast<fei::Body*>(fixture->GetBody()->GetUserData());
-}
-
-template<class T>
-T* fei::Physics::createBody(const fei::Vec2& pos, fei::Body::Type type)
-{
-	b2BodyDef bodyDef;
-	auto physicsPos = renderToPhysics(pos);
-	bodyDef.position.Set(physicsPos.x, physicsPos.y);
-	switch(type) {
-	case fei::Body::Type::STATIC:
-		bodyDef.type = b2_staticBody;
-		break;
-	case fei::Body::Type::DYNAMIC:
-		bodyDef.type = b2_dynamicBody;
-		break;
-	case fei::Body::Type::KINEMATIC:
-		bodyDef.type = b2_kinematicBody;
-		break;
-	}
-	auto b2bd = _world->CreateBody(&bodyDef);
-	auto body = new T(b2bd, type);
-	return body;
 }
 
 #endif // _FEI_PHYSICS_H_
