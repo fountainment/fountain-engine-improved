@@ -42,6 +42,13 @@ void RenderObj::setParent(fei::RenderList* parent)
 	_parent = parent;
 }
 
+void RenderObj::delFromParent()
+{
+	if (_parent) {
+		_parent->del(this);
+	}
+}
+
 void RenderObj::setSubstitute(RenderObj* sub)
 {
 	_substitute = sub;
@@ -148,7 +155,7 @@ void RenderObj::matrixTransformBegin()
 {
 	glTranslatef(getPosition().x, getPosition().y, _zPos);
 	if (_angle != 0.0f) {
-		glRotatef(_angle, 0.0f, 0.0f, 1.0f);
+		glRotatef(fei::R2D(_angle), 0.0f, 0.0f, 1.0f);
 	}
 	glPushMatrix();
 	if (_scale != 1.0f) {
@@ -166,11 +173,16 @@ void RenderObj::matrixTransformEnd()
 	glPopMatrix();
 }
 
-void RenderObj::feiBasicUpdate()
+void RenderObj::animeUpdate()
 {
 	if (_anime) {
 		_anime->feiObjectUpdate(this);
 	}
+}
+
+void RenderObj::feiBasicUpdate()
+{
+	animeUpdate();
 }
 
 void RenderObj::draw()

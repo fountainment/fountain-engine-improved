@@ -64,6 +64,9 @@
 #include "ui/Label.h"
 #include "ui/Button.h"
 
+#include "sprite/Sprite.h"
+#include "sprite/PhysicsSprite.h"
+
 #ifdef _MSC_VER
 	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")
 	#ifdef NDEBUG

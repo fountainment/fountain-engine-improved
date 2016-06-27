@@ -22,6 +22,7 @@ public:
 	void anchorTransform();
 	void matrixTransformEnd();
 
+	void animeUpdate();
 	virtual void feiBasicUpdate() override;
 
 	void draw();
@@ -32,6 +33,7 @@ public:
 	void setShader(ShaderProgram* sp);
 
 	RenderList* getParent();
+	void delFromParent();
 
 	void setSubstitute(RenderObj* sub);
 

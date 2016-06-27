@@ -21,10 +21,6 @@ Body::Body(b2Body* b2bd, Type tp)
 	_body->SetUserData(this);
 }
 
-Body::~Body()
-{
-}
-
 void Body::setBody(b2Body* b2bd)
 {
 	_body = b2bd;
@@ -127,13 +123,38 @@ void Body::destroyFixture(const std::vector<b2Fixture*>& fixtures)
 
 void Body::beginContact(Body* otherBody)
 {
+	if (_beginContactCallback) {
+		_beginContactCallback(otherBody);
+	}
 }
 
 bool Body::frameContact(Body* otherBody)
 {
-	return true;
+	bool ret = true;
+	if (_frameContactCallback) {
+		ret = _frameContactCallback(otherBody);
+	}
+	return ret;
 }
 
 void Body::endContact(Body* otherBody)
 {
+	if (_endContactCallback) {
+		_endContactCallback(otherBody);
+	}
+}
+
+void Body::setBeginContactCallback(std::function<void(Body*)> callbackFunc)
+{
+	_beginContactCallback = callbackFunc;
+}
+
+void Body::setFrameContactCallback(std::function<bool(Body*)> callbackFunc)
+{
+	_frameContactCallback = callbackFunc;
+}
+
+void Body::setEndContactCallback(std::function<void(Body*)> callbackFunc)
+{
+	_endContactCallback = callbackFunc;
 }
