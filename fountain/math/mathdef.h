@@ -7,11 +7,15 @@ namespace fei {
 
 extern const double eps;
 extern const float epsf;
+
 extern const double pi;
 extern const float pif;
 
 extern const double d2r;
+extern const float d2rf;
+
 extern const double r2d;
+extern const float r2df;
 
 inline double D2R(double degree)
 {
@@ -21,6 +25,16 @@ inline double D2R(double degree)
 inline double R2D(double rad)
 {
 	return rad * r2d;
+}
+
+inline float D2Rf(float degree)
+{
+	return degree * d2rf;
+}
+
+inline float R2Df(float rad)
+{
+	return rad * r2df;
 }
 
 } // namespace fei
