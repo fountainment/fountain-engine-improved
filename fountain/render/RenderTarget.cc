@@ -67,6 +67,11 @@ void RenderTarget::setSize(GLsizei width, GLsizei height, fei::Texture::Format f
 	}
 }
 
+fei::Vec2 RenderTarget::getSize()
+{
+	return getTexture()->getSize();
+}
+
 void RenderTarget::bindColorAttachment(fei::Texture* texture, int attachIndex)
 {
 	GLuint texId = 0;
@@ -126,6 +131,13 @@ float RenderTarget::getHDRLw()
 	}
 	if (num == 0) return 0.0f;
 	return std::exp(sum / num);
+}
+
+void RenderTarget::fillWithTexture(fei::Texture* texture)
+{
+	tmpBind();
+	texture->fillUp();
+	tmpUnbind();
 }
 
 void RenderTarget::genBuffers()

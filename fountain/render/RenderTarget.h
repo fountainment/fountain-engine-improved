@@ -22,6 +22,8 @@ public:
 	void setSize(const Vec2& size, Texture::Format format = Texture::Format::RGBA);
 	void setSize(GLsizei width, GLsizei height, Texture::Format format = Texture::Format::RGBA);
 
+	Vec2 getSize();
+
 	void bindColorAttachment(Texture* texture, int attachIndex);
 	void setDrawBuffers(const std::vector<GLenum>& buffers);
 
@@ -31,6 +33,8 @@ public:
 	bool isBind();
 
 	float getHDRLw();
+
+	void fillWithTexture(Texture* texture);
 
 private:
 	void genBuffers();

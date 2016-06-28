@@ -64,6 +64,18 @@ void Image::drawIt()
 	fei::Render::getInstance()->disableTexture();
 }
 
+void Image::fillUp()
+{
+	auto camera = fei::Render::getInstance()->getCurrentCamera();
+	auto viewport = fei::Render::getInstance()->getViewport();
+	auto target = fei::Render::getInstance()->getCurrentRenderTarget();
+	if (target) {
+		fei::Render::getInstance()->setViewport(target->getSize());
+	}
+	drawRect(camera->getCameraRect());
+	fei::Render::getInstance()->setViewport(viewport);
+}
+
 void Image::setSize(const fei::Vec2& s)
 {
 	_size = s;

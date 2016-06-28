@@ -178,6 +178,12 @@ void Texture::drawIt()
 	fei::Render::getInstance()->disableTexture();
 }
 
+void Texture::fillUp()
+{
+	auto img = getImage();
+	img.fillUp();
+}
+
 const fei::Image Texture::getImage(const fei::Rect& rect) const
 {
 	fei::Image result(_id, _size, rect);

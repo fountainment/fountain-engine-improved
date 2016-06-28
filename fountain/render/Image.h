@@ -23,6 +23,8 @@ public:
 
 	void drawIt() override;
 
+	void fillUp();
+
 	const Vec2 getSize() const;
 	const GLfloat* getTextureCoord() const;
 

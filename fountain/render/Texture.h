@@ -54,6 +54,8 @@ public:
 
 	void drawIt() override;
 
+	void fillUp();
+
 private:
 	void setId(GLuint _id);
 	void setSize(const Vec2& s);
