@@ -90,14 +90,14 @@ const fei::Vec2 Camera::getCameraSize()
 
 void Camera::setCameraRect(const fei::Rect& r)
 {
-	setCameraSize(r.getSize());
+	setCameraSize(r.getSize() * getCameraScale());
 	setPosition(r.getCenter());
 }
 
 const fei::Rect Camera::getCameraRect()
 {
 	fei::Rect ret;
-	ret.setSize(getCameraSize());
+	ret.setSize(getCameraSize() / getCameraScale());
 	ret.setCenter(getPosition());
 	return ret;
 }

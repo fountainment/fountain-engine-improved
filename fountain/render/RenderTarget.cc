@@ -124,9 +124,9 @@ float RenderTarget::getHDRLw()
 	float sum = 0.0f;
 	int num = 0;
 	for (int i = 0; i < int(w * h * 4); i += 4) {
-		if (buffer[i] == 0.0f) continue;
-		float l = buffer[i + 3] * 0.2126f + buffer[i + 2] * 0.7152f + buffer[i + 1] * 0.0722f;
-		sum += std::log(fei::epsf + l);
+		if (buffer[i + 3] == 0.0f) continue;
+		float luminance = fei::MAX(buffer[i], buffer[i + 1], buffer[i + 2]);
+		sum += std::log(fei::epsf + luminance);
 		num++;
 	}
 	if (num == 0) return 0.0f;
