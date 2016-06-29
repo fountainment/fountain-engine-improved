@@ -36,7 +36,7 @@ public:
 	void sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*) = RenderListZCmp);
 
 private:
-	std::list<RenderObj*> _objList;
+	std::vector<RenderObj*> _objList;
 	std::queue<RenderObj*> _garbageQueue;
 };
 

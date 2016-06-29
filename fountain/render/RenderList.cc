@@ -87,7 +87,7 @@ void RenderList::add(fei::RenderObj* rObj)
 void RenderList::del(fei::RenderObj* rObj)
 {
 	rObj->setParent(nullptr);
-	_objList.remove(rObj);
+	_objList.erase(std::find(_objList.begin(), _objList.end(), rObj));
 }
 
 void RenderList::clear()
@@ -123,7 +123,7 @@ void RenderList::garbageRecycle()
 
 void RenderList::sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*))
 {
-	_objList.sort(cmp);
+	std::sort(_objList.begin(), _objList.end(), cmp);
 }
 
 bool fei::RenderListZCmp(fei::RenderObj* a, fei::RenderObj* b)
