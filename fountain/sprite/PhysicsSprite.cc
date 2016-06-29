@@ -37,6 +37,6 @@ void PhysicsSprite::physicsSpriteUpdate()
 
 void PhysicsSprite::feiBasicUpdate()
 {
-	animeUpdate();
+	Sprite::feiBasicUpdate();
 	physicsSpriteUpdate();
 }

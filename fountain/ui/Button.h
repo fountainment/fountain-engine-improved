@@ -17,8 +17,8 @@ class Button : public RenderObj
 public:
 	Button();
 
-	void drawIt() override;
-	void feiBasicUpdate() override;
+	virtual void drawIt() override;
+	virtual void feiBasicUpdate() override;
 
 	void setLabel(const Label& label);
 	fei::Label* getLabel();

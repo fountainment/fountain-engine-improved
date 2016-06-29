@@ -1,8 +1,6 @@
 #ifndef _FEI_WINDOW_H_
 #define _FEI_WINDOW_H_
 
-//TODO: save window's position
-
 #include <GLFW/glfw3.h>
 
 #include "base/basedef.h"

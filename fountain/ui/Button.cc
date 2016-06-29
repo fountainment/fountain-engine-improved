@@ -34,6 +34,7 @@ void Button::drawIt()
 
 void Button::feiBasicUpdate()
 {
+	fei::RenderObj::feiBasicUpdate();
 	if (_drawCamera) {
 		fei::Vec2 cPos = fei::Interface::getInstance()->getRHCursorPos();
 		cPos = _drawCamera->screenToWorld(cPos);
@@ -73,7 +74,6 @@ void Button::feiBasicUpdate()
 			}
 		}
 	}
-	update();
 }
 
 void Button::setLabel(const fei::Label& label)
