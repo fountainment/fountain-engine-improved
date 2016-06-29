@@ -37,6 +37,18 @@ inline float R2Df(float rad)
 	return rad * r2df;
 }
 
+template <class T>
+inline T MAX(T a, T b)
+{
+	return a>b?a:b;
+}
+
+template <class T>
+inline T MAX(T a, T b, T c)
+{
+	return MAX(MAX(a, b), c);
+}
+
 } // namespace fei
 
 #endif // _FEI_MATHDEF_H_
