@@ -8,10 +8,11 @@ C Current
 Function:
 	O Render to Texture
 		! RenderBuffer create
+	O Physics Collision Logic
 	C FSM test
 	C InputBox Class
 	C UI Widget border
-	! Physics Collision Logic
+	C Component logic
 	! File Utility Class
 	* Resource Manager
 	* VBO
@@ -41,9 +42,9 @@ External:
 		* Engine Manual (doxygen?)
 
 	Study:
-		C Physically Based Rendering
+		F Physically Based Rendering
 		C C++11 std::thread
+		C LiquidFun Particle System
 		! Valkan API
-		* LiquidFun Particle System
 		* Unreal Source
 
