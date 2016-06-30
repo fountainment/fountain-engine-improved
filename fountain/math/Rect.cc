@@ -33,67 +33,15 @@ Rect::Rect(const fei::Vec2& ps, const fei::Vec2& sz)
 
 const fei::Vec2 Rect::getCenter() const
 {
-	return getPosition() + getSize() / 2.0f;
+	return getPosition() + getSize() * 0.5f;
 }
 
 void Rect::setCenter(const fei::Vec2& p)
 {
-	setPosition(p - getSize() / 2.0f);
+	setPosition(p - getSize() * 0.5f);
 }
 
-float Rect::getLeft() const
-{
-	return getPosition().x;
-}
-
-float Rect::getRight() const
-{
-	return getPosition().x + getSize().x;
-}
-
-float Rect::getTop() const
-{
-	return getPosition().y + getSize().y;
-}
-
-float Rect::getBottom() const
-{
-	return getPosition().y;
-}
-
-fei::Segment Rect::getLeftSegment() const
-{
-	fei::Segment ret;
-	ret.a = Vec2(getLeft(), getBottom());
-	ret.b = Vec2(getLeft(), getTop());
-	return ret;
-}
-
-fei::Segment Rect::getRightSegment() const
-{
-	fei::Segment ret;
-	ret.a = Vec2(getRight(), getBottom());
-	ret.b = Vec2(getRight(), getTop());
-	return ret;
-}
-
-fei::Segment Rect::getTopSegment() const
-{
-	fei::Segment ret;
-	ret.a = Vec2(getLeft(), getTop());
-	ret.b = Vec2(getRight(), getTop());
-	return ret;
-}
-
-fei::Segment Rect::getBottomSegment() const
-{
-	fei::Segment ret;
-	ret.a = Vec2(getLeft(), getBottom());
-	ret.b = Vec2(getRight(), getBottom());
-	return ret;
-}
-
-std::vector<fei::Segment> Rect::getAllSegments() const
+const std::vector<fei::Segment> Rect::getAllSegments() const
 {
 	return {getTopSegment(), getBottomSegment(), \
 		getLeftSegment(), getRightSegment()};
@@ -129,11 +77,11 @@ void Rect::normalize()
 {
 	if (getSize().x < 0) {
 		_pos.x += _size.x;
-		_size.x *= -1.0f;
+		_size.x = -_size.x;
 	}
 	if (getSize().y < 0) {
 		_pos.y += _size.y;
-		_size.y *= -1.0f;
+		_size.y = -_size.y;
 	}
 }
 
