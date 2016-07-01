@@ -180,3 +180,20 @@ void ImagePool::dumpIPI(const std::string& name)
 	}
 	writeIpiFile(name, texSize, infoVec);
 }
+
+const fei::Rect ImagePool::getOuterRect()
+{
+	fei::Rect ret;
+	bool first = true;
+	for (auto image : _imageList) {
+		auto rect = fei::Rect(image.getSize());
+		rect.setCenter(-image.getAnchor());
+		if (first) {
+			ret = rect;
+			first = false;
+		} else {
+			ret.mergeRect(rect);
+		}
+	}
+	return ret;
+}

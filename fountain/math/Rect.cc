@@ -1,5 +1,7 @@
 #include "math/Rect.h"
 
+#include "math/mathdef.h"
+
 using fei::Rect;
 
 Rect::Rect()
@@ -45,6 +47,15 @@ const std::vector<fei::Segment> Rect::getAllSegments() const
 {
 	return {getTopSegment(), getBottomSegment(), \
 		getLeftSegment(), getRightSegment()};
+}
+
+void Rect::mergeRect(const Rect& rect)
+{
+	float left = fei::MIN(getLeft(), rect.getLeft());
+	float right = fei::MAX(getRight(), rect.getRight());
+	float bottom = fei::MIN(getBottom(), rect.getBottom());
+	float top = fei::MAX(getTop(), rect.getTop());
+	*this = Rect(left, bottom, right - left, top - bottom);
 }
 
 void Rect::zoom(float scale)

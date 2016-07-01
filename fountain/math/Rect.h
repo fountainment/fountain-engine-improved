@@ -53,6 +53,8 @@ public:
 	const Segment getBottomSegment() const;
 	const std::vector<Segment> getAllSegments() const;
 
+	void mergeRect(const Rect& rect);
+
 	void zoom(float scale);
 	void zoom(const Vec2& v);
 	const Rect zoomed(float scale) const;

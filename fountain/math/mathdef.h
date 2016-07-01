@@ -49,6 +49,18 @@ inline T MAX(T a, T b, T c)
 	return MAX(MAX(a, b), c);
 }
 
+template <class T>
+inline T MIN(T a, T b)
+{
+	return a<b?a:b;
+}
+
+template <class T>
+inline T MIN(T a, T b, T c)
+{
+	return MIN(MIN(a, b), c);
+}
+
 } // namespace fei
 
 #endif // _FEI_MATHDEF_H_

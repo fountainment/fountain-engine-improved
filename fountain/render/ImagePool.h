@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 
 #include "base/basedef.h"
+#include "math/Rect.h"
 #include "render/Image.h"
 #include "render/Texture.h"
 
@@ -28,6 +29,8 @@ public:
 
 	void roundAnchor();
 	void dumpIPI(const std::string& name);
+
+	const Rect getOuterRect();
 
 private:
 	int _imageNum;
