@@ -92,6 +92,9 @@ void RenderList::del(fei::RenderObj* rObj)
 
 void RenderList::clear()
 {
+	for (auto renderObj : _objList) {
+		renderObj->setParent(nullptr);
+	}
 	_objList.clear();
 }
 
