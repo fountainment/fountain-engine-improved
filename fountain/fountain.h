@@ -66,6 +66,7 @@
 
 #include "sprite/Sprite.h"
 #include "sprite/PhysicsSprite.h"
+#include "sprite/Component.h"
 
 #ifdef _MSC_VER
 	#pragma comment(linker, "/NODEFAULTLIB:LIBCMT.lib")

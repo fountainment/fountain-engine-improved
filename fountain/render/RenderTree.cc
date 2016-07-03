@@ -61,6 +61,7 @@ void RenderTree::feiDestroy()
 
 void RenderTree::feiBasicUpdate()
 {
+	fei::RenderObj::feiBasicUpdate();
 	treeUpdate();
 }
 

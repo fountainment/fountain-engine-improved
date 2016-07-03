@@ -63,6 +63,7 @@ void RenderList::feiDestroy()
 
 void RenderList::feiBasicUpdate()
 {
+	fei::RenderObj::feiBasicUpdate();
 	listUpdate();
 }
 

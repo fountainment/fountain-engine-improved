@@ -9,10 +9,11 @@ Function:
 	O Render to Texture
 		! RenderBuffer create
 	O Physics Collision Logic
+	O Component Logic
+		! Message System
 	C FSM test
 	C InputBox Class
 	C UI Widget border
-	C Component logic
 	! File Utility Class
 	* Resource Manager
 	* VBO
