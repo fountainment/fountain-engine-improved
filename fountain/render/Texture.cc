@@ -178,10 +178,23 @@ void Texture::drawIt()
 	fei::Render::getInstance()->disableTexture();
 }
 
+void Texture::drawRect(const fei::Rect& rect)
+{
+	fei::Render::getInstance()->bindTexture(_id);
+        fei::Render::drawTexRect(rect);
+	fei::Render::getInstance()->disableTexture();
+}
+
 void Texture::fillUp()
 {
-	auto img = getImage();
-	img.fillUp();
+	auto camera = fei::Render::getInstance()->getCurrentCamera();
+	auto viewport = fei::Render::getInstance()->getViewport();
+	auto target = fei::Render::getInstance()->getCurrentRenderTarget();
+	if (target) {
+		fei::Render::getInstance()->setViewport(target->getSize());
+	}
+	drawRect(camera->getCameraRect());
+	fei::Render::getInstance()->setViewport(viewport);
 }
 
 const fei::Image Texture::getImage(const fei::Rect& rect) const

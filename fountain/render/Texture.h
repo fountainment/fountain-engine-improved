@@ -53,6 +53,7 @@ public:
 	GLuint getId() const;
 
 	void drawIt() override;
+	void drawRect(const Rect& rect);
 
 	void fillUp();
 
