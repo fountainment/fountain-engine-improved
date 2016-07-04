@@ -401,6 +401,8 @@ bool FSMEditorScene::processCmd(const std::string& cmd)
 			}
 			_fsm.dump(filename);
 			dumpPosition(filename + ".pos");
+			dumpSignal(filename + ".sig");
+			dumpState(filename + ".sta");
 			break;
 		case 'e':
 			if (!_fsm.load(filename)) {
@@ -425,6 +427,26 @@ void FSMEditorScene::dumpPosition(const std::string& filename)
 		auto name = _fsm.getStateName(statePosition.first);
 		auto pos = statePosition.second;
 		std::fprintf(file, "%s %f %f\n", name.c_str(), pos.x, pos.y);
+	}
+	std::fclose(file);
+}
+
+void FSMEditorScene::dumpSignal(const std::string& filename)
+{
+	auto vec = _fsm.getSignalVector();
+	auto file = std::fopen(filename.c_str(), "wb");
+	for (const auto& signal : vec) {
+		std::fprintf(file, "%s\n", signal.second.c_str());
+	}
+	std::fclose(file);
+}
+
+void FSMEditorScene::dumpState(const std::string& filename)
+{
+	auto vec = _fsm.getStateVector();
+	auto file = std::fopen(filename.c_str(), "wb");
+	for (const auto& state : vec) {
+		std::fprintf(file, "%s\n", state.second.c_str());
 	}
 	std::fclose(file);
 }

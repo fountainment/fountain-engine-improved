@@ -73,6 +73,8 @@ public:
 
 	bool processCmd(const std::string& cmd);
 	void dumpPosition(const std::string& filename);
+	void dumpSignal(const std::string& filename);
+	void dumpState(const std::string& filename);
 	void loadPosition(const std::string& filename);
 
 	void refreshWindow();
