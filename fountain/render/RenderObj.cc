@@ -7,26 +7,6 @@
 
 using fei::RenderObj;
 
-RenderObj::RenderObj()
-: _hasAlpha(false),
-  _isVisible(true),
-  _useColor(true),
-  _angle(0.0f),
-  _scale(1.0f),
-  _zPos(0.0f),
-  _anchor(fei::Vec2::ZERO),
-  _color(fei::Color::White),
-  _shaderProg(nullptr),
-  _parent(nullptr),
-  _substitute(nullptr),
-  _anime(nullptr)
-{
-}
-
-RenderObj::~RenderObj()
-{
-}
-
 void RenderObj::setShader(fei::ShaderProgram* sp)
 {
 	_shaderProg = sp;
