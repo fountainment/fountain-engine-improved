@@ -61,6 +61,14 @@ inline T MIN(T a, T b, T c)
 	return MIN(MIN(a, b), c);
 }
 
+template <class T>
+inline T clamp(T origin, T a, T b)
+{
+	if (origin < a) return a;
+	if (origin > b) return b;
+	return origin;
+}
+
 } // namespace fei
 
 #endif // _FEI_MATHDEF_H_
