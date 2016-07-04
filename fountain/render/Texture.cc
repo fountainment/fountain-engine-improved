@@ -105,6 +105,11 @@ void Texture::load(const std::string& filename)
 	FreeImage_Unload(dib);
 }
 
+void Texture::load(const unsigned char* bits, const fei::Vec2& size, Format dataFormat)
+{
+	load(bits, static_cast<int>(size.x), static_cast<int>(size.y), dataFormat);
+}
+
 void Texture::load(const unsigned char* bits, int w, int h, Format dataFormat)
 {
 	GLenum internalFormat = Format2InternalFormat(dataFormat);
@@ -141,6 +146,11 @@ bool Texture::isLoaded() const
 	return _id && GL_TRUE == glIsTexture(_id);
 }
 
+void Texture::subUpdate(const std::string& filename, const fei::Vec2& offset)
+{
+	subUpdate(filename, static_cast<int>(offset.x), static_cast<int>(offset.y));
+}
+
 void Texture::subUpdate(const std::string& filename, int xoffset, int yoffset)
 {
 	if (!isLoaded()) {
@@ -157,6 +167,11 @@ void Texture::subUpdate(const std::string& filename, int xoffset, int yoffset)
 	Format format = BPP2FIFormat(bpp);
 	subUpdate(bits, w, h, format, xoffset, yoffset);
 	FreeImage_Unload(dib);
+}
+
+void Texture::subUpdate(const unsigned char* bits, const fei::Vec2& size, Format dataFormat, const fei::Vec2& offset)
+{
+	subUpdate(bits, static_cast<int>(size.x), static_cast<int>(size.y), dataFormat, static_cast<int>(offset.x), static_cast<int>(offset.y));
 }
 
 void Texture::subUpdate(const unsigned char* bits, int w, int h, Format dataFormat, int xoffset, int yoffset)
