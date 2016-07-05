@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import sys
+import os, sys
 
 def processName(name):
     ret = name.replace('\'', '_')
@@ -14,17 +14,28 @@ def main():
     name = sys.argv[1]
     sigFileName = name + '.sig'
     staFileName = name + '.sta'
+    aniFileName = name + '.ani'
 
     memberIncFileName = name + 'Member.inc'
     initIncFileName = name + 'Init.inc'
+    sigs = []
+    stas = []
+    anis = []
 
-    f = open(sigFileName, 'r')
-    sigs = f.readlines()
-    f.close()
+    if os.path.exists(sigFileName):
+        f = open(sigFileName, 'r')
+        sigs = f.readlines()
+        f.close()
 
-    f = open(staFileName, 'r')
-    stas = f.readlines()
-    f.close()
+    if os.path.exists(staFileName):
+        f = open(staFileName, 'r')
+        stas = f.readlines()
+        f.close()
+
+    if os.path.exists(aniFileName):
+        f = open(aniFileName, 'r')
+        anis = f.readlines()
+        f.close()
 
     memberInc = []
     initInc = []
@@ -42,6 +53,36 @@ def main():
         if len(sta) != 0:
             memberInc.append('int _%sSta;\n' % stap)
             initInc.append('_%sSta = getStateId(\"%s\");\n' % (stap, sta))
+
+    staName = ''
+    aniIndex = 0
+    for ani in anis:
+        ani = ani.strip().split()
+        lani = len(ani)
+        if lani == 0:
+            continue
+        if lani == 1:
+            staName = processName(ani[0])
+            aniIndex = 0
+        else:
+            aniVarName = staName + 'Anime'
+            mapName = 'stateBaseAnimeMap'
+            if aniIndex != 0:
+                aniVarName = staName + 'EffectAnime'
+                mapName = 'stateEffectAnimeMap'
+            initInc.append('_%s[_%sSta] = &_%s;\n' % (mapName, staName, aniVarName))
+            initInc.append('_%s.loadImageFileAndIPI(\"%s\");\n' % (aniVarName, ani[0]))
+            initInc.append('_%s.setFps(%s);\n' % (aniVarName, ani[1]))
+            loop = 'false'
+            if ani[2] == 't':
+                loop = 'true'
+            initInc.append('_%s.setLoop(%s);\n' % (aniVarName, loop))
+            if lani == 3:
+                memberInc.append('fei::FrameAnime _%s;\n' % aniVarName)
+            if lani == 4:
+                memberInc.append('fut::CollisionFrameAnime _%s;\n' % aniVarName)
+                initInc.append('_%s.loadCollisionFile(\"%s\");\n' % (aniVarName, ani[3]))
+            aniIndex += 1
 
     f = open(memberIncFileName, 'w')
     f.writelines(memberInc)
