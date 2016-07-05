@@ -26,13 +26,12 @@ float Vec2::getAngle() const
 		if (std::abs(y) < fei::eps || y > 0) {
 			return 0.0f;
 		} else {
-			return 180.0f;
+			return fei::pif;
 		}
 	}
 	float ans = std::atan(y / x);
 	if (x >= 0) ans += fei::pif * 1.5f;
 	else ans += fei::pif * 0.5f;
-	ans *= 180.0f / fei::pif;
 	return ans;
 }
 
