@@ -31,13 +31,16 @@ public:
 	virtual void drawIt();
 
 	void setShader(ShaderProgram* sp);
+	ShaderProgram* getShader();
 
 	RenderList* getParent();
 	void delFromParent();
 
 	void setSubstitute(RenderObj* sub);
+	RenderObj* getSubstitute();
 
-	void setAnime(Anime* animePtr);
+	void setAnime(Anime* anime);
+	Anime* getAnime();
 
 	bool hasAlpha() const;
 	void setHasAlpha(bool hasAlpha);

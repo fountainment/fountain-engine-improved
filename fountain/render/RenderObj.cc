@@ -12,6 +12,11 @@ void RenderObj::setShader(fei::ShaderProgram* sp)
 	_shaderProg = sp;
 }
 
+fei::ShaderProgram* RenderObj::getShader()
+{
+	return _shaderProg;
+}
+
 fei::RenderList* RenderObj::getParent()
 {
 	return _parent;
@@ -34,9 +39,19 @@ void RenderObj::setSubstitute(RenderObj* sub)
 	_substitute = sub;
 }
 
-void RenderObj::setAnime(fei::Anime* _animePtr)
+RenderObj* RenderObj::getSubstitute()
 {
-	_anime = _animePtr;
+	return _substitute;
+}
+
+void RenderObj::setAnime(fei::Anime* anime)
+{
+	_anime = anime;
+}
+
+fei::Anime* RenderObj::getAnime()
+{
+	return _anime;
 }
 
 bool RenderObj::hasAlpha() const
