@@ -82,6 +82,7 @@ def main():
             if lani == 4:
                 memberInc.append('fut::CollisionFrameAnime _%s;\n' % aniVarName)
                 initInc.append('_%s.loadCollisionFile(\"%s\");\n' % (aniVarName, ani[3]))
+                initInc.append('_%s.setBody(getBody());\n' % aniVarName)
             aniIndex += 1
 
     f = open(memberIncFileName, 'w')
