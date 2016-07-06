@@ -1,5 +1,11 @@
 #include "time/Time.h"
 
+#include "time/Clock.h"
+
+#include <GLFW/glfw3.h>
+
+using fei::Time;
+
 #if defined(__linux) // Linux
 	#if !defined(_BSD_SOURCE)
 		#define _BSD_SOURCE
@@ -27,12 +33,6 @@
 		timeEndPeriod(1);
 	}
 #endif // Win32 end
-
-#include <GLFW/glfw3.h>
-
-#include "time/Clock.h"
-
-using fei::Time;
 
 Time *Time::instance_ = nullptr;
 
@@ -106,11 +106,6 @@ double Time::getTime()
 	return _curTime;
 }
 
-double Time::getDeltaTime()
-{
-	return _deltaTime;
-}
-
 long long Time::getFrame()
 {
 	return _totalFrame;
@@ -119,11 +114,6 @@ long long Time::getFrame()
 void Time::littleSleep()
 {
 	sysLittleSleep();
-}
-
-double Time::calcCurTime()
-{
-	return glfwGetTime() - _initTime;
 }
 
 double Time::getFps()

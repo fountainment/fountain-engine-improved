@@ -46,23 +46,9 @@ void Clock::setMasterClock(Clock* mClock)
 	}
 }
 
-void Clock::tick()
-{
-	_deltaTime = calculateDeltaTime();
-	if (_isPlay) {
-		_totalTime += _deltaTime;
-		_frameCount++;
-	}
-}
-
 double Clock::getTime()
 {
 	return _totalTime;
-}
-
-double Clock::getDeltaTime()
-{
-	return _deltaTime;
 }
 
 long long Clock::getFrameCount()
@@ -132,20 +118,4 @@ void Clock::switchPlayAndPause()
 	} else {
 		resume();
 	}
-}
-
-double Clock::calculateDeltaTime()
-{
-	double result = 0.0;
-	if (_isPlay) {
-		if (_isMaster) {
-			result = Time::getInstance()->getDeltaTime();
-		} else {
-			result = _masterClock->getDeltaTime();	
-		}
-		if (_timeScale != 1.0) {
-			result *= _timeScale;
-		}
-	}
-	return result;
 }
