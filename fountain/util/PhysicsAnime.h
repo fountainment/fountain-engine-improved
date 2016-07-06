@@ -38,6 +38,9 @@ public:
 
 	void destroyFixture();
 
+protected:
+	virtual void afterStop() override;
+
 private:
 	void createFixture(const std::vector<fei::Polygon>& polyVec);
 

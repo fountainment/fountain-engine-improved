@@ -22,16 +22,19 @@ void PlayObj::setLoop(bool loop)
 void PlayObj::play()
 {
 	_playClock.play();
+	afterPlay();
 }
 
 void PlayObj::pause()
 {
 	_playClock.pause();
+	afterPause();
 }
 
 void PlayObj::stop()
 {
 	_playClock.stop();
+	afterStop();
 }
 
 bool PlayObj::isStop()
@@ -57,4 +60,16 @@ fei::Clock* PlayObj::getClock()
 void PlayObj::setMasterClock(fei::Clock* clock)
 {
 	_playClock.setMasterClock(clock);
+}
+
+void PlayObj::afterPlay()
+{
+}
+
+void PlayObj::afterPause()
+{
+}
+
+void PlayObj::afterStop()
+{
 }

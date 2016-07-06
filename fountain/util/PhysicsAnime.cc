@@ -137,6 +137,12 @@ void CollisionFrameAnime::destroyFixture()
 	_fixture._fixtures.clear();
 }
 
+void CollisionFrameAnime::afterStop()
+{
+	fei::FrameAnime::afterStop();
+	destroyFixture();
+}
+
 void CollisionFrameAnime::createFixture(const std::vector<fei::Polygon>& polyVec)
 {
 	if (_body) {
@@ -144,4 +150,3 @@ void CollisionFrameAnime::createFixture(const std::vector<fei::Polygon>& polyVec
 		_fixture.setSensor(true);
 	}
 }
-

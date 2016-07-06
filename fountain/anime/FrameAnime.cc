@@ -119,3 +119,9 @@ fei::ImagePool* FrameAnime::getFramePool()
 {
 	return &_framePool;
 }
+
+void FrameAnime::afterStop()
+{
+	fei::Anime::afterStop();
+	_curFrameIndex = 0;
+}

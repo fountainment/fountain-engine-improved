@@ -37,6 +37,9 @@ public:
 
 	ImagePool* getFramePool();
 
+protected:
+	virtual void afterStop() override;
+
 private:
 	double _curFrameIndex;
 	float _fps;
