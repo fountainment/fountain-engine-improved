@@ -16,6 +16,7 @@ public:
 
 	void play();
 	void pause();
+	void resume();
 	void stop();
 
 	bool isStop();
@@ -29,6 +30,7 @@ public:
 protected:
 	virtual void afterPlay();
 	virtual void afterPause();
+	virtual void afterResume();
 	virtual void afterStop();
 
 private:

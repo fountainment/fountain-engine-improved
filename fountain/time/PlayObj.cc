@@ -31,6 +31,12 @@ void PlayObj::pause()
 	afterPause();
 }
 
+void PlayObj::resume()
+{
+	_playClock.resume();
+	afterResume();
+}
+
 void PlayObj::stop()
 {
 	_playClock.stop();
@@ -67,6 +73,10 @@ void PlayObj::afterPlay()
 }
 
 void PlayObj::afterPause()
+{
+}
+
+void PlayObj::afterResume()
 {
 }
 
