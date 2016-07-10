@@ -7,6 +7,8 @@
 
 namespace fei {
 
+class Rect;
+
 class Segment : public Shape
 {
 public:
@@ -19,6 +21,10 @@ public:
 	const Vec2 getVector() const;
 	float getLength() const;
 	float getLengthSq() const;
+
+	const Rect getRect() const;
+	const Vec2 getXInterval() const;
+	const Vec2 getYInterval() const;
 
 	void swapAB();
 
@@ -48,6 +54,16 @@ inline float fei::Segment::getLength() const
 inline float fei::Segment::getLengthSq() const
 {
 	return getVector().getLengthSq();
+}
+
+inline const fei::Vec2 fei::Segment::getXInterval() const
+{
+	return a.x < b.x ? fei::Vec2(a.x, b.x) : fei::Vec2(b.x, a.x);
+}
+
+inline const fei::Vec2 fei::Segment::getYInterval() const
+{
+	return a.y < b.y ? fei::Vec2(a.y, b.y) : fei::Vec2(b.y, a.y);
 }
 
 inline bool fei::Segment::rectCollidePoint(const fei::Vec2& p) const

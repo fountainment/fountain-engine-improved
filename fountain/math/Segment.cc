@@ -1,5 +1,7 @@
 #include "math/Segment.h"
 
+#include "math/Rect.h"
+
 using fei::Segment;
 
 Segment::Segment()
@@ -24,6 +26,11 @@ const float* Segment::getDataPtr() const
 int Segment::getDataSize() const
 {
 	return 2;
+}
+
+const fei::Rect Segment::getRect() const
+{
+	return fei::Rect(a, b - a);
 }
 
 void Segment::swapAB()
@@ -75,4 +82,3 @@ bool Segment::collideRay(fei::Vec2& pt, const fei::Vec2& src, const fei::Vec2& d
 		return false;
 	}
 }
-
