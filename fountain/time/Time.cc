@@ -1,18 +1,22 @@
 #include "time/Time.h"
 
-#include "time/Clock.h"
-
-#include <GLFW/glfw3.h>
-
-using fei::Time;
-
 #if defined(__linux) // Linux
 	#if !defined(_BSD_SOURCE)
 		#define _BSD_SOURCE
 	#endif
 	#include <sys/time.h>
 	#include <unistd.h>
+#endif // Linux end
 
+#if defined(_WIN32) // Win32
+	#include <windows.h>
+#endif // Win32 end
+
+#include "time/Clock.h"
+
+#include <GLFW/glfw3.h>
+
+#if defined(__linux) // Linux
 	const double littleSleepTime = 0.000001;
 
 	inline void sysLittleSleep()
@@ -22,8 +26,6 @@ using fei::Time;
 #endif // Linux end
 
 #if defined(_WIN32) // Win32
-	#include <windows.h>
-
 	const double littleSleepTime = 0.001;
 
 	inline void sysLittleSleep()
@@ -33,6 +35,8 @@ using fei::Time;
 		timeEndPeriod(1);
 	}
 #endif // Win32 end
+
+using fei::Time;
 
 Time *Time::instance_ = nullptr;
 
@@ -114,6 +118,11 @@ long long Time::getFrame()
 void Time::littleSleep()
 {
 	sysLittleSleep();
+}
+
+double fei::Time::calcCurTime()
+{
+	return glfwGetTime() - _initTime;
 }
 
 double Time::getFps()

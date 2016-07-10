@@ -4,8 +4,6 @@
 #include "base/basedef.h"
 #include "base/ModuleBase.h"
 
-#include <GLFW/glfw3.h>
-
 namespace fei {
 
 class Clock;
@@ -52,11 +50,6 @@ private:
 inline double fei::Time::getDeltaTime()
 {
 	return _deltaTime;
-}
-
-inline double fei::Time::calcCurTime()
-{
-	return glfwGetTime() - _initTime;
 }
 
 #endif // _FEI_TIME_H_
