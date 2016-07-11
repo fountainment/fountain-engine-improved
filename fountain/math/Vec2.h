@@ -296,4 +296,5 @@ inline bool fei::Vec2::intervalIntersects(fei::Vec2& intersection, const fei::Ve
 	intersection.y = fei::MIN(y, interval.y);
 	return intersection.x <= intersection.y;
 }
+
 #endif // _FEI_VEC2_H_
