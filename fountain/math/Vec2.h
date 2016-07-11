@@ -62,6 +62,9 @@ public:
 
 	const Vec2 getVerticalVec2() const;
 
+	bool intervalContains(float a) const;
+	bool intervalIntersects(Vec2& intersection, const Vec2& interval) const;
+
 	static const Vec2 ZERO;
 	static const Vec2 ONE;
 	static const Vec2 UP;
@@ -282,4 +285,15 @@ inline const fei::Vec2 fei::collideLine(const fei::Vec2& pa, const fei::Vec2& pb
 	return fei::Vec2(x, y);
 }
 
+inline bool fei::Vec2::intervalContains(float a) const
+{
+	return ((a - x) * (a - y)) >= 0.0f;
+}
+
+inline bool fei::Vec2::intervalIntersects(fei::Vec2& intersection, const fei::Vec2& interval) const
+{
+	intersection.x = fei::MAX(x, interval.x);
+	intersection.y = fei::MIN(y, interval.y);
+	return intersection.x <= intersection.y;
+}
 #endif // _FEI_VEC2_H_

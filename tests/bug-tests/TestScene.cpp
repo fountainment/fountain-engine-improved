@@ -4,6 +4,8 @@
 
 using namespace fei;
 
+//TODO: add Debug module, write some macro utilities
+
 void TestScene::init()
 {
 	setCamera(&mainCam);
@@ -115,6 +117,22 @@ void TestScene::testMath()
 	} else {
 		std::printf("No\n");
 	}
+
+	Segment segA(Vec2::ZERO, Vec2(10.0f));
+	Segment segB(Vec2(0.0f, 30.0f), Vec2(20.0f, -1.0f));
+	Segment segC(Vec2(1.0f, 31.0f), Vec2(21.0f, 0.0f));
+	Segment segD(Vec2::ZERO, Vec2::ONE);
+	Segment segE(Vec2(0.0f, 1.0f), Vec2::ONE);
+	Segment segF(Vec2(0.0f, 10.0f), Vec2(1.0f, 10.0f));
+	Segment segG(Vec2(2.0f, 10.0f), Vec2(3.0f, 10.0f));
+
+	std::printf("SegCmp: %d\n", segA.cmpRenderY(segB));
+	std::printf("SegCmp: %d\n", segB.cmpRenderY(segA));
+	std::printf("SegCmp: %d\n", segC.cmpRenderY(segD));
+	std::printf("SegCmp: %d\n", segD.cmpRenderY(segC));
+	std::printf("SegCmp: %d\n", segE.cmpRenderY(segF));
+	std::printf("SegCmp: %d\n", segF.cmpRenderY(segE));
+	std::printf("SegCmp: %d\n", segF.cmpRenderY(segG));
 }
 
 void TestScene::keyCallback(int key, int scancode, int action, int mods)

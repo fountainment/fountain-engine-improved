@@ -82,3 +82,20 @@ bool Segment::collideRay(fei::Vec2& pt, const fei::Vec2& src, const fei::Vec2& d
 		return false;
 	}
 }
+
+int Segment::cmpRenderY(const Segment& seg) const
+{
+	fei::Vec2 tmp;
+	bool yIntersects = getYInterval().intervalIntersects(tmp, seg.getYInterval());
+	bool xIntersects = getXInterval().intervalIntersects(tmp, seg.getXInterval());
+	if (xIntersects && yIntersects) {
+		float x = (tmp.x + tmp.y) * 0.5f;
+		return fei::cmp(getY(x), seg.getY(x));
+	} else {
+		if (xIntersects) {
+			return fei::cmp(a.y, seg.a.y);
+		} else {
+			return 0;
+		}
+	}
+}

@@ -69,6 +69,12 @@ inline T clamp(T origin, T a, T b)
 	return origin;
 }
 
+template <class T>
+inline int cmp(T a, T b) {
+	if (a == b) return 0;
+	return a < b ? -1 : 1;
+}
+
 } // namespace fei
 
 #endif // _FEI_MATHDEF_H_
