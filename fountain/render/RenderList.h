@@ -31,6 +31,7 @@ public:
 	void throwAwayAll();
 
 	const std::vector<RenderObj*> getListVector();
+	void listRearrange(std::vector<int> newIndex);
 
 	void garbageRecycle();
 	void sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*) = RenderListZCmp);

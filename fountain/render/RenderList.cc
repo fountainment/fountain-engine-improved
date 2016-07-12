@@ -113,7 +113,16 @@ void RenderList::throwAwayAll()
 
 const std::vector<fei::RenderObj*> RenderList::getListVector()
 {
-	return std::vector<fei::RenderObj*>(_objList.begin(), _objList.end());
+	return _objList;
+}
+
+void RenderList::listRearrange(std::vector<int> newIndex)
+{
+	auto cp = getListVector();
+	int sz = static_cast<int>(cp.size());
+	for (int i = 0; i < sz; i++) {
+		_objList[i] = cp[newIndex[i]];
+	}
 }
 
 void RenderList::garbageRecycle()
