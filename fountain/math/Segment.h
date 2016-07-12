@@ -35,7 +35,7 @@ public:
 	bool collideRay(Vec2& pt, const Vec2& src, const Vec2& drct) const;
 	int onLeftOrRight(const Vec2& pt) const;
 
-	int getY(float x) const;
+	float getY(float x) const;
 	int cmpRenderY(const Segment& seg) const;
 
 	Vec2 a;
@@ -85,7 +85,7 @@ inline int fei::Segment::onLeftOrRight(const fei::Vec2& pt) const
 	return cp>0.0f?-1:1;
 }
 
-inline int fei::Segment::getY(float x) const
+inline float fei::Segment::getY(float x) const
 {
 	return a.x==b.x ? (a.y+b.y)*0.5f : (x-a.x)*(b.y-a.y)/(b.x-a.x)+a.y;
 }
