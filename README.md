@@ -36,12 +36,12 @@ OpenGL
 
 GLFW
 
-GLEW
+glad
 
 FreeImage
 
 FreeType
 
-Box2D
+LiquidFun
 
 OpenAL
