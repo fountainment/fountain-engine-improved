@@ -361,10 +361,13 @@ b2Shape* Physics::ShapeToB2Shape(const fei::Shape* shape)
 		{
 			auto lShape = new b2ChainShape;
 			auto data = shape->getDataPtr();
-			auto pos = shape->getPosition();
 			b2Vec2 vec[2];
-			vec[0] = b2Vec2(data[0] + pos.x, data[1] + pos.y);
-			vec[1] = b2Vec2(data[2] + pos.x, data[3] + pos.y);
+			float physicsData[4];
+			for (int i = 0; i < 4; i++) {
+				physicsData[i] = Physics::getInstance()->renderToPhysics(data[i]);
+			}
+			vec[0] = b2Vec2(physicsData[0] + pos.x, physicsData[1] + pos.y);
+			vec[1] = b2Vec2(physicsData[2] + pos.x, physicsData[3] + pos.y);
 			lShape->CreateChain(vec, shape->getDataSize());
 			b2shape = lShape;
 		}
