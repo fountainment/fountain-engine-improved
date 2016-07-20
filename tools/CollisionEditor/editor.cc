@@ -19,6 +19,7 @@ void EditorScene::init()
 	setCamera(&_camera);
 
 	_texture.setHasAlpha(true);
+	_uiLayer.setHasAlpha(true);
 	add(&_texture);
 	add(&_editShapeObj);
 	add(&_uiLayer);
@@ -128,6 +129,9 @@ void EditorScene::init()
 		{
 			if (params.size() != 1) {
 				return fut::CommandResult(fut::CommandResult::Type::ERROR, "Param must be image filename!");
+			}
+			if (!fei::isFileExist(params[0])) {
+				return fut::CommandResult(fut::CommandResult::Type::ERROR, "Image file not exist!");
 			}
 			_texture.load(params[0]);
 			return fut::CommandResult::Ok;
@@ -260,6 +264,12 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 {
 	auto window = Application::getEngine()->getWindow();
 	switch (key) {
+	case GLFW_KEY_ESCAPE:
+		if (_commandLabel.isFocus()) {
+			_commandLabel.clearString();
+			_commandLabel.unfocus();
+		}
+		break;
 	case GLFW_KEY_BACKSPACE:
 		if (action == GLFW_PRESS || action == GLFW_REPEAT) {
 			_commandLabel.deleteChar();

@@ -178,3 +178,9 @@ void VimStyleCommandLabel::setString(const std::string& str)
 		Label::setString(*_fontCache, str);
 	}
 }
+
+void VimStyleCommandLabel::clearString()
+{
+	_command = fei::EmptyStr;
+	setString(_command);
+}

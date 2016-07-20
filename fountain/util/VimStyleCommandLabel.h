@@ -68,6 +68,7 @@ public:
 
 	void setFontCache(fei::FontCache* fontCache);
 	void setString(const std::string& str);
+	void clearString();
 
 private:
 	std::string _command;
