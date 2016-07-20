@@ -18,6 +18,7 @@ public:
 	void mul(float f);
 	void div(float f);
 
+	float dot(const fei::Vec3& v) const;
 	const Vec3 cross(const Vec3& v) const;
 
 	const Vec3 operator+(const Vec3& v) const;
@@ -70,6 +71,11 @@ inline void fei::Vec3::mul(float f)
 inline void fei::Vec3::div(float f)
 {
 	mul(1.0f / f);
+}
+
+inline float fei::Vec3::dot(const fei::Vec3& v) const
+{
+	return x * v.x + y * v.y + z * v.z;
 }
 
 inline const fei::Vec3 fei::Vec3::cross(const fei::Vec3& v) const
