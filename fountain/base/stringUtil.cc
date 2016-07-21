@@ -2,6 +2,8 @@
 
 #include "math/Vec2.h"
 
+static char buffer[256];
+
 const std::vector<std::string> fei::strSplit(const std::string& str, char delim)
 {
 	std::vector<std::string> elems;
@@ -38,9 +40,18 @@ const std::vector<fei::Vec2> fei::strVecToVec2Vec(const std::vector<std::string>
 	return ret;
 }
 
+int fei::strFormat(std::string& str, const char* format, ...)
+{
+	va_list args;
+	va_start(args, format);
+	auto ret = std::vsprintf(buffer, format, args);
+	va_end(args);
+	str = std::string(buffer);
+	return ret;
+}
+
 const std::string fei::strFormat(const char* format, ...)
 {
-	static char buffer[256];
 	va_list args;
 	va_start(args, format);
 	std::vsprintf(buffer, format, args);
