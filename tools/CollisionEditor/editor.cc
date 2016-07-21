@@ -154,6 +154,12 @@ void EditorScene::init()
 			editPolygon();
 			return fut::CommandResult::Ok;
 		};
+	auto editSegmentFunc =
+		[this](std::vector<std::string> params)
+		{
+			editSegment();
+			return fut::CommandResult::Ok;
+		};
 	auto saveFunc =
 		[this](std::vector<std::string> params)
 		{
@@ -174,6 +180,7 @@ void EditorScene::init()
 	interpreter->registerCommand({":edit", "rect"}, editRectFunc);
 	interpreter->registerCommand({":edit", "circle"}, editCircleFunc);
 	interpreter->registerCommand({":edit", "polygon"}, editPolygonFunc);
+	interpreter->registerCommand({":edit", "segment"}, editSegmentFunc);
 	interpreter->registerCommand({":w"}, saveFunc);
 	interpreter->registerCommand({":q"}, quitFunc);
 
@@ -206,6 +213,9 @@ void EditorScene::update()
 		_editCircle.setPosition(cursorWPos);
 		break;
 	case EditState::POLYGON:
+		break;
+	case EditState::SEGMENT:
+		_editSegment = fei::Segment(_mouseDownPos, cursorWPos);
 		break;
 	}
 
@@ -247,6 +257,20 @@ void EditorScene::editPolygon()
 	clearEditState();
 	_editState = EditState::POLYGON;
 	_editShapeObj.setShape(&_editPolygon);
+}
+
+void EditorScene::editSegment()
+{
+	clearEditState();
+	_editState = EditState::SEGMENT;
+	_editShapeObj.setShape(&_editSegment);
+}
+
+void EditorScene::editNone()
+{
+	clearEditState();
+	_editState = EditState::NONE;
+	_editShapeObj.setShape(nullptr);
 }
 
 const Vec2 EditorScene::getCursorWorldPos()
@@ -363,8 +387,17 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 						_shapeList.push_back(&_polygonList.back());
 						_shapeBodyMap[&_polygonList.back()] = body; 
 						_editPolygon.clearVertex();
+						break;
 					}
-					break;
+				case EditState::SEGMENT:
+					{
+						auto body = Physics::getInstance()->createBody(Vec2::ZERO, bodyType);
+						body->createFixture(&_editSegment);
+						_segmentList.push_back(_editSegment);
+						_shapeList.push_back(&_segmentList.back());
+						_shapeBodyMap[&_segmentList.back()] = body; 
+						break;
+					}
 				}
 				_mouseDown = false;
 			}
