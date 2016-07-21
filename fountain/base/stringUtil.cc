@@ -37,3 +37,13 @@ const std::vector<fei::Vec2> fei::strVecToVec2Vec(const std::vector<std::string>
 	}
 	return ret;
 }
+
+const std::string fei::strFormat(const char* format, ...)
+{
+	static char buffer[256];
+	va_list args;
+	va_start(args, format);
+	std::vsprintf(buffer, format, args);
+	va_end(args);
+	return std::string(buffer);
+}

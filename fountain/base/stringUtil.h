@@ -14,6 +14,8 @@ double strToFloat(const std::string& str);
 
 const std::vector<fei::Vec2> strVecToVec2Vec(const std::vector<std::string>& strVec);
 
+const std::string strFormat(const char* format, ...);
+
 } // namesapce fei
 
 inline double fei::strToFloat(const std::string& str)

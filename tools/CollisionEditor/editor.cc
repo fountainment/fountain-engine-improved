@@ -168,6 +168,12 @@ void EditorScene::init()
 			}
 			return fut::CommandResult::Ok;
 		};
+	auto showFpsFunc =
+		[](std::vector<std::string> params)
+		{
+			auto str = fei::strFormat("%f", fei::Time::getInstance()->getFps());
+			return fut::CommandResult(fut::CommandResult::Type::OK, str);
+		};
 
 	auto interpreter = _commandLabel.getInterpreter();
 	interpreter->registerCommand({":set", "gravity"}, gravityFunc);
@@ -181,6 +187,7 @@ void EditorScene::init()
 	interpreter->registerCommand({":edit", "circle"}, editCircleFunc);
 	interpreter->registerCommand({":edit", "polygon"}, editPolygonFunc);
 	interpreter->registerCommand({":edit", "segment"}, editSegmentFunc);
+	interpreter->registerCommand({":show", "fps"}, showFpsFunc);
 	interpreter->registerCommand({":w"}, saveFunc);
 	interpreter->registerCommand({":q"}, quitFunc);
 
