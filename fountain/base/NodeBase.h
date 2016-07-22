@@ -1,17 +1,13 @@
 #ifndef _FEI_NODEBASE_H_
 #define _FEI_NODEBASE_H_
 
+#include "base/basedef.h"
 #include "math/Vec2.h"
 
 namespace fei {
 
 class NodeBase
 {
-protected:
-	fei::Vec2 _pos;
-	bool _isLoaded;
-	bool _isActive;
-
 public:
 	NodeBase();
 
@@ -41,6 +37,15 @@ public:
 	virtual void feiUpdate();
 	virtual void feiBasicUpdate();
 	void feiReinit();
+
+	const std::string getName() const;
+	void setName(const std::string& name);
+
+protected:
+	fei::Vec2 _pos;
+	bool _isLoaded;
+	bool _isActive;
+	std::string _name;
 };
 
 } // namespace fei
@@ -48,7 +53,8 @@ public:
 inline fei::NodeBase::NodeBase()
 : _pos(fei::Vec2::ZERO),
   _isLoaded(false),
-  _isActive(true)
+  _isActive(true),
+  _name(fei::EmptyStr)
 {
 }
 
@@ -100,5 +106,15 @@ inline bool fei::NodeBase::isActive() const
 inline void fei::NodeBase::setActive(bool active)
 {
 	_isActive = active;
+}
+
+inline const std::string fei::NodeBase::getName() const
+{
+	return _name;
+}
+
+inline void fei::NodeBase::setName(const std::string& name)
+{
+	_name = name;
 }
 #endif // _FEI_NODEBASE_H_

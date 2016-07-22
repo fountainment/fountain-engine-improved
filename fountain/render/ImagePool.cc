@@ -114,6 +114,7 @@ void ImagePool::loadTextureAndSIP(const fei::Texture& texure, const std::string&
 	for (int i = 0; i < _imageNum; i++) {
 		_nameHash2ImageIndex[result[i]._hash] = i;
 		auto image = texure.getImage(result[i]._rect);
+		image.setName(result[i]._name);
 		image.setAnchor(result[i]._anchor);
 		_imageList.push_back(image);
 	}
@@ -127,6 +128,7 @@ void ImagePool::loadTextureAndIPI(const fei::Texture& texure, const std::string&
 	for (int i = 0; i < _imageNum; i++) {
 		_nameHash2ImageIndex[result[i]._hash] = i;
 		auto image = texure.getImage(result[i]._rect);
+		image.setName(result[i]._name);
 		image.setAnchor(result[i]._anchor);
 		_imageList.push_back(image);
 	}
@@ -176,7 +178,11 @@ void ImagePool::dumpIPI(const std::string& name)
 	for (auto image : _imageList) {
 		auto rect = image.getTexturePixelRect();
 		auto anchor = image.getAnchor();
-		infoVec.push_back(ImageInfo("image", 123, rect, anchor));
+		auto imName = image.getName();
+		if (imName == fei::EmptyStr) {
+			imName = "image";
+		}
+		infoVec.push_back(ImageInfo(imName, fei::bkdrHash(imName), rect, anchor));
 	}
 	writeIpiFile(name, texSize, infoVec);
 }
