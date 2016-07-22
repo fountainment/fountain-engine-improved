@@ -133,7 +133,7 @@ void EditorScene::init()
 			if (!fei::isFileExist(params[0])) {
 				return fut::CommandResult(fut::CommandResult::Type::ERROR, "Image file not exist!");
 			}
-			_texture.load(params[0]);
+			loadImage(params[0].c_str());
 			return fut::CommandResult::Ok;
 		};
 	auto editRectFunc =
@@ -166,6 +166,7 @@ void EditorScene::init()
 			if (params.size() >= 1) {
 				_saveName = params[0];
 			}
+			save();
 			return fut::CommandResult::Ok;
 		};
 	auto showFpsFunc =
@@ -278,6 +279,33 @@ void EditorScene::editNone()
 	clearEditState();
 	_editState = EditState::NONE;
 	_editShapeObj.setShape(nullptr);
+}
+
+void EditorScene::loadFile(const char* filename)
+{
+	//TODO: implement load function
+	loadImage(filename);
+}
+
+void EditorScene::loadImage(const char* filename)
+{
+	_texture.load(filename);
+}
+
+void EditorScene::loadIp(const char* filename)
+{
+	if (_texture.isLoaded()) {
+	} else {
+	}
+}
+
+void EditorScene::loadPos(const char* filename)
+{
+}
+
+void EditorScene::save()
+{
+	//TODO: implement save function
 }
 
 const Vec2 EditorScene::getCursorWorldPos()
@@ -421,5 +449,12 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 				break;
 			}
 		}
+	}
+}
+
+void EditorScene::dropCallback(int count, const char** paths)
+{
+	for (int i = 0; i < count; i++) {
+		loadFile(paths[i]);
 	}
 }
