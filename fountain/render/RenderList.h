@@ -35,10 +35,14 @@ public:
 
 	void garbageRecycle();
 	void sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*) = RenderListZCmp);
+	void topoSort(int (*cmp)(fei::RenderObj*, fei::RenderObj*));
 
 private:
 	std::vector<RenderObj*> _objList;
 	std::queue<RenderObj*> _garbageQueue;
+
+	static std::vector<std::vector<int>> dag_;
+	static std::vector<int> ind_;
 };
 
 } // namespace fei

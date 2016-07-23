@@ -4,6 +4,11 @@
 
 using fei::RenderList;
 
+#define MAX_RENDERLIST_SIZE 1000
+
+std::vector<std::vector<int>> RenderList::dag_(MAX_RENDERLIST_SIZE);
+std::vector<int> RenderList::ind_(MAX_RENDERLIST_SIZE);
+
 RenderList::~RenderList()
 {
 	garbageRecycle();
@@ -137,6 +142,49 @@ void RenderList::garbageRecycle()
 void RenderList::sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*))
 {
 	std::sort(_objList.begin(), _objList.end(), cmp);
+}
+
+void RenderList::topoSort(int (*cmp)(fei::RenderObj*, fei::RenderObj*))
+{
+	int num = _objList.size();
+	for (int i = 0; i < num; i++) {
+		ind_[i] = 0;
+		dag_[i].clear();
+	}
+	for (int i = 0; i < num; i++) {
+		for (int j = i + 1; j < num; j++) {
+			int t = cmp(_objList[i], _objList[j]);
+			if (t == 0) {
+				continue;
+			}
+			if (t > 0) {
+				dag_[j].push_back(i);
+				ind_[i]++;
+			} else {
+				dag_[i].push_back(j);
+				ind_[j]++;
+			}
+		}
+	}
+	std::vector<int> result;
+	std::queue<int> q;
+	for (int i = 0; i < num; i++) {
+		if (ind_[i] == 0) {
+			q.push(i);
+		}
+	}
+	while (!q.empty()) {
+		int t = q.front();
+		result.push_back(t);
+		q.pop();
+		for (const auto& i : dag_[t]) {
+			ind_[i]--;
+			if (ind_[i] == 0) {
+				q.push(i);
+			}
+		}
+	}
+	listRearrange(result);
 }
 
 bool fei::RenderListZCmp(fei::RenderObj* a, fei::RenderObj* b)
