@@ -34,8 +34,8 @@ public:
 	void listRearrange(std::vector<int> newIndex);
 
 	void garbageRecycle();
-	void sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*) = RenderListZCmp);
-	void topoSort(int (*cmp)(fei::RenderObj*, fei::RenderObj*));
+	void sort(std::function<bool(fei::RenderObj*, fei::RenderObj*)> cmp = RenderListZCmp);
+	void topoSort(std::function<int(fei::RenderObj*, fei::RenderObj*)> cmp);
 
 private:
 	std::vector<RenderObj*> _objList;

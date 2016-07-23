@@ -139,12 +139,12 @@ void RenderList::garbageRecycle()
 	}
 }
 
-void RenderList::sort(bool (*cmp)(fei::RenderObj*, fei::RenderObj*))
+void RenderList::sort(std::function<bool(fei::RenderObj*, fei::RenderObj*)> cmp)
 {
 	std::sort(_objList.begin(), _objList.end(), cmp);
 }
 
-void RenderList::topoSort(int (*cmp)(fei::RenderObj*, fei::RenderObj*))
+void RenderList::topoSort(std::function<int(fei::RenderObj*, fei::RenderObj*)> cmp)
 {
 	int num = _objList.size();
 	for (int i = 0; i < num; i++) {
