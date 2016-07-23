@@ -148,8 +148,8 @@ void RenderList::topoSort(int (*cmp)(fei::RenderObj*, fei::RenderObj*))
 {
 	int num = _objList.size();
 	for (int i = 0; i < num; i++) {
-		ind_[i] = 0;
 		dag_[i].clear();
+		ind_[i] = 0;
 	}
 	for (int i = 0; i < num; i++) {
 		for (int j = i + 1; j < num; j++) {
@@ -177,11 +177,16 @@ void RenderList::topoSort(int (*cmp)(fei::RenderObj*, fei::RenderObj*))
 		int t = q.front();
 		result.push_back(t);
 		q.pop();
-		for (const auto& i : dag_[t]) {
+		for (auto i : dag_[t]) {
 			ind_[i]--;
 			if (ind_[i] == 0) {
 				q.push(i);
 			}
+		}
+	}
+	for (int i = 0; i < num; i++) {
+		if (ind_[i] != 0) {
+			result.push_back(i);
 		}
 	}
 	listRearrange(result);
