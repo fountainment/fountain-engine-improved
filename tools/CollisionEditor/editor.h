@@ -44,6 +44,7 @@ public:
 	virtual void scrollCallback(double xoffset, double yoffset) override;
 	virtual void mouseButtonCallback(int button, int action, int mods) override;
 	virtual void dropCallback(int count, const char** paths) override;
+	virtual void framebufferSizeCallback(int width, int height) override;
 
 private:
 	fei::Camera _camera;

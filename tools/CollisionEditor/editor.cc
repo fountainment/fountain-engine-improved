@@ -229,20 +229,24 @@ void EditorScene::update()
 			if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
 				auto ip = _anime.getFramePool();
 				auto num = ip->getImageNum();
+				bool collide = false;
 				for (int i = 0; i < num; i++) {
 					auto image = ip->getImage(i);
 					Rect rect;
 					rect.setSize(image->getSize());
 					rect.setCenter(image->getPosition() - image->getAnchor());
-					bool collide = false;
 					if (rect.collidePoint(cursorWPos)) {
-						_anime.setCurFrameIndex(i);
+						Vec2 t1, t2;
+						if (!collide || \
+							(t1 = ip->getImage(_anime.getCurFrameIndex())->getSize(), t1.x * t1.y) > \
+							(t2 = image->getSize(), t2.x * t2.y)) {
+							_anime.setCurFrameIndex(i);
+						}
 						collide = true;
-						break;
 					}
-					if (!collide) {
-						_anime.setCurFrameIndex(-1);
-					}
+				}
+				if (!collide) {
+					_anime.setCurFrameIndex(-1);
 				}
 			}
 		}
@@ -544,4 +548,9 @@ void EditorScene::dropCallback(int count, const char** paths)
 	for (int i = 0; i < count; i++) {
 		loadFile(paths[i]);
 	}
+}
+
+void EditorScene::framebufferSizeCallback(int width, int height)
+{
+	_needInitUILayout = true;
 }
