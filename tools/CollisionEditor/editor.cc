@@ -4,6 +4,7 @@ using namespace fei;
 
 void EditorScene::init()
 {
+	_saveName = "untitled";
 	_editState = EditState::NONE;
 	_mouseDown = false;
 	_needInitUILayout = false;
@@ -12,6 +13,13 @@ void EditorScene::init()
 
 	_editShapeObj.setColorAlpha(0.5f);
 
+	_anime.getClock()->setTimeScale(0.0f);
+	_anime.setCurFrameIndex(-1);
+	_anime.play();
+	_animeObj.setHasAlpha(true);
+	_animeObj.setColor(Color::Green);
+	_animeObj.setAnime(&_anime);
+
 	Physics::getInstance()->setDoDebugDraw(true);
 	Physics::getInstance()->setDebugDrawCamera(&_camera);
 	Physics::getInstance()->setRatio(64.0f);
@@ -19,8 +27,11 @@ void EditorScene::init()
 	setCamera(&_camera);
 
 	_texture.setHasAlpha(true);
+	_imagePoolLayer.setHasAlpha(true);
 	_uiLayer.setHasAlpha(true);
 	add(&_texture);
+	add(&_imagePoolLayer);
+	add(&_animeObj);
 	add(&_editShapeObj);
 	add(&_uiLayer);
 
@@ -136,6 +147,12 @@ void EditorScene::init()
 			loadImage(params[0].c_str());
 			return fut::CommandResult::Ok;
 		};
+	auto unloadImageFunc =
+		[this](std::vector<std::string> params)
+		{
+			unloadImage();
+			return fut::CommandResult::Ok;
+		};
 	auto editRectFunc =
 		[this](std::vector<std::string> params)
 		{
@@ -184,6 +201,7 @@ void EditorScene::init()
 	interpreter->registerCommand({":new", "circle"}, newCircleFunc);
 	interpreter->registerCommand({":new", "polygon"}, newPolygonFunc);
 	interpreter->registerCommand({":load", "img"}, loadImageFunc);
+	interpreter->registerCommand({":unload", "img"}, unloadImageFunc);
 	interpreter->registerCommand({":edit", "rect"}, editRectFunc);
 	interpreter->registerCommand({":edit", "circle"}, editCircleFunc);
 	interpreter->registerCommand({":edit", "polygon"}, editPolygonFunc);
@@ -207,6 +225,27 @@ void EditorScene::update()
 	_editShapeObj.setVisible(_mouseDown && _editState != EditState::NONE);
 	switch (_editState) {
 	case EditState::NONE:
+		{
+			if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS) {
+				auto ip = _anime.getFramePool();
+				auto num = ip->getImageNum();
+				for (int i = 0; i < num; i++) {
+					auto image = ip->getImage(i);
+					Rect rect;
+					rect.setSize(image->getSize());
+					rect.setCenter(image->getPosition() - image->getAnchor());
+					bool collide = false;
+					if (rect.collidePoint(cursorWPos)) {
+						_anime.setCurFrameIndex(i);
+						collide = true;
+						break;
+					}
+					if (!collide) {
+						_anime.setCurFrameIndex(-1);
+					}
+				}
+			}
+		}
 		break;
 	case EditState::RECT:
 		_editRect = fei::Rect(_mouseDownPos, cursorWPos - _mouseDownPos);
@@ -283,19 +322,61 @@ void EditorScene::editNone()
 
 void EditorScene::loadFile(const char* filename)
 {
-	//TODO: implement load function
-	loadImage(filename);
+	int len = std::strlen(filename);
+	if (len < 3) {
+		return;
+	}
+	auto suffix = std::string(filename + len - 3);
+	do {
+		if (suffix == "png" || suffix == "jpg") {
+			loadImage(filename);
+			break;
+		}
+		if (suffix == "pos") {
+			loadPos(filename);
+			break;
+		}
+		if (suffix == "ipi") {
+			loadIPI(filename);
+			break;
+		}
+		if (suffix == "sip") {
+			loadSIP(filename);
+			break;
+		}
+	} while(0);
 }
 
 void EditorScene::loadImage(const char* filename)
 {
 	_texture.load(filename);
+	_texture.setVisible(true);
 }
 
-void EditorScene::loadIp(const char* filename)
+void EditorScene::loadSIP(const char* filename)
 {
+}
+
+void EditorScene::loadIPI(const char* filename)
+{
+	int len = std::strlen(filename);
+	if (len < 4) return;
 	if (_texture.isLoaded()) {
+		_anime.loadTextureAndIPI(_texture, filename);
+		unloadImage();
 	} else {
+		auto name = std::string(filename, len - 4);
+		_anime.loadImageFileAndIPI(name);
+	}
+	_anime.setCurFrameIndex(0);
+	_anime.pause();
+	auto ip = _anime.getFramePool();
+	auto num = ip->getImageNum();
+	_imagePoolLayer.clear();
+	for (int i = 0; i < num; i++) {
+		auto image = ip->getImage(i);
+		image->setHasAlpha(true);
+		_imagePoolLayer.add(image);
 	}
 }
 
@@ -306,6 +387,12 @@ void EditorScene::loadPos(const char* filename)
 void EditorScene::save()
 {
 	//TODO: implement save function
+}
+
+void EditorScene::unloadImage()
+{
+	_texture.setVisible(false);
+	_texture.unload();
 }
 
 const Vec2 EditorScene::getCursorWorldPos()

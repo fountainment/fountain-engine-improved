@@ -20,9 +20,9 @@ public:
 	void loadTextureAndSIP(const Texture& texture, const std::string& sipName);
 	void loadImageFileAndSIP(const std::string& name);
 	void loadImageFileAndSIP(const std::string& textureName, const std::string& sipName);
+	void loadTextureAndIPI(const Texture& texture, const std::string& ipiName);
 	void loadImageFileAndIPI(const std::string& name);
 	void loadImageFileAndIPI(const std::string& textureName, const std::string& ipiName);
-	void loadTextureAndIPI(const Texture& texture, const std::string& ipiName);
 
 	virtual void feiObjectUpdate(RenderObj* rObj) override;
 	void updateFrameIndex();
