@@ -388,15 +388,29 @@ void EditorScene::loadPos(const char* filename)
 {
 }
 
-void EditorScene::save()
-{
-	//TODO: implement save function
-}
-
 void EditorScene::unloadImage()
 {
 	_texture.setVisible(false);
 	_texture.unload();
+}
+
+void EditorScene::save()
+{
+	saveCol();
+	savePos();
+	saveIPI();
+}
+
+void EditorScene::saveCol()
+{
+}
+
+void EditorScene::savePos()
+{
+}
+
+void EditorScene::saveIPI()
+{
 }
 
 const Vec2 EditorScene::getCursorWorldPos()

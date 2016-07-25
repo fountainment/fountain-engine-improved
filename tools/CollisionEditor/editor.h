@@ -2,7 +2,6 @@
 #define _TOOLS_COLLISIONEDITOR_H_
 
 #include "fountain.h"
-#include "util/PhysicsAnime.h"
 #include "util/VimStyleCommandLabel.h"
 
 class EditorScene : public fei::Scene
@@ -33,9 +32,13 @@ public:
 	void loadSIP(const char* filename);
 	void loadIPI(const char* filename);
 	void loadPos(const char* filename);
-	void save();
 
 	void unloadImage();
+
+	void save();
+	void saveCol();
+	void savePos();
+	void saveIPI();
 
 	const fei::Vec2 getCursorWorldPos();
 
@@ -72,7 +75,7 @@ private:
 	std::string _saveName;
 
 	fei::RenderObj _animeObj;
-	fut::CollisionFrameAnime _anime;
+	fei::FrameAnime _anime;
 };
 
 #endif // _TOOLS_COLLISIONEDITOR_H_
