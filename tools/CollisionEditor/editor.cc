@@ -232,9 +232,7 @@ void EditorScene::update()
 				bool collide = false;
 				for (int i = 0; i < num; i++) {
 					auto image = ip->getImage(i);
-					Rect rect;
-					rect.setSize(image->getSize());
-					rect.setCenter(image->getPosition() - image->getAnchor());
+					auto rect = getRect(image);
 					if (rect.collidePoint(cursorWPos)) {
 						Vec2 t1, t2;
 						if (!collide || \

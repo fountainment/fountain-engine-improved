@@ -90,6 +90,15 @@ private:
 	Vec2 _size;
 };
 
+template<class T>
+inline const fei::Rect getRect(T obj)
+{
+	float scale = obj->getScale();
+	Rect ret(obj->getSize() * scale);
+	ret.setCenter(obj->getPosition() - obj->getAnchor() * scale);
+	return ret;
+}
+
 } // namespace fei
 
 inline const fei::Vec2 fei::Rect::getCenter() const
