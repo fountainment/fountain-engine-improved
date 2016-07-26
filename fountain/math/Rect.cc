@@ -33,16 +33,6 @@ Rect::Rect(const fei::Vec2& ps, const fei::Vec2& sz)
 	normalize();
 }
 
-const fei::Vec2 Rect::getCenter() const
-{
-	return getPosition() + getSize() * 0.5f;
-}
-
-void Rect::setCenter(const fei::Vec2& p)
-{
-	setPosition(p - getSize() * 0.5f);
-}
-
 const std::vector<fei::Segment> Rect::getAllSegments() const
 {
 	return {getTopSegment(), getBottomSegment(), \

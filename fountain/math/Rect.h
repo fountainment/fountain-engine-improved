@@ -17,7 +17,11 @@ public:
 	Rect(const Vec2& pos, const Vec2& sz);
 
 	const Vec2 getCenter() const;
+	float getCenterX() const;
+	float getCenterY() const;
 	void setCenter(const Vec2& p);
+	void setCenterX(float x);
+	void setCenterY(float y);
 
 	const Vec2 getSize() const;
 	float getSizeX() const;
@@ -41,11 +45,19 @@ public:
 	const Vec2 getLT() const;
 	const Vec2 getRB() const;
 	const Vec2 getRT() const;
+	const Vec2 getMB() const;
+	const Vec2 getMT() const;
+	const Vec2 getLM() const;
+	const Vec2 getRM() const;
 
 	void setLB(const Vec2& lb);
 	void setLT(const Vec2& lt);
 	void setRB(const Vec2& rb);
 	void setRT(const Vec2& rt);
+	void setMB(const Vec2& mb);
+	void setMT(const Vec2& mt);
+	void setLM(const Vec2& lm);
+	void setRM(const Vec2& rm);
 
 	const Segment getLeftSegment() const;
 	const Segment getRightSegment() const;
@@ -79,6 +91,36 @@ private:
 };
 
 } // namespace fei
+
+inline const fei::Vec2 fei::Rect::getCenter() const
+{
+	return getPosition() + getSize() * 0.5f;
+}
+
+inline float fei::Rect::getCenterX() const
+{
+	return getPositionX() + getSizeX() * 0.5f;
+}
+
+inline float fei::Rect::getCenterY() const
+{
+	return getPositionY() + getSizeY() * 0.5f;
+}
+
+inline void fei::Rect::setCenter(const fei::Vec2& p)
+{
+	setPosition(p - getSize() * 0.5f);
+}
+
+inline void fei::Rect::setCenterX(float x)
+{
+	setPositionX(x - getSizeX() * 0.5f);
+}
+
+inline void fei::Rect::setCenterY(float y)
+{
+	setPositionY(y - getSizeY() * 0.5f);
+}
 
 inline const fei::Vec2 fei::Rect::getSize() const
 {
@@ -170,6 +212,26 @@ inline const fei::Vec2 fei::Rect::getRT() const
 	return fei::Vec2(getRight(), getTop());
 }
 
+inline const fei::Vec2 fei::Rect::getMB() const
+{
+	return fei::Vec2(getCenterX(), getBottom());
+}
+
+inline const fei::Vec2 fei::Rect::getMT() const
+{
+	return fei::Vec2(getCenterX(), getTop());
+}
+
+inline const fei::Vec2 fei::Rect::getLM() const
+{
+	return fei::Vec2(getLeft(), getCenterY());
+}
+
+inline const fei::Vec2 fei::Rect::getRM() const
+{
+	return fei::Vec2(getRight(), getCenterY());
+}
+
 inline void fei::Rect::setLB(const Vec2& lb)
 {
 	setLeft(lb.x);
@@ -192,6 +254,30 @@ inline void fei::Rect::setRT(const Vec2& rt)
 {
 	setRight(rt.x);
 	setTop(rt.y);
+}
+
+inline void fei::Rect::setMB(const Vec2& mb)
+{
+	setCenterX(mb.x);
+	setBottom(mb.y);
+}
+
+inline void fei::Rect::setMT(const Vec2& mt)
+{
+	setCenterX(mt.x);
+	setTop(mt.y);
+}
+
+inline void fei::Rect::setLM(const Vec2& lm)
+{
+	setLeft(lm.x);
+	setCenterY(lm.y);
+}
+
+inline void fei::Rect::setRM(const Vec2& rm)
+{
+	setRight(rm.x);
+	setCenterY(rm.y);
 }
 
 inline const fei::Segment fei::Rect::getLeftSegment() const
