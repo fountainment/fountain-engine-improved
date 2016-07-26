@@ -1,5 +1,7 @@
 #include "math/Shape.h"
 
+#include "base/stringUtil.h"
+
 using fei::Shape;
 
 Shape::Shape()
@@ -12,12 +14,19 @@ Shape::~Shape()
 {
 }
 
-void Shape::print()
+const std::string Shape::dumpString() const
 {
+	std::string ret;
 	int ds = getDataSize();
-	std::printf("%d\n", ds);
+	ret += fei::strFormat("%d\n", ds);
 	auto ptr = getDataPtr();
 	for (int i = 0; i < ds; i++) {
-		std::printf("%f %f\n", ptr[i * 2], ptr[i * 2 + 1]);
+		ret += fei::strFormat("%f %f\n", ptr[i * 2], ptr[i * 2 + 1]);
 	}
+	return ret;
+}
+
+void Shape::print()
+{
+	std::printf("%s", dumpString().c_str());
 }

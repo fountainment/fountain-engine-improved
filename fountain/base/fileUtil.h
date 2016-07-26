@@ -7,6 +7,7 @@ namespace fei {
 
 bool isFileExist(const std::string& filename);
 char* readFileBuffer(const std::string& filename);
+void writeFileBuffer(const std::string& filename, const std::string& buffer);
 
 } // namespace fei
 

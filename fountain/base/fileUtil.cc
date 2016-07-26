@@ -35,3 +35,12 @@ char* fei::readFileBuffer(const std::string& filename)
 	}
 	return buffer;
 }
+
+void fei::writeFileBuffer(const std::string& filename, const std::string& buffer)
+{
+	std::FILE *fp = std::fopen(filename.c_str(), "wb");
+	if (fp) {
+		std::fwrite(buffer.c_str(), 1, buffer.size(),fp);
+		std::fclose(fp);
+	}
+}

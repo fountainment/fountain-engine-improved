@@ -32,6 +32,7 @@ public:
 	Type getType() const;
 	void setType(Type shapeType);
 
+	virtual const std::string dumpString() const;
 	void print();
 
 private:

@@ -23,6 +23,8 @@ public:
 	virtual bool collide(const Shape* shape) const override;
 	virtual bool collidePoint(const Vec2& p) const override;
 
+	virtual const std::string dumpString() const override;
+
 private:
 	float _radius;
 

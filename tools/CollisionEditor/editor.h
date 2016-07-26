@@ -32,6 +32,7 @@ public:
 	void loadSIP(const char* filename);
 	void loadIPI(const char* filename);
 	void loadPos(const char* filename);
+	void loadCol(const char* filename);
 
 	void unloadImage();
 
@@ -71,6 +72,7 @@ private:
 	std::list<fei::Polygon> _polygonList;
 	std::list<fei::Segment> _segmentList;
 	std::list<fei::Shape*> _shapeList;
+	std::map<fei::Shape*, int> _shapeIndexMap;
 	std::map<fei::Shape*, fei::Body*> _shapeBodyMap;
 	std::string _saveName;
 

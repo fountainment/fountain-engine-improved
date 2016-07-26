@@ -386,6 +386,12 @@ void EditorScene::loadIPI(const char* filename)
 
 void EditorScene::loadPos(const char* filename)
 {
+	//TODO: implement loadPos
+}
+
+void EditorScene::loadCol(const char* filename)
+{
+	//TODO: implement loadCol
 }
 
 void EditorScene::unloadImage()
@@ -403,14 +409,31 @@ void EditorScene::save()
 
 void EditorScene::saveCol()
 {
+	//TODO: implement saveCol
+	std::string buffer;
+	for (auto shape : _shapeList) {
+	}
+	fei::writeFileBuffer(_saveName + ".col", buffer);
 }
 
 void EditorScene::savePos()
 {
+	std::string buffer;
+	auto ip = _anime.getFramePool();
+	int num = ip->getImageNum();
+	for (int i = 0; i < num; i++) {
+		auto image = ip->getImage(i);
+		if (image->getPosition() != Vec2::ZERO) {
+			buffer += fei::strFormat("%s %.1f %.1f\n", image->getName().c_str(), image->getPositionX(), image->getPositionY());
+		}
+	}
+	fei::writeFileBuffer(_saveName + ".pos", buffer);
 }
 
 void EditorScene::saveIPI()
 {
+	auto ip = _anime.getFramePool();
+	ip->dumpIPI(_saveName + ".ipi");
 }
 
 const Vec2 EditorScene::getCursorWorldPos()

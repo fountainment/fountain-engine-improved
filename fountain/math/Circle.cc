@@ -1,5 +1,7 @@
 #include "math/Circle.h"
 
+#include "base/stringUtil.h"
+
 using fei::Circle;
 
 std::vector<fei::Vec2> Circle::_data32 = {
@@ -104,4 +106,9 @@ bool Circle::collide(const fei::Shape* shape) const
 bool Circle::collidePoint(const fei::Vec2& p) const
 {
 	return (getPosition() - p).getLengthSq() <= (getRadius() * getRadius());
+}
+
+const std::string Circle::dumpString() const
+{
+	return fei::strFormat("1\n%f %f %f\n", getPositionX(), getPositionY(), getRadius());
 }
