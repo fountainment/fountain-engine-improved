@@ -85,7 +85,7 @@ inline void fei::NodeBase::setPositionX(float x)
 
 inline void fei::NodeBase::setPositionY(float y)
 {
-	_pos.x = y;
+	_pos.y = y;
 }
 
 inline void fei::NodeBase::move(const fei::Vec2& v)
