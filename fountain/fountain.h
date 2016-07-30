@@ -46,6 +46,7 @@
 
 #include "anime/Anime.h"
 #include "anime/FrameAnime.h"
+#include "anime/ActionAnime.h"
 
 #include "scene/Layer.h"
 #include "scene/Scene.h"
