@@ -410,6 +410,7 @@ void EditorScene::saveCol()
 	//TODO: implement saveCol
 	std::string buffer;
 	for (auto shape : _shapeList) {
+		buffer += shape->dumpString();
 	}
 	fei::writeFileBuffer(_saveName + ".col", buffer);
 }
