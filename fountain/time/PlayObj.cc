@@ -82,4 +82,7 @@ void PlayObj::afterResume()
 
 void PlayObj::afterStop()
 {
+	if (isLoop()) {
+		play();
+	}
 }
