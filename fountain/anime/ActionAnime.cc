@@ -14,7 +14,7 @@ ActionAnime::ActionAnime()
 
 void ActionAnime::feiObjectUpdate(fei::RenderObj* rObj)
 {
-	if (_timeStateMapFunc) {
+	if (!isStop() && _timeStateMapFunc) {
 		_state = _timeStateMapFunc(getClock()->getTime());
 		if (_state < 0.0f || _state > 1.0f) {
 			stop();
