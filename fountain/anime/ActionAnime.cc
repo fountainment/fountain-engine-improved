@@ -1,9 +1,12 @@
 #include "anime/ActionAnime.h"
 
+#include "math/mathdef.h"
+
 using fei::ActionAnime;
 
 ActionAnime::ActionAnime()
-: _timeStateMapFunc(nullptr),
+: _state(0.0f),
+  _timeStateMapFunc(nullptr),
   _stateOutputMapFunc(nullptr),
   _outputFunc(nullptr)
 {
@@ -13,6 +16,10 @@ void ActionAnime::feiObjectUpdate(fei::RenderObj* rObj)
 {
 	if (_timeStateMapFunc) {
 		_state = _timeStateMapFunc(getClock()->getTime());
+		if (_state < 0.0f || _state > 1.0f) {
+			stop();
+			_state = fei::clamp(_state, 0.0f, 1.0f);
+		}
 		if (_stateOutputMapFunc) {
 			float output = _stateOutputMapFunc(_state);
 			if (_outputFunc) {
