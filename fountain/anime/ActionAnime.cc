@@ -22,3 +22,18 @@ void ActionAnime::feiObjectUpdate(fei::RenderObj* rObj)
 	}
 	update(rObj);
 }
+
+void ActionAnime::setTimeStateMapFunc(std::function<float(double)> func)
+{
+	_timeStateMapFunc = func;
+}
+
+void ActionAnime::setStateOutputMapFunc(std::function<float(float)> func)
+{
+	_stateOutputMapFunc = func;
+}
+
+void ActionAnime::setOutputFunc(std::function<void(float)> func)
+{
+	_outputFunc = func;
+}

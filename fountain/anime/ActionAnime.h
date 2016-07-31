@@ -14,6 +14,10 @@ public:
 
 	virtual void feiObjectUpdate(RenderObj* rObj) override;
 
+	void setTimeStateMapFunc(std::function<float(double)> func);
+	void setStateOutputMapFunc(std::function<float(float)> func);
+	void setOutputFunc(std::function<void(float)> func);
+
 private:
 	float _state;
 
