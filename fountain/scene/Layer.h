@@ -15,16 +15,14 @@ public:
 
 	void setCamera(Camera* camera);
 	Camera* getCamera();
-
+	void cameraPush();
+	void cameraPop();
 	//TODO: design control signal catch logic
 
 private:
 	bool _didCameraPush;
 	Camera *_oldCamera;
 	Camera *_layerCamera;
-
-	void cameraPush();
-	void cameraPop();
 };
 
 } // namespace fei
