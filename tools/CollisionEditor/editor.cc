@@ -177,6 +177,12 @@ void EditorScene::init()
 			editSegment();
 			return fut::CommandResult::Ok;
 		};
+	auto editNormalFunc =
+		[this](std::vector<std::string> params)
+		{
+			editNone();
+			return fut::CommandResult::Ok;
+		};
 	auto saveFunc =
 		[this](std::vector<std::string> params)
 		{
@@ -206,6 +212,7 @@ void EditorScene::init()
 	interpreter->registerCommand({":edit", "circle"}, editCircleFunc);
 	interpreter->registerCommand({":edit", "polygon"}, editPolygonFunc);
 	interpreter->registerCommand({":edit", "segment"}, editSegmentFunc);
+	interpreter->registerCommand({":edit", "normal"}, editNormalFunc);
 	interpreter->registerCommand({":show", "fps"}, showFpsFunc);
 	interpreter->registerCommand({":w"}, saveFunc);
 	interpreter->registerCommand({":q"}, quitFunc);
@@ -407,10 +414,20 @@ void EditorScene::save()
 
 void EditorScene::saveCol()
 {
-	//TODO: implement saveCol
 	std::string buffer;
-	for (auto shape : _shapeList) {
-		buffer += shape->dumpString();
+	std::vector<std::vector<Shape*>> shapeVec(_anime.getFramePool()->getImageNum());
+	for (auto shapeIndex : _shapeIndexMap) {
+		shapeVec[shapeIndex.second].push_back(shapeIndex.first);
+	}
+	int sz = shapeVec.size();
+	for (int i = 0; i < sz; i++) {
+		if (shapeVec[i].size() == 0) {
+			continue;
+		}
+		buffer += strFormat("%d\n%d\n", i, shapeVec[i].size());
+		for (auto shape : shapeVec[i]) {
+			buffer += shape->dumpString();
+		}
 	}
 	fei::writeFileBuffer(_saveName + ".col", buffer);
 }
@@ -439,6 +456,14 @@ const Vec2 EditorScene::getCursorWorldPos()
 {
 	auto window = Application::getEngine()->getWindow();
 	return _camera.screenToWorld(window->getRHCursorPos());
+}
+
+void EditorScene::finishShape(fei::Shape* shape)
+{
+	_shapeList.push_back(shape);
+	if (_anime.getCurFrameIndex() >= 0) {
+		_shapeIndexMap[shape] = _anime.getCurFrameIndex();
+	}
 }
 
 void EditorScene::charactorCallback(unsigned int codepoint)
@@ -521,43 +546,52 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 					break;
 				case EditState::RECT:
 					{
+						if (_editRect.getSize().x < 5.0f || _editRect.getSize().y < 5.0f) {
+							break;
+						}
 						auto body = Physics::getInstance()->createBody(Vec2::ZERO, bodyType);
 						body->createFixture(&_editRect);
 						_rectList.push_back(_editRect);
-						_shapeList.push_back(&_rectList.back());
 						_shapeBodyMap[&_rectList.back()] = body; 
+						finishShape(&_rectList.back());
 						break;
 					}
 				case EditState::CIRCLE:
 					{
+						if (_editCircle.getRadius() < 5.0f) {
+							break;
+						}
 						auto body = Physics::getInstance()->createBody(Vec2::ZERO, bodyType);
 						body->createFixture(&_editCircle);
 						_circleList.push_back(_editCircle);
-						_shapeList.push_back(&_circleList.back());
 						_shapeBodyMap[&_circleList.back()] = body; 
+						finishShape(&_circleList.back());
 						break;
 					}
 				case EditState::POLYGON:
 					{
-						if (!_editPolygon.isValid()) {
+						if (!_editPolygon.isValid() || _editPolygon.getArea() < 25.0f) {
 							_editPolygon.clearVertex();
 							break;
 						}
 						auto body = Physics::getInstance()->createBody(Vec2::ZERO, bodyType);
 						body->createFixture(_editPolygon);
 						_polygonList.push_back(_editPolygon);
-						_shapeList.push_back(&_polygonList.back());
 						_shapeBodyMap[&_polygonList.back()] = body; 
 						_editPolygon.clearVertex();
+						finishShape(&_polygonList.back());
 						break;
 					}
 				case EditState::SEGMENT:
 					{
+						if (_editSegment.getLength() < 5.0f) {
+							break;
+						}
 						auto body = Physics::getInstance()->createBody(Vec2::ZERO, bodyType);
 						body->createFixture(&_editSegment);
 						_segmentList.push_back(_editSegment);
-						_shapeList.push_back(&_segmentList.back());
 						_shapeBodyMap[&_segmentList.back()] = body; 
+						finishShape(&_segmentList.back());
 						break;
 					}
 				}
@@ -571,8 +605,11 @@ void EditorScene::mouseButtonCallback(int button, int action, int mods)
 				auto body = _shapeBodyMap[*shape];
 				if (body) {
 					Physics::getInstance()->destroyBody(body);
+					_shapeBodyMap[*shape] = nullptr;
 				}
+				Shape* ptr = *shape;
 				_shapeList.erase((++shape).base());
+				_shapeIndexMap.erase(ptr);
 				break;
 			}
 		}
