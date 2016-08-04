@@ -6,6 +6,7 @@
 #include "render/Color.h"
 #include "render/Render.h"
 #include "render/ShapeObj.h"
+#include "time/Time.h"
 
 using fei::Physics;
 using fei::ContactInfo;
@@ -223,7 +224,8 @@ void Physics::destroy()
 void Physics::executeBeforeFrame()
 {
 	_inStep = true;
-	_world->Step(0.0167f, 8, 3);
+	float deltaTime = static_cast<float>(fei::Time::getInstance()->getDeltaTime());
+	_world->Step(deltaTime, 8, 3);
 	_inStep = false;
 	_world->ClearForces();
 

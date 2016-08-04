@@ -28,6 +28,8 @@ public:
 	void addClock(Clock* pobj);
 	void delClock(Clock* pobj);
 
+	void setUseIdealTime(bool useIdealTime);
+
 	static Time* getInstance();
 
 private:
@@ -37,7 +39,11 @@ private:
 	double _curTime;
 	double _lastTime;
 	double _deltaTime;
+	double _defaultFps;
+	double _defaultSpf;
+	double _idealCurTime;
 	long long _totalFrame;
+	bool _useIdealTime;
 
 	std::queue<double> _frameTimeQueue;
 	std::list<Clock*> _clockList;
@@ -47,9 +53,19 @@ private:
 
 } // namespace fei
 
+inline double fei::Time::getTime()
+{
+	return _useIdealTime ? _idealCurTime : _curTime;
+}
+
 inline double fei::Time::getDeltaTime()
 {
-	return _deltaTime;
+	return _useIdealTime ? _defaultSpf : _deltaTime;
+}
+
+inline long long fei::Time::getFrame()
+{
+	return _totalFrame;
 }
 
 #endif // _FEI_TIME_H_

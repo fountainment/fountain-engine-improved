@@ -17,7 +17,7 @@
 #include <GLFW/glfw3.h>
 
 #if defined(__linux) // Linux
-	const double littleSleepTime = 0.000001;
+	constexpr double littleSleepTime = 0.000001;
 
 	inline void sysLittleSleep()
 	{
@@ -26,7 +26,7 @@
 #endif // Linux end
 
 #if defined(_WIN32) // Win32
-	const double littleSleepTime = 0.001;
+	constexpr double littleSleepTime = 0.001;
 
 	inline void sysLittleSleep()
 	{
@@ -39,9 +39,6 @@
 using fei::Time;
 
 Time *Time::instance_ = nullptr;
-
-static constexpr double defaultFps = 60.0;
-static constexpr double spf = 1.0 / defaultFps;
 
 Time* Time::getInstance()
 {
@@ -56,7 +53,11 @@ Time::Time()
   _curTime(0.0),
   _lastTime(0.0),
   _deltaTime(0.0),
-  _totalFrame(0)
+  _defaultFps(60.0),
+  _defaultSpf(1.0 / _defaultFps),
+  _idealCurTime(0.0),
+  _totalFrame(0),
+  _useIdealTime(false)
 {
 }
 
@@ -65,7 +66,8 @@ bool Time::init()
 	if (GLFW_FALSE == glfwInit()) {
 		return false;
 	} else {
-		_initTime = glfwGetTime();
+		glfwSetTime(0.0);
+		_initTime = 0.0;
 	}
 	return true;
 }
@@ -79,14 +81,15 @@ void Time::executeBeforeFrame()
 {
 	_lastTime = _curTime;
 	_curTime = calcCurTime();
+	_idealCurTime = _initTime + (_totalFrame + 1) * _defaultSpf;
 	_deltaTime = _curTime - _lastTime;
 
-	while (_deltaTime < spf - littleSleepTime * 0.7) {
+	while (_deltaTime < _defaultSpf - littleSleepTime) {
 		littleSleep();
 		_curTime = calcCurTime();
 		_deltaTime = _curTime - _lastTime;
 	}
-	if (_deltaTime > spf * 10.0 || _deltaTime < 0.0) {
+	if (_deltaTime > _defaultSpf * 10.0 || _deltaTime < 0.0) {
 		_deltaTime = 0.0;
 	}
 
@@ -103,16 +106,6 @@ void Time::executeAfterFrame()
 		q.pop();
 	}
 	_totalFrame++;
-}
-
-double Time::getTime()
-{
-	return _curTime;
-}
-
-long long Time::getFrame()
-{
-	return _totalFrame;
 }
 
 void Time::littleSleep()
@@ -144,4 +137,9 @@ void Time::addClock(fei::Clock* clock)
 void Time::delClock(fei::Clock* clock)
 {
 	_clockList.remove(clock);
+}
+
+void Time::setUseIdealTime(bool useIdealTime)
+{
+	_useIdealTime = useIdealTime;
 }
