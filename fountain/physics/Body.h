@@ -42,6 +42,8 @@ public:
 	void destroyFixture(b2Fixture* fixture);
 	void destroyFixture(const std::vector<b2Fixture*>& fixtures);
 
+	void setCollisionCategory(int category);
+
 	void setBeginContactCallback(std::function<void(Body*)> callbackFunc);
 	void setFrameContactCallback(std::function<bool(Body*)> callbackFunc);
 	void setEndContactCallback(std::function<void(Body*)> callbackFunc);
@@ -67,5 +69,15 @@ private:
 };
 
 } // namespace fei
+
+inline int fei::Body::getTag()
+{
+	return _tag;
+}
+
+inline b2Body* fei::Body::getB2Body() const
+{
+	return _body;
+}
 
 #endif // _FEI_BODY_H_
