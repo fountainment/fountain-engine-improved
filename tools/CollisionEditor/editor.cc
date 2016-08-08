@@ -557,7 +557,11 @@ void EditorScene::saveIPI()
 const Vec2 EditorScene::getCursorWorldPos()
 {
 	auto window = Application::getEngine()->getWindow();
-	return _camera.screenToWorld(window->getRHCursorPos());
+	Vec2 ret = _camera.screenToWorld(window->getRHCursorPos());
+	ret *= 2.0f;
+	ret.round();
+	ret *= 0.5f;
+	return ret;
 }
 
 void EditorScene::finishShape(fei::Shape* shape)
