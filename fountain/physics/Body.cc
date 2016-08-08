@@ -111,15 +111,20 @@ void Body::destroyFixture(const std::vector<b2Fixture*>& fixtures)
 	}
 }
 
+void Body::setCategoryBitsAndMaskBits(uint16 cbits, uint16 mbits)
+{
+	for (b2Fixture* f = _body->GetFixtureList(); f; f = f->GetNext()) {
+		b2Filter fd = f->GetFilterData();
+		fd.categoryBits = cbits;
+		fd.maskBits = mbits;
+		f->SetFilterData(fd);
+	}
+}
+
 void Body::setCollisionCategory(int category)
 {
 	uint16 bits = 1 << category;
-	for (b2Fixture* f = _body->GetFixtureList(); f; f = f->GetNext()) {
-		b2Filter fd = f->GetFilterData();
-		fd.categoryBits = bits;
-		fd.maskBits = bits;
-		f->SetFilterData(fd);
-	}
+	setCategoryBitsAndMaskBits(bits, bits);
 }
 
 void Body::beginContact(Body* otherBody)

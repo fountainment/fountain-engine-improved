@@ -42,6 +42,7 @@ public:
 	void destroyFixture(b2Fixture* fixture);
 	void destroyFixture(const std::vector<b2Fixture*>& fixtures);
 
+	void setCategoryBitsAndMaskBits(uint16 cbits, uint16 mbits);
 	void setCollisionCategory(int category);
 
 	void setBeginContactCallback(std::function<void(Body*)> callbackFunc);
