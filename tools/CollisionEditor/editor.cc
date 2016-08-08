@@ -329,6 +329,64 @@ void EditorScene::editNone()
 	_editShapeObj.setShape(nullptr);
 }
 
+void EditorScene::clearCol()
+{
+	for (auto shapeBody : _shapeBodyMap) {
+		Physics::getInstance()->destroyBody(shapeBody.second);
+	}
+	_shapeBodyMap.clear();
+	_shapeIndexMap.clear();
+	_rectList.clear();
+	_circleList.clear();
+	_polygonList.clear();
+	_segmentList.clear();
+	_shapeList.clear();
+}
+
+void EditorScene::addRect(const Rect rect, int index)
+{
+	auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::STATIC);
+	body->createFixture(&rect);
+	_rectList.push_back(rect);
+	Shape* shape = &_rectList.back();
+	_shapeBodyMap[shape] = body;
+	_shapeList.push_back(shape);
+	_shapeIndexMap[shape] = index;
+}
+
+void EditorScene::addCircle(const Circle circle, int index)
+{
+	auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::STATIC);
+	body->createFixture(&circle);
+	_circleList.push_back(circle);
+	Shape* shape = &_circleList.back();
+	_shapeBodyMap[shape] = body;
+	_shapeList.push_back(shape);
+	_shapeIndexMap[shape] = index;
+}
+
+void EditorScene::addSegment(const Segment segment, int index)
+{
+	auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::STATIC);
+	body->createFixture(&segment);
+	_segmentList.push_back(segment);
+	Shape* shape = &_segmentList.back();
+	_shapeBodyMap[shape] = body;
+	_shapeList.push_back(shape);
+	_shapeIndexMap[shape] = index;
+}
+
+void EditorScene::addPolygon(const Polygon polygon, int index)
+{
+	auto body = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::STATIC);
+	body->createFixture(polygon);
+	_polygonList.push_back(polygon);
+	Shape* shape = &_polygonList.back();
+	_shapeBodyMap[shape] = body;
+	_shapeList.push_back(shape);
+	_shapeIndexMap[shape] = index;
+}
+
 void EditorScene::loadFile(const char* filename)
 {
 	int len = std::strlen(filename);
@@ -351,6 +409,10 @@ void EditorScene::loadFile(const char* filename)
 		}
 		if (suffix == "sip") {
 			loadSIP(filename);
+			break;
+		}
+		if (suffix == "col") {
+			loadCol(filename);
 			break;
 		}
 	} while(0);
@@ -396,7 +458,47 @@ void EditorScene::loadPos(const char* filename)
 
 void EditorScene::loadCol(const char* filename)
 {
-	//TODO: implement loadCol
+	clearCol();
+	int index, n, vn;
+	auto f = std::fopen(filename, "r");
+	while (std::fscanf(f, "%d", &index) != EOF) {
+		std::fscanf(f, "%d", &n);
+		for (int i = 0; i < n; i++) {
+			float a, b, c, d;
+			std::fscanf(f, "%d", &vn);
+			switch (vn) {
+			case 0:
+				{
+					std::fscanf(f, "%f%f%f%f", &a, &b, &c, &d);
+					addRect(Rect(a, b, c, d), index);
+					break;
+				}
+			case 1:
+				{
+					std::fscanf(f, "%f%f%f", &a, &b, &c);
+					addCircle(Circle(Vec2(a, b), c), index);
+					break;
+				}
+			case 2:
+				{
+					std::fscanf(f, "%f%f%f%f", &a, &b, &c, &d);
+					addSegment(Segment(Vec2(a, b), Vec2(c, d)), index);
+					break;
+				}
+			default:
+				{
+					Polygon poly;
+					for (int i = 0; i < vn; i++) {
+						std::fscanf(f, "%f%f", &a, &b);
+						poly.pushVertex(Vec2(a, b));
+					}
+					addPolygon(poly, index);
+					break;
+				}
+			}
+		}
+	}
+	std::fclose(f);
 }
 
 void EditorScene::unloadImage()

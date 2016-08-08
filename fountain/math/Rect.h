@@ -77,14 +77,16 @@ public:
 
 	virtual bool collidePoint(const Vec2& pt) const override;
 
+	virtual const std::string dumpString() const override;
+
 	bool collideSegment(Vec2& pt, const Segment& seg) const;
 
 	bool collideRect(const Rect& rct) const;
 
 	void getStripCoord(float* coord) const;
 
-	const float* getDataPtr() const override;
-	int getDataSize() const override;
+	virtual const float* getDataPtr() const override;
+	virtual int getDataSize() const override;
 
 private:
 	Vec2 _size;

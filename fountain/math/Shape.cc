@@ -21,7 +21,7 @@ const std::string Shape::dumpString() const
 	ret += fei::strFormat("%d\n", ds);
 	auto ptr = getDataPtr();
 	for (int i = 0; i < ds; i++) {
-		ret += fei::strFormat("%f %f\n", ptr[i * 2], ptr[i * 2 + 1]);
+		ret += fei::strFormat("%f %f\n", ptr[i * 2] + getPositionX(), ptr[i * 2 + 1] + getPositionY());
 	}
 	return ret;
 }

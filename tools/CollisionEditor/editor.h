@@ -27,6 +27,13 @@ public:
 	void editSegment();
 	void editNone();
 
+	void clearCol();
+
+	void addRect(const fei::Rect rect, int index);
+	void addCircle(const fei::Circle circle, int index);
+	void addSegment(const fei::Segment segment, int index);
+	void addPolygon(const fei::Polygon polygon, int index);
+
 	void loadFile(const char* filename);
 	void loadImage(const char* filename);
 	void loadSIP(const char* filename);

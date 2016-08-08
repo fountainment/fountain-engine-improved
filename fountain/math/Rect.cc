@@ -1,5 +1,6 @@
 #include "math/Rect.h"
 
+#include "base/stringUtil.h"
 #include "math/mathdef.h"
 
 using fei::Rect;
@@ -76,11 +77,11 @@ const Rect Rect::zoomed(const fei::Vec2& v) const
 
 void Rect::normalize()
 {
-	if (getSize().x < 0) {
+	if (getSizeX() < 0) {
 		_pos.x += _size.x;
 		_size.x = -_size.x;
 	}
-	if (getSize().y < 0) {
+	if (getSizeY() < 0) {
 		_pos.y += _size.y;
 		_size.y = -_size.y;
 	}
@@ -117,6 +118,12 @@ bool Rect::collidePoint(const fei::Vec2& pt) const
 	return ((getPosition().x - pt.x) * (rt.x - pt.x) <= 0) && ((pos.y - pt.y) * (rt.y - pt.y) <= 0);
 }
 
+
+const std::string Rect::dumpString() const
+{
+	return fei::strFormat("0\n%f %f %f %f\n", _pos.x, _pos.y, _size.x, _size.y);
+}
+
 bool Rect::collideSegment(fei::Vec2& pt, const fei::Segment& seg) const
 {
 	fei::Vec2 tmp;
@@ -144,8 +151,8 @@ bool Rect::collideSegment(fei::Vec2& pt, const fei::Segment& seg) const
 bool Rect::collideRect(const Rect& rct) const
 {
 	auto dv = getCenter() - rct.getCenter();
-	float wSum = getSize().x + rct.getSize().x;
-	float hSum = getSize().y + rct.getSize().y;
+	float wSum = getSizeX() + rct.getSizeX();
+	float hSum = getSizeY() + rct.getSizeY();
 	float xD = std::abs(dv.x * 2.0f);
 	float yD = std::abs(dv.y * 2.0f);
 	return (xD <= wSum) && (yD <= hSum);
