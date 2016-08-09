@@ -46,16 +46,6 @@ void Clock::setMasterClock(Clock* mClock)
 	}
 }
 
-double Clock::getTime()
-{
-	return _totalTime;
-}
-
-long long Clock::getFrameCount()
-{
-	return _frameCount;
-}
-
 void Clock::setTimeScale(double tScale)
 {
 	_timeScale = tScale;
@@ -96,19 +86,9 @@ void Clock::stop()
 	_frameCount = 0;
 }
 
-bool Clock::isPlay()
-{
-	return _isPlay;
-}
-
 void Clock::setPlay(bool isplay)
 {
 	_isPlay = isplay;
-}
-
-bool Clock::isStop()
-{
-	return _isStop;
 }
 
 void Clock::switchPlayAndPause()
