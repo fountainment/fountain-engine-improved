@@ -69,6 +69,7 @@ public:
 	void keyCallback(int key, int scancode, int action, int mods) override;
 	void scrollCallback(double xoffset, double yoffset);
 	void mouseButtonCallback(int button, int action, int mods);
+	void framebufferSizeCallback(int width, int height);
 	void mouseDrag(fei::Camera* cam, fei::NodeBase* node, float k = 1.0f);
 
 	bool processCmd(const std::string& cmd);
