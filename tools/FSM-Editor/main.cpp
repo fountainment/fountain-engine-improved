@@ -24,6 +24,7 @@ void FSMEditor::engineSetting(Engine* e)
 	tex20.setMagFilter(GL_LINEAR);
 
 	//e->getWindow()->setFullscreen(true);
+	e->getWindow()->setResizable(true);
 	e->getWindow()->setSize(800, 600);
 	e->getWindow()->setSamples(8);
 	e->getWindow()->setTitle("FSM-Editor");
