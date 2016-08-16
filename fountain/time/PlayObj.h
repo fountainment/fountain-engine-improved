@@ -1,6 +1,7 @@
 #ifndef _FEI_PLAYOBJ_H_
 #define _FEI_PLAYOBJ_H_
 
+#include "base/basedef.h"
 #include "time/Clock.h"
 
 namespace fei {
@@ -27,6 +28,11 @@ public:
 	Clock* getClock();
 	void setMasterClock(Clock* clock);
 
+	void setPlayCallback(std::function<void()> callback);
+	void setPauseCallback(std::function<void()> callback);
+	void setResumeCallback(std::function<void()> callback);
+	void setStopCallback(std::function<void()> callback);
+
 protected:
 	virtual void afterPlay();
 	virtual void afterPause();
@@ -36,6 +42,11 @@ protected:
 private:
 	bool _isLoop;
 	Clock _playClock;
+
+	std::function<void()> _playCallback;
+	std::function<void()> _pauseCallback;
+	std::function<void()> _resumeCallback;
+	std::function<void()> _stopCallback;
 };
 
 } // namespace fei
