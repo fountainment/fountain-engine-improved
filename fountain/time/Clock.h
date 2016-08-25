@@ -65,9 +65,19 @@ inline void fei::Clock::tick()
 	}
 }
 
+inline double fei::Clock::getTime()
+{
+	return _totalTime;
+}
+
 inline double fei::Clock::getDeltaTime()
 {
 	return _deltaTime;
+}
+
+inline long long fei::Clock::getFrameCount()
+{
+	return _frameCount;
 }
 
 inline double fei::Clock::calculateDeltaTime()
@@ -84,6 +94,16 @@ inline double fei::Clock::calculateDeltaTime()
 		}
 	}
 	return result;
+}
+
+inline bool fei::Clock::isPlay()
+{
+	return _isPlay;
+}
+
+inline bool fei::Clock::isStop()
+{
+	return _isStop;
 }
 
 #endif // _FEI_CLOCK_H_

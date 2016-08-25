@@ -68,21 +68,54 @@ void PlayObj::setMasterClock(fei::Clock* clock)
 	_playClock.setMasterClock(clock);
 }
 
+void PlayObj::setPlayCallback(std::function<void()> callback)
+{
+	_playCallback = callback;
+}
+
+void PlayObj::setPauseCallback(std::function<void()> callback)
+{
+	_pauseCallback = callback;
+}
+
+void PlayObj::setResumeCallback(std::function<void()> callback)
+{
+	_resumeCallback = callback;
+}
+
+void PlayObj::setStopCallback(std::function<void()> callback)
+{
+	_stopCallback = callback;
+}
+
 void PlayObj::afterPlay()
 {
+	if (_playCallback) {
+		_playCallback();
+	}
 }
 
 void PlayObj::afterPause()
 {
+	if (_pauseCallback) {
+		_pauseCallback();
+	}
 }
 
 void PlayObj::afterResume()
 {
+	if (_stopCallback) {
+		_stopCallback();
+	}
 }
 
 void PlayObj::afterStop()
 {
 	if (isLoop()) {
 		play();
+	} else {
+		if (_stopCallback) {
+			_stopCallback();
+		}
 	}
 }

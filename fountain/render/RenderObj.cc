@@ -54,11 +54,6 @@ fei::Anime* RenderObj::getAnime()
 	return _anime;
 }
 
-bool RenderObj::hasAlpha() const
-{
-	return _hasAlpha;
-}
-
 void RenderObj::setHasAlpha(bool hasAlpha)
 {
 	_hasAlpha = hasAlpha;

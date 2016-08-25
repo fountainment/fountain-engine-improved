@@ -109,4 +109,9 @@ inline fei::RenderObj::RenderObj()
 {
 }
 
+inline bool fei::RenderObj::hasAlpha() const
+{
+	return _hasAlpha;
+}
+
 #endif // _FEI_RENDEROBJ_H_

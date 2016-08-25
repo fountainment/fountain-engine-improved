@@ -337,7 +337,6 @@ void FSMEditorScene::keyCallback(int key, int scancode, int action, int mods)
 	if (key == GLFW_KEY_F11 && action == GLFW_PRESS) {
 		auto window = Interface::getInstance()->getCurrentWindow();
 		window->setFullscreen(!window->isFullscreen());
-		_needUIRefresh = true;
 	}
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
 		if (!processCmd(unicodeToUtf8(_tmpName))) {
@@ -380,6 +379,11 @@ void FSMEditorScene::mouseButtonCallback(int button, int action, int mods)
 			_drawLine = false;
 		}
 	}
+}
+
+void FSMEditorScene::framebufferSizeCallback(int width, int height)
+{
+	_needUIRefresh = true;
 }
 
 void FSMEditorScene::mouseDrag(Camera* cam, NodeBase* node, float k)
