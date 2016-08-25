@@ -28,6 +28,11 @@ public:
 
 	void loadAnime(const std::string& path);
 
+	void loadAnchorOffset();
+	void loadGroup();
+	void saveIpi();
+	void saveAnchorOffset();
+
 	void mouseButtonCallback(int button, int action, int mods) override;
 	void cursorPosCallback(double xpos, double ypos) override;
 	void scrollCallback(double xoffset, double yoffset) override;
@@ -55,6 +60,10 @@ private:
 	int holdVertex;
 	fei::Vec2 _pos, _vertexPos;
 	fei::Vec2 mPos, oldPos, deltaV;
+
+	std::map<std::string, fei::Vec2> _ipiNameToAnchorOffset;
+	std::map<int, std::vector<std::string>> _groupIndexToIpiNameList;
+	std::map<std::string, int> _ipiNameToGroupIndex;
 };
 
 #endif

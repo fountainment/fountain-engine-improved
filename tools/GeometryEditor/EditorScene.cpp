@@ -72,6 +72,9 @@ void EditorScene::init()
 
 	animeBody = Physics::getInstance()->createBody(Vec2::ZERO, Body::Type::STATIC);
 	animeBody->getB2Body()->SetGravityScale(0.0f);
+
+	loadAnchorOffset();
+	loadGroup();
 }
 
 void EditorScene::update()
@@ -96,6 +99,13 @@ void EditorScene::update()
 
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT) && window->getKey(GLFW_KEY_LEFT_SHIFT)) {
 		anime[curEdit].getFramePool()->moveImageAnchor(-deltaV);
+		_ipiNameToAnchorOffset[ipiName].add(-deltaV);
+		auto group = _groupIndexToIpiNameList[_ipiNameToGroupIndex[ipiName]];
+		for (auto ipi : group) {
+			if (ipi != ipiName) {
+				_ipiNameToAnchorOffset[ipi].add(-deltaV);
+			}
+		}
 	}
 
 	if (window->getKey(GLFW_KEY_A)) {
@@ -122,6 +132,61 @@ void EditorScene::loadAnime(const std::string& path)
 	anime[curEdit].setLoop(true);
 	anime[curEdit].setBody(animeBody);
 	anime[curEdit].play();
+}
+
+void EditorScene::loadAnchorOffset()
+{
+	char name[256];
+	float x, y;
+	bool exist = fei::isFileExist("anchor.txt");
+	if (exist) {
+		auto f = std::fopen("anchor.txt", "r");
+		while (std::fscanf(f, "%s%f%f", name, &x, &y) != EOF) {
+			_ipiNameToAnchorOffset[name] = Vec2(x, y);
+		}
+		std::fclose(f);
+	}
+}
+
+void EditorScene::loadGroup()
+{
+	char name[256];
+	int n;
+	int index = 1;
+	bool exist = fei::isFileExist("group.txt");
+	if (exist) {
+		auto f = std::fopen("group.txt", "r");
+		while (std::fscanf(f, "%d", &n) != EOF) {
+			std::vector<std::string> strList;
+			for (int i = 0; i < n; i++) {
+				std::fscanf(f, "%s", name);
+				strList.push_back(name);
+				_ipiNameToGroupIndex[name] = index;
+			}
+			_groupIndexToIpiNameList[index] = strList;
+			index++;
+		}
+		std::fclose(f);
+	}
+}
+
+void EditorScene::saveIpi()
+{
+	if (ipiName == fei::EmptyStr) {
+		ipiName = "new.ipi";
+	}
+	anime[curEdit].getFramePool()->dumpIPI(ipiName);
+}
+
+void EditorScene::saveAnchorOffset()
+{
+	auto f = std::fopen("anchor.txt", "w");
+	for (auto ia : _ipiNameToAnchorOffset) {
+		if (ia.first != EmptyStr && ia.second != Vec2::ZERO) {
+			std::fprintf(f, "%s %f %f\n", ia.first.c_str(), ia.second.x, ia.second.y);
+		}
+	}
+	std::fclose(f);
 }
 
 void EditorScene::mouseButtonCallback(int button, int action, int mods)
@@ -248,13 +313,22 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 
 	if (key == GLFW_KEY_C && action == GLFW_PRESS) {
 		anime[curEdit].getFramePool()->roundAnchor();
+		_ipiNameToAnchorOffset[ipiName] *= 2.0f;
+		_ipiNameToAnchorOffset[ipiName].round();
+		_ipiNameToAnchorOffset[ipiName] *= 0.5f;
+		auto group = _groupIndexToIpiNameList[_ipiNameToGroupIndex[ipiName]];
+		for (auto ipi : group) {
+			if (ipi != ipiName) {
+				_ipiNameToAnchorOffset[ipi] *= 2.0f;
+				_ipiNameToAnchorOffset[ipi].round();
+				_ipiNameToAnchorOffset[ipi] *= 0.5f;
+			}
+		}
 	}
 
 	if (key == GLFW_KEY_V && action == GLFW_PRESS) {
-		if (ipiName == fei::EmptyStr) {
-			ipiName = "new.ipi";
-		}
-		anime[curEdit].getFramePool()->dumpIPI(ipiName);
+		saveIpi();
+		saveAnchorOffset();
 	}
 	if (key == GLFW_KEY_Z && action == GLFW_PRESS) {
 		poly[curEdit].clearVertex();
