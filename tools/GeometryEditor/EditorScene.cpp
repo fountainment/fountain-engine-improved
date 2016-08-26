@@ -102,7 +102,7 @@ void EditorScene::update()
 		_ipiNameToAnchorOffset[_ipiFileName].add(-deltaV);
 		auto group = _groupIndexToIpiNameList[_ipiNameToGroupIndex[_ipiFileName]];
 		for (auto ipi : group) {
-			if (ipi != ipiName) {
+			if (ipi != _ipiFileName) {
 				_ipiNameToAnchorOffset[ipi].add(-deltaV);
 			}
 		}
