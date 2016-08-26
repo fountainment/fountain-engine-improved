@@ -99,8 +99,8 @@ void EditorScene::update()
 
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT) && window->getKey(GLFW_KEY_LEFT_SHIFT)) {
 		anime[curEdit].getFramePool()->moveImageAnchor(-deltaV);
-		_ipiNameToAnchorOffset[ipiName].add(-deltaV);
-		auto group = _groupIndexToIpiNameList[_ipiNameToGroupIndex[ipiName]];
+		_ipiNameToAnchorOffset[_ipiFileName].add(-deltaV);
+		auto group = _groupIndexToIpiNameList[_ipiNameToGroupIndex[_ipiFileName]];
 		for (auto ipi : group) {
 			if (ipi != ipiName) {
 				_ipiNameToAnchorOffset[ipi].add(-deltaV);
@@ -126,6 +126,8 @@ void EditorScene::loadAnime(const std::string& path)
 	auto name = path;
 	name.erase(name.size() - 3, 3);
 	ipiName = name + "ipi";
+	_ipiFileName = strSplit(ipiName, '/').back();
+	_ipiFileName = strSplit(_ipiFileName, '\\').back();
 	anime[curEdit].loadImageFileAndIPI(name + "png", ipiName);
 	animeObj.setAnime(&anime[curEdit]);
 	anime[curEdit].setFps(15);
@@ -313,10 +315,10 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 
 	if (key == GLFW_KEY_C && action == GLFW_PRESS) {
 		anime[curEdit].getFramePool()->roundAnchor();
-		_ipiNameToAnchorOffset[ipiName] *= 2.0f;
-		_ipiNameToAnchorOffset[ipiName].round();
-		_ipiNameToAnchorOffset[ipiName] *= 0.5f;
-		auto group = _groupIndexToIpiNameList[_ipiNameToGroupIndex[ipiName]];
+		_ipiNameToAnchorOffset[_ipiFileName] *= 2.0f;
+		_ipiNameToAnchorOffset[_ipiFileName].round();
+		_ipiNameToAnchorOffset[_ipiFileName] *= 0.5f;
+		auto group = _groupIndexToIpiNameList[_ipiNameToGroupIndex[_ipiFileName]];
 		for (auto ipi : group) {
 			if (ipi != ipiName) {
 				_ipiNameToAnchorOffset[ipi] *= 2.0f;
