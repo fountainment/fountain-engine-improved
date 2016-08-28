@@ -134,9 +134,8 @@ void RenderList::listRearrange(std::vector<int> newIndex)
 void RenderList::garbageRecycle()
 {
 	while (!_garbageQueue.empty()) {
-		auto garbage = _garbageQueue.front();
+		delete _garbageQueue.front();
 		_garbageQueue.pop();
-		delete garbage;
 	}
 }
 
