@@ -10,6 +10,8 @@ namespace fei {
 class Sprite : public RenderList
 {
 public:
+	virtual ~Sprite();
+
 	void addComponent(Component* component);
 	void delComponent(Component* component);
 	void clearComponent();

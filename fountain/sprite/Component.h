@@ -11,6 +11,7 @@ public:
 	friend class Sprite;
 
 	Component();
+	virtual ~Component();
 
 	Sprite* getSprite();
 
@@ -19,10 +20,13 @@ public:
 	virtual void beforeDraw();
 	virtual void afterDraw();
 
+	void setPrivate(bool isPrivate);
+
 private:
 	void setSprite(Sprite* sprite);
 
 	Sprite* _sprite;
+	bool _isPrivate;
 };
 
 } // namespace fei

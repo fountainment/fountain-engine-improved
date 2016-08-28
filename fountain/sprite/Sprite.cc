@@ -2,6 +2,11 @@
 
 using fei::Sprite;
 
+Sprite::~Sprite()
+{
+	clearComponent();
+}
+
 void Sprite::addComponent(fei::Component* component)
 {
 	auto sprite = component->getSprite();
@@ -16,6 +21,16 @@ void Sprite::delComponent(fei::Component* component)
 {
 	component->setSprite(nullptr);
 	_componentList.erase(std::find(_componentList.begin(), _componentList.end(), component));
+}
+
+void Sprite::clearComponent()
+{
+	for (auto component : _componentList) {
+		auto sprite = component->getSprite();
+		if (sprite == this) {
+			component->setSprite(nullptr);
+		}
+	}
 }
 
 void Sprite::componentBasicUpdate()

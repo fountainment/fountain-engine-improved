@@ -5,8 +5,16 @@
 using fei::Component;
 
 Component::Component()
-: _sprite(nullptr)
+: _sprite(nullptr),
+  _isPrivate(false)
 {
+}
+
+Component::~Component()
+{
+	if (getSprite()) {
+		getSprite()->delComponent(this);
+	}
 }
 
 fei::Sprite* Component::getSprite()
@@ -30,7 +38,14 @@ void Component::afterDraw()
 {
 }
 
+void Component::setPrivate(bool isPrivate)
+{
+	_isPrivate = isPrivate;
+}
+
 void Component::setSprite(fei::Sprite* sprite)
 {
-	_sprite = sprite;
+	if (_isPrivate) {
+		_sprite = sprite;
+	}
 }
