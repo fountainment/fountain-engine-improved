@@ -79,8 +79,9 @@ bool Engine::loadModule()
 
 void Engine::unloadModule()
 {
-	if (getWindow()) {
-		Interface::getInstance()->destroyWindow(getWindow());
+	if (_window) {
+		_window->getSceneManager()->destroyCurScene();
+		Interface::getInstance()->destroyWindow(_window);
 	}
 	for (auto it = _moduleList.rbegin(); it != _moduleList.rend(); ++it) {
 		if (*it) {
