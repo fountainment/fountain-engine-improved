@@ -23,7 +23,8 @@ void RenderList::listInit()
 
 void RenderList::listDestroy()
 {
-	for (auto it = _objList.rbegin(); it != _objList.rend(); ++it) {
+	auto tmpList = _objList;
+	for (auto it = tmpList.rbegin(); it != tmpList.rend(); ++it) {
 		(*it)->feiDestroy();
 	}
 }
