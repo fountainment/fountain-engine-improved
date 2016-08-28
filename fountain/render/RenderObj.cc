@@ -99,6 +99,16 @@ void RenderObj::setAnchor(const fei::Vec2& acr)
 	_anchor = acr;
 }
 
+void RenderObj::setAnchorX(float x)
+{
+	_anchor.x = x;
+}
+
+void RenderObj::setAnchorY(float y)
+{
+	_anchor.y = y;
+}
+
 void RenderObj::setZPos(float z)
 {
 	_zPos = z;
@@ -117,6 +127,16 @@ float RenderObj::getAngle() const
 const fei::Vec2 RenderObj::getAnchor() const
 {
 	return _anchor;
+}
+
+float RenderObj::getAnchorX() const
+{
+	return _anchor.x;
+}
+
+float RenderObj::getAnchorY() const
+{
+	return _anchor.y;
 }
 
 float RenderObj::getZPos() const

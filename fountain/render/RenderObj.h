@@ -56,11 +56,15 @@ public:
 	void setScale(float scl);
 	void setAngle(float agl);
 	void setAnchor(const Vec2& acr);
+	void setAnchorX(float x);
+	void setAnchorY(float y);
 	void setZPos(float z);
 
 	float getScale() const;
 	float getAngle() const;
 	const Vec2 getAnchor() const;
+	float getAnchorX() const;
+	float getAnchorY() const;
 	float getZPos() const;
 
 	void roundAnchor();
