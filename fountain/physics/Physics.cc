@@ -110,6 +110,7 @@ void ContactListener::BeginContact(b2Contact* contact)
 	auto fixtureB = contact->GetFixtureB();
 	auto feiBodyA = Physics::getBodyByB2Fixture(fixtureA);
 	auto feiBodyB = Physics::getBodyByB2Fixture(fixtureB);
+	if (!feiBodyA || !feiBodyB) return;
 
 	contactInfo_.valid = !fixtureA->IsSensor() && !fixtureB->IsSensor();
 	contactInfo_.setFixture(fixtureA, fixtureB);
@@ -126,6 +127,8 @@ void ContactListener::EndContact(b2Contact* contact)
 	auto fixtureB = contact->GetFixtureB();
 	auto feiBodyA = Physics::getBodyByB2Fixture(fixtureA);
 	auto feiBodyB = Physics::getBodyByB2Fixture(fixtureB);
+	if (!feiBodyA || !feiBodyB) return;
+
 	feiBodyA->endContact(feiBodyB);
 	feiBodyB->endContact(feiBodyA);
 }
@@ -137,6 +140,7 @@ void ContactListener::PreSolve(b2Contact* contact, const b2Manifold* oldManifold
 	auto fixtureB = contact->GetFixtureB();
 	auto feiBodyA = Physics::getBodyByB2Fixture(fixtureA);
 	auto feiBodyB = Physics::getBodyByB2Fixture(fixtureB);
+	if (!feiBodyA || !feiBodyB) return;
 
 	contactInfo_.valid = true;
 	contactInfo_.setFixture(fixtureA, fixtureB);
@@ -296,6 +300,7 @@ void Physics::destroyBody(fei::Body* body)
 	if (body->_destroyed) {
 		return;
 	}
+	body->getB2Body()->SetUserData(nullptr);
 	if (isInStep()) {
 		_zombieBodyList.push(body);
 		body->_destroyed = true;
