@@ -123,6 +123,11 @@ fei::ImagePool* FrameAnime::getFramePool()
 	return &_framePool;
 }
 
+float FrameAnime::getTotalTime()
+{
+	return getFrameNum() / getFps();
+}
+
 void FrameAnime::afterStop()
 {
 	fei::Anime::afterStop();

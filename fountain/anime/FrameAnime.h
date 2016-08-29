@@ -38,6 +38,8 @@ public:
 
 	ImagePool* getFramePool();
 
+	float getTotalTime();
+
 protected:
 	virtual void afterStop() override;
 
