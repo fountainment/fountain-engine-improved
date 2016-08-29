@@ -22,19 +22,19 @@ fei::Sprite* Component::getSprite()
 	return _sprite;
 }
 
-void Component::basicUpdate()
+void Component::basicUpdate(fei::Sprite* sprite)
 {
 }
 
-void Component::update()
+void Component::update(fei::Sprite* sprite)
 {
 }
 
-void Component::beforeDraw()
+void Component::beforeDraw(fei::Sprite* sprite)
 {
 }
 
-void Component::afterDraw()
+void Component::afterDraw(fei::Sprite* sprite)
 {
 }
 

@@ -36,28 +36,28 @@ void Sprite::clearComponent()
 void Sprite::componentBasicUpdate()
 {
 	for (auto component : _componentList) {
-		component->basicUpdate();
+		component->basicUpdate(this);
 	}
 }
 
 void Sprite::componentBeforeDraw()
 {
 	for (auto component : _componentList) {
-		component->beforeDraw();
+		component->beforeDraw(this);
 	}
 }
 
 void Sprite::componentAfterDraw()
 {
 	for (auto component : _componentList) {
-		component->afterDraw();
+		component->afterDraw(this);
 	}
 }
 
 void Sprite::componentUpdate()
 {
 	for (auto component : _componentList) {
-		component->update();
+		component->update(this);
 	}
 }
 

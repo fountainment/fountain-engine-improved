@@ -15,10 +15,10 @@ public:
 
 	Sprite* getSprite();
 
-	virtual void basicUpdate();
-	virtual void update();
-	virtual void beforeDraw();
-	virtual void afterDraw();
+	virtual void basicUpdate(Sprite* sprite);
+	virtual void update(Sprite* sprite);
+	virtual void beforeDraw(Sprite* sprite);
+	virtual void afterDraw(Sprite* sprite);
 
 	void setPrivate(bool isPrivate);
 
