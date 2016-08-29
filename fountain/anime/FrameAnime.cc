@@ -60,6 +60,12 @@ void FrameAnime::loadTextureAndIPI(const fei::Texture& texture, const std::strin
 	_curFrameIndex = 0;
 }
 
+void FrameAnime::loadImagePool(ImagePool imagePool)
+{
+	_framePool = imagePool;
+	_curFrameIndex = 0;
+}
+
 void FrameAnime::feiObjectUpdate(fei::RenderObj* rObj)
 {
 	updateFrameIndex();
