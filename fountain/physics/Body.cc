@@ -121,6 +121,15 @@ void Body::setCategoryBitsAndMaskBits(uint16 cbits, uint16 mbits)
 	}
 }
 
+void Body::setGroupIndex(int16 groupIndex)
+{
+	for (b2Fixture* f = _body->GetFixtureList(); f; f = f->GetNext()) {
+		b2Filter fd = f->GetFilterData();
+		fd.groupIndex = groupIndex;
+		f->SetFilterData(fd);
+	}
+}
+
 void Body::setCollisionCategory(int category)
 {
 	uint16 bits = 1 << category;

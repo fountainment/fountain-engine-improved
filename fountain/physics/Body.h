@@ -44,6 +44,7 @@ public:
 
 	void setCategoryBitsAndMaskBits(uint16 cbits, uint16 mbits);
 	void setCollisionCategory(int category);
+	void setGroupIndex(int16 groupIndex);
 
 	void setBeginContactCallback(std::function<void(Body*)> callbackFunc);
 	void setFrameContactCallback(std::function<bool(Body*)> callbackFunc);
