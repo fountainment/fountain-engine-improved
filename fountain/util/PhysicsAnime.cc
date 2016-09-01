@@ -2,6 +2,30 @@
 
 using fut::CollisionFrameAnime;
 
+void fut::loadPolygonCollisionData(std::map<int, std::vector<fei::Polygon>>& frameMap, const std::string& filename)
+{
+	auto colF = std::fopen(filename.c_str(), "r");
+	int fi, polyNum;
+	frameMap.clear();
+	while (std::fscanf(colF, "%d", &fi) != EOF) {
+		std::vector<fei::Polygon> polyVec;
+		std::fscanf(colF, "%d", &polyNum);
+		for (int i = 0; i < polyNum; i++) {
+			int vertexNum;
+			std::fscanf(colF, "%d", &vertexNum);
+			fei::Polygon poly;
+			for (int j = 0; j < vertexNum; j++) {
+				float x, y;
+				std::fscanf(colF, "%f%f", &x, &y);
+				poly.pushVertex(fei::Vec2(x, y));
+			}
+			polyVec.push_back(poly);
+		}
+		frameMap[fi] = polyVec;
+	}
+	std::fclose(colF);
+}
+
 CollisionFrameAnime::CollisionFrameAnime()
 : _body(nullptr),
   _oldFrameIndex(-1)
@@ -72,27 +96,7 @@ void CollisionFrameAnime::update(fei::RenderObj* rObj)
 
 void CollisionFrameAnime::loadCollisionFile(const std::string& filename)
 {
-	auto colF = std::fopen(filename.c_str(), "r");
-	std::map<int, std::vector<fei::Polygon>> frameMap;
-	int fi, polyNum;
-	while (std::fscanf(colF, "%d", &fi) != EOF) {
-		std::vector<fei::Polygon> polyVec;
-		std::fscanf(colF, "%d", &polyNum);
-		for (int i = 0; i < polyNum; i++) {
-			int vertexNum;
-			std::fscanf(colF, "%d", &vertexNum);
-			fei::Polygon poly;
-			for (int j = 0; j < vertexNum; j++) {
-				float x, y;
-				std::fscanf(colF, "%f%f", &x, &y);
-				poly.pushVertex(fei::Vec2(x, y));
-			}
-			polyVec.push_back(poly);
-		}
-		frameMap[fi] = polyVec;
-	}
-	_frameMap = frameMap;
-	std::fclose(colF);
+	loadPolygonCollisionData(_frameMap, filename);
 }
 
 void CollisionFrameAnime::updateCollisionPolygon(std::function<void(fei::Polygon&)> func)

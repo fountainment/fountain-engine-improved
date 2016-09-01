@@ -11,6 +11,8 @@
 
 namespace fut {
 
+void loadPolygonCollisionData(std::map<int, std::vector<fei::Polygon>>& frameMap, const std::string& filename);
+
 class CollisionFrameAnime : public fei::FrameAnime
 {
 public:
