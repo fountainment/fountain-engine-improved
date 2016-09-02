@@ -26,42 +26,42 @@ public:
 
 	void DrawPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 	{
-		fei::Polygon polygon;
-		polygon.setVertices(vertexCount, (float*)&(vertices[0].x));
-		polygon.zoom(fei::Physics::getInstance()->getRatio());
-		polygon.setSolid(false);
+		_polygon.setVertices(vertexCount, (float*)&(vertices[0].x));
+		_polygon.zoom(fei::Physics::getInstance()->getRatio());
+		_polygon.setSolid(false);
 		_shapeObj.setColor(fei::Color(color.r, color.g, color.b));
-		_shapeObj.setShape(&polygon);
+		_shapeObj.setShape(&_polygon);
 		_shapeObj.draw();
 	}
 
 	void DrawSolidPolygon(const b2Vec2* vertices, int32 vertexCount, const b2Color& color)
 	{
-		fei::Polygon polygon;
-		polygon.setVertices(vertexCount, (float*)&(vertices[0].x));
-		polygon.zoom(fei::Physics::getInstance()->getRatio());
+		_polygon.setVertices(vertexCount, (float*)&(vertices[0].x));
+		_polygon.zoom(fei::Physics::getInstance()->getRatio());
+		_polygon.setSolid(true);
 		_shapeObj.setColor(fei::Color(color.r, color.g, color.b, 0.5f));
-		_shapeObj.setShape(&polygon);
+		_shapeObj.setShape(&_polygon);
 		_shapeObj.draw();
 		DrawPolygon(vertices, vertexCount, b2Color(color.r + 0.2f, color.g + 0.2f, color.b + 0.2f));
 	}
 
 	void DrawCircle(const b2Vec2& center, float32 radius, const b2Color& color)
 	{
-		fei::Circle circle(Physics::getInstance()->physicsToRender(radius));
-		circle.setPosition(Physics::getInstance()->physicsToRender(fei::Vec2(center.x, center.y)));
-		circle.setSolid(false);
+		_circle.setRadius(Physics::getInstance()->physicsToRender(radius));
+		_circle.setPosition(Physics::getInstance()->physicsToRender(fei::Vec2(center.x, center.y)));
+		_circle.setSolid(false);
 		_shapeObj.setColor(fei::Color(color.r, color.g, color.b));
-		_shapeObj.setShape(&circle);
+		_shapeObj.setShape(&_circle);
 		_shapeObj.draw();
 	}
 
 	void DrawSolidCircle(const b2Vec2& center, float32 radius, const b2Vec2& axis, const b2Color& color)
 	{
-		fei::Circle circle(Physics::getInstance()->physicsToRender(radius));
-		circle.setPosition(Physics::getInstance()->physicsToRender(fei::Vec2(center.x, center.y)));
+		_circle.setRadius(Physics::getInstance()->physicsToRender(radius));
+		_circle.setPosition(Physics::getInstance()->physicsToRender(fei::Vec2(center.x, center.y)));
+		_circle.setSolid(true);
 		_shapeObj.setColor(fei::Color(color.r, color.g, color.b, 0.5f));
-		_shapeObj.setShape(&circle);
+		_shapeObj.setShape(&_circle);
 		_shapeObj.draw();
 		auto lineColor = b2Color(color.r + 0.2f, color.g + 0.2f, color.b + 0.2f);
 		DrawSegment(center, center + radius * axis, lineColor);
@@ -74,9 +74,10 @@ public:
 		fei::Vec2 b(p2.x, p2.y);
 		a = Physics::getInstance()->physicsToRender(a);
 		b = Physics::getInstance()->physicsToRender(b);
-		fei::Segment segment(a, b);
+		_segment.a = a;
+		_segment.b = b;
 		_shapeObj.setColor(fei::Color(color.r, color.g, color.b));
-		_shapeObj.setShape(&segment);
+		_shapeObj.setShape(&_segment);
 		_shapeObj.draw();
 	}
 
@@ -98,6 +99,9 @@ public:
 
 private:
 	fei::ShapeObj _shapeObj;
+	fei::Polygon _polygon;
+	fei::Circle _circle;
+	fei::Segment _segment;
 };
 
 
