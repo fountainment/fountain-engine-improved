@@ -54,14 +54,12 @@ void Image::drawRect(const fei::Rect& rect)
 {
 	fei::Render::getInstance()->bindTexture(getId());
 	fei::Render::drawTexRect(rect, _texCoord);
-	fei::Render::getInstance()->disableTexture();
 }
 
 void Image::drawIt()
 {
 	fei::Render::getInstance()->bindTexture(getId());
 	fei::Render::drawTexQuadDS(_size2, _texCoord);
-	fei::Render::getInstance()->disableTexture();
 }
 
 void Image::fillUp()

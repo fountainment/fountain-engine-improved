@@ -117,7 +117,8 @@ FragmentShader::FragmentShader()
 
 ShaderProgram::ShaderProgram()
 : _id(0),
-  _useTexUniformLoc(-1)
+  _useTexUniformLoc(-1),
+  _useTexCache(false)
 {
 }
 
@@ -401,7 +402,10 @@ void ShaderProgram::setUniform(const std::string& varName, const fei::Vec4& valu
 
 void ShaderProgram::setUseTex(bool useTex)
 {
-	setUniform(_useTexUniformLoc, useTex);
+	if (_useTexCache != useTex) {
+		setUniform(_useTexUniformLoc, useTex);
+		_useTexCache = useTex;
+	}
 }
 
 void ShaderProgram::basicSetting()

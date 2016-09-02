@@ -21,6 +21,7 @@ void Button::drawIt()
 {
 	_drawCamera = fei::Render::getInstance()->getCurrentCamera();
 
+	fei::Render::getInstance()->disableTexture();
 	_backColor.use();
 	fei::Render::drawShape(&_backRect);
 	if (!_backImage.empty()) {

@@ -17,6 +17,7 @@ void ShapeObj::setShape(fei::Shape* sp)
 void ShapeObj::drawIt()
 {
 	if (shape != nullptr) {
+		fei::Render::getInstance()->disableTexture();
 		fei::Render::drawShape(shape);
 	}
 }

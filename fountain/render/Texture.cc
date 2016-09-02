@@ -190,14 +190,12 @@ void Texture::drawIt()
 {
 	fei::Render::getInstance()->bindTexture(_id);
 	fei::Render::drawTexQuadDS(_size2);
-	fei::Render::getInstance()->disableTexture();
 }
 
 void Texture::drawRect(const fei::Rect& rect)
 {
 	fei::Render::getInstance()->bindTexture(_id);
-        fei::Render::drawTexRect(rect);
-	fei::Render::getInstance()->disableTexture();
+	fei::Render::drawTexRect(rect);
 }
 
 void Texture::fillUp()

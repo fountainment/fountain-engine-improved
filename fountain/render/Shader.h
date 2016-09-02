@@ -100,6 +100,7 @@ private:
 
 	GLuint _id;
 	GLint _useTexUniformLoc;
+	bool _useTexCache;
 };
 
 } // namespace fei
