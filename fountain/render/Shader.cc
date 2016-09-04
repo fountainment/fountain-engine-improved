@@ -9,27 +9,27 @@ using fei::VertexShader;
 using fei::ShaderProgram;
 
 static const GLchar *BasicVertexShader = {
-        "void main()"
-        "{"
-        "       gl_TexCoord[0] = gl_MultiTexCoord0;"
-        "       gl_FrontColor = gl_Color;"
-        "       gl_Position = ftransform();"
-        "}"
+	"void main()\n"
+	"{\n"
+	"       gl_TexCoord[0] = gl_MultiTexCoord0;\n"
+	"       gl_FrontColor = gl_Color;\n"
+	"       gl_Position = ftransform();\n"
+	"}\n"
 };
 
 static const GLchar *BasicFragmentShader = {
-	"uniform sampler2D feiTex;"
-	"uniform bool feiUseTex;"
-	"void main()"
-	"{"
-	"       vec4 color = gl_Color;"
-	"       if (feiUseTex) {"
-	"               vec4 texColor = texture2D(feiTex, gl_TexCoord[0].st);"
-	"               if (texColor.a == 0.0 || color.a == 0.0) discard;"
-	"               color *= texColor;"
-	"       }"
-	"       gl_FragColor = color;"
-	"}"
+	"uniform sampler2D feiTex;\n"
+	"uniform bool feiUseTex;\n"
+	"void main()\n"
+	"{\n"
+	"       vec4 color = gl_Color;\n"
+	"       if (feiUseTex) {\n"
+	"               vec4 texColor = texture2D(feiTex, gl_TexCoord[0].st);\n"
+	"               if (texColor.a == 0.0 || color.a == 0.0) discard;\n"
+	"               color *= texColor;\n"
+	"       }\n"
+	"       gl_FragColor = color;\n"
+	"}\n"
 };
 
 static const char *ShaderTextureSwitchUniform = "feiUseTex";
