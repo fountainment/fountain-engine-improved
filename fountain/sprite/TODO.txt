@@ -1,2 +1,0 @@
-TODO: base RenderObj add some functions for usual game use
-TODO: add Component class

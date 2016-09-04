@@ -7,23 +7,31 @@ C Current
 
 Function:
 	O Render to Texture
-		! RenderBuffer create
+		? RenderBuffer create
+		C Last RenderTarget Recover
 	O Physics Collision Logic
+		C Avoid SetSensor Call in Collsion Callback (use process queue?)
 	O Component Logic
-		! Message System
+		? Message System
 	C FSM test
-	C InputBox Class
 	C UI Widget border
+	C More UI Widgets
+		C TextBox
+		C InputBox
+	! Particle System
+	! PBO in Texture Reading
 	! File Utility Class
 	* Resource Manager
 	* VBO
 	* Test and Debug module (e.g. log file debug output)
+	* Script System
+	* Network System
 
 
 Optimization:
-	C Avoid glGet* and glActiveTexture in render loop
 	! Framerate Control
 	! Make GL calls compatible with Nsight
+	! Avoid Redundant Uniform Value Setting
 	* Standardize function name (e.g. razor meanning-unclear load())
 	* Reduce texture switch
 
@@ -43,9 +51,10 @@ External:
 		* Engine Manual (doxygen?)
 
 	Study:
-		F Physically Based Rendering
-		C C++11 std::thread
+		C Interpreter Building
 		C LiquidFun Particle System
+		C C++11 std::thread
 		! Valkan API
+		! RakNet
 		* Unreal Source
 
