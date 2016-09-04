@@ -24,7 +24,7 @@ public:
 
 	int getRemainingSpace();
 
-	const Image queryCharactor(unsigned long c);
+	const Image queryCharacter(unsigned long c);
 	int queryKerning(unsigned long left, unsigned long right);
 	int queryAdvance(unsigned long c);
 

@@ -45,17 +45,17 @@ void Label::setString(fei::FontCache& fontCache, const std::string& str)
 void Label::addString(fei::FontCache& fontCache, const std::vector<unsigned long>& str)
 {
 	unsigned long prev = 0;
-	for (auto charactor : str) {
-		auto image = fontCache.queryCharactor(charactor); 
+	for (auto character : str) {
+		auto image = fontCache.queryCharacter(character); 
 		image.setUseColor(false);
 		_charList.push_back(image);
-		int advance = fontCache.queryAdvance(charactor);
+		int advance = fontCache.queryAdvance(character);
 		if (prev) {
-			advance += fontCache.queryKerning(prev, charactor);
+			advance += fontCache.queryKerning(prev, character);
 		}
 		_advanceList.push_back(advance);
 		_length += advance;
-		prev = charactor;
+		prev = character;
 	}
 	if (_centerAligned) {
 		setAnchor(Vec2(static_cast<float>(_length), 0.0f) / 2.0f);

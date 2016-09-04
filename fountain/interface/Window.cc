@@ -402,7 +402,7 @@ static void character_callback(GLFWwindow* window, unsigned int codepoint)
 {
 	auto scene = Window::getFeiWindow(window)->getSceneManager()->getCurScene();
 	if (scene) {
-		scene->charactorCallback(codepoint);
+		scene->characterCallback(codepoint);
 	}
 }
 

@@ -20,7 +20,7 @@ public:
 	virtual void mouseButtonCallback(int button, int action, int mods);
 	virtual void scrollCallback(double xoffset, double yoffset);
 	virtual void cursorPosCallback(double xpos, double ypos);
-	virtual void charactorCallback(unsigned int codepoint);
+	virtual void characterCallback(unsigned int codepoint);
 	virtual void framebufferSizeCallback(int width, int height);
 	virtual void dropCallback(int count, const char** paths);
 	virtual void joystickCallback(int joy, int event);

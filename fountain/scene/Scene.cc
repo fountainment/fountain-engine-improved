@@ -37,7 +37,7 @@ void Scene::scrollCallback(double xoffset, double yoffset)
 {
 }
 
-void Scene::charactorCallback(unsigned int codepoint)
+void Scene::characterCallback(unsigned int codepoint)
 {
 }
 

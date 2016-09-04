@@ -140,7 +140,7 @@ void FontCache::updateCache(const std::vector<unsigned long>& str)
 	if (updateSize > remainingSpace) {
 		int dissmissed = updateSize - remainingSpace;
 		updateSize = remainingSpace;
-		std::fprintf(stderr, "FontCache: Cache overflow! (%d charactors dismissed)\n", dissmissed);
+		std::fprintf(stderr, "FontCache: Cache overflow! (%d characters dismissed)\n", dissmissed);
 	}
 	while (updateSize > 0) {
 		int subUpdateSize;
@@ -178,7 +178,7 @@ int FontCache::getRemainingSpace()
 	return (_gridNum - _curRow - 1) * _gridNum + (_gridNum - _curCol);
 }
 
-const fei::Image FontCache::queryCharactor(unsigned long c)
+const fei::Image FontCache::queryCharacter(unsigned long c)
 {
 	auto it = _charImageMap.find(c);
 	if (it == _charImageMap.end()) {
