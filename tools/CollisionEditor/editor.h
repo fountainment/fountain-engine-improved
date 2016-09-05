@@ -53,7 +53,7 @@ public:
 	void finishShape(fei::Shape* shape);
 
 	virtual void keyCallback(int key, int scancode, int action, int mods) override;
-	virtual void charactorCallback(unsigned int codepoint) override;
+	virtual void characterCallback(unsigned int codepoint) override;
 	virtual void scrollCallback(double xoffset, double yoffset) override;
 	virtual void mouseButtonCallback(int button, int action, int mods) override;
 	virtual void dropCallback(int count, const char** paths) override;

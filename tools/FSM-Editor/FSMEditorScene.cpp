@@ -318,7 +318,7 @@ void FSMEditorScene::establishLink(StateButton* a, StateButton* b)
 	}
 }
 
-void FSMEditorScene::charactorCallback(unsigned int codepoint)
+void FSMEditorScene::characterCallback(unsigned int codepoint)
 {
 	if (_tmpName.size() < 25 && codepoint != (unsigned int)' ') {
 		_tmpName.push_back(codepoint);

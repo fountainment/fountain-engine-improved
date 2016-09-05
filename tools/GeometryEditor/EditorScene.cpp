@@ -39,6 +39,7 @@ void EditorScene::init()
 	Physics::getInstance()->setDebugDrawCamera(&mainCam);
 	Physics::getInstance()->setRatio(64.0f);
 
+	animeObj.setHasAlpha(true);
 	add(&animeObj);
 
 	for (int i = 0; i < 10; i++) {
