@@ -72,6 +72,8 @@ public:
 
 	bool isInStep();
 
+	b2World* getB2World();
+
 	static b2Shape* ShapeToB2Shape(const Shape* shape);
 	static Body* getBodyByB2Fixture(const b2Fixture* fixture);
 
@@ -117,6 +119,11 @@ inline float fei::Physics::renderToPhysics(float f)
 inline float fei::Physics::physicsToRender(float f)
 {
 	return f * getRatio();
+}
+
+inline b2World* fei::Physics::getB2World()
+{
+	return _world;
 }
 
 inline fei::Body* fei::Physics::getBodyByB2Fixture(const b2Fixture* fixture)
