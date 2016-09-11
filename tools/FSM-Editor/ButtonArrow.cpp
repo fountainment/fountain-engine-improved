@@ -10,7 +10,7 @@ ButtonArrow::ButtonArrow(fei::Button* ba, fei::Button* bb, const std::string& la
 	_label.setString(FSMEditor::font20, labelStr);
 }
 
-void ButtonArrow::drawIt()
+void ButtonArrow::update()
 {
 	auto pa = _ba->getCenter();
 	auto pb = _bb->getCenter();
@@ -24,7 +24,8 @@ void ButtonArrow::drawIt()
 		fei::Vec2 bac;
 		auto bbc = collideP;
 		auto arrowP = collideP - segVec * 21.0f - segVVec * 7.0f;
-		fei::Render::drawLine(collideP, arrowP);
+		_arrowSeg.a = collideP;
+		_arrowSeg.b = arrowP;
 		if (_ba->getRect().collideSegment(collideP, _seg)) {
 			bac = collideP;
 			auto center = (bac + bbc) * 0.5f;
@@ -35,6 +36,12 @@ void ButtonArrow::drawIt()
 			_label.setCenter(center);
 		}
 	}
+}
+
+void ButtonArrow::drawIt()
+{
+	fei::Render::getInstance()->disableTexture();
+	fei::Render::drawShape(&_arrowSeg);
 	fei::Render::drawShape(&_seg);
 	_label.draw();
 }
