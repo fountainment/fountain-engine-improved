@@ -16,7 +16,9 @@ PhysicsSprite::~PhysicsSprite()
 
 void PhysicsSprite::initBody(fei::Body::Type type)
 {
-	_body = fei::Physics::getInstance()->createBody(getPosition(), type);
+	if (!_body) {
+		_body = fei::Physics::getInstance()->createBody(getPosition(), type);
+	}
 }
 
 void PhysicsSprite::destroyBody()
