@@ -76,6 +76,8 @@ public:
 	void setColorAlpha(float alpha);
 	const Color getColor() const;
 
+	virtual void processWith(std::function<void(RenderObj*)> func);
+
 private:
 	void setParent(RenderList* parent);
 

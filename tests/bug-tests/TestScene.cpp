@@ -160,7 +160,7 @@ void TestScene::scrollCallback(double xoffset, double yoffset)
 	}
 }
 
-void TestScene::charactorCallback(unsigned int codepoint)
+void TestScene::characterCallback(unsigned int codepoint)
 {
 	comLabel.inputChar(codepoint);
 }

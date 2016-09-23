@@ -572,7 +572,7 @@ void EditorScene::finishShape(fei::Shape* shape)
 	}
 }
 
-void EditorScene::charactorCallback(unsigned int codepoint)
+void EditorScene::characterCallback(unsigned int codepoint)
 {
 	_commandLabel.inputChar(static_cast<char>(codepoint));
 }

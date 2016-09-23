@@ -65,7 +65,7 @@ public:
 
 	void establishLink(StateButton* a, StateButton* b);
 
-	void charactorCallback(unsigned int codepoint) override;
+	void characterCallback(unsigned int codepoint) override;
 	void keyCallback(int key, int scancode, int action, int mods) override;
 	void scrollCallback(double xoffset, double yoffset);
 	void mouseButtonCallback(int button, int action, int mods);

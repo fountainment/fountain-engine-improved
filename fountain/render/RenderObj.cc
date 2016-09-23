@@ -273,3 +273,10 @@ const fei::Color RenderObj::getColor() const
 {
 	return _color;
 }
+
+void RenderObj::processWith(std::function<void(RenderObj*)> func)
+{
+	if (func) {
+		func(this);
+	}
+}
