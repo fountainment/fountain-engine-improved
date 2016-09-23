@@ -94,7 +94,15 @@ public:
 
 	void DrawParticles(const b2Vec2* centers, float32 radius, const b2ParticleColor* colors, int32 count)
 	{
-		//TODO implement DebugDraw::DrawParticles
+		_shapeObj.setShape(&_circle);
+		_circle.setRadius(Physics::getInstance()->physicsToRender(radius));
+		_circle.setSolid(true);
+		for (int32 i = 0; i < count; i++) {
+			auto pos = Physics::getInstance()->physicsToRender(fei::Vec2(centers[i].x, centers[i].y));
+			_circle.setPosition(pos);
+			_shapeObj.setColor(fei::Color(colors[i].r, colors[i].g, colors[i].b, 0.5f));
+			_shapeObj.draw();
+		}
 	}
 
 private:
@@ -211,6 +219,7 @@ bool Physics::init()
 	flags += b2Draw::e_jointBit;
 	//flags += b2Draw::e_aabbBit;
 	flags += b2Draw::e_pairBit;
+	flags += b2Draw::e_particleBit;
 	//flags += b2Draw::e_centerOfMassBit;
 	_debugDraw->SetFlags(flags);
 	_world->SetAllowSleeping(true);
