@@ -27,6 +27,8 @@ public:
 	void delChild(RenderObj* rObj);
 	void sort();
 
+	virtual void processWith(std::function<void(RenderObj*)> func) override;
+
 private:
 	RenderObj* _root;
 	RenderList _childList;

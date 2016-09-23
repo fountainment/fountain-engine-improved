@@ -37,6 +37,8 @@ public:
 	void sort(std::function<bool(fei::RenderObj*, fei::RenderObj*)> cmp = RenderListZCmp);
 	void topoSort(std::function<int(fei::RenderObj*, fei::RenderObj*)> cmp);
 
+	virtual void processWith(std::function<void(RenderObj*)> func) override;
+
 private:
 	std::vector<RenderObj*> _objList;
 	std::queue<RenderObj*> _garbageQueue;

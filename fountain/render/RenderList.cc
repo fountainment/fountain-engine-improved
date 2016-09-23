@@ -192,6 +192,15 @@ void RenderList::topoSort(std::function<int(fei::RenderObj*, fei::RenderObj*)> c
 	listRearrange(result);
 }
 
+void RenderList::processWith(std::function<void(fei::RenderObj*)> func)
+{
+	auto tmpList = _objList;
+	fei::RenderObj::processWith(func);
+	for (auto renderObj : tmpList) {
+		renderObj->processWith(func);
+	}
+}
+
 bool fei::RenderListZCmp(fei::RenderObj* a, fei::RenderObj* b)
 {
 	return a->getZPos() < b->getZPos();

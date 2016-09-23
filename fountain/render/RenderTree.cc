@@ -92,3 +92,12 @@ void RenderTree::sort()
 {
 	_childList.sort();
 }
+
+void RenderTree::processWith(std::function<void(fei::RenderObj*)> func)
+{
+	fei::RenderObj::processWith(func);
+	if (_root) {
+		_root->processWith(func);
+	}
+	_childList.processWith(func);
+}
