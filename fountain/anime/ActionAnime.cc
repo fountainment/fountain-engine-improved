@@ -20,7 +20,7 @@ void ActionAnime::feiObjectUpdate(fei::RenderObj* rObj)
 			stop();
 			_state = fei::clamp(_state, 0.0f, 1.0f);
 		}
-		if (_stateOutputMapFunc) {
+		if (isPlay() && _stateOutputMapFunc) {
 			float output = _stateOutputMapFunc(_state);
 			if (_outputFunc) {
 				_outputFunc(output);
