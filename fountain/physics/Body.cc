@@ -101,6 +101,9 @@ b2Fixture* Body::createFixture(const b2FixtureDef& fixDef)
 
 void Body::destroyFixture(b2Fixture* fixture)
 {
+	if (_destroyed) {
+		return;
+	}
 	_body->DestroyFixture(fixture);
 }
 
