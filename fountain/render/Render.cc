@@ -59,9 +59,7 @@ void Render::destroy()
 void Render::executeBeforeFrame()
 {
 	clearBuffer();
-	//initViewport();
 	initMatrix();
-	//initShader();
 }
 
 void Render::executeAfterFrame()
