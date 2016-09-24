@@ -143,7 +143,7 @@ void Texture::unload()
 
 bool Texture::isLoaded() const
 {
-	return _id && GL_TRUE == glIsTexture(_id);
+	return _id != 0;
 }
 
 void Texture::subUpdate(const std::string& filename, const fei::Vec2& offset)
