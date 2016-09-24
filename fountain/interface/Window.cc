@@ -3,6 +3,7 @@
 #include <glad/glad.h>
 
 #include "interface/Interface.h"
+#include "render/Render.h"
 
 using fei::Window;
 
@@ -41,6 +42,11 @@ void Window::setSize(int w, int h)
 	if (_window) {
 		glfwSetWindowSize(_window, w, h);
 	}
+}
+
+void Window::setSize(const fei::Vec2& size)
+{
+	setSize(static_cast<int>(size.x), static_cast<int>(size.y));
 }
 
 void Window::setTitle(std::string tt)
@@ -201,6 +207,10 @@ void Window::setCurrent()
 		glfwMakeContextCurrent(_window);
 		gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		Interface::getInstance()->setCurrentWindow(this);
+		auto shader = fei::Render::getInstance()->getShaderProgram();
+		if (shader) {
+			shader->use();
+		}
 		updateVsync();
 	}
 }

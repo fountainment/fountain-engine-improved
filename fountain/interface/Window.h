@@ -17,6 +17,7 @@ public:
 	~Window();
 
 	void setSize(int w, int h);
+	void setSize(const Vec2& size);
 	void setTitle(std::string tt);
 	void setResizable(bool resizable);
 	void setFullscreen(bool fullscreen);
