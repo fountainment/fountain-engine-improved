@@ -42,6 +42,7 @@ public:
 	virtual void keyCallback(int key, int scancode, int action, int mods) override;
 	virtual void scrollCallback(double xoffset, double yoffset) override;
 	virtual void characterCallback(unsigned int codepoint) override;
+	virtual void framebufferSizeCallback(int width, int height) override;
 
 private:
 	void testMath();

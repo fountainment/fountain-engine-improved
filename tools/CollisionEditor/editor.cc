@@ -284,8 +284,10 @@ void EditorScene::update()
 void EditorScene::initUILayout()
 {
 	auto window = Application::getEngine()->getWindow();
-	_camera.setCameraSize(window->getFrameSize());
-	_uiCamera.setCameraSize(window->getFrameSize());
+	auto frameSize = window->getFrameSize();
+	fei::Render::getInstance()->setViewport(frameSize);
+	_camera.setCameraSize(frameSize);
+	_uiCamera.setCameraSize(frameSize);
 	_commandLabel.setPosition(_uiCamera.screenToWorld(Vec2(5.0f)));
 }
 
@@ -595,7 +597,6 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 	case GLFW_KEY_F11:
 		if (action == GLFW_PRESS) {
 			window->setFullscreen(!window->isFullscreen());
-			_needInitUILayout = true;
 		}
 		break;
 	case GLFW_KEY_ENTER:

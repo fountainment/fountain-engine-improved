@@ -140,7 +140,6 @@ void TestScene::keyCallback(int key, int scancode, int action, int mods)
 	if (key == GLFW_KEY_F11 && action == GLFW_PRESS) {
 		auto window = fei::Interface::getInstance()->getCurrentWindow();
 		window->setFullscreen(!window->isFullscreen());
-		_needInitUILayout = true;
 	}
 	if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
 		comLabel.executeCommand();
@@ -163,6 +162,11 @@ void TestScene::scrollCallback(double xoffset, double yoffset)
 void TestScene::characterCallback(unsigned int codepoint)
 {
 	comLabel.inputChar(codepoint);
+}
+
+void TestScene::framebufferSizeCallback(int width, int height)
+{
+	_needInitUILayout = true;
 }
 
 void TestScene::testPhysics()
@@ -228,6 +232,7 @@ void TestScene::initUILayout()
 	auto window = fei::Interface::getInstance()->getCurrentWindow();
 	auto winSize = window->getFrameSize();
 	std::printf("%f %f\n", winSize.x, winSize.y);
+	fei::Render::getInstance()->setViewport(winSize);
 	mainCam.setCameraSize(winSize);
 	_renderTarget.setSize(winSize, Texture::Format::RGBAF);
 	_renderTarget.getTexture()->setHasAlpha(true);

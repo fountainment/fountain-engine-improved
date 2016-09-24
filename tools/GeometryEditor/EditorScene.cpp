@@ -249,8 +249,6 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 
 	if (key == GLFW_KEY_F11 && action == GLFW_PRESS) {
 		window->setFullscreen(!window->isFullscreen());
-		Render::getInstance()->setViewport(window->getFrameSize());
-		mainCam.setCameraSize(window->getFrameSize());
 	}
 
 	if (key == GLFW_KEY_S && action == GLFW_PRESS) {
@@ -374,7 +372,8 @@ void EditorScene::keyCallback(int key, int scancode, int action, int mods)
 
 void EditorScene::framebufferSizeCallback(int width, int height)
 {
-	Vec2 framebufferSize((float)width, (float)height);
+	Vec2 framebufferSize(static_cast<float>(width), static_cast<float>(height));
+	Render::getInstance()->setViewport(framebufferSize);
 	mainCam.setCameraSize(framebufferSize);
 }
 

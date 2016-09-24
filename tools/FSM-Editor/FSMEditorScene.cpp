@@ -476,6 +476,7 @@ void FSMEditorScene::refreshWindow()
 	Color("#555").setClearColor();
 	auto win = Interface::getInstance()->getCurrentWindow();
 	auto winS = win->getFrameSize();
+	Render::getInstance()->setViewport(winS);
 	_mainCam.setCameraSize(winS);
 	_fsmCam.setCameraSize(winS);
 
