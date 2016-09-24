@@ -9,22 +9,30 @@ using fei::VertexShader;
 using fei::ShaderProgram;
 
 static const GLchar *BasicVertexShader = {
+	"#version 130\n"
+	"in vec4 feiVertex;\n"
+	"in vec2 feiTexCoord;\n"
+	"out vec4 v_color;\n"
+	"out vec2 v_texcoord;\n"
 	"void main()\n"
 	"{\n"
-	"       gl_TexCoord[0] = gl_MultiTexCoord0;\n"
-	"       gl_FrontColor = gl_Color;\n"
-	"       gl_Position = ftransform();\n"
+	"       v_color = gl_Color;\n"
+	"       v_texcoord = feiTexCoord;\n"
+	"       gl_Position = gl_ModelViewProjectionMatrix * feiVertex;\n"
 	"}\n"
 };
 
 static const GLchar *BasicFragmentShader = {
+	"#version 130\n"
 	"uniform sampler2D feiTex;\n"
 	"uniform bool feiUseTex;\n"
+	"in vec4 v_color;\n"
+	"in vec2 v_texcoord;\n"
 	"void main()\n"
 	"{\n"
-	"       vec4 color = gl_Color;\n"
+	"       vec4 color = v_color;\n"
 	"       if (feiUseTex) {\n"
-	"               vec4 texColor = texture2D(feiTex, gl_TexCoord[0].st);\n"
+	"               vec4 texColor = texture2D(feiTex, v_texcoord);\n"
 	"               if (texColor.a == 0.0 || color.a == 0.0) discard;\n"
 	"               color *= texColor;\n"
 	"       }\n"
@@ -197,6 +205,8 @@ void ShaderProgram::attach(Shader* vs, Shader* fs)
 
 void ShaderProgram::beforeLink()
 {
+	bindAttribLocation(0, "feiVertex");
+	bindAttribLocation(2, "feiTexCoord");
 }
 
 void ShaderProgram::afterLink()

@@ -124,11 +124,13 @@ FountainShader::FountainShader()
 
 void FountainShader::beforeLink()
 {
+	fei::ShaderProgram::beforeLink();
 	bindAllFragDataLocation();
 }
 
 void FountainShader::afterLink()
 {
+	fei::ShaderProgram::afterLink();
 	cacheAllUniformLocation();
 	setDefaultVariableValue();
 }
