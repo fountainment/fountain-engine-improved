@@ -59,9 +59,9 @@ void Render::destroy()
 void Render::executeBeforeFrame()
 {
 	clearBuffer();
-	initViewport();
+	//initViewport();
 	initMatrix();
-	initShader();
+	//initShader();
 }
 
 void Render::executeAfterFrame()
@@ -278,5 +278,5 @@ void Render::drawShape(const fei::Shape* shape)
 
 void Render::useColor(const fei::Vec4* color)
 {
-	glColor4fv(&color->x);
+	glColor4f(color->x, color->y, color->z, color->w);
 }

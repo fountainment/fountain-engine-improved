@@ -108,10 +108,10 @@ private:
 
 inline void Render::drawArray2f(const GLfloat* vertex, GLint first, GLsizei count, GLenum mode)
 {
-	glEnableClientState(GL_VERTEX_ARRAY);
-	glVertexPointer(2, GL_FLOAT, 0, vertex);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, vertex);
 	glDrawArrays(mode, first, count);
-	glDisableClientState(GL_VERTEX_ARRAY);
+	glDisableVertexAttribArray(0);
 }
 
 inline void Render::drawLine(const fei::Vec2& pa, const fei::Vec2& pb)
@@ -151,66 +151,66 @@ inline void Render::drawQuadDS(const fei::Vec2& size)
 
 inline void Render::drawTexRect(const fei::Vec2& size)
 {
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, stripTexCoord_);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, stripTexCoord_);
 	drawRect(size);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableVertexAttribArray(2);
 }
 
 inline void Render::drawTexRect(const fei::Rect& rect)
 {
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, stripTexCoord_);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, stripTexCoord_);
 	drawRect(rect);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableVertexAttribArray(2);
 }
 
 inline void Render::drawTexQuad(const fei::Vec2& size)
 {
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, stripTexCoord_);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, stripTexCoord_);
 	drawQuad(size);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableVertexAttribArray(2);
 }
 
 inline void Render::drawTexQuadDS(const fei::Vec2& size)
 {
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, stripTexCoord_);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, stripTexCoord_);
 	drawQuadDS(size);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableVertexAttribArray(2);
 }
 
 inline void Render::drawTexRect(const fei::Vec2& size, GLfloat* texCoord)
 {
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoord);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, texCoord);
 	drawRect(size);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableVertexAttribArray(2);
 }
 
 inline void Render::drawTexRect(const fei::Rect& rect, GLfloat* texCoord)
 {
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoord);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, texCoord);
 	drawRect(rect);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableVertexAttribArray(2);
 }
 
 inline void Render::drawTexQuad(const fei::Vec2& size, GLfloat* texCoord)
 {
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoord);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, texCoord);
 	drawQuad(size);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableVertexAttribArray(2);
 }
 
 inline void Render::drawTexQuadDS(const fei::Vec2& size, GLfloat* texCoord)
 {
-	glEnableClientState(GL_TEXTURE_COORD_ARRAY);
-	glTexCoordPointer(2, GL_FLOAT, 0, texCoord);
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, texCoord);
 	drawQuadDS(size);
-	glDisableClientState(GL_TEXTURE_COORD_ARRAY);
+	glDisableVertexAttribArray(2);
 }
 
 inline void Render::IndependentDraw(fei::RenderObj* rObj)
