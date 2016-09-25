@@ -10,6 +10,11 @@ ButtonArrow::ButtonArrow(fei::Button* ba, fei::Button* bb, const std::string& la
 	_label.setString(FSMEditor::font20, labelStr);
 }
 
+void ButtonArrow::init()
+{
+	update();
+}
+
 void ButtonArrow::update()
 {
 	auto pa = _ba->getCenter();

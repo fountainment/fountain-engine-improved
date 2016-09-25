@@ -10,6 +10,7 @@ const Color& FSMEditor::brightColor = fei::Color::White;
 const Color& FSMEditor::midColor = fei::Color("#333");
 const Color& FSMEditor::lightColor = fei::Color("#09C");
 const Color& FSMEditor::lighterColor = fei::Color("#0AD");
+const Color& FSMEditor::selectColor = fei::Color::Yellow;
 FontCache FSMEditor::font20;
 FontCache FSMEditor::font;
 

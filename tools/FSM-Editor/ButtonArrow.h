@@ -11,6 +11,7 @@ class ButtonArrow : public fei::RenderObj
 public:
 	ButtonArrow(fei::Button* ba, fei::Button* bb, const std::string& labelStr);
 
+	virtual void init() override;
 	virtual void update() override;
 	virtual void drawIt() override;
 

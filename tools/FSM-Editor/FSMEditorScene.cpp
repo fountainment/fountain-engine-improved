@@ -5,7 +5,9 @@
 
 using namespace fei;
 
-StateButton* StateButton::DownStateButton;
+SignalButton* SignalButton::selectSignalButton_ = nullptr;
+StateButton* StateButton::downStateButton_ = nullptr;
+StateButton* StateButton::selectStateButton_ = nullptr;
 static FSMEditorScene* scene;
 static fut::FSM* fsm;
 
@@ -52,6 +54,13 @@ SignalButton::SignalButton(int sig)
 	_sig = sig;
 }
 
+SignalButton::~SignalButton()
+{
+	if (selectSignalButton_ == this) {
+		selectSignalButton_ = nullptr;
+	}
+}
+
 void SignalButton::onClick()
 {
 	if (_sig == -1) {
@@ -63,6 +72,11 @@ void SignalButton::onClick()
 		}
 	} else {
 		scene->setSignal(_sig);
+		if (selectSignalButton_) {
+			selectSignalButton_->setFrontColor(FSMEditor::brightColor);
+		}
+		selectSignalButton_ = this;
+		selectSignalButton_->setFrontColor(FSMEditor::selectColor);
 	}
 }
 
@@ -71,6 +85,13 @@ StateButton::StateButton(int state)
 	_state = state;
 	setFrontColor(FSMEditor::lighterColor);
 	setBackColor(FSMEditor::darkColor);
+}
+
+StateButton::~StateButton()
+{
+	if (selectStateButton_ == this) {
+		selectStateButton_ = nullptr;
+	}
 }
 
 void StateButton::onEnter()
@@ -102,24 +123,29 @@ void StateButton::onClick()
 		}
 	} else {
 		scene->setState(_state);
+		if (selectStateButton_) {
+			selectStateButton_->setFrontColor(FSMEditor::lighterColor);
+		}
+		selectStateButton_ = this;
+		selectStateButton_->setFrontColor(FSMEditor::selectColor);
 	}
 }
 
 void StateButton::onButtonDown()
 {
 	if (_state != -1) {
-		DownStateButton = this;
+		downStateButton_ = this;
 	}
 }
 
 void StateButton::onButtonUp()
 {
-	DownStateButton = nullptr;
+	downStateButton_ = nullptr;
 }
 
 void StateButton::beforeUpdate()
 {
-	if (DownStateButton == this) {
+	if (downStateButton_ == this) {
 		scene->mouseDrag(&scene->_fsmCam, this);
 		scene->_statePositionMap[_state] = this->getPosition();
 	}
@@ -137,10 +163,12 @@ void FSMEditorScene::init()
 	_needUIRefresh = false;
 
 	_currentSignal = -1;
+	_currentState = -1;
 	_drawLine = false;
 	_collideStateButton = nullptr;
 	_startStateButton = nullptr;
 	_endStateButton = nullptr;
+	_displayType = DisplayType::SHOW_ALL;
 
 	add(&_lineLayer);
 	add(&_editingLineLayer);
@@ -211,6 +239,23 @@ void FSMEditorScene::beforeUpdate()
 	}
 }
 
+void FSMEditorScene::updateStateList()
+{
+	//clear stateListLayer
+	_stateListLayer.throwAwayAll();
+	_stateListLayer.clear();
+	_stateListLayer.garbageRecycle();
+
+	auto stateList = _fsm.getStateVector();
+	for (auto& state : stateList) {
+		auto button = new StateButton(state.first);
+		button->setLabelString(FSMEditor::font, state.second);
+		button->feiInit();
+		button->setPosition(_statePositionMap[state.first]);
+		_stateListLayer.add(button);
+	}
+}
+
 void FSMEditorScene::updateSignalList()
 {
 	//clear signalListLayer
@@ -236,23 +281,27 @@ void FSMEditorScene::updateSignalList()
 	}
 }
 
+void FSMEditorScene::updateSignalPosition()
+{
+	Vec2 winSize = Interface::getInstance()->getCurrentWindow()->getFrameSize();
+	Vec2 startPosition = winSize.zoomed(Vec2(-0.5f, 0.5f));
+	startPosition.add(Vec2(1.0f, -50.0f - 1.0f));
+	auto buttons = _signalListLayer.getListVector();
+	for (auto robj : buttons) {
+		auto button = static_cast<SignalButton*>(robj);
+		if (startPosition.x + button->getRectSize().x > winSize.x / 2.0f - 100.0f) {
+			startPosition.x = winSize.x / -2.0f + 1.0f;
+			startPosition.y -= 51.0f;
+		}
+		button->setPosition(startPosition);
+		startPosition.add(Vec2(button->getRectSize().x + 1.0f, 0.0f));
+	}
+}
+
 void FSMEditorScene::updateFSM()
 {
-	//clear stateListLayer
-	_stateListLayer.throwAwayAll();
-	_stateListLayer.clear();
-	_stateListLayer.garbageRecycle();
-
-	auto stateList = _fsm.getStateVector();
-	for (auto& state : stateList) {
-		auto button = new StateButton(state.first);
-		button->setLabelString(FSMEditor::font, state.second);
-		button->feiInit();
-		button->setPosition(_statePositionMap[state.first]);
-		_stateListLayer.add(button);
-	}
-	//TODO:
-	//  add save button saving fsm to text file
+	updateStateList();
+	updateSignalList();
 	updateFSMConnection();
 }
 
@@ -268,13 +317,19 @@ void FSMEditorScene::updateFSMConnection()
 	int len = stateV.size();
 	for (int i = 0; i < len - 1; i++) {
 		for (int j = i + 1; j < len; j++) {
-			auto ba = dynamic_cast<StateButton*>(stateV[i]);
-			auto bb = dynamic_cast<StateButton*>(stateV[j]);
+			auto ba = static_cast<StateButton*>(stateV[i]);
+			auto bb = static_cast<StateButton*>(stateV[j]);
 			auto bai = ba->getState();
 			auto bbi = bb->getState();
+			if (_displayType == DisplayType::SHOW_ONE_STATE
+					&& bai != _currentState && bbi != _currentState) {
+				continue;
+			}
 			auto abs = _fsm.getLinkSignalVector(bai, bbi);
 			auto bbs = _fsm.getLinkSignalVector(bbi, bai);
-			if (!abs.empty()) {
+			if ((_displayType != DisplayType::SHOW_ONE_SIGNAL
+					|| std::find(abs.begin(), abs.end(), _currentSignal) != abs.end())
+					&& !abs.empty()) {
 				std::string labelStr = _fsm.getSignalName(abs[0]);
 				int len = abs.size();
 				for (int i = 1; i < len; i++) {
@@ -282,7 +337,9 @@ void FSMEditorScene::updateFSMConnection()
 				}
 				_lineLayer.add(new ButtonArrow(ba, bb, labelStr));
 			}
-			if (!bbs.empty()) {
+			if ((_displayType != DisplayType::SHOW_ONE_SIGNAL
+					|| std::find(bbs.begin(), bbs.end(), _currentSignal) != bbs.end())
+					&& !bbs.empty()) {
 				std::string labelStr = _fsm.getSignalName(bbs[0]);
 				int len = bbs.size();
 				for (int i = 1; i < len; i++) {
@@ -298,6 +355,7 @@ void FSMEditorScene::setSignal(int sig)
 {
 	std::printf("Signal: %d\n", sig);
 	_currentSignal = sig;
+	updateFSMConnection();
 	//TODO:
 	//  highlight the select SignalButton
 }
@@ -305,6 +363,8 @@ void FSMEditorScene::setSignal(int sig)
 void FSMEditorScene::setState(int state)
 {
 	std::printf("State: %d\n", state);
+	_currentState = state;
+	updateFSMConnection();
 }
 
 void FSMEditorScene::establishLink(StateButton* a, StateButton* b)
@@ -314,6 +374,17 @@ void FSMEditorScene::establishLink(StateButton* a, StateButton* b)
 		int stateB = b->getState();
 		_fsm.registerLink(stateA, stateB, _currentSignal);
 		std::printf("Link: %d->%d (%d)\n", stateA, stateB, _currentSignal);
+		updateFSMConnection();
+	}
+}
+
+void FSMEditorScene::deleteLink(StateButton* a, StateButton* b)
+{
+	if (_currentSignal != -1) {
+		int stateA = a->getState();
+		int stateB = b->getState();
+		_fsm.deleteLink(stateA, _currentSignal);
+		std::printf("Delete Link: %d->%d (%d)\n", stateA, stateB, _currentSignal);
 		updateFSMConnection();
 	}
 }
@@ -346,6 +417,15 @@ void FSMEditorScene::keyCallback(int key, int scancode, int action, int mods)
 				_addStateButton->click();
 			}
 		}
+	}
+	if (key == GLFW_KEY_A && action == GLFW_PRESS && mods == GLFW_MOD_ALT) {
+		showAll();
+	}
+	if (key == GLFW_KEY_S && action == GLFW_PRESS && mods == GLFW_MOD_ALT) {
+		showOnlyOneSignal();
+	}
+	if (key == GLFW_KEY_D && action == GLFW_PRESS && mods == GLFW_MOD_ALT) {
+		showOnlyOneState();
 	}
 }
 
@@ -471,6 +551,24 @@ void FSMEditorScene::loadPosition(const std::string& filename)
 	std::fclose(file);
 }
 
+void FSMEditorScene::showOnlyOneState()
+{
+	_displayType = DisplayType::SHOW_ONE_STATE;
+	updateFSMConnection();
+}
+
+void FSMEditorScene::showOnlyOneSignal()
+{
+	_displayType = DisplayType::SHOW_ONE_SIGNAL;
+	updateFSMConnection();
+}
+
+void FSMEditorScene::showAll()
+{
+	_displayType = DisplayType::SHOW_ALL;
+	updateFSMConnection();
+}
+
 void FSMEditorScene::refreshWindow()
 {
 	Color("#555").setClearColor();
@@ -487,10 +585,10 @@ void FSMEditorScene::refreshWindow()
 
 	startPosition = winS;
 	startPosition.zoom(Vec2(0.5f, -0.5f));
-	_addStateButton->setPosition(startPosition + Vec2(-_addStateButton->getRectSize().x - 1.0f, 1.0f));
+	_addStateButton->setPosition(startPosition
+		+ Vec2(-_addStateButton->getRectSize().x - 1.0f, 1.0f));
 
 	_tmpLabel.setPosition(winS * -0.5f + Vec2(20.0f));
 
-	updateSignalList();
-	updateFSM();
+	updateSignalPosition();
 }

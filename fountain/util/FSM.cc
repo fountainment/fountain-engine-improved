@@ -85,6 +85,14 @@ void FSM::registerLink(int curState, int nextState, int signal)
 	_fsmMap[curState][signal] = nextState;
 }
 
+void FSM::deleteLink(int curState, int signal)
+{
+	auto it = _fsmMap[curState].find(signal);
+	if (it != _fsmMap[curState].end()) {
+		_fsmMap[curState].erase(it);
+	}
+}
+
 int FSM::getSignalId(const std::string& signal)
 {
 	auto it = _nameSignalMap.find(signal);

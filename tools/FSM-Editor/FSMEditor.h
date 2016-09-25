@@ -13,6 +13,7 @@ public:
 	const static fei::Color& midColor;
 	const static fei::Color& lightColor;
 	const static fei::Color& lighterColor;
+	const static fei::Color& selectColor;
 	static fei::FontCache font20;
 	static fei::FontCache font;
 };

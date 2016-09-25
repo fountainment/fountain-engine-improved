@@ -23,6 +23,7 @@ public:
 	int registerSignal();
 	int registerState();
 	void registerLink(int curState, int nextState, int signal);
+	void deleteLink(int curState, int signal);
 
 	int getSignalId(const std::string& signal);
 	int getStateId(const std::string& state);
