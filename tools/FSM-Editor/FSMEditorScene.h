@@ -79,18 +79,22 @@ public:
 	void establishLink(StateButton* a, StateButton* b);
 	void deleteLink(StateButton* a, StateButton* b);
 
-	void characterCallback(unsigned int codepoint) override;
-	void keyCallback(int key, int scancode, int action, int mods) override;
-	void scrollCallback(double xoffset, double yoffset);
-	void mouseButtonCallback(int button, int action, int mods);
-	void framebufferSizeCallback(int width, int height);
-	void mouseDrag(fei::Camera* cam, fei::NodeBase* node, float k = 1.0f);
+	virtual void characterCallback(unsigned int codepoint) override;
+	virtual void keyCallback(int key, int scancode, int action, int mods) override;
+	virtual void scrollCallback(double xoffset, double yoffset);
+	virtual void mouseButtonCallback(int button, int action, int mods);
+	virtual void dropCallback(int count, const char** paths) override;
+	virtual void framebufferSizeCallback(int width, int height);
+	virtual void mouseDrag(fei::Camera* cam, fei::NodeBase* node, float k = 1.0f);
 
 	bool processCmd(const std::string& cmd);
 	void dumpPosition(const std::string& filename);
 	void dumpSignal(const std::string& filename);
 	void dumpState(const std::string& filename);
 	void loadPosition(const std::string& filename);
+
+	void loadFSM(const std::string& filename);
+	void dumpFSM(const std::string& filename);
 
 	void showOnlyOneState();
 	void showOnlyOneSignal();

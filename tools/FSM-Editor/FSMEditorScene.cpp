@@ -461,6 +461,13 @@ void FSMEditorScene::mouseButtonCallback(int button, int action, int mods)
 	}
 }
 
+void FSMEditorScene::dropCallback(int count, const char** paths)
+{
+	for (int i = 0; i < count; i++) {
+		loadFSM(paths[i]);
+	}
+}
+
 void FSMEditorScene::framebufferSizeCallback(int width, int height)
 {
 	_needUIRefresh = true;
@@ -479,23 +486,10 @@ bool FSMEditorScene::processCmd(const std::string& cmd)
 		_tmpLabel.clearString();
 		switch (cmd[1]) {
 		case 'w':
-			if (filename == fei::EmptyStr) {
-				filename = _openFile;
-				if (filename == fei::EmptyStr) break;
-			}
-			_fsm.dump(filename);
-			dumpPosition(filename + ".pos");
-			dumpSignal(filename + ".sig");
-			dumpState(filename + ".sta");
+			dumpFSM(filename);
 			break;
 		case 'e':
-			if (!_fsm.load(filename)) {
-				break;
-			}
-			_openFile = filename;
-			loadPosition(filename + ".pos");
-			updateSignalList();
-			updateFSM();
+			loadFSM(filename);
 			break;
 		}
 		_tmpName.clear();
@@ -549,6 +543,32 @@ void FSMEditorScene::loadPosition(const std::string& filename)
 		_statePositionMap[id] = Vec2(x, y);
 	}
 	std::fclose(file);
+}
+
+void FSMEditorScene::loadFSM(const std::string& filename)
+{
+	if (!_fsm.load(filename)) {
+		return;
+	}
+	_openFile = filename;
+	loadPosition(filename + ".pos");
+	updateSignalList();
+	updateFSM();
+}
+
+void FSMEditorScene::dumpFSM(const std::string& filename)
+{
+	std::string name = filename;
+	if (name == fei::EmptyStr) {
+		name = _openFile;
+		if (name == fei::EmptyStr) {
+			return;
+		}
+	}
+	_fsm.dump(name);
+	dumpPosition(name + ".pos");
+	dumpSignal(name + ".sig");
+	dumpState(name + ".sta");
 }
 
 void FSMEditorScene::showOnlyOneState()
