@@ -34,7 +34,7 @@ static const fei::Vec3 strToRGB(const std::string& colorStr)
 {
 	int len = colorStr.length();
 	const char* cstr = colorStr.c_str();
-	fei::Vec3 result;
+	fei::Vec3 result(fei::Vec3::ZERO);
 	try {
 		if (len <= 3) {
 			throw "Length less than 3!";

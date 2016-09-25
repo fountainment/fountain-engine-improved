@@ -107,7 +107,7 @@ void FontCache::updateCache(unsigned long* str, int strSize)
 		_charAdvanceMap[str[i]] = slot->advance.x >> 6;
 	}
 	_cacheTexture.subUpdate(bits, bitsW, bitsH, fei::Texture::Format::LUMA, xLoc, yLoc);
-	delete bits;
+	delete [] bits;
 	_curCol += strSize;
 	_curRow += _curCol / _gridNum;
 	_curCol %= _gridNum;

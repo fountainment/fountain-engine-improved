@@ -430,6 +430,9 @@ bool Polygon::collide(const fei::Shape* shape) const
 	//case fei::Shape::Type::POLYGON:
 	//case fei::Shape::Type::RECT:
 	//case fei::Shape::Type::SEGMENT:
+	default:
+		std::printf("Polygon::collide Not Implemented!\n");
+		break;
 	}
 	return result;
 }

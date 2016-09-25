@@ -316,7 +316,7 @@ const fei::Vec2 Window::getKeyAxis()
 
 const fei::Vec2 Window::getCursorPos()
 {
-	fei::Vec2 result;
+	fei::Vec2 result(fei::Vec2::ZERO);
 	if (_window) {
 		double xpos, ypos;
 		glfwGetCursorPos(_window, &xpos, &ypos);
@@ -327,7 +327,7 @@ const fei::Vec2 Window::getCursorPos()
 
 const fei::Vec2 Window::getRHCursorPos()
 {
-	fei::Vec2 result;
+	fei::Vec2 result(fei::Vec2::ZERO);
 	if (_window) {
 		result = getCursorPos();
 		result.y = getWindowSize().y - 1 - result.y;
@@ -345,7 +345,7 @@ const fei::Vec2 Window::getRHCursorDeltaV()
 
 const fei::Vec2 Window::getWindowSize()
 {
-	fei::Vec2 result;
+	fei::Vec2 result(fei::Vec2::ZERO);
 	if (_window) {
 		int width, height;
 		glfwGetWindowSize(_window, &width, &height);
@@ -356,7 +356,7 @@ const fei::Vec2 Window::getWindowSize()
 
 const fei::Vec2 Window::getFrameSize()
 {
-	fei::Vec2 result;
+	fei::Vec2 result(fei::Vec2::ZERO);
 	if (_window) {
 		int width, height;
 		glfwGetFramebufferSize(_window, &width, &height);
@@ -367,7 +367,7 @@ const fei::Vec2 Window::getFrameSize()
 
 const fei::Vec2 Window::getWindowPos()
 {
-	fei::Vec2 result;
+	fei::Vec2 result(fei::Vec2::ZERO);
 	if (_window) {
 		int xpos, ypos;
 		glfwGetWindowPos(_window, &xpos, &ypos);
