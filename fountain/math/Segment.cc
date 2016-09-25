@@ -46,9 +46,11 @@ bool Segment::collide(const fei::Shape* shape) const
 	Vec2 tmp;
 	switch (shape->getType()) {
 	//TODO: implement cases
-	//case fei::Shape::Type::CIRCLE:
-	//case fei::Shape::Type::POLYGON:
-	//case fei::Shape::Type::RECT:
+	case fei::Shape::Type::CIRCLE:
+	case fei::Shape::Type::POLYGON:
+	case fei::Shape::Type::RECT:
+		std::printf("Segment::collide Not Implemented!\n");
+		break;
 	case fei::Shape::Type::SEGMENT:
 		result = collideSegment(tmp, *(static_cast<const Segment*>(shape)));
 		break;

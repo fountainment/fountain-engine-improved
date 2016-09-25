@@ -426,11 +426,10 @@ bool Polygon::collide(const fei::Shape* shape) const
 	bool result = false;
 	switch (shape->getType()) {
 	//TODO: implement cases
-	//case fei::Shape::Type::CIRCLE:
-	//case fei::Shape::Type::POLYGON:
-	//case fei::Shape::Type::RECT:
-	//case fei::Shape::Type::SEGMENT:
-	default:
+	case fei::Shape::Type::CIRCLE:
+	case fei::Shape::Type::POLYGON:
+	case fei::Shape::Type::RECT:
+	case fei::Shape::Type::SEGMENT:
 		std::printf("Polygon::collide Not Implemented!\n");
 		break;
 	}

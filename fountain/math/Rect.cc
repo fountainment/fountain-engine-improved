@@ -98,8 +98,10 @@ bool Rect::collide(const fei::Shape* other) const
 		}
 		break;
 	//TODO: implement cases
-	//case fei::Shape::Type::CIRCLE:
-	//case fei::Shape::Type::POLYGON:
+	case fei::Shape::Type::CIRCLE:
+	case fei::Shape::Type::POLYGON:
+		std::printf("Rect::collide Not Implemented!\n");
+		break;
 	case fei::Shape::Type::SEGMENT:
 		{
 			auto seg = static_cast<const fei::Segment*>(other);
