@@ -106,6 +106,28 @@ private:
 	static Render *instance_;
 };
 
+inline void Render::registTexSize(GLuint id, const fei::Vec2& size)
+{
+	_textureSizeMap[id] = size;
+}
+
+inline const fei::Vec2 Render::queryTexSize(GLuint id)
+{
+	return _textureSizeMap[id];
+}
+
+inline void Render::addRefTexture(GLuint id)
+{
+	if (!id) return;
+	_textureRCMap[id]++;
+}
+
+inline void Render::releaseTexture(GLuint id)
+{
+	if (!id) return;
+	_textureRCMap[id]--;
+}
+
 inline void Render::drawArray2f(const GLfloat* vertex, GLint first, GLsizei count, GLenum mode)
 {
 	glEnableVertexAttribArray(0);

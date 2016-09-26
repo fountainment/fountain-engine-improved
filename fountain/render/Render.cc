@@ -196,28 +196,6 @@ int Render::queryTexture(const std::string& filename)
 	return ans;
 }
 
-void Render::registTexSize(GLuint id, const fei::Vec2& size)
-{
-	_textureSizeMap[id] = size;
-}
-
-const fei::Vec2 Render::queryTexSize(GLuint id)
-{
-	return _textureSizeMap[id];
-}
-
-void Render::addRefTexture(GLuint id)
-{
-	if (!id) return;
-	_textureRCMap[id]++;
-}
-
-void Render::releaseTexture(GLuint id)
-{
-	if (!id) return;
-	_textureRCMap[id]--;
-}
-
 void Render::deleteUnusedTexture()
 {
 	for (auto it = _textureRCMap.begin(); it != _textureRCMap.end();) {
