@@ -1,9 +1,9 @@
 #include "render/RenderObj.h"
-#include "render/RenderList.h"
 
 #include <glad/glad.h>
 
 #include "anime/Anime.h"
+#include "render/RenderList.h"
 
 using fei::RenderObj;
 
@@ -156,6 +156,16 @@ void RenderObj::moveAnchor(const fei::Vec2& v)
 	_anchor.add(v);
 }
 
+void RenderObj::rotateX(float dltAgl)
+{
+	_angleX += dltAgl;
+}
+
+void RenderObj::rotateY(float dltAgl)
+{
+	_angleY += dltAgl;
+}
+
 void RenderObj::rotate(float dltAgl)
 {
 	_angle += dltAgl;
@@ -164,6 +174,12 @@ void RenderObj::rotate(float dltAgl)
 void RenderObj::matrixTransformBegin()
 {
 	glTranslatef(getPositionX(), getPositionY(), _zPos);
+	if (_angleX != 0.0f) {
+		glRotatef(fei::R2Df(_angleX), 1.0f, 0.0f, 0.0f);
+	}
+	if (_angleY != 0.0f) {
+		glRotatef(fei::R2Df(_angleY), 0.0f, 1.0f, 0.0f);
+	}
 	if (_angle != 0.0f) {
 		glRotatef(fei::R2Df(_angle), 0.0f, 0.0f, 1.0f);
 	}

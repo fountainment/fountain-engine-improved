@@ -70,6 +70,8 @@ public:
 	void roundAnchor();
 	void moveAnchor(const Vec2& v);
 
+	void rotateX(float dltAgl);
+	void rotateY(float dltAgl);
 	void rotate(float dltAgl);
 
 	void setColor(const Color& c);
@@ -85,6 +87,8 @@ private:
 	bool _isVisible;
 	bool _useColor;
 	//int _alphaFunc;
+	float _angleX;
+	float _angleY;
 	float _angle;
 	float _scale;
 	float _zPos;
@@ -103,6 +107,8 @@ inline fei::RenderObj::RenderObj()
 : _hasAlpha(false),
   _isVisible(true),
   _useColor(true),
+  _angleX(0.0f),
+  _angleY(0.0f),
   _angle(0.0f),
   _scale(1.0f),
   _zPos(0.0f),
