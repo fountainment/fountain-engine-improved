@@ -23,6 +23,8 @@ void ToolScene::init()
 	_planeLayer.add(&_backPlane);
 	_planeLayer.add(&_plane);
 
+	_planeLayer.setShader(NormalTool::getShader());
+
 	add(&_planeLayer);
 	add(&_uiLayer);
 }
@@ -34,6 +36,7 @@ void ToolScene::update()
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT)) {
 		rotatePlane(deltaV * 0.005f);
 	}
+	NormalTool::getShader()->setLightData();
 }
 
 void ToolScene::resetPlane()

@@ -3,6 +3,15 @@
 
 #include "fountain.h"
 
+class NormalTool : public fei::Application
+{
+public:
+        void engineSetting(fei::Engine* engine);
+	static fei::FountainShader* getShader();
+
+	static fei::FountainShader shader_;
+};
+
 class ToolScene : public fei::Scene
 {
 public:

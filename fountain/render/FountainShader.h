@@ -108,6 +108,8 @@ public:
 
 	void setLightData();
 
+	void loadDefault();
+
 	static const int RENDER_PLAIN = 0;
 	static const int RENDER_BLUR = 1;
 	static const int RENDER_BASIC = 2;
@@ -169,6 +171,9 @@ private:
 	GLint _lightRadius;
 
 	LightManager _lightManager;
+
+	static const GLchar *defaultVert_;
+	static const GLchar *defaultFrag_;
 };
 
 }

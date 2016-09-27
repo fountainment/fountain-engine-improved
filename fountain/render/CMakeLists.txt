@@ -12,4 +12,5 @@ set(FOUNTAIN_RENDER_SRC
 	render/Shader.cc
 	render/ShapeObj.cc
 	render/FountainShader.cc
+	render/FountainShaderSource.cc
 )

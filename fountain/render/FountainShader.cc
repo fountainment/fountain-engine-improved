@@ -195,15 +195,15 @@ void FountainShader::setDefaultVariableValue()
 
 	setUseLight(false);
 
-	setKd(fei::Vec3::ONE);
+	setKd(fei::Vec3::ONE / fei::pif);
 	setKs(fei::Vec3::ZERO);
 	setSmoothness(0.0f);
 	setEmitValue(1.0f);
 	setEmitAllValue(0.0f);
 	setNormalValue(fei::Vec3::ZUP);
 
-	setBlurRadius(30.0f);
-	setSampleNum(10.0f);
+	setBlurRadius(20.0f);
+	setSampleNum(2.0f);
 
 	setLw(1.0f);
 	setLwhite(100.0f);
@@ -313,4 +313,9 @@ void FountainShader::setLightData()
 	setUniform(_lightDirection, _lightManager._lightDirection, lightNum);
 	setUniform(_lightColor, _lightManager._lightColor, lightNum);
 	setUniform(_lightRadius, _lightManager._lightRadius, lightNum);
+}
+
+void FountainShader::loadDefault()
+{
+	loadString(defaultVert_, defaultFrag_);
 }
