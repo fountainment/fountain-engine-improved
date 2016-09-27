@@ -32,15 +32,46 @@ void ToolScene::update()
 	auto window = fei::Interface::getInstance()->getCurrentWindow();
 	auto deltaV = window->getRHCursorDeltaV();
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT)) {
-		deltaV *= 0.005f;
-		float nextAngleX = _plane.getAngleX() - deltaV.y;
-		float nextAngleY = _plane.getAngleY() + deltaV.x;
-		float limit = pif * 0.5f;
-		if (nextAngleX >= -limit && nextAngleX <= limit) {
-			_plane.rotateX(-deltaV.y);
-		}
-		if (nextAngleY >= -limit && nextAngleY <= limit) {
-			_plane.rotateY(deltaV.x);
-		}
+		rotatePlane(deltaV * 0.005f);
+	}
+}
+
+void ToolScene::resetPlane()
+{
+	_plane.setAngleX(0.0f);
+	_plane.setAngleY(0.0f);
+}
+
+void ToolScene::rotatePlane(const Vec2& v)
+{
+	float nextAngleX = _plane.getAngleX() - v.y;
+	float nextAngleY = _plane.getAngleY() + v.x;
+	float limit = pif * 0.5f;
+	if (nextAngleX >= -limit && nextAngleX <= limit) {
+		_plane.rotateX(-v.y);
+	}
+	if (nextAngleY >= -limit && nextAngleY <= limit) {
+		_plane.rotateY(v.x);
+	}
+}
+
+void ToolScene::keyCallback(int key, int scancode, int action, int mods)
+{
+	switch (key) {
+	case GLFW_KEY_W:
+		rotatePlane(Vec2(0.0f, D2R(2.0f)));
+		break;
+	case GLFW_KEY_S:
+		rotatePlane(Vec2(0.0f, D2R(-2.0f)));
+		break;
+	case GLFW_KEY_A:
+		rotatePlane(Vec2(D2R(-2.0f), 0.0f));
+		break;
+	case GLFW_KEY_D:
+		rotatePlane(Vec2(D2R(2.0f), 0.0f));
+		break;
+	case GLFW_KEY_R:
+		resetPlane();
+		break;
 	}
 }

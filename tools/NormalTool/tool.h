@@ -9,6 +9,11 @@ public:
 	virtual void init() override;
 	virtual void update() override;
 
+	void resetPlane();
+	void rotatePlane(const fei::Vec2& v);
+
+	virtual void keyCallback(int key, int scancode, int action, int mods);
+
 private:
 	fei::Camera _camera;
 	fei::Camera _uiCamera;
