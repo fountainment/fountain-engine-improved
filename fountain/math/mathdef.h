@@ -5,17 +5,17 @@
 
 namespace fei {
 
-extern const double eps;
-extern const float epsf;
+constexpr double eps = 1e-8;
+constexpr float epsf = 1e-5f;
 
-extern const double pi;
-extern const float pif;
+constexpr double pi = 3.14159265358979324;
+constexpr float pif = 3.14159265358979324f;
 
-extern const double d2r;
-extern const float d2rf;
+constexpr double d2r = 0.017453292519943;
+constexpr float d2rf = 0.017453292519943f;
 
-extern const double r2d;
-extern const float r2df;
+constexpr double r2d = 57.295779513082;
+constexpr float r2df = 57.295779513082f;
 
 inline double D2R(double degree)
 {

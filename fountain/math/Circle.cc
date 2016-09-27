@@ -4,7 +4,7 @@
 
 using fei::Circle;
 
-std::vector<fei::Vec2> Circle::_data32 = {
+const std::vector<fei::Vec2> Circle::_data32 = {
 fei::Vec2(1.000000f, 0.000000f),
 fei::Vec2(0.980785f, 0.195090f),
 fei::Vec2(0.923880f, 0.382683f),

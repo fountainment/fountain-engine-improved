@@ -28,7 +28,7 @@ public:
 private:
 	float _radius;
 
-	static std::vector<Vec2> _data32;
+	static const std::vector<Vec2> _data32;
 };
 
 } // namespace fei

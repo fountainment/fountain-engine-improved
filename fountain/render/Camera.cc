@@ -9,10 +9,11 @@
 using fei::Camera;
 
 Camera::Camera()
-: _width(1.0f),
-  _height(1.0f),
-  _cameraType(Type::ORTHOGRAPHIC),
+: _cameraType(Type::ORTHOGRAPHIC),
   _cameraScale(1.0f),
+  _cameraZPos(perspectiveCameraNear_ + fei::pif),
+  _width(1.0f),
+  _height(1.0f),
   _needDataUpdate(true)
 {
 }
@@ -28,13 +29,13 @@ void Camera::update()
 {
 	updateCameraData();
 	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
 	if (_cameraType == Type::ORTHOGRAPHIC) {
-		glLoadIdentity();
-		glOrtho(_left, _right, _bottom, _top, _near, _far);
+		glOrtho(_left, _right, _bottom, _top, orthoCameraNear_, orthoCameraFar_);
 	} else if (_cameraType == Type::PERSPECTIVE) {
-		//TODO: write it when you want to test it
+		glFrustum(_left, _right, _bottom, _top, perspectiveCameraNear_, perspectiveCameraFar_);
 	}
-	glTranslatef(-getPosition().x, -getPosition().y, 0);
+	glTranslatef(-getPositionX(), -getPositionY(), -getCameraZPos());
 	glMatrixMode(GL_MODELVIEW);
 	fei::Render::getInstance()->setCurrentCamera(this);
 }
@@ -102,10 +103,23 @@ const fei::Rect Camera::getCameraRect()
 	return ret;
 }
 
+void Camera::setCameraZPos(float z)
+{
+	_cameraZPos = z;
+	if (_cameraZPos < perspectiveCameraNear_) {
+		_cameraZPos = perspectiveCameraNear_ + fei::pif;
+	}
+	_needDataUpdate = true;
+}
+
+float Camera::getCameraZPos()
+{
+	return _cameraZPos;
+}
+
 const fei::Vec2 Camera::screenToWorld(const fei::Vec2& scrPos)
 {
-	updateCameraData();
-	auto camSize = fei::Vec2(_right - _left, _top - _bottom);
+	auto camSize = getCameraSize() / getCameraScale();
 	auto vpSize = fei::Render::getInstance()->getViewport().getSize();
 	auto ans = camSize.zoomed(scrPos.zoomed(vpSize.reciprocal()) - fei::Vec2(0.5f)) + getPosition();
 	return ans;
@@ -113,8 +127,7 @@ const fei::Vec2 Camera::screenToWorld(const fei::Vec2& scrPos)
 
 const fei::Vec2 Camera::worldToScreen(const fei::Vec2& wrdPos)
 {
-	updateCameraData();
-	auto camSize = fei::Vec2(_right - _left, _top - _bottom);
+	auto camSize = getCameraSize() / getCameraScale();
 	auto vpSize = fei::Render::getInstance()->getViewport().getSize();
 	auto ans = ((wrdPos - getPosition()).zoomed(camSize.reciprocal()) + fei::Vec2(0.5f)).zoomed(vpSize);
 	return ans;
@@ -123,17 +136,14 @@ const fei::Vec2 Camera::worldToScreen(const fei::Vec2& wrdPos)
 void Camera::updateCameraData()
 {
 	if (_needDataUpdate) {
-		if (_cameraType == Type::ORTHOGRAPHIC) {
-			float ratio = 2.0f * _cameraScale;
-			_left = -_width / ratio;
-			_right = _width / ratio;
-			_bottom = -_height / ratio;
-			_top = _height / ratio;
-			_near = -99999.0f;
-			_far = 99999.0f;
-		} else if (_cameraType == Type::PERSPECTIVE) {
-			//TODO: write it when you want to test it
+		float ratio = 2.0f * _cameraScale;
+		if (_cameraType == Type::PERSPECTIVE) {
+			ratio *= getCameraZPos() / perspectiveCameraNear_;
 		}
+		_left = -_width / ratio;
+		_right = _width / ratio;
+		_bottom = -_height / ratio;
+		_top = _height / ratio;
 		_needDataUpdate = false;
 	}
 }

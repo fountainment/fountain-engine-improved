@@ -47,9 +47,10 @@ public:
 	void dump(const std::string& filename);
 	bool load(const std::string& filename);
 
-	static const int NoneSig = 0;
-	static const int ChangeSig = 1;
-	static const int NoneState = 0;
+	static constexpr int NoneSig = 0;
+	static constexpr int LeaveSig = 1;
+	static constexpr int ChangeSig = 2;
+	static constexpr int NoneState = 0;
 
 private:
 	virtual void outputSignal(int signal);

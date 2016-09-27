@@ -191,6 +191,7 @@ const std::string FSM::getStateName()
 void FSM::setState(int state)
 {
 	if (_state != state) {
+		outputSignal(LeaveSig);
 		_state = state;
 		outputSignal(ChangeSig);
 	}
