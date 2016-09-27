@@ -18,8 +18,7 @@ void ToolScene::init()
 	_rect.setCenter(Vec2::ZERO);
 	_backPlane.setShape(&_backRect);
 	_plane.setShape(&_rect);
-	_backPlane.setZPos(-300.0f);
-	_backPlane.setColor(Color(0.9f));
+	//_backPlane.setZPos(-300.0f);
 	_planeLayer.add(&_backPlane);
 	_planeLayer.add(&_plane);
 
@@ -36,6 +35,7 @@ void ToolScene::update()
 	if (window->getMouseButton(GLFW_MOUSE_BUTTON_LEFT)) {
 		rotatePlane(deltaV * 0.005f);
 	}
+	NormalTool::getShader()->setViewCoord(Vec3(_camera.getPosition(), _camera.getCameraZPos()));
 	NormalTool::getShader()->setLightData();
 }
 

@@ -2,6 +2,7 @@ bin
 build
 deps
 res
+*.aps
 *.cbp
 *.layout
 *.depend
