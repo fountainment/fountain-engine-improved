@@ -89,6 +89,16 @@ void RenderObj::setScale(float scl)
 	_scale = scl;
 }
 
+void RenderObj::setAngleX(float agl)
+{
+	_angleX = agl;
+}
+
+void RenderObj::setAngleY(float agl)
+{
+	_angleY = agl;
+}
+
 void RenderObj::setAngle(float agl)
 {
 	_angle = agl;
@@ -117,6 +127,16 @@ void RenderObj::setZPos(float z)
 float RenderObj::getScale() const
 {
 	return _scale;
+}
+
+float RenderObj::getAngleX() const
+{
+	return _angleX;
+}
+
+float RenderObj::getAngleY() const
+{
+	return _angleY;
 }
 
 float RenderObj::getAngle() const

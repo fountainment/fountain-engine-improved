@@ -54,6 +54,8 @@ public:
 	void setUseColor(bool useColor);
 
 	void setScale(float scl);
+	void setAngleX(float agl);
+	void setAngleY(float agl);
 	void setAngle(float agl);
 	void setAnchor(const Vec2& acr);
 	void setAnchorX(float x);
@@ -61,6 +63,8 @@ public:
 	void setZPos(float z);
 
 	float getScale() const;
+	float getAngleX() const;
+	float getAngleY() const;
 	float getAngle() const;
 	const Vec2 getAnchor() const;
 	float getAnchorX() const;
