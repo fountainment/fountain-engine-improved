@@ -60,21 +60,23 @@ void ToolScene::rotatePlane(const Vec2& v)
 
 void ToolScene::keyCallback(int key, int scancode, int action, int mods)
 {
-	switch (key) {
-	case GLFW_KEY_W:
-		rotatePlane(Vec2(0.0f, D2R(2.0f)));
-		break;
-	case GLFW_KEY_S:
-		rotatePlane(Vec2(0.0f, D2R(-2.0f)));
-		break;
-	case GLFW_KEY_A:
-		rotatePlane(Vec2(D2R(-2.0f), 0.0f));
-		break;
-	case GLFW_KEY_D:
-		rotatePlane(Vec2(D2R(2.0f), 0.0f));
-		break;
-	case GLFW_KEY_R:
-		resetPlane();
-		break;
+	if (action != GLFW_RELEASE) {
+		switch (key) {
+		case GLFW_KEY_W:
+			rotatePlane(Vec2(0.0f, D2R(2.0f)));
+			break;
+		case GLFW_KEY_S:
+			rotatePlane(Vec2(0.0f, D2R(-2.0f)));
+			break;
+		case GLFW_KEY_A:
+			rotatePlane(Vec2(D2R(-2.0f), 0.0f));
+			break;
+		case GLFW_KEY_D:
+			rotatePlane(Vec2(D2R(2.0f), 0.0f));
+			break;
+		case GLFW_KEY_R:
+			resetPlane();
+			break;
+		}
 	}
 }
