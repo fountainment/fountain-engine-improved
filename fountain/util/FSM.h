@@ -55,7 +55,7 @@ public:
 private:
 	virtual void outputSignal(int signal);
 
-	int _maxSignal = 1;
+	int _maxSignal = 2;
 	int _maxState = 1;
 	int _state;
 	std::map<std::string, int> _nameSignalMap;
