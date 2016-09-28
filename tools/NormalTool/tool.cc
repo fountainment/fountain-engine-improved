@@ -67,18 +67,11 @@ void ToolScene::update()
 	NormalTool::getShader()->setLightData();
 
 	double x = _plane.getAngleX();
-	double y = _plane.getAngleY();
+	double y = _plane.getAngleZ();
 	_eulerLabel.setString(*NormalTool::getFont(), strFormat("%4.0f %4.0f", R2D(x), R2D(y)));
-	double t = x + pi * 0.5;
-	double ay = std::cos(t);
-	double ax = (std::sin(t) * std::sin(t) * (2.0 - 2.0 * std::sin(y) + ay * ay) - 2.0) * -0.5;
-	ax = std::sin(t) * std::sin(y);
-	double az = 1.0 - ax * ax - ay * ay;
-	if (az <= 0.0) {
-		az = 0.0;
-	} else {
-		az = std::sqrt(az);
-	}
+	double ax = std::sin(x) * std::sin(y);
+	double ay = -std::sin(x) * std::cos(y);
+	double az = std::cos(x);
 	_normalLabel.setString(*NormalTool::getFont(), strFormat("%4.2f %4.2f %4.2f", ax, ay, az));
 	Vec3 color = (Vec3(-static_cast<float>(ax), static_cast<float>(ay), static_cast<float>(az)) + Vec3::ONE) * 0.5f;
 	_colorButton.setBackColor(color);
@@ -95,28 +88,31 @@ void ToolScene::update()
 void ToolScene::resetPlane()
 {
 	_plane.setAngleX(0.0f);
-	_plane.setAngleY(0.0f);
+	_plane.setAngleZ(0.0f);
 }
 
 void ToolScene::rotatePlane(const Vec2& v)
 {
 	float nextAngleX = _plane.getAngleX() - v.y;
-	float nextAngleY = _plane.getAngleY() + v.x;
+	float nextAngleZ = _plane.getAngleZ() - v.x;
 	float limit = pif * 0.5f;
 	if (nextAngleX >= -limit && nextAngleX <= limit) {
 		_plane.rotateX(-v.y);
 	} else {
 		_plane.setAngleX(-_plane.getAngleX());
 	}
-	if (nextAngleY >= -limit && nextAngleY <= limit) {
-		_plane.rotateY(v.x);
+	if (nextAngleZ >= -limit && nextAngleZ <= limit) {
+		_plane.rotateZ(-v.x);
+	} else {
+		_plane.setAngleX(-_plane.getAngleX());
+		_plane.setAngleZ(-_plane.getAngleZ());
 	}
-	auto t = Vec2(_plane.getAngleX(), _plane.getAngleY());
+	auto t = Vec2(_plane.getAngleX(), _plane.getAngleZ());
 	t.x = R2Df(t.x);
 	t.y = R2Df(t.y);
 	t.round();
 	_plane.setAngleX(D2Rf(t.x));
-	_plane.setAngleY(D2Rf(t.y));
+	_plane.setAngleZ(D2Rf(t.y));
 }
 
 void ToolScene::keyCallback(int key, int scancode, int action, int mods)

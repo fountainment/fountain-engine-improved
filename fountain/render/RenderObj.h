@@ -56,6 +56,7 @@ public:
 	void setScale(float scl);
 	void setAngleX(float agl);
 	void setAngleY(float agl);
+	void setAngleZ(float agl);
 	void setAngle(float agl);
 	void setAnchor(const Vec2& acr);
 	void setAnchorX(float x);
@@ -65,6 +66,7 @@ public:
 	float getScale() const;
 	float getAngleX() const;
 	float getAngleY() const;
+	float getAngleZ() const;
 	float getAngle() const;
 	const Vec2 getAnchor() const;
 	float getAnchorX() const;
@@ -76,6 +78,7 @@ public:
 
 	void rotateX(float dltAgl);
 	void rotateY(float dltAgl);
+	void rotateZ(float dltAgl);
 	void rotate(float dltAgl);
 
 	void setColor(const Color& c);
@@ -93,6 +96,7 @@ private:
 	//int _alphaFunc;
 	float _angleX;
 	float _angleY;
+	float _angleZ;
 	float _angle;
 	float _scale;
 	float _zPos;
@@ -113,6 +117,7 @@ inline fei::RenderObj::RenderObj()
   _useColor(true),
   _angleX(0.0f),
   _angleY(0.0f),
+  _angleZ(0.0f),
   _angle(0.0f),
   _scale(1.0f),
   _zPos(0.0f),

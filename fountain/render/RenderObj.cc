@@ -99,6 +99,11 @@ void RenderObj::setAngleY(float agl)
 	_angleY = agl;
 }
 
+void RenderObj::setAngleZ(float agl)
+{
+	_angleZ = agl;
+}
+
 void RenderObj::setAngle(float agl)
 {
 	_angle = agl;
@@ -137,6 +142,11 @@ float RenderObj::getAngleX() const
 float RenderObj::getAngleY() const
 {
 	return _angleY;
+}
+
+float RenderObj::getAngleZ() const
+{
+	return _angleZ;
 }
 
 float RenderObj::getAngle() const
@@ -186,6 +196,11 @@ void RenderObj::rotateY(float dltAgl)
 	_angleY += dltAgl;
 }
 
+void RenderObj::rotateZ(float dltAgl)
+{
+	_angleZ += dltAgl;
+}
+
 void RenderObj::rotate(float dltAgl)
 {
 	_angle += dltAgl;
@@ -194,6 +209,9 @@ void RenderObj::rotate(float dltAgl)
 void RenderObj::matrixTransformBegin()
 {
 	glTranslatef(getPositionX(), getPositionY(), _zPos);
+	if (_angleZ != 0.0f) {
+		glRotatef(fei::R2Df(_angleZ), 0.0f, 0.0f, 1.0f);
+	}
 	if (_angleY != 0.0f) {
 		glRotatef(fei::R2Df(_angleY), 0.0f, 1.0f, 0.0f);
 	}
