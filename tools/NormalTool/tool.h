@@ -21,7 +21,7 @@ public:
 	{
 		getLabel()->setCenterAligned(true);
 		getLabel()->setPosition(getRectSize() * 0.5f);
-		getLabel()->move(fei::Vec2(0.0f, -10.0f));
+		getLabel()->move(fei::Vec2(0.0f, -12.0f));
 	}
 
 	virtual void onEnter() override
@@ -34,10 +34,16 @@ public:
 		setFrontColor(fei::Color::Black);
 	}
 
-	virtual void onClick() override
+	virtual void onMouseDown() override
 	{
+		setFrontColor(fei::Color::Yellow);
 		auto window = fei::Interface::getInstance()->getCurrentWindow();
 		window->setClipboard(getName());
+	}
+
+	virtual void onMouseUp() override
+	{
+		setFrontColor(fei::Color::White);
 	}
 };
 
