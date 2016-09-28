@@ -383,6 +383,15 @@ const fei::Vec2 Window::getWindowPos()
 	return result;
 }
 
+const std::string fei::Window::getClipboard()
+{
+	if (_window) {
+		return std::string(glfwGetClipboardString(_window));
+	} else {
+		return fei::EmptyStr;
+	}
+}
+
 static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
 	auto scene = Window::getFeiWindow(window)->getSceneManager()->getCurScene();

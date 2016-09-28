@@ -55,6 +55,8 @@ public:
 
 	void resetPlane();
 	void rotatePlane(const fei::Vec2& v);
+	void roundAngle();
+	void setColorStr(const std::string& str);
 
 	virtual void keyCallback(int key, int scancode, int action, int mods);
 

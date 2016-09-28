@@ -85,11 +85,11 @@ void ToolScene::update()
 	_normalLabel.setString(*NormalTool::getFont(), strFormat("%4.2f %4.2f %4.2f", ax, ay, az));
 	Vec3 color = (Vec3(-static_cast<float>(ax), static_cast<float>(ay), static_cast<float>(az)) + Vec3::ONE) * 0.5f;
 	_colorButton.setBackColor(color);
-	int i = static_cast<int>(color.x * 255.0f);
+	int i = static_cast<int>(std::roundf(color.x * 255.0f));
 	i <<= 8;
-	i += static_cast<int>(color.y * 255.0f);
+	i += static_cast<int>(std::roundf(color.y * 255.0f));
 	i <<= 8;
-	i += static_cast<int>(color.z * 255.0f);
+	i += static_cast<int>(std::roundf(color.z * 255.0f));
 	auto str = strFormat("%06X", i);
 	_colorButton.setLabelString(*NormalTool::getFont(), str);
 	_colorButton.setName(str);
@@ -117,6 +117,11 @@ void ToolScene::rotatePlane(const Vec2& v)
 		_plane.setAngleX(-_plane.getAngleX());
 		_plane.setAngleZ(-_plane.getAngleZ());
 	}
+	roundAngle();
+}
+
+void ToolScene::roundAngle()
+{
 	auto t = Vec2(_plane.getAngleX(), _plane.getAngleZ());
 	t.x = R2Df(t.x);
 	t.y = R2Df(t.y);
@@ -125,8 +130,27 @@ void ToolScene::rotatePlane(const Vec2& v)
 	_plane.setAngleZ(D2Rf(t.y));
 }
 
+void ToolScene::setColorStr(const std::string & str)
+{
+	Color color("#" + str);
+
+	auto x = -(color.x * 2.0f - 1.0f);
+	auto y = color.y * 2.0f - 1.0f;
+	auto z = color.z * 2.0f - 1.0f;
+
+	auto angleX = clamp(std::acosf(z), -pif * 0.5f, pif * 0.5f);
+	auto angleY = clamp(std::atanf(-x / y), -pif * 0.5f, pif * 0.5f);
+	if (y > 0.0) {
+		angleX *= -1.0f;
+	}
+	_plane.setAngleX(angleX);
+	_plane.setAngleZ(angleY);
+	roundAngle();
+}
+
 void ToolScene::keyCallback(int key, int scancode, int action, int mods)
 {
+	auto window = fei::Interface::getInstance()->getCurrentWindow();
 	if (action != GLFW_RELEASE) {
 		float degree = 1.0f;
 		if (mods == GLFW_MOD_SHIFT) {
@@ -148,6 +172,13 @@ void ToolScene::keyCallback(int key, int scancode, int action, int mods)
 		case GLFW_KEY_R:
 			resetPlane();
 			break;
+		case GLFW_KEY_V:
+			if (mods == GLFW_MOD_CONTROL) {
+				auto str = window->getClipboard();
+				if (str.length() == 6) {
+					setColorStr(str);
+				}
+			}
 		}
 	}
 }

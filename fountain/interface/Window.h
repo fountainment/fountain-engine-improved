@@ -62,6 +62,8 @@ public:
 	const Vec2 getFrameSize();
 	const Vec2 getWindowPos();
 
+	const std::string getClipboard();
+
 	SceneManager* getSceneManager() const;
 
 	static Window* getFeiWindow(GLFWwindow* window);
