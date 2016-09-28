@@ -72,6 +72,16 @@ void ToolScene::update()
 	double ax = std::sin(x) * std::sin(y);
 	double ay = -std::sin(x) * std::cos(y);
 	double az = std::cos(x);
+	double eps = 0.001;
+	if (std::abs(ax) < eps) {
+		ax = 0.0;
+	}
+	if (std::abs(ay) < eps) {
+		ay = 0.0;
+	}
+	if (std::abs(az) < eps) {
+		az = 0.0;
+	}
 	_normalLabel.setString(*NormalTool::getFont(), strFormat("%4.2f %4.2f %4.2f", ax, ay, az));
 	Vec3 color = (Vec3(-static_cast<float>(ax), static_cast<float>(ay), static_cast<float>(az)) + Vec3::ONE) * 0.5f;
 	_colorButton.setBackColor(color);
