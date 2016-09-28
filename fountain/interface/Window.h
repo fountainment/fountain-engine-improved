@@ -25,6 +25,7 @@ public:
 	void setHideCursor(bool isHide);
 	void setBlockCursor(bool isBlock);
 	void setSamples(int samples);
+	void setClipboard(const std::string& str);
 
 	void updateVsync();
 	void setVsync(bool vsync);

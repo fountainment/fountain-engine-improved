@@ -33,6 +33,12 @@ const fei::Rect Segment::getRect() const
 	return fei::Rect(a, b - a);
 }
 
+void Segment::setAB(const fei::Vec2& aa, const fei::Vec2& bb)
+{
+	a = aa;
+	b = bb;
+}
+
 void Segment::swapAB()
 {
 	auto tmp = a;

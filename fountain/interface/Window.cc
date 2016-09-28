@@ -133,6 +133,13 @@ void Window::setSamples(int samples)
 	_samples = samples;
 }
 
+void Window::setClipboard(const std::string& str)
+{
+	if (_window) {
+		glfwSetClipboardString(_window, str.c_str());
+	}
+}
+
 void Window::setContextRoot(Window* root)
 {
 	if (root) {

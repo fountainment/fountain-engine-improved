@@ -26,6 +26,7 @@ public:
 	const Vec2 getXInterval() const;
 	const Vec2 getYInterval() const;
 
+	void setAB(const Vec2& aa, const Vec2& bb);
 	void swapAB();
 
 	virtual bool collide(const Shape* shape) const;

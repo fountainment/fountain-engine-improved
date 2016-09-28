@@ -5,6 +5,7 @@
 using namespace fei;
 
 FountainShader NormalTool::shader_;
+FontCache NormalTool::font_;
 
 void NormalTool::engineSetting(Engine* engine)
 {
@@ -12,6 +13,9 @@ void NormalTool::engineSetting(Engine* engine)
 	shader->loadDefault();
 	shader->setRenderMode(FountainShader::RENDER_BASIC);
 	shader->setUseLight(true);
+
+	auto font = getFont();
+	font->loadFont("res/font/wqy.ttc", 32);
 
 	auto lightManager = shader->getLightManager();
 	lightManager->setLightNum(1);
@@ -32,6 +36,11 @@ void NormalTool::engineSetting(Engine* engine)
 FountainShader* NormalTool::getShader()
 {
 	return &shader_;
+}
+
+FontCache* NormalTool::getFont()
+{
+	return &font_;
 }
 
 int main()

@@ -18,11 +18,39 @@ void ToolScene::init()
 	_rect.setCenter(Vec2::ZERO);
 	_backPlane.setShape(&_backRect);
 	_plane.setShape(&_rect);
-	//_backPlane.setZPos(-300.0f);
 	_planeLayer.add(&_backPlane);
 	_planeLayer.add(&_plane);
 
+	for (int i = 0; i < 13; i++) {
+		auto y = -300.0f + i * 50.0f;
+		auto seg = new Segment(Vec2(-500.0f, y), Vec2(500.0f, y));
+		auto obj = new ShapeObj();
+		obj->setShape(seg);
+		obj->setColor(Color::Black);
+		obj->setZPos(0.01f);
+		_planeLayer.add(obj);
+	}
+	for (int i = 0; i < 21; i++) {
+		auto x = -500.0f + i * 50.0f;
+		auto seg = new Segment(Vec2(x, -300.0f), Vec2(x, 300.0f));
+		auto obj = new ShapeObj();
+		obj->setShape(seg);
+		obj->setColor(Color::Black);
+		obj->setZPos(0.01f);
+		_planeLayer.add(obj);
+	}
+
 	_planeLayer.setShader(NormalTool::getShader());
+
+	_eulerLabel.setPosition(Vec2(260.0f, 260.0f));
+	_normalLabel.setPosition(Vec2(260.0f, 210.0f));
+	_colorButton.setPosition(Vec2(250.0f, 100.0f));
+
+	_colorButton.setRectSize(Vec2(200.0f, 50.0f));
+
+	_uiLayer.add(&_eulerLabel);
+	_uiLayer.add(&_normalLabel);
+	_uiLayer.add(&_colorButton);
 
 	add(&_planeLayer);
 	add(&_uiLayer);
@@ -37,6 +65,31 @@ void ToolScene::update()
 	}
 	NormalTool::getShader()->setViewCoord(Vec3(_camera.getPosition(), _camera.getCameraZPos()));
 	NormalTool::getShader()->setLightData();
+
+	double x = _plane.getAngleX();
+	double y = _plane.getAngleY();
+	_eulerLabel.setString(*NormalTool::getFont(), strFormat("%4.0f %4.0f", R2D(x), R2D(y)));
+	double t = x + pi * 0.5;
+	double ay = std::cos(t);
+	double ax = (std::sin(t) * std::sin(t) * (2.0 - 2.0 * std::sin(y) + ay * ay) - 2.0) * -0.5;
+	ax = std::sin(t) * std::sin(y);
+	double az = 1.0 - ax * ax - ay * ay;
+	if (az <= 0.0) {
+		az = 0.0;
+	} else {
+		az = std::sqrt(az);
+	}
+	_normalLabel.setString(*NormalTool::getFont(), strFormat("%4.2f %4.2f %4.2f", ax, ay, az));
+	Vec3 color = (Vec3(-ax, ay, az) + Vec3::ONE) * 0.5f;
+	_colorButton.setBackColor(color);
+	int i = static_cast<int>(color.x * 255.0f);
+	i <<= 8;
+	i += static_cast<int>(color.y * 255.0f);
+	i <<= 8;
+	i += static_cast<int>(color.z * 255.0f);
+	auto str = strFormat("%06X", i);
+	_colorButton.setLabelString(*NormalTool::getFont(), str);
+	_colorButton.setName(str);
 }
 
 void ToolScene::resetPlane()
@@ -56,23 +109,33 @@ void ToolScene::rotatePlane(const Vec2& v)
 	if (nextAngleY >= -limit && nextAngleY <= limit) {
 		_plane.rotateY(v.x);
 	}
+	auto t = Vec2(_plane.getAngleX(), _plane.getAngleY());
+	t.x = R2Df(t.x);
+	t.y = R2Df(t.y);
+	t.round();
+	_plane.setAngleX(D2Rf(t.x));
+	_plane.setAngleY(D2Rf(t.y));
 }
 
 void ToolScene::keyCallback(int key, int scancode, int action, int mods)
 {
 	if (action != GLFW_RELEASE) {
+		float degree = 1.0f;
+		if (mods == GLFW_MOD_SHIFT) {
+			degree = 2.0f;
+		}
 		switch (key) {
 		case GLFW_KEY_W:
-			rotatePlane(Vec2(0.0f, D2Rf(2.0f)));
+			rotatePlane(Vec2(0.0f, D2Rf(degree)));
 			break;
 		case GLFW_KEY_S:
-			rotatePlane(Vec2(0.0f, D2Rf(-2.0f)));
+			rotatePlane(Vec2(0.0f, D2Rf(-degree)));
 			break;
 		case GLFW_KEY_A:
-			rotatePlane(Vec2(D2Rf(-2.0f), 0.0f));
+			rotatePlane(Vec2(D2Rf(-degree), 0.0f));
 			break;
 		case GLFW_KEY_D:
-			rotatePlane(Vec2(D2Rf(2.0f), 0.0f));
+			rotatePlane(Vec2(D2Rf(degree), 0.0f));
 			break;
 		case GLFW_KEY_R:
 			resetPlane();

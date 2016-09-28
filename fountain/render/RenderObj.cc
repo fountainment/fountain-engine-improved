@@ -194,11 +194,11 @@ void RenderObj::rotate(float dltAgl)
 void RenderObj::matrixTransformBegin()
 {
 	glTranslatef(getPositionX(), getPositionY(), _zPos);
-	if (_angleX != 0.0f) {
-		glRotatef(fei::R2Df(_angleX), 1.0f, 0.0f, 0.0f);
-	}
 	if (_angleY != 0.0f) {
 		glRotatef(fei::R2Df(_angleY), 0.0f, 1.0f, 0.0f);
+	}
+	if (_angleX != 0.0f) {
+		glRotatef(fei::R2Df(_angleX), 1.0f, 0.0f, 0.0f);
 	}
 	if (_angle != 0.0f) {
 		glRotatef(fei::R2Df(_angle), 0.0f, 0.0f, 1.0f);
