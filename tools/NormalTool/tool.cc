@@ -80,7 +80,7 @@ void ToolScene::update()
 		az = std::sqrt(az);
 	}
 	_normalLabel.setString(*NormalTool::getFont(), strFormat("%4.2f %4.2f %4.2f", ax, ay, az));
-	Vec3 color = (Vec3(-ax, ay, az) + Vec3::ONE) * 0.5f;
+	Vec3 color = (Vec3(-static_cast<float>(ax), static_cast<float>(ay), static_cast<float>(az)) + Vec3::ONE) * 0.5f;
 	_colorButton.setBackColor(color);
 	int i = static_cast<int>(color.x * 255.0f);
 	i <<= 8;
@@ -105,6 +105,8 @@ void ToolScene::rotatePlane(const Vec2& v)
 	float limit = pif * 0.5f;
 	if (nextAngleX >= -limit && nextAngleX <= limit) {
 		_plane.rotateX(-v.y);
+	} else {
+		_plane.setAngleX(-_plane.getAngleX());
 	}
 	if (nextAngleY >= -limit && nextAngleY <= limit) {
 		_plane.rotateY(v.x);
