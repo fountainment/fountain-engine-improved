@@ -138,8 +138,8 @@ void ToolScene::setColorStr(const std::string & str)
 	auto y = color.y * 2.0f - 1.0f;
 	auto z = color.z * 2.0f - 1.0f;
 
-	auto angleX = clamp(std::acosf(z), -pif * 0.5f, pif * 0.5f);
-	auto angleY = clamp(std::atanf(-x / y), -pif * 0.5f, pif * 0.5f);
+	auto angleX = clamp(std::acos(z), -pif * 0.5f, pif * 0.5f);
+	auto angleY = clamp(std::atan(-x / y), -pif * 0.5f, pif * 0.5f);
 	if (y > 0.0) {
 		angleX *= -1.0f;
 	}
