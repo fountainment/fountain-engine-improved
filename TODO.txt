@@ -6,6 +6,11 @@ C Current
 ? Uncertain
 X Cancled
 
+Current Quque:
+	C Add Timer class
+	C File Utility Class
+	C PBO in Texture Reading
+
 Function:
 	F FSM test
 	O Render to Texture
@@ -21,12 +26,12 @@ Function:
 		C TextBox
 		C InputBox
 	C File Utility Class
-	! Particle System
-	! PBO in Texture Reading
+	C Particle System
+	C PBO in Texture Reading
 	! A Quake-style Console
-	* Resource Manager
+	! Resource Manager
+	! Test and Debug module (e.g. log file debug output)
 	* VBO
-	* Test and Debug module (e.g. log file debug output)
 	* Script System
 	* Network System
 
@@ -44,8 +49,8 @@ External:
 	Tool:
 		O FSM Editor
 			F Highlight selected signal arrow (alt+s)
-			C Signal Deletion
-			C State Deletion
+			F Signal Deletion
+			F State Deletion
 			! Self-directed signal rendering
 
 	Test:
