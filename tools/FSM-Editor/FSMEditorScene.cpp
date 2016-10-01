@@ -225,7 +225,6 @@ void FSMEditorScene::beforeUpdate()
 			mouseDrag(&_fsmCam, &_fsmCam, -1);
 		}
 		if (_startStateButton && _drawLine) {
-			//TODO: add line shape
 			_editingLine.a = _startStateButton->getCenter();
 			_editingLine.b = _fsmCam.screenToWorld(win->getRHCursorPos());
 			_editingLineObj.setVisible(true);
@@ -247,10 +246,15 @@ void FSMEditorScene::updateStateList()
 	_stateListLayer.garbageRecycle();
 
 	auto stateList = _fsm.getStateVector();
+	auto curSta = _currentState;
+	_currentState = -1;
 	for (auto& state : stateList) {
 		auto button = new StateButton(state.first);
 		button->setLabelString(FSMEditor::font, state.second);
 		button->feiInit();
+		if (curSta != -1 && state.first == curSta) {
+			button->click();
+		}
 		button->setPosition(_statePositionMap[state.first]);
 		_stateListLayer.add(button);
 	}
@@ -264,21 +268,18 @@ void FSMEditorScene::updateSignalList()
 	_signalListLayer.garbageRecycle();
 
 	auto signalList =_fsm.getSignalVector();
-	Vec2 winSize = Interface::getInstance()->getCurrentWindow()->getFrameSize();
-	Vec2 startPosition = winSize.zoomed(Vec2(-0.5f, 0.5f));
-	startPosition.add(Vec2(1.0f, -50.0f - 1.0f));
+	auto curSig = _currentSignal;
+	_currentSignal = -1;
 	for (auto& signal : signalList) {
 		auto button = new SignalButton(signal.first);
 		button->setLabelString(FSMEditor::font, signal.second);
 		button->feiInit();
-		if (startPosition.x + button->getRectSize().x > winSize.x / 2.0f - 100.0f) {
-			startPosition.x = winSize.x / -2.0f + 1.0f;
-			startPosition.y -= 51.0f;
+		if (curSig != -1 && signal.first == curSig) {
+			button->click();
 		}
-		button->setPosition(startPosition);
-		startPosition.add(Vec2(button->getRectSize().x + 1.0f, 0.0f));
 		_signalListLayer.add(button);
 	}
+	updateSignalPosition();
 }
 
 void FSMEditorScene::updateSignalPosition()
@@ -307,8 +308,6 @@ void FSMEditorScene::updateFSM()
 
 void FSMEditorScene::updateFSMConnection()
 {
-	//TODO:
-	//  add all relations to fsm
 	_lineLayer.throwAwayAll();
 	_lineLayer.clear();
 	_lineLayer.garbageRecycle();
@@ -356,8 +355,6 @@ void FSMEditorScene::setSignal(int sig)
 	std::printf("Signal: %d\n", sig);
 	_currentSignal = sig;
 	updateFSMConnection();
-	//TODO:
-	//  highlight the select SignalButton
 }
 
 void FSMEditorScene::setState(int state)
@@ -365,6 +362,16 @@ void FSMEditorScene::setState(int state)
 	std::printf("State: %d\n", state);
 	_currentState = state;
 	updateFSMConnection();
+}
+
+bool FSMEditorScene::isLinked(StateButton* a, StateButton* b)
+{
+	if (_currentSignal != -1) {
+		int stateA = a->getState();
+		int stateB = b->getState();
+		return _fsm.hasLink(stateA, stateB, _currentSignal);
+	}
+	return false;
 }
 
 void FSMEditorScene::establishLink(StateButton* a, StateButton* b)
@@ -386,6 +393,24 @@ void FSMEditorScene::deleteLink(StateButton* a, StateButton* b)
 		_fsm.deleteLink(stateA, _currentSignal);
 		std::printf("Delete Link: %d->%d (%d)\n", stateA, stateB, _currentSignal);
 		updateFSMConnection();
+	}
+}
+
+void FSMEditorScene::deleteCurrentSignal()
+{
+	if (_currentSignal != -1) {
+		_fsm.deleteSignal(_currentSignal);
+		_currentSignal = -1;
+		updateFSM();
+	}
+}
+
+void FSMEditorScene::deleteCurrentState()
+{
+	if (_currentState != -1) {
+		_fsm.deleteState(_currentState);
+		_currentState = -1;
+		updateFSM();
 	}
 }
 
@@ -427,6 +452,13 @@ void FSMEditorScene::keyCallback(int key, int scancode, int action, int mods)
 	if (key == GLFW_KEY_D && action == GLFW_PRESS && mods == GLFW_MOD_ALT) {
 		showOnlyOneState();
 	}
+	if (key == GLFW_KEY_DELETE && action == GLFW_PRESS) {
+		if (mods == GLFW_MOD_CONTROL) {
+			deleteCurrentSignal();
+		} else {
+			deleteCurrentState();
+		}
+	}
 }
 
 void FSMEditorScene::scrollCallback(double xoffset, double yoffset)
@@ -452,7 +484,11 @@ void FSMEditorScene::mouseButtonCallback(int button, int action, int mods)
 				if (_drawLine) {
 					_endStateButton = _collideStateButton;
 					if (_startStateButton && _endStateButton->getState() != -1) {
-						establishLink(_startStateButton, _endStateButton);
+						if (isLinked(_startStateButton, _endStateButton)) {
+							deleteLink(_startStateButton, _endStateButton);
+						} else {
+							establishLink(_startStateButton, _endStateButton);
+						}
 					}
 				}
 			}

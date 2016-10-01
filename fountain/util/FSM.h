@@ -20,9 +20,11 @@ public:
 	void registerLink(const std::string& curState, \
 			const std::string& nextState, const std::string& signal);
 
-	int registerSignal();
-	int registerState();
 	void registerLink(int curState, int nextState, int signal);
+	bool hasLink(int curState, int nextState, int signal);
+
+	void deleteSignal(int signal);
+	void deleteState(int state);
 	void deleteLink(int curState, int signal);
 
 	int getSignalId(const std::string& signal);
@@ -54,6 +56,9 @@ public:
 
 private:
 	virtual void outputSignal(int signal);
+
+	int registerSignal();
+	int registerState();
 
 	int _maxSignal = 2;
 	int _maxState = 1;

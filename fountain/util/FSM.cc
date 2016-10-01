@@ -80,9 +80,50 @@ int FSM::registerState()
 	return ++_maxState;
 }
 
+bool FSM::hasLink(int curState, int nextState, int signal)
+{
+	return _fsmMap[curState][signal] == nextState;
+}
+
 void FSM::registerLink(int curState, int nextState, int signal)
 {
 	_fsmMap[curState][signal] = nextState;
+}
+
+void FSM::deleteSignal(int signal)
+{
+	for (auto& it : _fsmMap) {
+		auto itt = it.second.find(signal);
+		if (itt != it.second.end()) {
+			it.second.erase(itt);
+		}
+	}
+	auto it = _signalNameMap.find(signal);
+	if (it != _signalNameMap.end()) {
+		auto name = it->second;
+		_signalNameMap.erase(it);
+		auto itt = _nameSignalMap.find(name);
+		if (itt != _nameSignalMap.end()) {
+			_nameSignalMap.erase(itt);
+		}
+	}
+}
+
+void FSM::deleteState(int state)
+{
+	auto it = _fsmMap.find(state);
+	if (it != _fsmMap.end()) {
+		_fsmMap.erase(it);
+	}
+	auto itt = _stateNameMap.find(state);
+	if (itt != _stateNameMap.end()) {
+		auto name = itt->second;
+		_stateNameMap.erase(itt);
+		auto ittt = _nameStateMap.find(name);
+		if (ittt != _nameStateMap.end()) {
+			_nameStateMap.erase(ittt);
+		}
+	}
 }
 
 void FSM::deleteLink(int curState, int signal)

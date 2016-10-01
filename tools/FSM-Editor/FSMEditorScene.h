@@ -4,8 +4,6 @@
 #include <fountain.h>
 #include <util/FSM.h>
 
-//TODO: add pointer and signalLabel class
-
 class ButtonBase : public fei::Button
 {
 public:
@@ -76,8 +74,12 @@ public:
 	void setSignal(int signal);
 	void setState(int state);
 
+	bool isLinked(StateButton* a, StateButton* b);
 	void establishLink(StateButton* a, StateButton* b);
 	void deleteLink(StateButton* a, StateButton* b);
+
+	void deleteCurrentSignal();
+	void deleteCurrentState();
 
 	virtual void characterCallback(unsigned int codepoint) override;
 	virtual void keyCallback(int key, int scancode, int action, int mods) override;
