@@ -1,6 +1,7 @@
 #ifndef _FEI_CLOCK_H_
 #define _FEI_CLOCK_H_
 
+#include "base/basedef.h"
 #include "time/Time.h"
 
 namespace fei {
@@ -9,7 +10,7 @@ class Clock
 {
 public:
 	Clock();
-	virtual ~Clock();
+	~Clock();
 
 	void init();
 	void init(Clock* mClock);
@@ -38,6 +39,8 @@ public:
 
 	void switchPlayAndPause();
 
+	void setTickCallback(std::function<void()> callback);
+
 private:
 	double calculateDeltaTime();
 
@@ -52,6 +55,8 @@ private:
 	bool _isStop;
 
 	Clock* _masterClock;
+
+	std::function<void()> _tickCallback;
 };
 
 } // namespace fei
@@ -62,6 +67,9 @@ inline void fei::Clock::tick()
 	if (_isPlay) {
 		_totalTime += _deltaTime;
 		_frameCount++;
+		if (_tickCallback) {
+			_tickCallback();
+		}
 	}
 }
 

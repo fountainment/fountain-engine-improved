@@ -32,6 +32,7 @@ public:
 	void setPauseCallback(std::function<void()> callback);
 	void setResumeCallback(std::function<void()> callback);
 	void setStopCallback(std::function<void()> callback);
+	void setTickCallback(std::function<void()> callback);
 
 protected:
 	virtual void afterPlay();

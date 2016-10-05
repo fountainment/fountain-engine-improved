@@ -23,6 +23,7 @@
 
 #include "time/Time.h"
 #include "time/Clock.h"
+#include "time/Timer.h"
 
 #include "interface/Interface.h"
 #include "interface/Window.h"

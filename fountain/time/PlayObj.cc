@@ -88,6 +88,11 @@ void PlayObj::setStopCallback(std::function<void()> callback)
 	_stopCallback = callback;
 }
 
+void PlayObj::setTickCallback(std::function<void()> callback)
+{
+	getClock()->setTickCallback(callback);
+}
+
 void PlayObj::afterPlay()
 {
 	if (_playCallback) {

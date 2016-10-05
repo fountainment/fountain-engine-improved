@@ -12,7 +12,8 @@ Clock::Clock()
   _isMaster(true),
   _isPlay(true),
   _isStop(false),
-  _masterClock(nullptr)
+  _masterClock(nullptr),
+  _tickCallback(nullptr)
 {
 	fei::Time::getInstance()->addClock(this);
 }
@@ -98,4 +99,9 @@ void Clock::switchPlayAndPause()
 	} else {
 		resume();
 	}
+}
+
+void Clock::setTickCallback(std::function<void()> callback)
+{
+	_tickCallback = callback;
 }

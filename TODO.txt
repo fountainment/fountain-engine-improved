@@ -13,6 +13,7 @@ Current Quque:
 
 Function:
 	F FSM test
+	F Add Timer class
 	O Render to Texture
 		? RenderBuffer create
 		C Last RenderTarget Recover
@@ -20,7 +21,6 @@ Function:
 		C Avoid SetSensor Call in Collsion Callback (use process queue?)
 	O Component Logic
 		? Message System
-	C Add Timer class
 	C UI Widget border
 	C More UI Widgets
 		C TextBox
