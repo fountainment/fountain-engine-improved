@@ -2,6 +2,7 @@
 #define _FEI_BASEDEF_H_
 
 #include <algorithm>
+#include <atomic>
 #include <cassert>
 #include <cstdarg>
 #include <cstddef>

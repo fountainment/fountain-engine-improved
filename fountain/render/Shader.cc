@@ -66,7 +66,7 @@ void Shader::loadFile(const std::string& filename)
 {
 	auto buffer = fei::readFileBuffer(filename);
 	if (buffer) {
-		loadString(buffer);
+		loadString((char*)buffer);
 		delete [] buffer;
 	}
 }
@@ -151,7 +151,7 @@ void ShaderProgram::loadFile(const std::string& vs, const std::string& fs)
 	auto vsStr = fei::readFileBuffer(vs);
 	auto fsStr = fei::readFileBuffer(fs);
 	if (vsStr && fsStr) {
-		loadString(vsStr, fsStr);
+		loadString((char*)vsStr, (char*)fsStr);
 	} else {
 		std::fprintf(stderr, "ShaderProgram: loadFile failed!\n");
 	}

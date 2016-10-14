@@ -7,12 +7,11 @@ C Current
 X Cancled
 
 Current Quque:
-	C Add Timer class
-	C File Utility Class
+	O File Utility Class
+		C Add input output function
 	C PBO in Texture Reading
 
 Function:
-	F FSM test
 	F Add Timer class
 	O Render to Texture
 		? RenderBuffer create
@@ -25,7 +24,6 @@ Function:
 	C More UI Widgets
 		C TextBox
 		C InputBox
-	C File Utility Class
 	C Particle System
 	C PBO in Texture Reading
 	! A Quake-style Console
