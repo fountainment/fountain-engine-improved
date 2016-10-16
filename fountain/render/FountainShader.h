@@ -35,9 +35,15 @@ public:
 	void move(const Vec2& v);
 	void move(const Vec3& v);
 
-	static const int POINT_LIGHT = 0;
-	static const int DIRECTIONAL_LIGHT = 1;
-	static const int SPOT_LIGHT = 2;
+	static constexpr int RENDER_PLAIN = 0;
+	static constexpr int RENDER_BLUR = 1;
+	static constexpr int RENDER_BASIC = 2;
+	static constexpr int RENDER_HDR = 3;
+	static constexpr int RENDER_FINAL = 4;
+
+	static constexpr int POINT_LIGHT = 0;
+	static constexpr int DIRECTIONAL_LIGHT = 1;
+	static constexpr int SPOT_LIGHT = 2;
 
 private:
 	Light() = default;
