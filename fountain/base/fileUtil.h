@@ -31,6 +31,8 @@ public:
 	void preload();
 	bool isLoaded();
 
+	int scanf(const char* format, ...);
+
 	void closeFile();
 	void deleteBuffer();
 	void deleteThread();

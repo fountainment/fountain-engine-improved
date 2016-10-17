@@ -139,6 +139,17 @@ bool File::isLoaded()
 	return _isLoaded;
 }
 
+int File::scanf(const char* format, ...)
+{
+	//TODO: add _buffer support
+	if (!_filePtr) return EOF;
+	va_list args;
+	va_start(args, format);
+	int ret = std::fscanf(_filePtr, format, args);
+	va_end(args);
+	return ret;
+}
+
 void File::closeFile()
 {
 	if (_filePtr != nullptr) {
