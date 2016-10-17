@@ -145,7 +145,7 @@ int File::scanf(const char* format, ...)
 	if (!_filePtr) return EOF;
 	va_list args;
 	va_start(args, format);
-	int ret = std::fscanf(_filePtr, format, args);
+	int ret = std::vfscanf(_filePtr, format, args);
 	va_end(args);
 	return ret;
 }
