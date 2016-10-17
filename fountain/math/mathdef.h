@@ -75,12 +75,12 @@ inline int cmp(T a, T b) {
 	return a < b ? -1 : 1;
 }
 
-inline bool getBit(int n, int index)
+inline bool getBit(int32_t n, int index)
 {
 	return ((n >> index) & 1) == 1;
 }
 
-inline void setBit(int& num, int index, bool bit)
+inline void setBit(int32_t& num, int index, bool bit)
 {
 	if (bit) {
 		num |= 1 << index;

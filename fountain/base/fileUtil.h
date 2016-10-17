@@ -42,6 +42,7 @@ public:
 	const std::string getBufferString();
 
 private:
+	void waitLoading();
 	void loadFileIntoBuffer();
 
 	std::atomic<unsigned char*> _buffer;

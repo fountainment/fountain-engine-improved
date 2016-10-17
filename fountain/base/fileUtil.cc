@@ -100,10 +100,18 @@ bool File::exist()
 	return _filePtr != nullptr;
 }
 
+void File::waitLoading()
+{
+	if (_loadingThread) {
+		_loadingThread->join();
+	}
+}
+
 void File::load()
 {
+	//asert _filePtr != nullptr
 	if (_isLoading) {
-		_loadingThread->join();
+		waitLoading();
 	} else {
 		if (_isLoaded) {
 			return;
@@ -115,14 +123,14 @@ void File::load()
 
 void File::loadFileIntoBuffer()
 {
-	_isLoaded = false;
 	_isLoading = true;
+	_isLoaded = false;
 	deleteBuffer();
 	_buffer = fei::readFileBuffer(_filePtr, &_fileSize);
 	_state = State::BUFFER;
 	closeFile();
-	_isLoading = false;
 	_isLoaded = true;
+	_isLoading = false;
 }
 
 void File::preload()
@@ -142,6 +150,9 @@ bool File::isLoaded()
 int File::scanf(const char* format, ...)
 {
 	//TODO: add _buffer support
+	if (_isLoading) {
+		waitLoading();
+	}
 	if (!_filePtr) return EOF;
 	va_list args;
 	va_start(args, format);
@@ -153,25 +164,25 @@ int File::scanf(const char* format, ...)
 void File::closeFile()
 {
 	if (_filePtr != nullptr) {
-		std::fclose(_filePtr);
-		_filePtr = nullptr;
 		if (_state == State::FILE) {
 			_state = State::NONE;
 		}
+		std::fclose(_filePtr);
+		_filePtr = nullptr;
 	}
 }
 
 void File::deleteBuffer()
 {
 	if (_buffer.load() != nullptr) {
+		if (_state == State::BUFFER) {
+			_state = State::NONE;
+		}
 		if (_ownBuffer) {
 			delete[] _buffer.load();
 		}
 		_buffer = nullptr;
 		_fileSize = -1;
-		if (_state == State::BUFFER) {
-			_state = State::NONE;
-		}
 		_isLoaded = false;
 	}
 }
@@ -181,6 +192,7 @@ void File::deleteThread()
 	if (_loadingThread) {
 		_loadingThread->join();
 		delete _loadingThread;
+		_loadingThread = nullptr;
 	}
 }
 
