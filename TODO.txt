@@ -8,8 +8,10 @@ X Cancled
 
 Current Quque:
 	O File Utility Class
-		C Add input output function
+		C Add output function
+		C Add buffer input output support
 	C PBO in Texture Reading
+	C Test and Debug module (e.g. log file debug output)
 
 Function:
 	F Add Timer class
@@ -26,9 +28,9 @@ Function:
 		C InputBox
 	C Particle System
 	C PBO in Texture Reading
+	C Test and Debug module (e.g. log file debug output)
 	! A Quake-style Console
 	! Resource Manager
-	! Test and Debug module (e.g. log file debug output)
 	* VBO
 	* Script System
 	* Network System
