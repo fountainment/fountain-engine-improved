@@ -1,6 +1,7 @@
 #include "render/ImagePool.h"
 
 #include "base/basedef.h"
+#include "base/fileUtil.h"
 #include "math/hash.h"
 #include "math/Rect.h"
 
@@ -26,19 +27,20 @@ const std::vector<ImageInfo> loadSipFile(const std::string& filename)
 	char name[100];
 	int x, y, _imageNum, tmp;
 	float rx, ry, rw, rh;
-	std::FILE *sipF = std::fopen(filename.c_str(), "r");
-	if (!sipF) {
+	fei::File sipF;
+	sipF.open(filename.c_str(), "r");
+	if (!sipF.exist()) {
 		std::fprintf(stderr, "loadSipFile: \"%s\" file not exist!\n", filename.c_str());
 		return result;
 	}
-	tmp = std::fscanf(sipF, "%d%d%d", &x, &y, &_imageNum);
+	sipF.scanf("%d%d%d", &x, &y, &_imageNum);
 	for (int i = 0; i < _imageNum; i++) {
-		tmp = std::fscanf(sipF, "%s%f%f%f%f", name, &rw, &rh, &rx, &ry);
+		tmp = sipF.scanf("%s%f%f%f%f", name, &rw, &rh, &rx, &ry);
 		if (EOF == tmp) break;
 		result.push_back(ImageInfo(name, fei::bkdrHash(name), \
 				fei::Rect(rx, y - ry - rh, rw, rh), fei::Vec2::ZERO));
 	}
-	std::fclose(sipF);
+	sipF.close();
 	return result;
 }
 
@@ -48,19 +50,20 @@ const std::vector<ImageInfo> loadIpiFile(const std::string& filename)
 	char name[100];
 	int x, y, _imageNum, tmp;
 	float rx, ry, rw, rh, ax, ay;
-	std::FILE *ipiF = std::fopen(filename.c_str(), "r");
-	if (!ipiF) {
+	fei::File ipiF;
+	ipiF.open(filename.c_str(), "r");
+	if (!ipiF.exist()) {
 		std::fprintf(stderr, "loadIpiFile: \"%s\" file not exist!\n", filename.c_str());
 		return result;
 	}
-	tmp = std::fscanf(ipiF, "%d%d%d", &x, &y, &_imageNum);
+	ipiF.scanf("%d%d%d", &x, &y, &_imageNum);
 	for (int i = 0; i < _imageNum; i++) {
-		tmp = std::fscanf(ipiF, "%s%f%f%f%f%f%f", name, &rw, &rh, &rx, &ry, &ax, &ay);
+		tmp = ipiF.scanf("%s%f%f%f%f%f%f", name, &rw, &rh, &rx, &ry, &ax, &ay);
 		if (EOF == tmp) break;
 		result.push_back(ImageInfo(name, fei::bkdrHash(name), \
 				fei::Rect(rx, y - ry - rh, rw, rh), fei::Vec2(ax, -ay)));
 	}
-	std::fclose(ipiF);
+	ipiF.close();
 	return result;
 }
 

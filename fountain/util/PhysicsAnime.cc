@@ -1,29 +1,32 @@
 #include "util/PhysicsAnime.h"
 
+#include "base/fileUtil.h"
+
 using fut::CollisionFrameAnime;
 
 void fut::loadPolygonCollisionData(std::map<int, std::vector<fei::Polygon>>& frameMap, const std::string& filename)
 {
-	auto colF = std::fopen(filename.c_str(), "r");
+	fei::File colF;
+	colF.open(filename.c_str(), "r");
 	int fi, polyNum;
 	frameMap.clear();
-	while (std::fscanf(colF, "%d", &fi) != EOF) {
+	while (colF.scanf("%d", &fi) != EOF) {
 		std::vector<fei::Polygon> polyVec;
-		std::fscanf(colF, "%d", &polyNum);
+		colF.scanf("%d", &polyNum);
 		for (int i = 0; i < polyNum; i++) {
 			int vertexNum;
-			std::fscanf(colF, "%d", &vertexNum);
+			colF.scanf("%d", &vertexNum);
 			fei::Polygon poly;
 			for (int j = 0; j < vertexNum; j++) {
 				float x, y;
-				std::fscanf(colF, "%f%f", &x, &y);
+				colF.scanf("%f%f", &x, &y);
 				poly.pushVertex(fei::Vec2(x, y));
 			}
 			polyVec.push_back(poly);
 		}
 		frameMap[fi] = polyVec;
 	}
-	std::fclose(colF);
+	colF.close();
 }
 
 CollisionFrameAnime::CollisionFrameAnime()

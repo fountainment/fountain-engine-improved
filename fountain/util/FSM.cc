@@ -1,5 +1,7 @@
 #include "util/FSM.h"
 
+#include "base/fileUtil.h"
+
 using fut::FSM;
 
 FSM::FSM()
@@ -261,16 +263,17 @@ void FSM::dump(const std::string& filename)
 bool FSM::load(const std::string& filename)
 {
 	char a[50], b[50], s[50];
-	auto file = std::fopen(filename.c_str(), "rb");
-	if (!file) {
+	fei::File file;
+	file.open(filename.c_str(), "rb");
+	if (!file.exist()) {
 		return false;
 	}
 	clearAll();
-	std::fscanf(file, "%s", a);
-	while (std::fscanf(file, "%s%s%s", a, b, s) != EOF) {
+	file.scanf("%s", a);
+	while (file.scanf("%s%s%s", a, b, s) != EOF) {
 		registerLink(a, b, s);
 	}
-	std::fclose(file);
+	file.close();
 	return true;
 }
 
