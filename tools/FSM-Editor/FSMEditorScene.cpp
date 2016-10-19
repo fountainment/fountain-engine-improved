@@ -569,16 +569,17 @@ void FSMEditorScene::loadPosition(const std::string& filename)
 {
 	char a[50];
 	float x, y;
-	auto file = std::fopen(filename.c_str(), "rb");
-	if (!file) {
+	File file;
+	file.open(filename.c_str(), "rb");
+	if (!file.exist()) {
 		return;
 	}
 	_statePositionMap.clear();
-	while (std::fscanf(file, "%s %f %f", a, &x, &y) != EOF) {
+	while (file.scanf("%s %f %f", a, &x, &y) != EOF) {
 		int id = _fsm.getStateId(a);
 		_statePositionMap[id] = Vec2(x, y);
 	}
-	std::fclose(file);
+	file.close();
 }
 
 void FSMEditorScene::loadFSM(const std::string& filename)

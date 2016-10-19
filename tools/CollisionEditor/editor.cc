@@ -462,28 +462,29 @@ void EditorScene::loadCol(const char* filename)
 {
 	clearCol();
 	int index, n, vn;
-	auto f = std::fopen(filename, "r");
-	while (std::fscanf(f, "%d", &index) != EOF) {
-		std::fscanf(f, "%d", &n);
+	File f;
+	f.open(filename, "rb");
+	while (f.scanf("%d", &index) != EOF) {
+		f.scanf("%d", &n);
 		for (int i = 0; i < n; i++) {
 			float a, b, c, d;
-			std::fscanf(f, "%d", &vn);
+			f.scanf("%d", &vn);
 			switch (vn) {
 			case 0:
 				{
-					std::fscanf(f, "%f%f%f%f", &a, &b, &c, &d);
+					f.scanf("%f%f%f%f", &a, &b, &c, &d);
 					addRect(Rect(a, b, c, d), index);
 					break;
 				}
 			case 1:
 				{
-					std::fscanf(f, "%f%f%f", &a, &b, &c);
+					f.scanf("%f%f%f", &a, &b, &c);
 					addCircle(Circle(Vec2(a, b), c), index);
 					break;
 				}
 			case 2:
 				{
-					std::fscanf(f, "%f%f%f%f", &a, &b, &c, &d);
+					f.scanf("%f%f%f%f", &a, &b, &c, &d);
 					addSegment(Segment(Vec2(a, b), Vec2(c, d)), index);
 					break;
 				}
@@ -491,7 +492,7 @@ void EditorScene::loadCol(const char* filename)
 				{
 					Polygon poly;
 					for (int i = 0; i < vn; i++) {
-						std::fscanf(f, "%f%f", &a, &b);
+						f.scanf("%f%f", &a, &b);
 						poly.pushVertex(Vec2(a, b));
 					}
 					addPolygon(poly, index);
@@ -500,7 +501,7 @@ void EditorScene::loadCol(const char* filename)
 			}
 		}
 	}
-	std::fclose(f);
+	f.close();
 }
 
 void EditorScene::unloadImage()

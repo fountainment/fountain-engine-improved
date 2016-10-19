@@ -141,14 +141,14 @@ void EditorScene::loadAnchorOffset()
 {
 	char name[256];
 	float x, y;
-	bool exist = fei::isFileExist("anchor.txt");
-	if (exist) {
-		auto f = std::fopen("anchor.txt", "r");
-		while (std::fscanf(f, "%s%f%f", name, &x, &y) != EOF) {
+	File f;
+	f.open("anchor.txt", "rb");
+	if (f.exist()) {
+		while (f.scanf("%s%f%f", name, &x, &y) != EOF) {
 			_ipiNameToAnchorOffset[name] = Vec2(x, y);
 		}
-		std::fclose(f);
 	}
+	f.close();
 }
 
 void EditorScene::loadGroup()
@@ -156,21 +156,21 @@ void EditorScene::loadGroup()
 	char name[256];
 	int n;
 	int index = 1;
-	bool exist = fei::isFileExist("group.txt");
-	if (exist) {
-		auto f = std::fopen("group.txt", "r");
-		while (std::fscanf(f, "%d", &n) != EOF) {
+	File f;
+	f.open("group.txt", "rb");
+	if (f.exist()) {
+		while (f.scanf("%d", &n) != EOF) {
 			std::vector<std::string> strList;
 			for (int i = 0; i < n; i++) {
-				std::fscanf(f, "%s", name);
+				f.scanf("%s", name);
 				strList.push_back(name);
 				_ipiNameToGroupIndex[name] = index;
 			}
 			_groupIndexToIpiNameList[index] = strList;
 			index++;
 		}
-		std::fclose(f);
 	}
+	f.close();
 }
 
 void EditorScene::saveIpi()
@@ -183,7 +183,7 @@ void EditorScene::saveIpi()
 
 void EditorScene::saveAnchorOffset()
 {
-	auto f = std::fopen("anchor.txt", "w");
+	auto f = std::fopen("anchor.txt", "wb");
 	for (auto ia : _ipiNameToAnchorOffset) {
 		if (ia.first != EmptyStr && ia.second != Vec2::ZERO) {
 			std::fprintf(f, "%s %f %f\n", ia.first.c_str(), ia.second.x, ia.second.y);
