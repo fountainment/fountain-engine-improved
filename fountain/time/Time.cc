@@ -89,8 +89,8 @@ void Time::executeBeforeFrame()
 		_curTime = calcCurTime();
 		_deltaTime = _curTime - _lastTime;
 	}
-	if (_deltaTime > _defaultSpf * 10.0 || _deltaTime < 0.0) {
-		_deltaTime = 0.0;
+	if (_deltaTime > _defaultSpf * 10.0 || _deltaTime <= 0.0) {
+		_deltaTime = _defaultSpf;
 	}
 
 	for (auto clock : _clockList) {
