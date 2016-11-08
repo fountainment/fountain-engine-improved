@@ -110,6 +110,15 @@ void RenderList::throwAway(fei::RenderObj* garbage)
 	_garbageQueue.push(garbage);
 }
 
+void RenderList::throwAwayIf(std::function<bool(fei::RenderObj*)> func)
+{
+	for (auto renderObj : _objList) {
+		if (func && func(renderObj)) {
+			throwAway(renderObj);
+		}
+	}
+}
+
 void RenderList::throwAwayAll()
 {
 	for (auto renderObj : _objList) {
