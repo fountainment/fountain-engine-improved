@@ -7,6 +7,7 @@
 #include "base/NodeBase.h"
 #include "base/noncopyable.h"
 #include "base/stringUtil.h"
+#include "base/funcUtil.h"
 
 #include "math/mathdef.h"
 #include "math/Rect.h"
