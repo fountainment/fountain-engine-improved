@@ -72,6 +72,8 @@ public:
 
 	bool isInStep();
 
+	std::queue<std::function<void()>>* getAfterStepProcessQueue();
+
 	b2World* getB2World();
 
 	static b2Shape* ShapeToB2Shape(const Shape* shape);
@@ -85,7 +87,7 @@ private:
 	b2World* _world;
 	b2Draw* _debugDraw;
 	b2ContactListener* _contactListener;
-	std::queue<Body*> _zombieBodyList;
+	std::queue<std::function<void()>> _afterStepProcessQueue;
 	Camera* _ddCamera;
 	bool _doDebugDraw;
 	bool _inStep;

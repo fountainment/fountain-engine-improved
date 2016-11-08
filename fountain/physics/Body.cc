@@ -31,12 +31,29 @@ const fei::Vec2 Body::getPosition() const
 {
 	auto b2v = _body->GetPosition();
 	auto vec = fei::Vec2(b2v.x, b2v.y);
-	return Physics::getInstance()->physicsToRender(vec);
+	return fei::Physics::getInstance()->physicsToRender(vec);
 }
 
 float Body::getAngle() const
 {
 	return _body->GetAngle();
+}
+
+void Body::setTransform(const fei::Vec2& position, float angle)
+{
+	fei::Vec2 physicsPosition = fei::Physics::getInstance()->renderToPhysics(position);
+	b2Vec2 b2v(physicsPosition.x, physicsPosition.y);
+	_body->SetTransform(b2v, angle);
+}
+
+void Body::setPosition(const fei::Vec2& position)
+{
+	setTransform(position, getAngle());
+}
+
+void Body::setAngle(float angle)
+{
+	setTransform(getPosition(), angle);
 }
 
 void Body::setSpeed(const fei::Vec2& sp)
@@ -65,6 +82,7 @@ b2Fixture* Body::createFixture(const fei::Shape* shape)
 	}
 	auto *b2shape = Physics::ShapeToB2Shape(shape);
 	auto fixture = _body->CreateFixture(b2shape, density);
+	fixture->SetFilterData(_filter);
 	if (b2shape) {
 		delete b2shape;
 	}
@@ -96,12 +114,24 @@ const std::vector<b2Fixture*> Body::createFixture(const std::vector<fei::Polygon
 
 b2Fixture* Body::createFixture(const b2FixtureDef& fixDef)
 {
-	return _body->CreateFixture(&fixDef);
+	auto fixture = _body->CreateFixture(&fixDef);
+	fixture->SetFilterData(_filter);
+	return fixture;
 }
 
 void Body::destroyFixture(b2Fixture* fixture)
 {
 	if (_destroyed) {
+		return;
+	}
+	if (fei::Physics::getInstance()->isInStep()) {
+		auto q = fei::Physics::getInstance()->getAfterStepProcessQueue();
+		q->push(
+			[this, fixture]()
+			{
+				_body->DestroyFixture(fixture);
+			}
+		);
 		return;
 	}
 	_body->DestroyFixture(fixture);
@@ -116,6 +146,8 @@ void Body::destroyFixture(const std::vector<b2Fixture*>& fixtures)
 
 void Body::setCategoryBitsAndMaskBits(uint16 cbits, uint16 mbits)
 {
+	_filter.categoryBits = cbits;
+	_filter.maskBits = mbits;
 	for (b2Fixture* f = _body->GetFixtureList(); f; f = f->GetNext()) {
 		b2Filter fd = f->GetFilterData();
 		fd.categoryBits = cbits;
@@ -126,6 +158,7 @@ void Body::setCategoryBitsAndMaskBits(uint16 cbits, uint16 mbits)
 
 void Body::setGroupIndex(int16 groupIndex)
 {
+	_filter.groupIndex = groupIndex;
 	for (b2Fixture* f = _body->GetFixtureList(); f; f = f->GetNext()) {
 		b2Filter fd = f->GetFilterData();
 		fd.groupIndex = groupIndex;

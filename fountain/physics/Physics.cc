@@ -141,7 +141,11 @@ void ContactListener::EndContact(b2Contact* contact)
 	auto feiBodyB = Physics::getBodyByB2Fixture(fixtureB);
 	if (!feiBodyA || !feiBodyB) return;
 
+	contactInfo_.valid = false;
+	contactInfo_.setFixture(fixtureA, fixtureB);
 	feiBodyA->endContact(feiBodyB);
+
+	contactInfo_.setFixture(fixtureB, fixtureA);
 	feiBodyB->endContact(feiBodyA);
 }
 
@@ -246,11 +250,10 @@ void Physics::executeBeforeFrame()
 	_inStep = false;
 	_world->ClearForces();
 
-	while (!_zombieBodyList.empty()) {
-		auto body = _zombieBodyList.front();
-		_world->DestroyBody(body->getB2Body());
-		delete body;
-		_zombieBodyList.pop();
+	while (!_afterStepProcessQueue.empty()) {
+		auto func = _afterStepProcessQueue.front();
+		_afterStepProcessQueue.pop();
+		func();
 	}
 }
 
@@ -315,7 +318,13 @@ void Physics::destroyBody(fei::Body* body)
 	}
 	body->getB2Body()->SetUserData(nullptr);
 	if (isInStep()) {
-		_zombieBodyList.push(body);
+		_afterStepProcessQueue.push(
+			[this, body]()
+			{
+				_world->DestroyBody(body->getB2Body());
+				delete body;
+			}
+		);
 		body->_destroyed = true;
 		return;
 	}
@@ -336,6 +345,11 @@ void Physics::setDebugDrawCamera(fei::Camera* cam)
 bool Physics::isInStep()
 {
 	return _inStep;
+}
+
+std::queue<std::function<void()>>* Physics::getAfterStepProcessQueue()
+{
+	return &_afterStepProcessQueue;
 }
 
 b2Shape* Physics::ShapeToB2Shape(const fei::Shape* shape)

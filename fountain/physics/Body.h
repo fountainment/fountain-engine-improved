@@ -22,8 +22,12 @@ public:
 		KINEMATIC = 3
 	};
 
-	const fei::Vec2 getPosition() const;
+	const Vec2 getPosition() const;
 	float getAngle() const;
+
+	void setTransform(const fei::Vec2& position, float angle);
+	void setPosition(const Vec2& positon);
+	void setAngle(float angle);
 
 	b2Body* getB2Body() const;
 
@@ -61,6 +65,7 @@ private:
 	void endContact(Body* otherBody);
 
 	b2Body* _body;
+	b2Filter _filter;
 	Type _type;
 	int _tag;
 	bool _destroyed;
