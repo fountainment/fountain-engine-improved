@@ -14,8 +14,7 @@ void EditorScene::init()
 	_editShapeObj.setColorAlpha(0.5f);
 
 	_anime.getClock()->setTimeScale(0.0f);
-	_anime.setCurFrameIndex(-1);
-	_anime.play();
+	_anime.stop();
 	_animeObj.setHasAlpha(true);
 	_animeObj.setColor(Color::Green);
 	_animeObj.setAnime(&_anime);
@@ -246,6 +245,7 @@ void EditorScene::update()
 							(t1 = ip->getImage(_anime.getCurFrameIndex())->getSize(), t1.x * t1.y) > \
 							(t2 = image->getSize(), t2.x * t2.y)) {
 							_anime.setCurFrameIndex(i);
+							_anime.play();
 						}
 						collide = true;
 					}

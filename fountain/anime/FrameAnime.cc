@@ -69,15 +69,17 @@ void FrameAnime::loadImagePool(fei::ImagePool imagePool)
 void FrameAnime::feiObjectUpdate(fei::RenderObj* rObj)
 {
 	updateFrameIndex();
-	updateFrameContent(rObj);
-	update(rObj);
+	if (rObj->getAnime() == this) {
+		updateFrameContent(rObj);
+		update(rObj);
+	}
 }
 
 void FrameAnime::updateFrameIndex()
 {
 	if (isPlay()) {
 		_curFrameIndex += getFps() * getDeltaTime();
-		if (_curFrameIndex >= getFrameNum()) {
+		if (_curFrameIndex < 0 || _curFrameIndex >= getFrameNum()) {
 			stop();
 		}
 	}
@@ -125,7 +127,7 @@ fei::ImagePool* FrameAnime::getFramePool()
 
 float FrameAnime::getTotalTime()
 {
-	return getFrameNum() / getFps();
+	return isLoop() ? INFINITY : (getFrameNum() / getFps());
 }
 
 void FrameAnime::afterStop()
