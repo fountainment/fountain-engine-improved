@@ -11,7 +11,6 @@ inline std::function<void()> deleteFunc(T t)
 	return [t](){delete t;};
 }
 
-template <class T>
 inline std::function<void()> funcVector(std::vector<std::function<void()>> v)
 {
 	return [v](){for (auto f : v){f();}};
