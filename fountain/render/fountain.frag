@@ -144,15 +144,15 @@ void PointLight(inout vec3 result, vec3 texColor, vec3 normal, vec3 lightPos, fl
 
 	vec3 n = normal;
 	vec3 l = pl - p;
+	vec3 nl = normalize(l);
 	float len = 0.0;
 
-	float cosThetai = dot(n, l);
+	float cosThetai = dot(n, nl);
 	float cosThetah = 0.0;
 	if (cosThetai > 0.0) {
 		len = length(l);
-		l = l / len;
 		vec3 v = -g_ViewDirection;
-		vec3 h = normalize(l + v);
+		vec3 h = normalize(nl + v);
 		cosThetah = max(dot(n, h), 0.0);
 	} else {
 		return;
@@ -172,15 +172,15 @@ void DirectionalLight(inout vec3 result, vec3 texColor, vec3 normal, vec3 lightD
 
 	vec3 n = normal;
 	vec3 l = -lightDirection;
+	vec3 nl = normalize(l);
 	float len = 0.0;
 
-	float cosThetai = dot(n, l);
+	float cosThetai = dot(n, nl);
 	float cosThetah = 0.0;
 	if (cosThetai > 0.0) {
 		len = length(l);
-		l = l / len;
 		vec3 v = vec3(0.0, 0.0, 1.0);
-		vec3 h = normalize(l + v);
+		vec3 h = normalize(nl + v);
 		cosThetah = max(dot(n, h), 0.0);
 	} else {
 		return;
@@ -201,15 +201,15 @@ void SpotLight(inout vec3 result, vec3 texColor, vec3 normal, vec3 lightPos, vec
 
 	vec3 n = normal;
 	vec3 l = -lightDirection;
+	vec3 nl = normalize(l);
 	float len = 0.0;
 
-	float cosThetai = dot(n, l);
+	float cosThetai = dot(n, nl);
 	float cosThetah = 0.0;
 	if (cosThetai > 0.0) {
 		len = length(l);
-		l = l / len;
-		vec3 v = vec3(0.0, 0.0, 1.0);
-		vec3 h = normalize(l + v);
+		vec3 v = -g_ViewDirection;
+		vec3 h = normalize(nl + v);
 		cosThetah = max(dot(n, h), 0.0);
 	} else {
 		return;
