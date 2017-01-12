@@ -150,7 +150,7 @@ void RenderList::garbageRecycle()
 
 void RenderList::sort(std::function<bool(fei::RenderObj*, fei::RenderObj*)> cmp)
 {
-	std::sort(_objList.begin(), _objList.end(), cmp);
+	std::stable_sort(_objList.begin(), _objList.end(), cmp);
 }
 
 void RenderList::topoSort(std::function<int(fei::RenderObj*, fei::RenderObj*)> cmp)
