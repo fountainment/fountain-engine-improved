@@ -226,7 +226,7 @@ bool Physics::init()
 	flags += b2Draw::e_particleBit;
 	//flags += b2Draw::e_centerOfMassBit;
 	_debugDraw->SetFlags(flags);
-	_world->SetAllowSleeping(true);
+	_world->SetAllowSleeping(false);
 	_world->SetDebugDraw(_debugDraw);
 	_world->SetContactListener(_contactListener);
 	return true;
