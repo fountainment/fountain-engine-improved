@@ -24,6 +24,7 @@ void Timer::timerUpdate()
 {
 	setRemainTime(getInterval() - getClock()->getTime());
 	if (getRemainTime() < 0.0) {
+		setRemainTime(0.0f);
 		stop();
 	}
 }
