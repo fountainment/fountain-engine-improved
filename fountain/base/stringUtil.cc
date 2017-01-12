@@ -33,8 +33,8 @@ const std::vector<fei::Vec2> fei::strVecToVec2Vec(const std::vector<std::string>
 	int len = strVec.size();
 	for (int i = 0; i < len; i += 2) {
 		float x, y;
-		x = static_cast<float>(fei::strToFloat(strVec[i]));
-		y = i != len - 1 ? static_cast<float>(fei::strToFloat(strVec[i + 1])) : 0;
+		x = fei::strToFloat(strVec[i]);
+		y = i != len - 1 ? fei::strToFloat(strVec[i + 1]) : 0;
 		ret.push_back(fei::Vec2(x, y));
 	}
 	return ret;
