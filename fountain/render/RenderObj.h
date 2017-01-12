@@ -112,7 +112,7 @@ private:
 } // namespace fei
 
 inline fei::RenderObj::RenderObj()
-: _hasAlpha(false),
+: _hasAlpha(true),
   _isVisible(true),
   _useColor(true),
   _angleX(0.0f),
