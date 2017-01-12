@@ -20,7 +20,10 @@ void Sprite::addComponent(fei::Component* component)
 void Sprite::delComponent(fei::Component* component)
 {
 	component->setSprite(nullptr);
-	_componentList.erase(std::find(_componentList.begin(), _componentList.end(), component));
+	auto it = std::find(_componentList.begin(), _componentList.end(), component);
+		if (it != _componentList.end()) {
+		_componentList.erase(it);
+	}
 }
 
 void Sprite::clearComponent()
