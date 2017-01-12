@@ -35,6 +35,16 @@ unsigned char CommandInterpreter::queryKeyword(const std::string& keyword)
 	return it->second;
 }
 
+std::vector<CommandResult> CommandInterpreter::interpretMulticommand(const std::string& multicommand)
+{
+	std::vector<CommandResult> result;
+	std::vector<std::string> commands = fei::strSplit(multicommand, '\n');
+	for (auto command : commands) {
+		result.push_back(interpretCommand(command));
+	}
+	return result;
+}
+
 CommandResult CommandInterpreter::interpretCommand(const std::string& command)
 {
 	CommandResult ret;
@@ -75,7 +85,7 @@ uint32_t CommandInterpreter::calcCommandIndex(const std::vector<std::string>& co
 	return ret;
 }
 
-const std::set<char> VimStyleCommandLabel::_focusChar = {':', '/', '%'};
+const std::set<char> VimStyleCommandLabel::_focusChar = {':', '/', '%', '~'};
 
 VimStyleCommandLabel::VimStyleCommandLabel()
 : _fontCache(nullptr),

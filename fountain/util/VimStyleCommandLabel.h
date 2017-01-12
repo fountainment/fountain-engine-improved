@@ -36,6 +36,8 @@ public:
 	unsigned char registerKeyword(const std::string& keyword);
 	unsigned char queryKeyword(const std::string& keyword);
 	void registerCommand(const std::vector<std::string>& command, CommandFunction function);
+
+	std::vector<CommandResult> interpretMulticommand(const std::string& command);
 	CommandResult interpretCommand(const std::string& command);
 
 private:
