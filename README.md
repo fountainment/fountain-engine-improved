@@ -5,43 +5,80 @@ FountainEngine Improved!
 
 A Crossplatform C++ OpenGL 2D Game Engine
 
-What's Improved Now
--------------------
 
-- Use cmake to build
-- Codes fully support Visual Studio
-- Add RenderList logic
-- Clearer module logic
+New Engine In Plan
+------------------
 
-What's Planned
---------------
+From April 2017,
 
-- Tool for creating new project
-- A light system integrated in render logic
+I started working in a game company.
 
-How to Build
-------------
+Found a lot of interesting things,
 
-	$ python downloadDepsAndRes.py
-	$ mkdir build
-	$ cd build
-	$ cmake ..
+and had many good ideas to improve the engine,
 
-Then use 'make'(Linux) or open Fountain.sln(Windows)
+Some are not compatible with the current one,
 
-Dependencies
-------------
+Especially the renderer.
+
+
+Some Thoughts Here
+------------------
+
+OpenGL 4.2 core profile will be used in the next engine,
+
+which is still compatible with Intel HD4000 in my old laptop.
+
+It means the new renderer will have no fixed-pipeline funtionality,
+
+and will take more adtanvage of display memory.
+
+And I'm going to try FMOD, which is a very good sound library.
+
+FMOD is currently free for small budget project.
+
+I also did some research on Vulkan API recently, it's very low level,
+
+study it can help one to better understand the rendering pipeline,
+
+but it's hard to use, I still need much time to get familiar with that,
+
+probably won't be seen in the next engine.
+
+
+Some Libs Which Are Confirmed To Be Used
+----------------------------------------
 
 OpenGL
 
-GLFW
-
 glad
 
-FreeImage
+glm
 
-FreeType
+GLFW
 
-LiquidFun
+FMOD
 
-OpenAL
+
+Some Plans
+----------
+
+A good demo to indicate the features
+
+A python engine version to help prototyping
+
+Better usage of C++11 features (smart pointer, multithreading)
+
+Have documentation? (doxygen?)
+
+Have unittest?
+
+
+Conclusion
+----------
+
+These engines are more of my self learning projects
+
+My expectation is one day I can use it in Ludum Dare
+
+And at least, I can do some algorithm experiments with it
