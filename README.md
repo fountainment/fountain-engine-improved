@@ -13,17 +13,19 @@ From April 2017,
 
 I started working in a game company.
 
-Found a lot of interesting things,
+Found a lot of interesting things in this period,
 
-and had many good ideas to improve the engine,
+and had many good ideas to improve the engine.
 
-Some are not compatible with the current one,
+Some ideas are not compatible with the current engine structure,
 
-Especially the renderer.
+especially the renderer part.
+
+So, this old engine probably won't be updated from now.
 
 
-Some Thoughts Here
-------------------
+Some Vison Here
+---------------
 
 OpenGL 4.2 core profile will be used in the next engine,
 
@@ -31,7 +33,7 @@ which is still compatible with Intel HD4000 in my old laptop.
 
 It means the new renderer will have no fixed-pipeline funtionality,
 
-and will take more adtanvage of display memory.
+and will take more advantage of display memory.
 
 And I'm going to try FMOD, which is a very good sound library.
 
@@ -45,9 +47,15 @@ but it's hard to use, I still need much time to get familiar with that,
 
 probably won't be seen in the next engine.
 
+Multithreading is a must-have for modern game engine,
 
-Some Libs Which Are Confirmed To Be Used
-----------------------------------------
+I only have a little experience with it,
+
+but I will try to improve the skill by practicing in the new engine.
+
+
+Some Libs Confirmed To Be Used
+------------------------------
 
 OpenGL
 
@@ -69,9 +77,9 @@ A python engine version to help prototyping
 
 Better usage of C++11 features (smart pointer, multithreading)
 
-Have documentation? (doxygen?)
+Documentation? (doxygen?)
 
-Have unittest?
+Unittest?
 
 
 Conclusion
