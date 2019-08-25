@@ -20,28 +20,28 @@ def download(filename, url):
     print("Finished!")
 
 def extract_to(filename, dirname):
-	zfile = zipfile.ZipFile(filename, 'r')
-	for ef in zfile.namelist():
-		if ef.endswith('/'):
-			continue
-		p = os.path.join(dirname, ef)   
-		d = os.path.dirname(p)
-		if not os.path.exists(d):
-		    os.makedirs(d)
-		f = open(p, 'wb')
-		f.write(zfile.read(ef))
-		f.close()
-	zfile.close()
+    zfile = zipfile.ZipFile(filename, 'r')
+    for ef in zfile.namelist():
+        if ef.endswith('/'):
+            continue
+        p = os.path.join(dirname, ef)
+        d = os.path.dirname(p)
+        if not os.path.exists(d):
+            os.makedirs(d)
+        f = open(p, 'wb')
+        f.write(zfile.read(ef))
+        f.close()
+    zfile.close()
 
 def extract(filename):
-	extract_to(os.path.join(workpath, filename), workpath)
+    extract_to(os.path.join(workpath, filename), workpath)
 
 def main():
-	download("deps.zip", "http://www.fountainment.com/download/deps.zip")
-	download("res.zip", "http://www.fountainment.com/download/res.zip")
+    # download("deps.zip", "http://www.fountainment.com/download/deps.zip")
+    # download("res.zip", "http://www.fountainment.com/download/res.zip")
 
-	extract("deps.zip")
-	extract("res.zip")
+    extract("deps.zip")
+    extract("res.zip")
 
 if __name__ == '__main__':
-	main()
+    main()
